@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Loader from "../../../components/Loader";
 import { useGetAllPostedStoredPurchasesQuery } from "../../../slices/purchase/storePurchaseHeadersApiSlice";
 import { Table, Button } from "react-bootstrap";
@@ -8,15 +8,19 @@ import { CiEdit } from "react-icons/ci";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdEye } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
+import PostedPurchaseModal from "./lines/PostedPurchaseModal";
 const AllPostedStorePurchases = () => {
-  const handleAdd = (e) => {
-    alert("Hi");
-  };
-  const { data, isLoading } = useGetAllPostedStoredPurchasesQuery();
-  console.log(data);
+  const handleAdd = (e) => {};
+  const { data: posted_purchase_orders, isLoading } =
+    useGetAllPostedStoredPurchasesQuery();
+  const [posted_mode, set_posted_mode] = useState("");
   return (
     <>
       <p>*** All Posted Store Purchases ***</p>
+      <div>
+        <PostedPurchaseModal />
+      </div>
+
       <Table striped style={{ border: "1px solid #ccc" }}>
         <thead>
           <tr>
@@ -33,10 +37,10 @@ const AllPostedStorePurchases = () => {
         <tbody>
           {isLoading ? (
             <Loader />
-          ) : data.data[0] === null ? (
+          ) : posted_purchase_orders?.data[0] === null ? (
             <>No data</>
           ) : (
-            data.data.map((item, index) => (
+            posted_purchase_orders?.data.map((item, index) => (
               <tr>
                 <td>{index + 1}</td>
                 <td>{item.store_purchase_number}</td>

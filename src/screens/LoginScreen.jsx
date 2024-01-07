@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
-import FormContainer from '../components/FormContainer';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLoginMutation } from '../slices/administration/usersApiSlice';
-import { setCredentials } from '../slices/authSlice';
-import { toast } from 'react-toastify';
-import Loader from '../components/Loader';
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Form, Button, Row, Col } from "react-bootstrap";
+import FormContainer from "../components/FormContainer";
+import { useDispatch, useSelector } from "react-redux";
+import { useLoginMutation } from "../slices/administration/usersApiSlice";
+import { setCredentials } from "../slices/authSlice";
+import { toast } from "react-toastify";
+import Loader from "../components/Loader";
 
 const LoginScreen = () => {
-  const [user_email, setUser_Email] = useState('');
-  const [password, setPassword] = useState('');
+  const [user_email, setUser_Email] = useState("");
+  const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const LoginScreen = () => {
 
   useEffect(() => {
     if (userInfo) {
-      navigate('/securedhome');
+      navigate("/securedhome");
     }
   }, [navigate, userInfo]);
 
@@ -30,8 +30,8 @@ const LoginScreen = () => {
     try {
       const res = await login({ user_email, password }).unwrap();
       dispatch(setCredentials({ ...res.data }));
-      console.log(res.data)
-      navigate('/securedhome');
+      console.log(res.data);
+      navigate("/securedhome");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -42,22 +42,22 @@ const LoginScreen = () => {
       <h1>Sign In</h1>
 
       <Form onSubmit={submitHandler}>
-        <Form.Group className='my-2' controlId='email'>
+        <Form.Group className="my-2" controlId="email">
           <Form.Label>Email Address</Form.Label>
           <Form.Control
             required
-            type='email'
-            placeholder='Enter email'
+            type="email"
+            placeholder="Enter email"
             value={user_email}
             onChange={(e) => setUser_Email(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group className='my-2' controlId='password'>
+        <Form.Group className="my-2" controlId="password">
           <Form.Label>Password</Form.Label>
           <Form.Control
-            type='password'
-            placeholder='Enter password'
+            type="password"
+            placeholder="Enter password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
@@ -65,9 +65,9 @@ const LoginScreen = () => {
 
         <Button
           disabled={isLoading}
-          type='submit'
-          variant='primary'
-          className='mt-3'
+          type="submit"
+          variant="primary"
+          className="mt-3"
         >
           Sign In
         </Button>
@@ -75,9 +75,9 @@ const LoginScreen = () => {
 
       {isLoading && <Loader />}
 
-      <Row className='py-3'>
+      <Row className="py-3">
         <Col>
-          New User? <Link to='/register'>Register</Link>
+          New User? <Link to="/register">Register</Link>
         </Col>
       </Row>
     </FormContainer>

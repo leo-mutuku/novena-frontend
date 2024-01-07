@@ -37,10 +37,7 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    set_order_items({
-      ...order_items,
-      total_cost_per_item: order_items.item_cost * order_items.quantity,
-    });
+    set_total_cost(total_cost + order_items.item_cost * order_items.quantity);
     set_purchase_list([...purchase_list, order_items]);
   };
   return (
@@ -130,34 +127,17 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
               )}
               <br />
               <hr />
-              <span>*** Add purchase Items ***</span> {`| Total Cost Ksh. `}
+              <span>*** Add purchase Items ***</span>{" "}
+              {`| Total Cost Ksh. ${total_cost} `}
               <div>
                 <Form onSubmit={handleSubmit}>
                   <Row>
                     <Col>
-                      <select
-                        value={order_items.item_code}
-                        onChange={(e) =>
-                          set_order_items({
-                            ...order_items,
-                            item_code: e.target.value,
-                          })
-                        }
-                      >
-                        {item_register?.data?.map((item, index) => (
-                          <option value={item.item_code} key={index}>
-                            {item.item_name}
-                          </option>
-                        ))}
-                      </select>
-                    </Col>
-                    <Col>
                       <Form.Group className="my-2" controlId="order_items">
                         <Form.Label>Item Code</Form.Label>
-                        <Form.Control
-                          type="number"
+                        <Form.Select
+                          type="text"
                           required
-                          placeholder="order_items"
                           value={order_items.item_code}
                           onChange={(e) =>
                             set_order_items({
@@ -165,7 +145,41 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
                               item_code: e.target.value,
                             })
                           }
-                        ></Form.Control>
+                        >
+                          {item_register?.data?.map((item, index) => (
+                            <option value={item.item_code} key={index}>
+                              {item.item_name}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group className="my-2" controlId="account_number">
+                        <Form.Label>Account Number</Form.Label>
+                        <Form.Select
+                          type="number"
+                          required
+                          placeholder="Account Number"
+                          value={order_items.item_code}
+                          onChange={(e) =>
+                            set_order_items({
+                              ...order_items,
+                              account_number: e.target.value,
+                            })
+                          }
+                        >
+                          {accounts?.data?.map((account, index) => (
+                            <>
+                              <option
+                                key={index}
+                                value={account.account_number}
+                              >
+                                {account.account_name}
+                              </option>
+                            </>
+                          ))}
+                        </Form.Select>
                       </Form.Group>
                     </Col>
                     <Col>

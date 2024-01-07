@@ -9,13 +9,19 @@ import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import AddPurchaseModal from "./lines/AddPurchaseModal";
+import DeletePurchaseModal from "./lines/DeletePurchaseModal";
 
 const PurchaseList = () => {
   const [mode, set_mode] = useState("none");
+  const [mode_delete, set_mode_delete] = useState("none");
   const [store_purchase_id, set_store_purchase_id] = useState("");
   const handleAdd = (e, id, style) => {
     set_store_purchase_id(id);
     set_mode(style);
+  };
+  const handleDelete = (e, id, style) => {
+    set_store_purchase_id(id);
+    set_mode_delete(style);
   };
   const { data, isLoading } = useGetAllStorePurchaseHeadersQuery();
   const navigate = useNavigate();
@@ -27,6 +33,12 @@ const PurchaseList = () => {
         <AddPurchaseModal
           store_purchase_id={store_purchase_id}
           set_mode={set_mode}
+        />
+      </div>
+      <div style={{ display: `${mode_delete}` }}>
+        <DeletePurchaseModal
+          store_purchase_id={store_purchase_id}
+          set_mode_delete={set_mode_delete}
         />
       </div>
       <Table striped style={{ border: "1px solid #ccc" }}>
@@ -86,7 +98,11 @@ const PurchaseList = () => {
                 <td>
                   {item.status === "New" ? (
                     <Link to={`#`}>
-                      <MdDelete />
+                      <MdDelete
+                        onClick={(e) =>
+                          handleDelete(e, item.store_purchase_number, "block")
+                        }
+                      />
                     </Link>
                   ) : (
                     "--"

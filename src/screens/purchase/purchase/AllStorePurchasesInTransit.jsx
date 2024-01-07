@@ -9,12 +9,10 @@ import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdEye } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 const AllStorePurchasesInTransit = () => {
-  const { data, isLoading } = useGetAllStorePurchasesInTransitQuery();
-  console.log(data);
+  const { data: purchase_order_intransit, isLoading } =
+    useGetAllStorePurchasesInTransitQuery();
 
-  const handleAdd = (e) => {
-    console.log("hi");
-  };
+  const handleAdd = (e) => {};
   return (
     <>
       <p>*** All Store Purchases In Transit ***</p>
@@ -34,10 +32,10 @@ const AllStorePurchasesInTransit = () => {
         <tbody>
           {isLoading ? (
             <Loader />
-          ) : data.data[0] === null ? (
+          ) : purchase_order_intransit.data[0] === null ? (
             <>No data</>
           ) : (
-            data.data.map((item, index) => (
+            purchase_order_intransit.data.map((item, index) => (
               <tr>
                 <td>{index + 1}</td>
                 <td>{item.store_purchase_number}</td>
