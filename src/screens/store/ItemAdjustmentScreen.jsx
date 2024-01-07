@@ -1,8 +1,8 @@
 import PageActionComponent from "../../components/PageActionComponent";
 const pagemenus = [
   { pagename: "All stock adjustment", to: "allstockadjustment" },
-  { pagename: "In progress", to: "allstockadjustment" },
-  { pagename: "Posted", to: "allstockadjustment" },
+  { pagename: "In progress", to: "allstockadjustmentinprogrss" },
+  { pagename: "Posted", to: "allpostedstockadjustment" },
   { pagename: "New Stock Adjustment", to: "createstockadjustment" },
 ];
 

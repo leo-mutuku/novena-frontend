@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
-function CreateRequisition() {
-  return (
-    <div>CreateRequisition</div>
-  )
-}
+const CreateRequisition = () => {
+  return <div>CreateRequisition</div>;
+};
 
-export default CreateRequisition
+export default CreateRequisition;

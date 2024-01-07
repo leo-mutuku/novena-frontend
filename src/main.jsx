@@ -103,8 +103,6 @@ import SalesPeoplelist from "./screens/sales/salespeople/SalesPeoplelist.jsx";
 import CreateSalesPeople from "./screens/sales/salespeople/CreateSalesPeople.jsx";
 import ProductionActualList from "./screens/production/actual/ProductionActualList.jsx";
 import ProductionCreateActual from "./screens/production/actual/ProductionCreateActual.jsx";
-import PackhouseList from "./screens/production/packhouse/PackhouseList.jsx";
-import Createpackhouse from "./screens/production/packhouse/Createpackhouse.jsx";
 import RequisitionList from "./screens/purchase/requisition/RequisitionList.jsx";
 import CreatePurchase from "./screens/purchase/purchase/CreatePurchase.jsx";
 import PurchaseList from "./screens/purchase/purchase/PurchaseList.jsx";
@@ -116,6 +114,12 @@ import AllStorePurchasesInTransit from "./screens/purchase/purchase/AllStorePurc
 import CreateBankAccount from "./screens/finance/bankaccounts/CreateBankAccount.jsx";
 import CreatePackhousePerson from "./screens/production/packhousepeople/CreatePackhousePerson.jsx";
 import PackhosePeopleList from "./screens/production/packhousepeople/PackhosePeopleList.jsx";
+import Allpostedrequisitions from "./screens/purchase/requisition/AllPostedRequisitions.jsx";
+import CreateRequisition from "./screens/purchase/requisition/CreateRequisition.jsx";
+import StockTakeInProgress from "./screens/store/stocktake/StockTakeInProgress.jsx";
+import PostedStockTake from "./screens/store/stocktake/PostedStockTake.jsx";
+import StockAdjustmentInProgress from "./screens/store/stockadjustment/StockAdjustmentInProgress.jsx";
+import PostedStockAdjustment from "./screens/store/stockadjustment/PostedStockAdjustment.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -206,8 +210,12 @@ const router = createBrowserRouter(
             <Route imdex element={<StocktakeList />} />
             <Route path="allstocktakes" element={<StocktakeList />} />
             <Route path="createstocktake" element={<CreateStockTake />} />
+            <Route
+              path="allstocktakeinprogress"
+              element={<StockTakeInProgress />}
+            />
+            <Route path="allpostedstocktakes" element={<PostedStockTake />} />
           </Route>
-          <Route path="createstocktake" element={<CreateStockTake />} />
           <Route path="itemadjustment" element={<ItemAdjustmentScreen />}>
             <Route index element={<StockAdjustmentlist />} />
             <Route
@@ -217,6 +225,15 @@ const router = createBrowserRouter(
             <Route
               path="allstockadjustment"
               element={<StockAdjustmentlist />}
+            />
+            <Route index element={<StockAdjustmentlist />} />
+            <Route
+              path="allstockadjustmentinprogrss"
+              element={<StockAdjustmentInProgress />}
+            />
+            <Route
+              path="allpostedstockadjustment"
+              element={<PostedStockAdjustment />}
             />
           </Route>
           <Route path="storeitems" element={<StoreItemsScreen />}>
@@ -235,7 +252,6 @@ const router = createBrowserRouter(
         </Route>
         {/* purchase routes */}
         <Route path="purchase" element={<PurchaseScreen />}>
-          {/* <Route index element={<PurchaseDashboard />} /> */}
           <Route path="storepurchase" element={<StorePurchaseScreen />}>
             <Route index element={<PurchaseList />} />
             <Route path="createstorepurchase" element={<CreatePurchase />} />
@@ -251,9 +267,15 @@ const router = createBrowserRouter(
           </Route>
           <Route path="storerequisition" element={<StoreRequisitionScreen />}>
             <Route index element={<RequisitionList />} />
+            <Route path="createrequisition" element={<CreateRequisition />} />
             <Route
-              path="createrequisition"
-              element={<CreateStoreItemslist />}
+              path="allinprogressrequisitions"
+              element={<StockTakeInProgress />}
+            />
+
+            <Route
+              path="allpostedrequisitions"
+              element={<Allpostedrequisitions />}
             />
             <Route path="allstorerequisitions" element={<RequisitionList />} />
           </Route>

@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
-function StockAdjustmentlist() {
-  return (
-    <div>StockAdjustmentlist</div>
-  )
-}
+const StockAdjustmentlist = () => {
+  return <div>StockAdjustmentlist</div>;
+};
 
-export default StockAdjustmentlist
+export default StockAdjustmentlist;

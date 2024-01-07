@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
-function CreateStockTake() {
-  return (
-    <div>CreateStockTake</div>
-  )
-}
+const CreateStockTake = () => {
+  return <div>CreateStockTake</div>;
+};
 
-export default CreateStockTake
+export default CreateStockTake;

@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function RequisitionList() {
-  return (
-    <div>RequisitionList</div>
-  )
+  return <div>RequisitionList</div>;
 }
 
-export default RequisitionList
+export default RequisitionList;
