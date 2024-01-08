@@ -4,7 +4,7 @@ import { sidelinks } from "./sidelinks";
 function PayrollScreen() {
   return (
     <>
-      <ModulePageComponent page_title="Purchase" sidelinks={sidelinks} />
+      <ModulePageComponent page_title="Payroll" sidelinks={sidelinks} />
     </>
   );
 }

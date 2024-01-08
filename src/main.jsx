@@ -118,6 +118,8 @@ import StockTakeInProgress from "./screens/store/stocktake/StockTakeInProgress.j
 import PostedStockTake from "./screens/store/stocktake/PostedStockTake.jsx";
 import StockAdjustmentInProgress from "./screens/store/stockadjustment/StockAdjustmentInProgress.jsx";
 import PostedStockAdjustment from "./screens/store/stockadjustment/PostedStockAdjustment.jsx";
+import PayrollScreen from "./screens/payroll/PayrollScreen.jsx";
+import PaymentScreen from "./screens/payment/PaymentScreen.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -322,7 +324,10 @@ const router = createBrowserRouter(
           <Route path='fleetregister' element={<FleetRegister/>}/>
           <Route path='fleetmaintenance' element={<FleetMaintenance/>}/> */}
         </Route>
-
+        {/* payroll */}
+        <Route path="payroll" element={<PayrollScreen />}></Route>
+        {/* payment */}
+        <Route path="payment" element={<PaymentScreen />}></Route>
         {/* finance routes */}
         <Route path="finance" element={<FinanceScreen />}>
           <Route path="accounts" element={<AccountsScreen />}>
