@@ -1,19 +1,21 @@
 import React, {useState, useEffect}from 'react'
 import {Form, Button,Row, Col } from 'react-bootstrap'
 import { useCreateSupplierMutation } from '../../../slices/administration/suppliersApiSlice';
+import { useGetAllItemRegisterQuery } from '../../../slices/store/itemregisterApiSlice';
 import {  useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 function CreateSupplier() {
 
 
-    const [supplier_email, set_supplier_email]=useState('');
+    const [supplier_email, set_supplier_email]=useState('null@null');
     const [supplier_name, set_supplier_name]=useState('');
     const [supplier_phone_number, set_supplier_phone_number]=useState('');
     const [supplier_location, set_supplier_location]=useState('');
     const [item_supplied_code, set_item_supplied_code]=useState('');
 
     const [createSupplier, { isLoading }] = useCreateSupplierMutation();
+    const {data:suppliers} = useGetAllItemRegisterQuery();
     const navigate = useNavigate()
     useEffect(() => {
       navigate()
@@ -106,14 +108,19 @@ function CreateSupplier() {
 
         <Col>
         <Form.Group className='my-2' controlId='item_supplied_code'>
-          <Form.Label>Item supplied code</Form.Label>
-          <Form.Control
+          <Form.Label>Item supplied </Form.Label>
+          <Form.Select
             required
             type='number'
             placeholder='Item supplied code '
             value={item_supplied_code}
             onChange={(e) => set_item_supplied_code(e.target.value)}
-          ></Form.Control>
+          >
+             <option>Enter item supplied</option>
+            {suppliers?.data?.map((supplier, index)=>(
+            <option value={supplier.item_code}>{ supplier.item_name} - {supplier.item_code}</option>
+            ))}
+          </Form.Select>
         </Form.Group>
         </Col>
 
