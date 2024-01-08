@@ -12,11 +12,11 @@ export const sidelinks = [
   // },
   {
     menuTitle: "Daily Pack house",
-    subMenus: [{ subMenuTitle: "Daily Pack House", to: "dailypackhouse" }],
+    subMenus: [{ subMenuTitle: "Daily Pack House", to: "#" }],
   },
   {
     menuTitle: "Pack house",
-    subMenus: [{ subMenuTitle: "Pack House", to: "packhouse" }],
+    subMenus: [{ subMenuTitle: "Pack House", to: "#" }],
   },
   {
     menuTitle: "Pack house People",
