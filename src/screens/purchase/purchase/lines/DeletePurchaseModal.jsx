@@ -15,7 +15,6 @@ function DeletePurchaseModal({
   const { data: item_register } = useGetAllItemRegisterQuery();
   const { data: accounts } = useGetAllAccountsQuery();
 
-  console.log(item_register);
   const [total_cost, set_total_cost] = useState(0);
   const [order_items, set_order_items] = useState({
     item_code: 0,
@@ -24,20 +23,10 @@ function DeletePurchaseModal({
     quantity: 0,
     total_cost_per_item: 0,
   });
-  let items = [];
+
   const [purchase_list, set_purchase_list] = useState([]);
 
-  console.log(item_register);
-  useEffect(() => {}, [
-    items,
-    purchase_list,
-    store_purchase_id,
-    item_register,
-    accounts,
-    order_items,
-    order_items.item_cost,
-    order_items.quantity,
-  ]);
+  useEffect(() => {}, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

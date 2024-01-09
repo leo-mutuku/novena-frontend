@@ -15,39 +15,58 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
   const { data: suppliers } = useGetAllSuppliersQuery();
   const [purchase_line, { isLoading }] = useCreateStorePurchaseLineMutation();
 
-  console.log(item_register);
   const [total_cost, set_total_cost] = useState(0);
   const [order_items, set_order_items] = useState({
     item_code: "",
+    item_code_name: "",
     account_number: "",
+    account_name: "",
     supplier_number: "",
+    supplier_number_name: "",
     item_cost: "",
-    quantity: "",
+    quantity: 0,
     total_cost_per_item: "",
+    purchase_header_id: "",
   });
-  let items = [];
+
   const [purchase_list, set_purchase_list] = useState([]);
 
-  console.log(item_register);
-  useEffect(() => {}, [
-    items,
-    purchase_list,
-    store_purchase_id,
-    item_register,
-    accounts,
-    order_items,
-    order_items.item_cost,
-    order_items.quantity,
-  ]);
+  useEffect(() => {
+    set_order_items({ ...order_items, purchase_header_id: store_purchase_id });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    set_total_cost(total_cost + order_items.item_cost * order_items.quantity);
     set_purchase_list([...purchase_list, order_items]);
   };
 
-  const handleSave = async (e) => {
-    console.log("");
+  const handleSave = async () => {
+    try {
+      if (purchase_list.length === 0) {
+        alert("Add items to purchase first!");
+      } else {
+        const res = purchase_line({
+          store_purchase_id,
+          purchase_line: purchase_list,
+        });
+      }
+    } catch (error) {}
+  };
+
+  const handleItemCode = (e) => {
+    let x = item_register?.data?.filter((a) => {
+      if (a.item_code == e.target.value) {
+        return a.item_name;
+      }
+    });
+    set_order_items({
+      ...order_items,
+      item_code: e.target.value,
+      item_name: x[0].item_name,
+      item_cost: x[0].current_price,
+      account_number: x[0].account_number,
+      total_cost_per_item: x[0].current_price * order_items.quantity,
+    });
   };
   return (
     <>
@@ -80,62 +99,6 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
             </Modal.Header>
 
             <Modal.Body>
-              {/* List of items */}
-              {purchase_list?.length === 0 ? (
-                <span style={{ color: "#fd7e14" }}>
-                  No items yet! Add items to purchase
-                </span>
-              ) : (
-                <>
-                  <Table>
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Item Code</th>
-                        <th>Account no</th>
-                        <th>Supplier no</th>
-                        <th>@ Cost</th>
-                        <th>Quantity</th>
-                        <Button
-                          variant="outline-danger"
-                          size="sm"
-                          onClick={() => set_purchase_list([])}
-                        >
-                          Delete <MdDelete />
-                        </Button>
-                      </tr>
-                    </thead>
-                    {purchase_list.map((p_items, index) => (
-                      <>
-                        <tbody>
-                          <tr key={p_items.item_code}>
-                            <td>{index + 1}</td>
-                            <td>{p_items.item_code}</td>
-                            <td>{p_items.account_number}</td>
-                            <td>{p_items.supplier_number}</td>
-                            <td>{p_items.item_cost}</td>
-                            <td>{p_items.quantity}</td>
-                            <Button
-                              variant="outline-danger"
-                              size="sm"
-                              onClick={() =>
-                                set_purchase_list(
-                                  purchase_list.filter(
-                                    (a) => a.item_code !== p_items.item_code
-                                  )
-                                )
-                              }
-                            >
-                              Delete <MdDelete />
-                            </Button>
-                          </tr>
-                        </tbody>
-                      </>
-                    ))}
-                  </Table>
-                </>
-              )}
-              <br />
               <hr />
               <span>*** Add purchase Items ***</span>{" "}
               {`| Total Cost Ksh. ${total_cost} `}
@@ -143,25 +106,20 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
                 <Form onSubmit={handleSubmit}>
                   <Row>
                     <Col>
-                      <Form.Group className="my-2" controlId="order_items">
-                        <Form.Label>Item Code</Form.Label>
+                      <Form.Group className="my-2" controlId="item_code">
+                        <Form.Label>Item</Form.Label>
                         <Form.Select
                           type="text"
                           required
                           placeholder="Item Code"
                           value={order_items.item_code}
-                          onChange={(e) =>
-                            set_order_items({
-                              ...order_items,
-                              item_code: e.target.value,
-                            })
-                          }
+                          onChange={handleItemCode}
                         >
                           {" "}
-                          <option>Item Code</option>
+                          <option>Item</option>
                           {item_register?.data?.map((item, index) => (
                             <option value={item.item_code} key={index}>
-                              {item.item_name}
+                              {item.item_code} | {item.item_name}
                             </option>
                           ))}
                         </Form.Select>
@@ -171,6 +129,7 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
                       <Form.Group className="my-2" controlId="account_number">
                         <Form.Label>Account Number</Form.Label>
                         <Form.Select
+                          disabled
                           type="number"
                           required
                           placeholder="Account Number"
@@ -274,6 +233,22 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
                         ></Form.Control>
                       </Form.Group>
                     </Col>
+                    <Col>
+                      <Form.Group className="my-2" controlId="naraturation">
+                        <Form.Control
+                          type="text"
+                          required
+                          placeholder="Naration"
+                          value={order_items.total_cost_per_item}
+                          onChange={(e) =>
+                            set_order_items({
+                              ...order_items,
+                              naration: e.target.value,
+                            })
+                          }
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
                   </Row>
                   <br />
                   <div>
@@ -282,12 +257,71 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
                 </Form>
                 <br />
               </div>
+              {/* List of items */}
+              {purchase_list?.length === 0 ? (
+                <span style={{ color: "#fd7e14" }}>
+                  No items yet! Add items to purchase
+                </span>
+              ) : (
+                <>
+                  <Table>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Item</th>
+                        <th>Account</th>
+                        <th>Supplier</th>
+                        <th>@ Cost</th>
+                        <th>Quantity</th>
+                        <Button
+                          variant="outline-danger"
+                          size="sm"
+                          onClick={() => set_purchase_list([])}
+                        >
+                          Delete <MdDelete />
+                        </Button>
+                      </tr>
+                    </thead>
+                    {purchase_list.map((p_items, index) => (
+                      <>
+                        <tbody>
+                          <tr key={p_items.item_code}>
+                            <td>{index + 1}</td>
+                            <td>
+                              {p_items.item_code} | {p_items.item_name}
+                            </td>
+                            <td>{p_items.account_number}</td>
+                            <td>{p_items.supplier_number}</td>
+                            <td>{p_items.item_cost}</td>
+                            <td>{p_items.quantity}</td>
+                            <Button
+                              variant="outline-danger"
+                              size="sm"
+                              onClick={() =>
+                                set_purchase_list(
+                                  purchase_list.filter(
+                                    (a) => a.item_code !== p_items.item_code
+                                  )
+                                )
+                              }
+                            >
+                              Delete <MdDelete />
+                            </Button>
+                          </tr>
+                        </tbody>
+                      </>
+                    ))}
+                  </Table>
+                </>
+              )}
+              <br />
             </Modal.Body>
 
             <Modal.Footer className="gap-2">
               <Button onClick={handleSave} variant="primary">
                 Save changes
               </Button>
+
               <Button variant="secondary" onClick={() => set_mode("none")}>
                 Close
               </Button>

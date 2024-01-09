@@ -28,19 +28,22 @@ const PurchaseList = () => {
   useEffect(() => {}, [data]);
   return (
     <>
+      <>
+        <div style={{ display: `${mode}` }}>
+          <AddPurchaseModal
+            store_purchase_id={store_purchase_id}
+            set_mode={set_mode}
+          />
+        </div>
+        <div style={{ display: `${mode_delete}` }}>
+          <DeletePurchaseModal
+            store_purchase_id={store_purchase_id}
+            set_mode_delete={set_mode_delete}
+          />
+        </div>
+      </>
       <p>*** All Store Purchases ***</p>
-      <div style={{ display: `${mode}` }}>
-        <AddPurchaseModal
-          store_purchase_id={store_purchase_id}
-          set_mode={set_mode}
-        />
-      </div>
-      <div style={{ display: `${mode_delete}` }}>
-        <DeletePurchaseModal
-          store_purchase_id={store_purchase_id}
-          set_mode_delete={set_mode_delete}
-        />
-      </div>
+
       <Table striped style={{ border: "1px solid #ccc" }}>
         <thead>
           <tr>
