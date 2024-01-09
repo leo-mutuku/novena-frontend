@@ -43,6 +43,18 @@ function CreateUser() {
       toast.error(err?.data?.message || err.error);
     }
   };
+
+  // handleStaff
+  const handleStaff = (e) => {
+    let user = staff?.data?.filter((a) => {
+      if (a.staff_number == e.target.value) {
+        return a.staff_number;
+      }
+    });
+    set_first_name(user[0].first_name);
+    set_user_email(user[0].user_email);
+    set_last_name(user[0].last_name);
+  };
   return (
     <>
       <span>*** Create User ***</span>
@@ -76,33 +88,15 @@ function CreateUser() {
                 required
                 placeholder="Staff number"
                 value={staff_number}
-                onChange={(e) => set_staff_number()}
+                onChange={handleStaff}
               >
                 {staff?.data?.map((item) => (
                   <option value={item.staff_number}>
-                    {item.staff_number} - {item.first_name}
+                    {item.staff_number} | {item.first_name}
                   </option>
                 ))}
               </Form.Select>
             </Form.Group>
-            {/* <Form.Group className="my-2" controlId="staff_number">
-              <Form.Label>Staff_number</Form.Label>
-              <Form.Control
-                as="select"
-                value={staff_number}
-                onChange={(e) => {
-                  console.log("e.target.value", e.target.value);
-                  set_staff_number(e.target.value);
-                }}
-              >
-                {staff.data.map((s, i) => (
-                  <option
-                    key={i}
-                    value={s.staff_number}
-                  >{`${s.first_name}-${s.last_name}, ${s.staff_number}`}</option>
-                ))}
-              </Form.Control>
-            </Form.Group> */}
           </Col>
         </Row>
 

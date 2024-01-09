@@ -23,6 +23,8 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
     account_name: "",
     supplier_number: "",
     supplier_name: "",
+    supplier_number: "",
+    supplier_email: "",
     item_cost: 0,
     quantity: 0,
     total_cost_per_item: "",
@@ -107,10 +109,9 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
       ...order_items,
       supplier_number: e.target.value,
       supplier_name: x[0].supplier_name,
-      total_cost_per_item: order_items.item_cost * e.target.value,
+      supplier_email: x[0].supplier_email,
+      supplier_number: x[0].supplier_number,
     });
-
-    console.log(order_items.supplier_name);
   };
 
   return (
