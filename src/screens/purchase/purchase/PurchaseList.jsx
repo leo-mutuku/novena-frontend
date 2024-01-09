@@ -10,8 +10,10 @@ import { IoMdAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import AddPurchaseModal from "./lines/AddPurchaseModal";
 import DeletePurchaseModal from "./lines/DeletePurchaseModal";
+import TimeDate from "../../../components/TimeDate";
 
 const PurchaseList = () => {
+  let timeDate = new TimeDate();
   const [mode, set_mode] = useState("none");
   const [mode_delete, set_mode_delete] = useState("none");
   const [store_purchase_id, set_store_purchase_id] = useState("");
@@ -68,7 +70,7 @@ const PurchaseList = () => {
               <tr>
                 <td>{index + 1}</td>
                 <td>{item.store_purchase_number}</td>
-                <td>{item.purchase_date}</td>
+                <td>{`${timeDate.date(item.purchase_date)}`}</td>
 
                 <td>{item.prepared_by}</td>
                 <td>{item.approved_by}</td>

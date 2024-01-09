@@ -22,8 +22,8 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
     account_number: "",
     account_name: "",
     supplier_number: "",
-    supplier_number_name: "",
-    item_cost: "",
+    supplier_name: "",
+    item_cost: 0,
     quantity: 0,
     total_cost_per_item: "",
     purchase_header_id: "",
@@ -53,21 +53,66 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
     } catch (error) {}
   };
 
+  //handle item
   const handleItemCode = (e) => {
     let x = item_register?.data?.filter((a) => {
       if (a.item_code == e.target.value) {
         return a.item_name;
       }
     });
+
+    let y = accounts?.data?.filter((a) => {
+      if (a.account_number == x[0].account_number) {
+        return a.account_name;
+      }
+    });
+
     set_order_items({
       ...order_items,
       item_code: e.target.value,
       item_name: x[0].item_name,
       item_cost: x[0].current_price,
+      account_name: y[0].account_name,
       account_number: x[0].account_number,
+
       total_cost_per_item: x[0].current_price * order_items.quantity,
     });
   };
+
+  // handle cost
+  const handleItemCost = (e) => {
+    set_order_items({
+      ...order_items,
+      item_cost: e.target.value,
+      total_cost_per_item: e.target.value * order_items.quantity,
+    });
+  };
+  // handle quantity
+  const handleQuantity = (e) => {
+    set_order_items({
+      ...order_items,
+      quantity: e.target.value,
+      total_cost_per_item: order_items.item_cost * e.target.value,
+    });
+  };
+  // handle supplier
+  const handleSupplier = (e) => {
+    let x = suppliers?.data?.filter((a) => {
+      if (a.supplier_number == e.target.value) {
+        return a.supplier_name;
+      }
+    });
+
+    set_order_items({
+      ...order_items,
+      supplier_number: e.target.value,
+      supplier_name: x[0].supplier_name,
+      total_cost_per_item: order_items.item_cost * e.target.value,
+    });
+
+    console.log(order_items.supplier_name);
+  };
+
   return (
     <>
       <div
@@ -148,7 +193,8 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
                                 key={index}
                                 value={account.account_number}
                               >
-                                {account.account_name}
+                                {" "}
+                                {account.account_number} |{account.account_name}
                               </option>
                             </>
                           ))}
@@ -157,23 +203,22 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
                     </Col>
                     <Col>
                       <Form.Group className="my-2" controlId="supplier_number">
-                        <Form.Label>Supplier Number</Form.Label>
+                        <Form.Label>Supplier </Form.Label>
                         <Form.Select
                           type="number"
                           required
                           placeholder="Supplier Number"
                           value={order_items.supplier_number}
-                          onChange={(e) =>
-                            set_order_items({
-                              ...order_items,
-                              supplier_number: e.target.value,
-                            })
-                          }
+                          onChange={handleSupplier}
                         >
-                          <option>Supplier Number</option>
+                          <option value={""}>Supplier </option>
                           {suppliers?.data?.map((supplier, index) => (
                             <>
-                              <option value={supplier.supplier_number}>
+                              <option
+                                key={index}
+                                value={supplier.supplier_number}
+                              >
+                                {supplier.supplier_number} |
                                 {supplier.supplier_name}
                               </option>
                             </>
@@ -189,12 +234,7 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
                           required
                           placeholder="Cost per unit (Ksh)"
                           value={order_items.item_cost}
-                          onChange={(e) =>
-                            set_order_items({
-                              ...order_items,
-                              item_cost: e.target.value,
-                            })
-                          }
+                          onChange={handleItemCost}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -206,12 +246,7 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
                           required
                           placeholder="Quantity"
                           value={order_items.quantity}
-                          onChange={(e) =>
-                            set_order_items({
-                              ...order_items,
-                              quantity: e.target.value,
-                            })
-                          }
+                          onChange={handleQuantity}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -238,7 +273,8 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
                         <Form.Control
                           type="text"
                           required
-                          placeholder="Naration"
+                          disabled
+                          placeholder="Total"
                           value={order_items.total_cost_per_item}
                           onChange={(e) =>
                             set_order_items({
@@ -273,13 +309,16 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
                         <th>Supplier</th>
                         <th>@ Cost</th>
                         <th>Quantity</th>
-                        <Button
-                          variant="outline-danger"
-                          size="sm"
-                          onClick={() => set_purchase_list([])}
-                        >
-                          Delete <MdDelete />
-                        </Button>
+                        <th>Total</th>
+                        <th>
+                          <Button
+                            variant="outline-danger"
+                            size="sm"
+                            onClick={() => set_purchase_list([])}
+                          >
+                            Delete <MdDelete />
+                          </Button>
+                        </th>
                       </tr>
                     </thead>
                     {purchase_list.map((p_items, index) => (
@@ -290,23 +329,31 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
                             <td>
                               {p_items.item_code} | {p_items.item_name}
                             </td>
-                            <td>{p_items.account_number}</td>
-                            <td>{p_items.supplier_number}</td>
+                            <td>
+                              {p_items.account_number} | {p_items.account_name}
+                            </td>
+                            <td>
+                              {p_items.supplier_number} |{" "}
+                              {p_items.supplier_name}
+                            </td>
                             <td>{p_items.item_cost}</td>
                             <td>{p_items.quantity}</td>
-                            <Button
-                              variant="outline-danger"
-                              size="sm"
-                              onClick={() =>
-                                set_purchase_list(
-                                  purchase_list.filter(
-                                    (a) => a.item_code !== p_items.item_code
+                            <td>{p_items.total_cost_per_item}</td>
+                            <td>
+                              <Button
+                                variant="outline-danger"
+                                size="sm"
+                                onClick={() =>
+                                  set_purchase_list(
+                                    purchase_list.filter(
+                                      (a) => a.item_code !== p_items.item_code
+                                    )
                                   )
-                                )
-                              }
-                            >
-                              Delete <MdDelete />
-                            </Button>
+                                }
+                              >
+                                Delete <MdDelete />
+                              </Button>
+                            </td>
                           </tr>
                         </tbody>
                       </>
