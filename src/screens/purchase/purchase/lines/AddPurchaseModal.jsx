@@ -7,11 +7,13 @@ import { Prev } from "react-bootstrap/esm/PageItem";
 import { useGetAllItemRegisterQuery } from "../../../../slices/store/itemregisterApiSlice";
 import { useGetAllAccountsQuery } from "../../../../slices/finance/accountsApiSlice";
 import { useGetAllSuppliersQuery } from "../../../../slices/administration/suppliersApiSlice";
+import { useCreateStorePurchaseLineMutation } from "../../../../slices/purchase/storePurchaseLinesApiSlice";
 
 function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
   const { data: item_register } = useGetAllItemRegisterQuery();
   const { data: accounts } = useGetAllAccountsQuery();
   const { data: suppliers } = useGetAllSuppliersQuery();
+  const [purchase_line, { isLoading }] = useCreateStorePurchaseLineMutation();
 
   console.log(item_register);
   const [total_cost, set_total_cost] = useState(0);
@@ -42,6 +44,10 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
     e.preventDefault();
     set_total_cost(total_cost + order_items.item_cost * order_items.quantity);
     set_purchase_list([...purchase_list, order_items]);
+  };
+
+  const handleSave = async (e) => {
+    console.log("");
   };
   return (
     <>
@@ -279,7 +285,9 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
             </Modal.Body>
 
             <Modal.Footer className="gap-2">
-              <Button variant="primary">Save changes</Button>
+              <Button onClick={handleSave} variant="primary">
+                Save changes
+              </Button>
               <Button variant="secondary" onClick={() => set_mode("none")}>
                 Close
               </Button>

@@ -18,11 +18,13 @@ function CreateUser() {
   const { data: staff } = useGetAllStaffQuery();
   const navigate = useNavigate();
 
-  console.log(staff);
-
   useEffect(() => {
     navigate();
   }, [navigate]);
+  const handleStaffChange = (e) => {
+    alert("");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -69,13 +71,19 @@ function CreateUser() {
           <Col>
             <Form.Group className="my-2" controlId="staff_number">
               <Form.Label>Staff Number</Form.Label>
-              <Form.Control
+              <Form.Select
                 type="number"
                 required
                 placeholder="Staff number"
                 value={staff_number}
-                onChange={(e) => set_staff_number(e.target.value)}
-              ></Form.Control>
+                onChange={(e) => set_staff_number()}
+              >
+                {staff?.data?.map((item) => (
+                  <option value={item.staff_number}>
+                    {item.staff_number} - {item.first_name}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
             {/* <Form.Group className="my-2" controlId="staff_number">
               <Form.Label>Staff_number</Form.Label>
