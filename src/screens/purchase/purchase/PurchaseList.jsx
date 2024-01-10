@@ -18,16 +18,17 @@ const PurchaseList = () => {
   const [mode_delete, set_mode_delete] = useState("none");
   const [store_purchase_id, set_store_purchase_id] = useState("");
   const handleAdd = (e, id, style) => {
-    set_store_purchase_id(id);
+    set_store_purchase_id(parseInt(id));
     set_mode(style);
   };
   const handleDelete = (e, id, style) => {
-    set_store_purchase_id(id);
+    set_store_purchase_id(parseInt(id));
     set_mode_delete(style);
   };
   const { data, isLoading } = useGetAllStorePurchaseHeadersQuery();
   const navigate = useNavigate();
   useEffect(() => {}, [data]);
+  console.log(data);
   return (
     <>
       <>
@@ -63,10 +64,10 @@ const PurchaseList = () => {
         <tbody>
           {isLoading ? (
             <Loader />
-          ) : data.data[0] === null ? (
+          ) : data?.data[0] === null ? (
             <>No data</>
           ) : (
-            data.data.map((item, index) => (
+            data?.data?.map((item, index) => (
               <tr>
                 <td>{index + 1}</td>
                 <td>{item.store_purchase_number}</td>

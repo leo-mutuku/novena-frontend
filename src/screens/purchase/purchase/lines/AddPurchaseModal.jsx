@@ -1,8 +1,11 @@
 import { Table, Button, Row, Col, Form } from "react-bootstrap";
+
 import Modal from "react-bootstrap/Modal";
+import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
-import Select from "react-select";
+import { useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import { Prev } from "react-bootstrap/esm/PageItem";
 import { useGetAllItemRegisterQuery } from "../../../../slices/store/itemregisterApiSlice";
 import { useGetAllAccountsQuery } from "../../../../slices/finance/accountsApiSlice";
@@ -10,35 +13,53 @@ import { useGetAllSuppliersQuery } from "../../../../slices/administration/suppl
 import { useCreateStorePurchaseLineMutation } from "../../../../slices/purchase/storePurchaseLinesApiSlice";
 
 function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
+  let purchase_id = parseInt(store_purchase_id);
+  console.log(typeof purchase_id);
+  console.log();
+
   const { data: item_register } = useGetAllItemRegisterQuery();
   const { data: accounts } = useGetAllAccountsQuery();
   const { data: suppliers } = useGetAllSuppliersQuery();
+  const { userInfo } = useSelector((state) => state.auth);
   const [purchase_line, { isLoading }] = useCreateStorePurchaseLineMutation();
-
+  const navigate = useNavigate();
   const [total_cost, set_total_cost] = useState(0);
   const [order_items, set_order_items] = useState({
-    item_code: "",
-    item_code_name: "",
-    account_number: "",
+    item_code: 0,
+    item_name: "",
+    account_number: 0,
     account_name: "",
-    supplier_number: "",
+    supplier_number: 0,
     supplier_name: "",
     supplier_number: "",
     supplier_email: "",
+    supplier_phone_number: "",
     item_cost: 0,
     quantity: 0,
     total_cost_per_item: "",
     purchase_header_id: "",
+    created_by: userInfo?.first_name,
   });
 
   const [purchase_list, set_purchase_list] = useState([]);
+  console.log(purchase_list);
 
   useEffect(() => {
-    set_order_items({ ...order_items, purchase_header_id: store_purchase_id });
-  }, []);
+    if (userInfo) {
+      set_order_items({
+        ...order_items,
+        created_by: userInfo.first_name,
+        purchase_header_id: purchase_id,
+      });
+    }
+
+    navigate();
+  }, [userInfo, navigate, purchase_id]);
 
   const handleSubmit = async (e) => {
+    console.log(order_items);
     e.preventDefault();
+    set_order_items({ ...order_items, created_by: userInfo.first_name });
     set_purchase_list([...purchase_list, order_items]);
   };
 
@@ -51,6 +72,9 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
           store_purchase_id,
           purchase_line: purchase_list,
         });
+
+        toast.success("Purchase lines created successfully");
+        navigate("../allstorepurchasesintransit");
       }
     } catch (error) {}
   };
@@ -71,9 +95,9 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
 
     set_order_items({
       ...order_items,
-      item_code: e.target.value,
+      item_code: parseInt(e.target.value),
       item_name: x[0].item_name,
-      item_cost: x[0].current_price,
+      item_cost: parseInt(x[0].current_price),
       account_name: y[0].account_name,
       account_number: x[0].account_number,
 
@@ -111,6 +135,7 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
       supplier_name: x[0].supplier_name,
       supplier_email: x[0].supplier_email,
       supplier_number: x[0].supplier_number,
+      supplier_phone_number: x[0].supplier_phone_number,
     });
   };
 
@@ -146,8 +171,7 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
 
             <Modal.Body>
               <hr />
-              <span>*** Add purchase Items ***</span>{" "}
-              {`| Total Cost Ksh. ${total_cost} `}
+              <span>*** Add purchase Items ***</span>
               <div>
                 <Form onSubmit={handleSubmit}>
                   <Row>

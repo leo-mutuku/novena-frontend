@@ -52,8 +52,11 @@ function CreateUser() {
       }
     });
     set_first_name(user[0].first_name);
-    set_user_email(user[0].user_email);
+    set_user_email(user[0].staff_email);
     set_last_name(user[0].last_name);
+    set_phone(user[0].phone_number);
+
+    console.log(user);
   };
   return (
     <>
