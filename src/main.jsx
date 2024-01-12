@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import {
-  createBrowserRouter,
+  createHashRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
@@ -120,8 +120,9 @@ import StockAdjustmentInProgress from "./screens/store/stockadjustment/StockAdju
 import PostedStockAdjustment from "./screens/store/stockadjustment/PostedStockAdjustment.jsx";
 import PayrollScreen from "./screens/payroll/PayrollScreen.jsx";
 import PaymentScreen from "./screens/payment/PaymentScreen.jsx";
+import AllMaizePurchase from "./screens/purchase/purchase/AllMaizePurchase.jsx";
 
-const router = createBrowserRouter(
+const router = createHashRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<HomeScreen />} />
@@ -246,12 +247,13 @@ const router = createBrowserRouter(
         {/* purchase routes */}
         <Route path="purchase" element={<PurchaseScreen />}>
           <Route path="storepurchase" element={<StorePurchaseScreen />}>
-            <Route index element={<PurchaseList />} />
+            {/* <Route index element={<PurchaseList />} /> */}
             <Route path="createstorepurchase" element={<CreatePurchase />} />
             <Route
               path="allstorepurchasesintransit"
               element={<AllStorePurchasesInTransit />}
             />
+            <Route path="allmaizepurchase" element={<AllMaizePurchase />} />
             <Route path="allstorepurchase" element={<PurchaseList />} />
             <Route
               path="allpostedstorepurchases"

@@ -29,7 +29,6 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
     item_name: "",
     account_number: 0,
     account_name: "",
-    supplier_number: 0,
     supplier_name: "",
     supplier_number: "",
     supplier_email: "",
@@ -68,15 +67,21 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
       if (purchase_list.length === 0) {
         alert("Add items to purchase first!");
       } else {
-        const res = purchase_line({
+        const res = await purchase_line({
           store_purchase_id,
           purchase_line: purchase_list,
-        });
-
-        toast.success("Purchase lines created successfully");
-        navigate("../allstorepurchasesintransit");
+        }).unwrap();
+        if (res.status === "failed") {
+          toast.error("Purchase lines already added. Proceed to update");
+          navigate("../allstorepurchasesintransit");
+        } else {
+          toast.success("Purchase lines created successfully");
+          navigate("../allstorepurchasesintransit");
+        }
       }
-    } catch (error) {}
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
   };
 
   //handle item
@@ -134,7 +139,6 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
       supplier_number: e.target.value,
       supplier_name: x[0].supplier_name,
       supplier_email: x[0].supplier_email,
-      supplier_number: x[0].supplier_number,
       supplier_phone_number: x[0].supplier_phone_number,
     });
   };

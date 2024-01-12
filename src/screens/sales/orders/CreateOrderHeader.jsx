@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function CreateOrder() {
-  return (
-    <div>CreateOrder</div>
-  )
+  return <div>CreateOrder</div>;
 }
 
-export default CreateOrder
+export default CreateOrder;

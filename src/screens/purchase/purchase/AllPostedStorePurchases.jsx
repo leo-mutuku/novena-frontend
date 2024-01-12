@@ -9,7 +9,9 @@ import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdEye } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import PostedPurchaseModal from "./lines/PostedPurchaseModal";
+import TimeDate from "../../../components/TimeDate";
 const AllPostedStorePurchases = () => {
+  const timeDate = new TimeDate();
   const handleAdd = (e) => {};
   const { data: posted_purchase_orders, isLoading } =
     useGetAllPostedStoredPurchasesQuery();
@@ -44,7 +46,9 @@ const AllPostedStorePurchases = () => {
               <tr>
                 <td>{index + 1}</td>
                 <td>{item.store_purchase_number}</td>
-                <td>{item.purchase_date}</td>
+                <td>{`${timeDate.date(item.purchase_date)} : ${timeDate.time(
+                  item.purchase_date
+                )}`}</td>
 
                 <td>{item.prepared_by}</td>
                 <td>{item.approved_by}</td>

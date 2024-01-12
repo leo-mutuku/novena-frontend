@@ -71,7 +71,9 @@ const PurchaseList = () => {
               <tr>
                 <td>{index + 1}</td>
                 <td>{item.store_purchase_number}</td>
-                <td>{`${timeDate.date(item.purchase_date)}`}</td>
+                <td>{`${timeDate.date(item.purchase_date)} : ${timeDate.time(
+                  item.purchase_date
+                )}`}</td>
 
                 <td>{item.prepared_by}</td>
                 <td>{item.approved_by}</td>

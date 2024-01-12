@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Loader from "../../../components/Loader";
 import { useGetAllStorePurchasesInTransitQuery } from "../../../slices/purchase/storePurchaseHeadersApiSlice";
 import { Table, Button } from "react-bootstrap";
@@ -8,14 +8,31 @@ import { CiEdit } from "react-icons/ci";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdEye } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
+import TimeDate from "../../../components/TimeDate";
+import EditPurchaseModal from "./lines/EditPurchaseModal";
 const AllStorePurchasesInTransit = () => {
+  const [edit_mode, set_edit_mode] = useState("none");
+  const [purchase_header_id, set_purchase_header_id] = useState("");
+  const timeDate = new TimeDate();
   const { data: purchase_order_intransit, isLoading } =
     useGetAllStorePurchasesInTransitQuery();
 
   const handleAdd = (e) => {};
+  const handleEdit = (e, id, mode) => {
+    set_edit_mode(mode);
+    set_purchase_header_id(parseInt(id));
+  };
   return (
     <>
       <p>*** All Store Purchases In Transit ***</p>
+      <div style={{ display: `${edit_mode}` }}>
+        <EditPurchaseModal
+          set_edit_mode={set_edit_mode}
+          edit_mode={edit_mode}
+          purchase_header_id={purchase_header_id}
+        />
+      </div>
+
       <Table striped style={{ border: "1px solid #ccc" }}>
         <thead>
           <tr>
@@ -39,14 +56,19 @@ const AllStorePurchasesInTransit = () => {
               <tr>
                 <td>{index + 1}</td>
                 <td>{item.store_purchase_number}</td>
-                <td>{item.purchase_date}</td>
+                <td>{`${timeDate.date(item.purchase_date)} : ${timeDate.time(
+                  item.purchase_date
+                )}`}</td>
 
                 <td>{item.prepared_by}</td>
                 <td>{item.approved_by}</td>
                 <td>{item.total_cost}</td>
                 <td>
                   {item.status === "New" ? (
-                    <span onClick={handleAdd} style={{ color: "orange" }}>
+                    <span
+                      onClick={(e) => handleAdd()}
+                      style={{ color: "orange" }}
+                    >
                       {item.status}
                     </span>
                   ) : item.status === "In Transit" ? (
@@ -57,7 +79,11 @@ const AllStorePurchasesInTransit = () => {
                     item.status
                   )}
                 </td>
-                <td>
+                <td
+                  onClick={(e) =>
+                    handleEdit(e, item.store_purchase_number, "block")
+                  }
+                >
                   {item.status === "In Transit" ? (
                     <Link to={`#`}>
                       <CiEdit />

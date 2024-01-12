@@ -43,7 +43,7 @@ function CreateAccount() {
   return (
     <>
       <span>*** Create Account *** </span>
-      <span>{total_cost}</span>
+
       <Row>
         <div>
           {" "}
