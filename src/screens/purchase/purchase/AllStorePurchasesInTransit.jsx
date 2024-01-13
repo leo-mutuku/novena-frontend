@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Loader from "../../../components/Loader";
 import { useGetAllStorePurchasesInTransitQuery } from "../../../slices/purchase/storePurchaseHeadersApiSlice";
+import { useGetAllPurchaseLinesByHeaderIdQuery } from "../../../slices/purchase/storePurchaseLinesApiSlice";
+
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa6";
@@ -48,12 +50,14 @@ const AllStorePurchasesInTransit = () => {
         </thead>
         <tbody>
           {isLoading ? (
-            <Loader />
-          ) : purchase_order_intransit.data[0] === null ? (
+            <tr>
+              <Loader />
+            </tr>
+          ) : purchase_order_intransit?.data[0] === null ? (
             <>No data</>
           ) : (
-            purchase_order_intransit.data.map((item, index) => (
-              <tr>
+            purchase_order_intransit?.data.map((item, index) => (
+              <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{item.store_purchase_number}</td>
                 <td>{`${timeDate.date(item.purchase_date)} : ${timeDate.time(
