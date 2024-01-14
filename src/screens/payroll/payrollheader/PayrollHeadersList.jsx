@@ -1,7 +1,5 @@
 import React from "react";
 
-const PayrollHeadersList = () => {
+export const PayrollHeadersList = () => {
   return <div>PayrollHeadersList</div>;
 };
-
-export default PayrollHeadersList;

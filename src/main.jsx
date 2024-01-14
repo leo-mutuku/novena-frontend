@@ -133,6 +133,10 @@ import PackhouseList from "./screens/production/packhouse/PackhouseList.jsx";
 import CreatePackHouse from "./screens/production/packhouse/CreatePackHouse.jsx";
 import { PackHouseEntriesScreen } from "./screens/production/PackHouseEntriesScreen.jsx";
 import { PackhouseEntriesList } from "./screens/production/packhouseentries/PackhouseEntriesList.jsx";
+import { CreatePayrollHeaders } from "./screens/payroll/payrollHeader/CreatePayrollHeaders.jsx";
+import { PayrollHeadersList } from "./screens/payroll/payrollHeader/PayrollHeadersList.jsx";
+import { PayrollHeaderScreen } from "./screens/payroll/PayrollHeaderScreen.jsx";
+import { CategoryScreen } from "./screens/payroll/CategoryScreen.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -169,7 +173,10 @@ const router = createHashRouter(
           </Route>
         </Route>
         {/* payroll */}
-        <Route></Route>
+        <Route path="payroll" element={<PayrollScreen />}>
+          <Route path="category" element={<CategoryScreen />}></Route>
+          <Route path="payrollheader" element={<PayrollHeaderScreen />}></Route>
+        </Route>
 
         {/* production routes */}
         <Route path="production" element={<ProductionScreen />}>
