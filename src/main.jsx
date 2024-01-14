@@ -137,6 +137,10 @@ import { CreatePayrollHeaders } from "./screens/payroll/payrollHeader/CreatePayr
 import { PayrollHeadersList } from "./screens/payroll/payrollHeader/PayrollHeadersList.jsx";
 import { PayrollHeaderScreen } from "./screens/payroll/PayrollHeaderScreen.jsx";
 import { CategoryScreen } from "./screens/payroll/CategoryScreen.jsx";
+import { CategoryList } from "./screens/payroll/category/CategoryList.jsx";
+import { CreateCategory } from "./screens/payroll/category/CreateCategory.jsx";
+import { AllPayrollHeadersInTransit } from "./screens/payroll/payrollheader/AllPayrollHeadersInTransit.jsx";
+import { AllPostedPayrollHeaders } from "./screens/payroll/payrollheader/AllPostedPayrollHeaders.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -174,8 +178,22 @@ const router = createHashRouter(
         </Route>
         {/* payroll */}
         <Route path="payroll" element={<PayrollScreen />}>
-          <Route path="category" element={<CategoryScreen />}></Route>
-          <Route path="payrollheader" element={<PayrollHeaderScreen />}></Route>
+          <Route path="category" element={<CategoryScreen />}>
+            <Route path="categories" element={<CategoryList />} />
+            <Route path="createcategory" element={<CreateCategory />} />
+          </Route>
+          <Route path="payrollheader" element={<PayrollHeaderScreen />}>
+            <Route path="allpayroll" element={<PayrollHeadersList />} />
+            <Route
+              path="allpayrollintransit"
+              element={<AllPayrollHeadersInTransit />}
+            />
+            <Route
+              path="allpostedpayroll"
+              element={<AllPostedPayrollHeaders />}
+            />
+            <Route path="createpayroll" element={<CreatePayrollHeaders />} />
+          </Route>
         </Route>
 
         {/* production routes */}
