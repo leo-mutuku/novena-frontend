@@ -1,6 +1,10 @@
 export const sidelinks = [
   {
     menuTitle: "Payment",
-    subMenus: [{ subMenuTitle: "Payment", to: "#" }],
+    subMenus: [
+      { subMenuTitle: "Purchases", to: "#" },
+      { subMenuTitle: "Requisitions", to: "#" },
+      { subMenuTitle: "Payment Voucher", to: "#" },
+    ],
   },
 ];

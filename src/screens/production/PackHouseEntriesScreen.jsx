@@ -1,15 +1,12 @@
 import PageActionComponent from "../../components/PageActionComponent";
 const pagemenus = [
-  { pagename: "All pack house", to: "allpackhouse" },
-  { pagename: "Create Pack house", to: "createpackhouse" },
+  { pagename: "All pack house entris", to: "allpackhouseentries" },
 ];
 
-const PackHouseScreen = () => {
+export const PackHouseEntriesScreen = () => {
   return (
     <>
       <PageActionComponent pagemenus={pagemenus} />
     </>
   );
 };
-
-export default PackHouseScreen;

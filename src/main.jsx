@@ -26,13 +26,12 @@ import FleetScreen from "./screens/fleet/FleetScreen.jsx";
 import FinanceScreen from "./screens/finance/FinanceScreen.jsx";
 import AdministrationScreen from "./screens/administration/AdministrationScreen.jsx";
 import ProductionDashboardScreen from "./screens/production/ProductionDashboardScreen.jsx";
-import ProjectionScreen from "./screens/production/ProjectionScreen.jsx";
+import ProductionHeaderScreen from "./screens/production/ProductionHeaderScreen.jsx";
 import AdministrationDashboardScreen from "./screens/administration/AdministrationDashboardScreen.jsx";
 import UsersScreen from "./screens/administration/UsersScreen.jsx";
 import SuppliersScreen from "./screens/administration/SuppliersScreen.jsx";
 import StaffScreen from "./screens/administration/StaffScreen.jsx";
 import InstitutionsScreen from "./screens/administration/InstitutionsScreen.jsx";
-import ActualScreen from "./screens/production/ActualScreen.jsx";
 import PackHouseScreen from "./screens/production/PackHouseScreen.jsx";
 import ReturnOrdersScreen from "./screens/sales/ReturnOrdersScreen.jsx";
 import OrderInvoiceScreen from "./screens/sales/OrderInvoiceScreen.jsx";
@@ -121,6 +120,19 @@ import PostedStockAdjustment from "./screens/store/stockadjustment/PostedStockAd
 import PayrollScreen from "./screens/payroll/PayrollScreen.jsx";
 import PaymentScreen from "./screens/payment/PaymentScreen.jsx";
 import AllMaizePurchase from "./screens/purchase/purchase/AllMaizePurchase.jsx";
+import ProductionHeaderList from "./screens/production/productionheaders/ProductionHeaderList.jsx";
+import CreateProductionHeader from "./screens/production/productionheaders/CreateProductionHeader.jsx";
+import AllPostedProductionHeaderList from "./screens/production/productionheaders/AllPostedProductionHeaderList.jsx";
+import AllProductionHeaderListInTransit from "./screens/production/productionheaders/AllProductionHeaderListInTransit.jsx";
+import DailyPackhouseScreen from "./screens/production/DailyPackhouseScreen.jsx";
+import DailyPackHouseHeadersList from "./screens/production/dailypackhouse/DailyPackHouseHeadersList.jsx";
+import AllPostedDailyPackhouse from "./screens/production/dailypackhouse/AllPostedDailyPackhouse.jsx";
+import CreateDailyPackhouseHeader from "./screens/production/dailypackhouse/CreateDailyPackhouseHeader.jsx";
+import AllDailyPackhouseHeaderInTransit from "./screens/production/dailypackhouse/AllDailyPackhouseHeaderInTransit.jsx";
+import PackhouseList from "./screens/production/packhouse/PackhouseList.jsx";
+import CreatePackHouse from "./screens/production/packhouse/CreatePackHouse.jsx";
+import { PackHouseEntriesScreen } from "./screens/production/PackHouseEntriesScreen.jsx";
+import { PackhouseEntriesList } from "./screens/production/packhouseentries/PackhouseEntriesList.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -155,37 +167,66 @@ const router = createHashRouter(
             <Route path="createstaff" element={<CreateStaff />} />
             <Route path="allstaff" element={<StaffList />} />
           </Route>
-          <Route
-            path="payrollpreparation"
-            element={<PayrollPreparationScreen />}
-          >
-            <Route index element={<PreparationList />} />
-            <Route path="payrollpreparations" element={<CreatePreparation />} />
-            <Route
-              path="allpayrollpreparations"
-              element={<PreparationList />}
-            />
-          </Route>
-
-          <Route path="payrollactual" element={<PayrollActualScreen />}>
-            <Route index element={<ActualList />} />
-            <Route path="createpayroll" element={<CreateActual />} />
-            <Route path="allpayrolls" element={<ActualList />} />
-          </Route>
         </Route>
+        {/* payroll */}
+        <Route></Route>
 
         {/* production routes */}
         <Route path="production" element={<ProductionScreen />}>
           <Route index element={<ProductionDashboardScreen />} />
-          <Route path="projection" element={<ProjectionScreen />}>
-            <Route index element={<PreparationList />} />
+          {/* production header routes */}
+          <Route path="productionheaders" element={<ProductionHeaderScreen />}>
+            <Route index element={<ProductionHeaderList />} />
             <Route
-              path="createproductionprepare"
-              element={<CreatePreparation />}
+              path="createproductionheader"
+              element={<CreateProductionHeader />}
             />
-            <Route path="allpreparation" element={<PreparationList />} />
+            <Route
+              path="allproductionheaders"
+              element={<ProductionHeaderList />}
+            />
+            <Route
+              path="allproductionheaderlistintransit"
+              element={<AllProductionHeaderListInTransit />}
+            />
+            <Route
+              path="allpostedtransiactionheaderlist"
+              element={<AllPostedProductionHeaderList />}
+            />
           </Route>
-          <Route path="actual" element={<ActualScreen />}></Route>
+          {/* daily packhouse routes */}
+          <Route path="dailypackhouse" element={<DailyPackhouseScreen />}>
+            <Route
+              path="alldailypackhouse"
+              element={<DailyPackHouseHeadersList />}
+            />
+            <Route
+              path="alldailypackhouseintransit"
+              element={<AllDailyPackhouseHeaderInTransit />}
+            />
+            <Route
+              path="allposteddailypackhouse"
+              element={<AllPostedDailyPackhouse />}
+            />
+            <Route
+              path="createdailypackhouse"
+              element={<CreateDailyPackhouseHeader />}
+            />
+          </Route>
+          {/* packhouse routes */}
+          <Route path="packhouse" element={<PackHouseScreen />}>
+            <Route path="allpackhouse" element={<PackhouseList />} />
+            <Route path="createpackhouse" element={<CreatePackHouse />} />
+          </Route>
+          {/* pack house entries */}
+          <Route path="packhouseentries" element={<PackHouseEntriesScreen />}>
+            <Route
+              path="allpackhouseentries"
+              element={<PackhouseEntriesList />}
+            />
+          </Route>
+
+          {/* pack house people */}
           <Route path="packhousepeople" element={<PackHouseScreen />}>
             <Route index element={<PackhosePeopleList />} />
             <Route path="createpackhouse" element={<CreatePackhousePerson />} />

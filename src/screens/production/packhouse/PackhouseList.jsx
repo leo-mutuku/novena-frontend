@@ -1,8 +1,7 @@
-import React from 'react'
+import React from "react";
 
-function PackhouseList() {
-  return (
-    <div>PackhouseList</div>
-  )
-}
-export default PackhouseList
+const PackhouseList = () => {
+  return <div>PackhouseList</div>;
+};
+
+export default PackhouseList;
