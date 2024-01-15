@@ -4,6 +4,7 @@ export const sidelinks = [
     subMenus: [
       { subMenuTitle: "Store Item Register", to: "storeitemregister" },
       { subMenuTitle: "Store Items", to: "storeitems" },
+      { subMenuTitle: "Store Items Entries", to: "storeitemsentries" },
     ],
   },
   {

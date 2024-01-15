@@ -148,6 +148,10 @@ import PaymentVoucherList from "./screens/payment/payments/paymentvouchers/Payme
 import CreatePaymentVoucher from "./screens/payment/payments/paymentvouchers/CreatePaymentVoucher.jsx";
 import { AllPaymentVouchersInTransit } from "./screens/payment/payments/paymentvouchers/AllPaymentVouchersInTransit.jsx";
 import { PurchasesList } from "./screens/payment/payments/purchases/PurchasesList.jsx";
+import { StoreItemEntriesScreen } from "./screens/store/StoreItemEntriesScreen.jsx";
+import AllItemEntries from "./screens/store/storeitementries/AllItemEntries.jsx";
+import AccountEntriesScreen from "./screens/finance/AccountEntriesScreen.jsx";
+import AllAccountEntries from "./screens/finance/accountenties/AllAccountEntries.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -337,6 +341,9 @@ const router = createHashRouter(
             <Route path="createstoreitem" element={<CreateStoreItemslist />} />
             <Route path="allstoreitems" element={<StoreItemslist />} />
           </Route>
+          <Route path="storeitemsentries" element={<StoreItemEntriesScreen />}>
+            <Route path="allitementries" element={<AllItemEntries />} />
+          </Route>
           <Route path="storeregister" element={<StoreRegisterScreen />}>
             <Route index element={<StoreRegisterList />} />
             <Route
@@ -440,6 +447,9 @@ const router = createHashRouter(
             <Route path="createaccount" element={<CreateAccount />} />
             <Route path="updateaccount" element={<UpdateAccount />} />
             <Route path="viewaccount" element={<ViewAccounts />} />
+          </Route>
+          <Route path="allaccountentries" element={<AccountEntriesScreen />}>
+            <Route path="allaccountentries" element={<AllAccountEntries />} />
           </Route>
           <Route path="gl" element={<GeneralledgerScreen />}>
             <Route index element={<GLList />} />
