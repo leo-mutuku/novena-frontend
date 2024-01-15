@@ -39,6 +39,14 @@ export const storePurchaseHeadersApiSlice = apiSlice.injectEndpoints({
         providesTags: ["StorePurchaseHeader"],
       }),
     }),
+    postStorePurchaseHeader: builder.mutation({
+      query: (data) => ({
+        url: `${STOREPURCHASEHEADERS_URL}/poststorepurchaseheader`,
+        method: "POST",
+        body: data,
+        providesTags: ["StorePurchaseHeader"],
+      }),
+    }),
   }),
 });
 
@@ -47,4 +55,5 @@ export const {
   useGetAllPostedStoredPurchasesQuery,
   useGetAllStorePurchasesInTransitQuery,
   useCreateStorePurchaseHeaderMutation,
+  usePostStorePurchaseHeaderMutation,
 } = storePurchaseHeadersApiSlice;

@@ -2,21 +2,27 @@ import { Table, Button, Row, Col, Form } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { useState, useEffect, useRef } from "react";
 import Select from "react-select";
-import { MdDelete } from "react-icons/md";
+import { Link, useNavigate } from "react-router-dom";
 import { Prev } from "react-bootstrap/esm/PageItem";
 import { useGetAllItemRegisterQuery } from "../../../../slices/store/itemregisterApiSlice";
 import { useGetAllAccountsQuery } from "../../../../slices/finance/accountsApiSlice";
 import { useGetAllPurchaseLinesByHeaderIdQuery } from "../../../../slices/purchase/storePurchaseLinesApiSlice";
+import { usePostStorePurchaseHeaderMutation } from "../../../../slices/purchase/storePurchaseHeadersApiSlice";
 import ItemEdit from "./ItemEdit";
+import Loader from "../../../../components/Loader";
+import { toast } from "react-toastify";
+
 function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
   const [checked, setChecked] = useState(false);
   const id = purchase_header_id.toString();
   const { data: purchase_order_lines } =
     useGetAllPurchaseLinesByHeaderIdQuery(id);
+  const [post_purchase, { isLoading }] = usePostStorePurchaseHeaderMutation();
 
   const [update_list, set_update_list] = useState([]);
 
   const [new_quantity, set_new_quantiry] = useState("");
+  const navigate = useNavigate();
   useEffect(() => {
     if (purchase_order_lines?.data) {
       set_update_list(purchase_header_id.data);
@@ -67,6 +73,17 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
       }
     });
   };
+
+  const handlePost = async (e) => {
+    let store_purchase_header_id = purchase_header_id;
+    try {
+      const res = await post_purchase({ store_purchase_header_id }).unwrap();
+      console.log(res);
+      navigate("../allstorepurchase");
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
   return (
     <>
       <div
@@ -97,7 +114,9 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
           <Modal.Dialog>
             <Modal.Header closeButton onClick={(e) => set_edit_mode("none")}>
               <Modal.Title style={{ fontSize: "14px" }}>
-                <span style={{ fontSize: "14px" }}>Purchase order no.</span>
+                <span style={{ fontSize: "14px" }}>
+                  Purchase order no.{purchase_header_id}
+                </span>
               </Modal.Title>
             </Modal.Header>
             <hr />
@@ -155,7 +174,9 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
             </Modal.Body>
 
             <Modal.Footer className="gap-2">
-              <Button variant="success">Post purchase order</Button>
+              <Button variant="success" onClick={(e) => handlePost()}>
+                Post purchase order
+              </Button>
               <Button
                 variant="secondary"
                 onClick={(e) => set_edit_mode("none")}

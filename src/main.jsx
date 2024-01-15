@@ -141,6 +141,13 @@ import { CategoryList } from "./screens/payroll/category/CategoryList.jsx";
 import { CreateCategory } from "./screens/payroll/category/CreateCategory.jsx";
 import { AllPayrollHeadersInTransit } from "./screens/payroll/payrollheader/AllPayrollHeadersInTransit.jsx";
 import { AllPostedPayrollHeaders } from "./screens/payroll/payrollheader/AllPostedPayrollHeaders.jsx";
+import { PurchasesScreen } from "./screens/payment/PurchasesScreen.jsx";
+import { RequisitionsScreen } from "./screens/payment/RequisitionsScreen.jsx";
+import { PaymentVoucherScreen } from "./screens/payment/PaymentVoucherScreen.jsx";
+import PaymentVoucherList from "./screens/payment/payments/paymentvouchers/PaymentVoucherList.jsx";
+import CreatePaymentVoucher from "./screens/payment/payments/paymentvouchers/CreatePaymentVoucher.jsx";
+import { AllPaymentVouchersInTransit } from "./screens/payment/payments/paymentvouchers/AllPaymentVouchersInTransit.jsx";
+import { PurchasesList } from "./screens/payment/payments/purchases/PurchasesList.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -193,6 +200,35 @@ const router = createHashRouter(
               element={<AllPostedPayrollHeaders />}
             />
             <Route path="createpayroll" element={<CreatePayrollHeaders />} />
+          </Route>
+        </Route>
+
+        {/* payment */}
+        <Route path="payment" element={<PaymentScreen />}>
+          <Route path="purchases" element={<PurchasesScreen />}>
+            <Route path="allpurchasepayment" element={<PurchasesList />} />
+            <Route
+              path="allpurchasepaymentintransit"
+              element={<AllPaymentVouchersInTransit />}
+            />
+            <Route
+              path="allpostedpurchasepayment"
+              element={<AllPaymentVouchersInTransit />}
+            />
+            <Route
+              path="createpurchasepayment"
+              element={<AllPaymentVouchersInTransit />}
+            />
+          </Route>
+          <Route path="requsitions" element={<RequisitionsScreen />}></Route>
+          <Route path="paymentvoucher" element={<PaymentVoucherScreen />}>
+            <Route path="allpvs" element={<PaymentVoucherList />} />
+            <Route
+              path="allpvintransit"
+              element={<AllPaymentVouchersInTransit />}
+            />
+            <Route path="allpostedpv" element={<PaymentVoucherList />} />
+            <Route path="createpv" element={<CreatePaymentVoucher />} />
           </Route>
         </Route>
 
