@@ -8,7 +8,7 @@ import { useGetAllItemRegisterQuery } from "../../../../slices/store/itemregiste
 import { useGetAllAccountsQuery } from "../../../../slices/finance/accountsApiSlice";
 import { useGetAllPurchaseLinesByHeaderIdQuery } from "../../../../slices/purchase/storePurchaseLinesApiSlice";
 import { usePostStorePurchaseHeaderMutation } from "../../../../slices/purchase/storePurchaseHeadersApiSlice";
-import ItemEdit from "./ItemEdit";
+import MaizeAdd from "./MaizeAdd";
 import Loader from "../../../../components/Loader";
 import { toast } from "react-toastify";
 
@@ -35,6 +35,8 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+    } catch (error) {}
 
     set_purchase_list([...purchase_list, order_items]);
   };
@@ -55,6 +57,7 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
   // };
   const [item_edit_state, set_item_edit_state] = useState("none");
   const [items_to_edit, set_items_to_edit] = useState(null);
+  console.log(items_to_edit);
   const handleItemEdit = (e) => {
     if (items_to_edit) {
       console.log(item_edit_state);
@@ -74,16 +77,16 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
     });
   };
 
-  const handlePost = async (e) => {
-    let store_purchase_header_id = purchase_header_id;
-    try {
-      const res = await post_purchase({ store_purchase_header_id }).unwrap();
-      console.log(res);
-      navigate("../allstorepurchase");
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
-    }
-  };
+  //   const handlePost = async (e) => {
+  //     let store_purchase_header_id = purchase_header_id;
+  //     try {
+  //       const res = await post_purchase({ store_purchase_header_id }).unwrap();
+  //       console.log(res);
+  //       navigate("../allstorepurchase");
+  //     } catch (err) {
+  //       toast.error(err?.data?.message || err.error);
+  //     }
+  //   };
   return (
     <>
       <div
@@ -99,7 +102,7 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
         }}
       >
         <div style={{ display: `${item_edit_state}` }}>
-          <ItemEdit
+          <MaizeAdd
             set_item_edit_state={set_item_edit_state}
             items_to_edit={items_to_edit}
           />
@@ -164,6 +167,9 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
                               </Button>
                             </div>
                           </Col>
+                          <Col>
+                            <p>More details</p>
+                          </Col>
                         </Row>
                       </div>
                       <hr />
@@ -174,9 +180,9 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
             </Modal.Body>
 
             <Modal.Footer className="gap-2">
-              <Button variant="success" onClick={(e) => handlePost()}>
+              {/* <Button variant="success" onClick={(e) => handlePost()}>
                 Post purchase order
-              </Button>
+              </Button> */}
               <Button
                 variant="secondary"
                 onClick={(e) => set_edit_mode("none")}
