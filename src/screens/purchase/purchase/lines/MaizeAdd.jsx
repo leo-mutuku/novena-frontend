@@ -1,15 +1,44 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
-
+import { useCreateMaizePurchaseMutation } from "../../../../slices/purchase/maizePurchaseApiSlice";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const MaizeAdd = ({ set_item_edit_state, items_to_edit }) => {
   const [item_to_edit, set_item_to_edit] = useState(items_to_edit);
   const [driver_name, set_driver_name] = useState("");
   const [driver_phone_number, set_driver_phone_number] = useState("");
   const [moisture, set_moisture] = useState("");
   const [aflotoxin, set_aflotoxin] = useState("");
-  const handleSubmit = (e) => {
+  const [created_by, set_created_by] = useState("");
+
+  const [store_purchase_number, set_store_purchase_number] = useState("");
+
+  const [maize_details, { isLoading }] = useCreateMaizePurchaseMutation();
+  const { userInfo } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (userInfo) {
+      set_created_by(userInfo.first_name);
+    }
+    navigate();
+  }, [navigate, userInfo]);
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("ready to submit");
+
+    try {
+      const res = await maize_details({
+        store_purchase_number: items_to_edit?.purchase_header_id,
+        store_purchase_line_number: items_to_edit?.store_purchase_line_id,
+        driver_name,
+        driver_phone_number,
+        moisture_content: moisture,
+        aflotoxin_level: aflotoxin,
+        prepared_by: created_by,
+      }).unwrap();
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div

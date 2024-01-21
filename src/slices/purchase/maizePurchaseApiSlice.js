@@ -1,7 +1,6 @@
 import { apiSlice } from "../apiSlice";
 const MAIZEPURCHASE_URL = "/api/v1/purchase/maizepurchase";
 export const maizePurchaseApiSlice = apiSlice.injectEndpoints({
-  tagTypes: ["StorePurchaseHeader"],
   endpoints: (builder) => ({
     createMaizePurchase: builder.mutation({
       query: (data) => ({

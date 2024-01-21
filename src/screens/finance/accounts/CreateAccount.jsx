@@ -14,7 +14,7 @@ function CreateAccount() {
 
   const [CreateAccount, { isLoading }] = useCreateAccountMutation();
   const { userInfo } = useSelector((state) => state.auth);
-  console.log(userInfo);
+
   const navigate = useNavigate();
   useEffect(() => {
     if (userInfo) {
