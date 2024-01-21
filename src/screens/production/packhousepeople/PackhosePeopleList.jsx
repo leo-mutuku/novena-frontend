@@ -11,7 +11,7 @@ import { IoMdEye } from "react-icons/io";
 
 const PackhosePeopleList = () => {
   const { data, isLoading } = useGetAllPackHousePeopleQuery();
-  console.log(data);
+
   return (
     <>
       <p>*** All packhouse people ***</p>
@@ -32,7 +32,7 @@ const PackhosePeopleList = () => {
           {isLoading ? (
             <Loader />
           ) : (
-            data.data.map((item, index) => (
+            data?.data?.map((item, index) => (
               <tr>
                 <td>{index + 1}</td>
                 <td>{item.packhouse_person_number}</td>
@@ -40,7 +40,7 @@ const PackhosePeopleList = () => {
                 <td>{item.last_name}</td>
                 <td>{item.email}</td>
                 <td>{item.phone}</td>
-                {/* <td>{item.updated_at}</td> */}
+
                 <td>
                   <Link to="#">
                     <CiEdit />

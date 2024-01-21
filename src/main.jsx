@@ -146,7 +146,7 @@ import { RequisitionsScreen } from "./screens/payment/RequisitionsScreen.jsx";
 import { PaymentVoucherScreen } from "./screens/payment/PaymentVoucherScreen.jsx";
 import PaymentVoucherList from "./screens/payment/payments/paymentvouchers/PaymentVoucherList.jsx";
 import CreatePaymentVoucher from "./screens/payment/payments/paymentvouchers/CreatePaymentVoucher.jsx";
-import { AllPaymentVouchersInTransit } from "./screens/payment/payments/paymentvouchers/AllPaymentVouchersInTransit.jsx";
+import AllPaymentVouchersInTransit from "./screens/payment/payments/paymentvouchers/AllPaymentVouchersInTransit.jsx";
 import { PurchasesList } from "./screens/payment/payments/purchases/PurchasesList.jsx";
 import { StoreItemEntriesScreen } from "./screens/store/StoreItemEntriesScreen.jsx";
 import AllItemEntries from "./screens/store/storeitementries/AllItemEntries.jsx";

@@ -6,8 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function CreateProductionHeader() {
-  const [production_officer_i, set_production_officer_i] = useState("");
-  const [production_officer_ii, set_production_officer_ii] = useState("");
+  const [production_officer, set_production_officer] = useState("");
   const [production_input, set_production_input] = useState("");
   const [expected_output, set_expected_output] = useState("");
   const [created_by, set_created_by] = useState("");
@@ -27,8 +26,7 @@ function CreateProductionHeader() {
 
     try {
       const res = await CreateAccount({
-        production_officer_i,
-        production_officer_ii,
+        production_officer,
         production_input,
         expected_output,
         created_by,
@@ -60,20 +58,20 @@ function CreateProductionHeader() {
                 type="number"
                 required
                 placeholder="production_input"
-                value={account_name}
+                value={production_input}
                 onChange={(e) => set_production_input(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group className="my-2" controlId="account_number">
+            <Form.Group className="my-2" controlId="expected_output">
               <Form.Label>Expected Output</Form.Label>
               <Form.Control
                 type="number"
                 required
                 placeholder="Expected Output"
-                value={account_number}
-                onChange={(e) => set_account_number(e.target.value)}
+                value={expected_output}
+                onChange={(e) => set_expected_output(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -81,26 +79,14 @@ function CreateProductionHeader() {
 
         <Row>
           <Col>
-            <Form.Group className="my-2" controlId="gl_number">
-              <Form.Label>Poduction Officer I</Form.Label>
+            <Form.Group className="my-2" controlId="production_officer">
+              <Form.Label>Production officer</Form.Label>
               <Form.Control
                 required
                 type="text"
-                placeholder="Officer I"
-                value={gl_number}
-                onChange={(e) => set_gl_number(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group className="my-2" controlId="account_balance">
-              <Form.Label>Production officer II</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Officer II"
-                value={account_balance}
-                // onChange={(e) => set_account_balance(e.target.value)}
+                placeholder="Officer "
+                value={production_officer}
+                onChange={(e) => set_production_officer(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
