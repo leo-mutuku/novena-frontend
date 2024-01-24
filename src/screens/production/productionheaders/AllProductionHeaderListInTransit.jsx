@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Loader from "../../../components/Loader";
-import { useGetAllStorePurchasesInTransitQuery } from "../../../slices/purchase/storePurchaseHeadersApiSlice";
+import { useGetAllProductionHeadersInTransitQuery } from "../../../slices/production/productionHeaderApiSlice";
 import { useGetAllPurchaseLinesByHeaderIdQuery } from "../../../slices/purchase/storePurchaseLinesApiSlice";
 
 import { Table, Button } from "react-bootstrap";
@@ -16,8 +16,8 @@ const AllProductionHeaderListInTransit = () => {
   const [edit_mode, set_edit_mode] = useState("none");
   const [purchase_header_id, set_purchase_header_id] = useState("");
   const timeDate = new TimeDate();
-  const { data: purchase_order_intransit, isLoading } =
-    useGetAllStorePurchasesInTransitQuery();
+  const { data: production_intransit, isLoading } =
+    useGetAllProductionHeadersInTransitQuery();
 
   const handleAdd = (e) => {};
   const handleEdit = (e, id, mode) => {
@@ -39,42 +39,44 @@ const AllProductionHeaderListInTransit = () => {
         <thead>
           <tr>
             <th>#</th>
-            <th>Purchase no </th>
-            <th>Purchase date</th>
-            <th>Prepared by</th>
-            <th>Aproved by</th>
-            <th>Total cost</th>
+            <th>Date </th>
+            <th>Officer</th>
+            <th>Batch No.</th>
+            <th>Input</th>
+            <th>Expected</th>
+            <th>Output</th>
+            <th>Variance</th>
             <th>Status</th>
             <th>Edit</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
           {isLoading ? (
-            <tr>
-              <Loader />
-            </tr>
-          ) : purchase_order_intransit?.data[0] === null ? (
+            <Loader />
+          ) : production_intransit?.data[0] === null ? (
             <>No data</>
           ) : (
-            purchase_order_intransit?.data.map((item, index) => (
-              <tr key={index}>
+            production_intransit?.data?.map((item, index) => (
+              <tr>
                 <td>{index + 1}</td>
-                <td>{item.store_purchase_number}</td>
-                <td>{`${timeDate.date(item.purchase_date)} : ${timeDate.time(
-                  item.purchase_date
-                )}`}</td>
 
-                <td>{item.prepared_by}</td>
-                <td>{item.approved_by}</td>
-                <td>{item.total_cost}</td>
+                <td style={{ fontSize: "14px" }}>{`${timeDate.date(
+                  item.production_date
+                )} : ${timeDate.time(item.production_date)}`}</td>
+                <td>{item.production_officer}</td>
+
+                <td style={{ fontSize: "14px" }}>{`${
+                  item.production_batch_no
+                }-${timeDate.date(item.production_date)}`}</td>
+                <td>{item.production_input}</td>
+                <td>{item.expected_output}</td>
+                <td>{item.actual_output}</td>
+                <td>{item.production_variance}</td>
+
                 <td>
                   {item.status === "New" ? (
-                    <span
-                      onClick={(e) => handleAdd()}
-                      style={{ color: "orange" }}
-                    >
-                      {item.status}
-                    </span>
+                    <span style={{ color: "orange" }}>{item.status}</span>
                   ) : item.status === "In Transit" ? (
                     <span style={{ color: "blue" }}>{item.status}</span>
                   ) : item.status === "Posted" ? (
@@ -83,14 +85,28 @@ const AllProductionHeaderListInTransit = () => {
                     item.status
                   )}
                 </td>
-                <td
-                  onClick={(e) =>
-                    handleEdit(e, item.store_purchase_number, "block")
-                  }
-                >
-                  {item.status === "In Transit" ? (
+
+                <td>
+                  {item.status === "New" ? (
                     <Link to={`#`}>
-                      <CiEdit />
+                      <IoMdAdd
+                        onClick={(e) =>
+                          handleAdd(e, item.store_purchase_number, "block")
+                        }
+                      />
+                    </Link>
+                  ) : (
+                    "--"
+                  )}
+                </td>
+                <td>
+                  {item.status === "New" ? (
+                    <Link to={`#`}>
+                      <MdDelete
+                        onClick={(e) =>
+                          handleDelete(e, item.store_purchase_number, "block")
+                        }
+                      />
                     </Link>
                   ) : (
                     "--"

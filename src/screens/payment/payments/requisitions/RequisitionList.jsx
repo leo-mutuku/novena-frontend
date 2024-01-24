@@ -1,5 +1,7 @@
 import React from "react";
 
-export const RequisitionList = () => {
+const RequisitionList = () => {
   return <div>RequisitionList</div>;
 };
+
+export default RequisitionList;

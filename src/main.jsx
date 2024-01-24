@@ -152,6 +152,16 @@ import { StoreItemEntriesScreen } from "./screens/store/StoreItemEntriesScreen.j
 import AllItemEntries from "./screens/store/storeitementries/AllItemEntries.jsx";
 import AccountEntriesScreen from "./screens/finance/AccountEntriesScreen.jsx";
 import AllAccountEntries from "./screens/finance/accountenties/AllAccountEntries.jsx";
+import CustomersScreen from "./screens/administration/CustomersScreen.jsx";
+import CreateCustomer from "./screens/administration/customers/CreateCustomer.jsx";
+import CustomerList from "./screens/administration/customers/CustomerList.jsx";
+import CashAccountEntriesScreen from "./screens/finance/CashAccountEntriesScreen.jsx";
+import CashAccountScreen from "./screens/finance/CashAccountScreen.jsx";
+import AllCashAccount from "./screens/finance/cashaccounts/AllCashAccount.jsx";
+import CReateCashAccount from "./screens/finance/cashaccounts/CReateCashAccount.jsx";
+import AllCashAccountEntries from "./screens/finance/cashaccountentries/AllCashAccountEntries.jsx";
+import AllPaymentRequisitionInTransit from "./screens/payment/payments/requisitions/AllPaymentRequisitionInTransit.jsx";
+import AllPostedPaymentRequisitions from "./screens/payment/payments/requisitions/AllPostedPaymentRequisitions.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -185,6 +195,10 @@ const router = createHashRouter(
             <Route index element={<StaffList />} />
             <Route path="createstaff" element={<CreateStaff />} />
             <Route path="allstaff" element={<StaffList />} />
+          </Route>
+          <Route path="customers" element={<CustomersScreen />}>
+            <Route path="createcustomer" element={<CreateCustomer />} />
+            <Route path="allcustomers" element={<CustomerList />} />
           </Route>
         </Route>
         {/* payroll */}
@@ -224,7 +238,17 @@ const router = createHashRouter(
               element={<AllPaymentVouchersInTransit />}
             />
           </Route>
-          <Route path="requsitions" element={<RequisitionsScreen />}></Route>
+          <Route path="requsitions" element={<RequisitionsScreen />}>
+            <Route path="allpaymentrequisition" element={<RequisitionList />} />
+            <Route
+              path="allpaymentrequisitionintransit"
+              element={<AllPaymentRequisitionInTransit />}
+            />
+            <Route
+              path="allpostedpaymentrequisition"
+              element={<AllPostedPaymentRequisitions />}
+            />
+          </Route>
           <Route path="paymentvoucher" element={<PaymentVoucherScreen />}>
             <Route path="allpvs" element={<PaymentVoucherList />} />
             <Route
@@ -465,6 +489,19 @@ const router = createHashRouter(
             <Route index element={<MpesatillList />} />
             <Route path="creatempesatill" element={<CreatempesaList />} />
             <Route path="allmpesatill" element={<MpesatillList />} />
+          </Route>
+          <Route
+            path="allcashaccountentries"
+            element={<CashAccountEntriesScreen />}
+          >
+            <Route
+              path="allcashaccountentries"
+              element={<AllCashAccountEntries />}
+            />
+          </Route>
+          <Route path="cashaccounts" element={<CashAccountScreen />}>
+            <Route path="allcashaccounts" element={<AllCashAccount />} />
+            <Route path="createCashAccount" element={<CReateCashAccount />} />
           </Route>
           <Route path="bankaccounts" element={<BankAccountsScreem />}>
             <Route index element={<BankAccountsList />} />

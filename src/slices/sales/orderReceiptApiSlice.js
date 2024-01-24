@@ -1,9 +1,24 @@
-import React from 'react'
+import { apiSlice } from "../apiSlice";
+const SALESPEOPLE_URL = "/api/v1/sales/salespeople";
 
-function orderReceiptApiSlice() {
-  return (
-    <div>orderReceiptApiSlice</div>
-  )
-}
+export const orderReceiptApiSlice = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    getAllSalesPeople: builder.query({
+      query: (data) => ({
+        url: `${SALESPEOPLE_URL}/getallsalespeople`,
+        method: "GET",
+        body: data,
+      }),
+    }),
+    createSalesPerson: builder.mutation({
+      query: (data) => ({
+        url: `${SALESPEOPLE_URL}/createsalesperson`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+  }),
+});
 
-export const {} = orderReceiptApiSlice
+export const { useCreateSalesPersonMutation, useGetAllSalesPeopleQuery } =
+  orderReceiptApiSlice;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Loader from "../../../components/Loader";
-import { useGetAllStorePurchaseHeadersQuery } from "../../../slices/purchase/storePurchaseHeadersApiSlice";
+import { useGetAllProductionHeadersQuery } from "../../../slices/production/productionHeaderApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa6";
@@ -25,10 +25,11 @@ const ProductionHeaderList = () => {
     set_store_purchase_id(parseInt(id));
     set_mode_delete(style);
   };
-  const { data, isLoading } = useGetAllStorePurchaseHeadersQuery();
+  const { data: production, isLoading } = useGetAllProductionHeadersQuery();
   const navigate = useNavigate();
-  useEffect(() => {}, [data]);
-  console.log(data);
+  useEffect(() => {});
+  console.log(production?.data);
+  console.log(Error);
   return (
     <>
       <>
@@ -51,33 +52,41 @@ const ProductionHeaderList = () => {
         <thead>
           <tr>
             <th>#</th>
-            <th>Purchase no </th>
-            <th>Purchase date</th>
-            <th>Prepared by</th>
-            <th>Aproved by</th>
-            <th>Total cost</th>
+            <th>Date </th>
+            <th>Officer</th>
+            <th>Batch No.</th>
+            <th>Input</th>
+            <th>Expected</th>
+            <th>Output</th>
+            <th>Variance</th>
             <th>Status</th>
-            <th>Add</th>
             <th>Edit</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
           {isLoading ? (
             <Loader />
-          ) : data?.data[0] === null ? (
+          ) : production?.data[0] === null ? (
             <>No data</>
           ) : (
-            data?.data?.map((item, index) => (
+            production?.data?.map((item, index) => (
               <tr>
                 <td>{index + 1}</td>
-                <td>{item.store_purchase_number}</td>
-                <td>{`${timeDate.date(item.purchase_date)} : ${timeDate.time(
-                  item.purchase_date
-                )}`}</td>
 
-                <td>{item.prepared_by}</td>
-                <td>{item.approved_by}</td>
-                <td>{item.total_cost}</td>
+                <td style={{ fontSize: "14px" }}>{`${timeDate.date(
+                  item.production_date
+                )} : ${timeDate.time(item.production_date)}`}</td>
+                <td>{item.production_officer}</td>
+
+                <td style={{ fontSize: "14px" }}>{`${
+                  item.production_batch_no
+                }-${timeDate.date(item.production_date)}`}</td>
+                <td>{item.production_input}</td>
+                <td>{item.expected_output}</td>
+                <td>{item.actual_output}</td>
+                <td>{item.production_variance}</td>
+
                 <td>
                   {item.status === "New" ? (
                     <span style={{ color: "orange" }}>{item.status}</span>

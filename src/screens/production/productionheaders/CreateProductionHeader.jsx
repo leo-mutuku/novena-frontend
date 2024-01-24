@@ -4,16 +4,18 @@ import { useSelector } from "react-redux";
 import { useCreateProductionHeaderMutation } from "../../../slices/production/productionHeaderApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Loader from "../../../components/Loader";
 
 function CreateProductionHeader() {
   const [production_officer, set_production_officer] = useState("");
   const [production_input, set_production_input] = useState("");
   const [expected_output, set_expected_output] = useState("");
+  const [production_date, set_production_date] = useState("");
+  const [naration, set_naration] = useState("");
   const [created_by, set_created_by] = useState("");
 
   const [ProductionHeader, { isLoading }] = useCreateProductionHeaderMutation();
   const { userInfo } = useSelector((state) => state.auth);
-  console.log(userInfo);
   const navigate = useNavigate();
   useEffect(() => {
     if (userInfo) {
@@ -23,17 +25,21 @@ function CreateProductionHeader() {
   }, [navigate, userInfo]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const res = await CreateAccount({
+      const res = await ProductionHeader({
         production_officer,
         production_input,
         expected_output,
+        production_date,
+        naration,
         created_by,
       }).unwrap();
-
-      navigate("../allproductionheaders");
-      toast.success("Production Iniated Successfully");
+      if (res.status == "failed") {
+        toast.error(err?.data?.message || err.error);
+      } else {
+        toast.success("Production Iniated Successfully");
+        navigate("../allproductionheaders");
+      }
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -44,7 +50,6 @@ function CreateProductionHeader() {
 
       <Row>
         <div>
-          {" "}
           <hr />
         </div>
       </Row>
@@ -76,6 +81,32 @@ function CreateProductionHeader() {
             </Form.Group>
           </Col>
         </Row>
+        <Row>
+          <Col>
+            <Form.Group className="my-2" controlId="production_date">
+              <Form.Label>Production Date</Form.Label>
+              <Form.Control
+                type="date"
+                required
+                placeholder="production_date"
+                value={production_date}
+                onChange={(e) => set_production_date(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="my-2" controlId="expected_output">
+              <Form.Label>Naration</Form.Label>
+              <Form.Control
+                type="text"
+                required
+                placeholder="Shift"
+                value={naration}
+                onChange={(e) => set_naration(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+        </Row>
 
         <Row>
           <Col>
@@ -95,7 +126,7 @@ function CreateProductionHeader() {
           submit
         </Button>
 
-        {/* {isLoading && <Loader />} */}
+        {isLoading && <Loader />}
       </Form>
     </>
   );

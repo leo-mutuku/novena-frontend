@@ -51,11 +51,12 @@ const DailyPackHouseHeadersList = () => {
         <thead>
           <tr>
             <th>#</th>
-            <th>Purchase no </th>
-            <th>Purchase date</th>
-            <th>Prepared by</th>
-            <th>Aproved by</th>
-            <th>Total cost</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Pack Date</th>
+            <th>Total</th>
+            <th>Bales</th>
+            <th>Cost</th>
             <th>Status</th>
             <th>Add</th>
             <th>Edit</th>

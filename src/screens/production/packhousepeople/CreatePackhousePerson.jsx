@@ -17,6 +17,7 @@ function CreatePackhousePerson() {
   const [created_by, set_created_by] = useState("");
 
   const { data: staff } = useGetAllStaffQuery();
+  const [CreatePackPerson] = useCreatePackHousePersonMutation();
   const { userInfo } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ function CreatePackhousePerson() {
     e.preventDefault();
 
     try {
-      const res = await CreateAccount({
+      const res = await CreatePackPerson({
         first_name,
         last_name,
         email,
@@ -38,8 +39,13 @@ function CreatePackhousePerson() {
         staff_id,
         created_by,
       }).unwrap();
-      console.log(res);
-      navigate("../packhousepeople");
+      if (res.status == "failed") {
+        toast.error(err?.data?.message || err.error);
+      } else {
+        toast.success("Created successduly");
+        navigate("../allpackhouse");
+      }
+
       toast.success(`${first_name}'s account created successfully!`);
     } catch (err) {
       toast.error(err?.data?.message || err.error);

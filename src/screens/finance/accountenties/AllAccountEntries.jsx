@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
 import { useGetAllAccountsQuery } from "../../../slices/finance/accountsApiSlice";
@@ -12,6 +12,15 @@ import { IoMdEye } from "react-icons/io";
 
 const AllAccountEntries = () => {
   const { data, isLoading } = useGetAllAccountEntriesQuery();
+  const [account_entries, set_account_entries] = useState([]);
+
+  if (data?.data) {
+    let state = data?.data;
+    const result = Object.keys(state).map((key) => ({
+      [key]: state[key].account_entry_id,
+    }));
+    console.log(result);
+  }
 
   return (
     <>

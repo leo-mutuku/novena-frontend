@@ -1,7 +1,7 @@
 import { apiSlice } from "../apiSlice";
 const PRODUCTIONHEADER_URL = "/api/v1/production/productionheaders";
 
-export const productionProjectionApiSlice = apiSlice.injectEndpoints({
+export const paymentRequisitionApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createProductionHeader: builder.mutation({
       query: (data) => ({
@@ -47,4 +47,4 @@ export const {
   useGetAllProductionHeadersQuery,
   useGetAllProductionHeadersInTransitQuery,
   useGetAllPostedProductionHeadersQuery,
-} = productionProjectionApiSlice;
+} = paymentRequisitionApiSlice;

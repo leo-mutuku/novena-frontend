@@ -1,12 +1,24 @@
-import { apiSlice } from '../apiSlice';
-const USERS_URL = '/api/v1/administration/users';
+import { apiSlice } from "../apiSlice";
+const SALESPEOPLE_URL = "/api/v1/sales/salespeople";
 
-import React from 'react'
+export const orderApiSlice = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    getAllSalesPeople: builder.query({
+      query: (data) => ({
+        url: `${SALESPEOPLE_URL}/getallsalespeople`,
+        method: "GET",
+        body: data,
+      }),
+    }),
+    createSalesPerson: builder.mutation({
+      query: (data) => ({
+        url: `${SALESPEOPLE_URL}/createsalesperson`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+  }),
+});
 
-function orderApiSlice() {
-  return (
-    <div>orderApiSlice</div>
-  )
-}
-
-export const {} = orderApiSlice
+export const { useCreateSalesPersonMutation, useGetAllSalesPeopleQuery } =
+  orderApiSlice;

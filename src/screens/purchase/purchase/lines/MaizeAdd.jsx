@@ -3,6 +3,7 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import { useCreateMaizePurchaseMutation } from "../../../../slices/purchase/maizePurchaseApiSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const MaizeAdd = ({ set_item_edit_state, items_to_edit }) => {
   const [item_to_edit, set_item_to_edit] = useState(items_to_edit);
   const [driver_name, set_driver_name] = useState("");
@@ -35,9 +36,16 @@ const MaizeAdd = ({ set_item_edit_state, items_to_edit }) => {
         aflotoxin_level: aflotoxin,
         prepared_by: created_by,
       }).unwrap();
-      console.log(res);
+      if (res.status === "failed") {
+        toast.error("An error occurred");
+        navigate("../allstorepurchasesintransit");
+      } else {
+        toast.success("Maize details added successfully");
+        navigate("../allstorepurchasesintransit");
+      }
+      navigate("../allstorepurchase");
     } catch (error) {
-      console.log(error);
+      toast.error("An error occurred");
     }
   };
   return (

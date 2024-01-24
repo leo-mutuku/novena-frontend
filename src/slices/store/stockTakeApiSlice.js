@@ -1,12 +1,24 @@
-import { apiSlice } from '../apiSlice';
-const USERS_URL = '/api/v1/administration/users';
+import { apiSlice } from "../apiSlice";
+const STOREITEMS_URL = "/api/v1/store/storeitems";
 
-import React from 'react'
+export const stockTakeApiSlice = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    getAllStoreItems: builder.query({
+      query: (data) => ({
+        url: `${STOREITEMS_URL}/getallstoreitems`,
+        method: "GET",
+        body: data,
+      }),
+    }),
+    createStoreItem: builder.mutation({
+      query: (data) => ({
+        url: `${STOREITEMS_URL}/createstoreitem`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+  }),
+});
 
-function stockTakeApiSlice() {
-  return (
-    <div>stockTakeApiSlice</div>
-  )
-}
-
-export const {} =  stockTakeApiSlice
+export const { useGetAllStoreItemsQuery, useCreateStoreItemMutation } =
+  stockTakeApiSlice;

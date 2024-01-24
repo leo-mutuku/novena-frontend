@@ -1,16 +1,24 @@
-import { apiSlice } from '../apiSlice';
-const ORDERDISPATCH_URL = '/api/v1/administration/users';
+import { apiSlice } from "../apiSlice";
+const SALESPEOPLE_URL = "/api/v1/sales/salespeople";
 
 export const dispatchOrderApiSlice = apiSlice.injectEndpoints({
-    endpoints: (builder) => ({
-        getAllorderdispatches: builder.query({
-            query: () => ({
-                url: `${ORDERDISPATCH_URL}/getallorderdispatches`,
-                method: 'GET',
-                body: data,
-            })
-        }),
-    })
-})
+  endpoints: (builder) => ({
+    getAllSalesPeople: builder.query({
+      query: (data) => ({
+        url: `${SALESPEOPLE_URL}/getallsalespeople`,
+        method: "GET",
+        body: data,
+      }),
+    }),
+    createSalesPerson: builder.mutation({
+      query: (data) => ({
+        url: `${SALESPEOPLE_URL}/createsalesperson`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+  }),
+});
 
-export const { useGetAllorderdispatchesQuery } = dispatchOrderApiSlice
+export const { useCreateSalesPersonMutation, useGetAllSalesPeopleQuery } =
+  dispatchOrderApiSlice;

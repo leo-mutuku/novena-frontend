@@ -18,4 +18,8 @@ export const sidelinks = [
     menuTitle: "Customers",
     subMenus: [{ subMenuTitle: "Customers", to: "#" }],
   },
+  {
+    menuTitle: "Institutions",
+    subMenus: [{ subMenuTitle: "Institutions", to: "#" }],
+  },
 ];

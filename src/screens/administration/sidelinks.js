@@ -5,7 +5,11 @@ export const sidelinks = [
   },
   {
     menuTitle: "Institutions",
-    subMenus: [{ subMenuTitle: "institutions", to: "institutions" }],
+    subMenus: [{ subMenuTitle: "Institutions", to: "institutions" }],
+  },
+  {
+    menuTitle: "Customers",
+    subMenus: [{ subMenuTitle: "Customers", to: "customers" }],
   },
   {
     menuTitle: "Staff",
