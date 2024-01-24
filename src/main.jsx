@@ -162,6 +162,11 @@ import CReateCashAccount from "./screens/finance/cashaccounts/CReateCashAccount.
 import AllCashAccountEntries from "./screens/finance/cashaccountentries/AllCashAccountEntries.jsx";
 import AllPaymentRequisitionInTransit from "./screens/payment/payments/requisitions/AllPaymentRequisitionInTransit.jsx";
 import AllPostedPaymentRequisitions from "./screens/payment/payments/requisitions/AllPostedPaymentRequisitions.jsx";
+import DriverScreen from "./screens/fleet/DriverScreen.jsx";
+import RoutesScreen from "./screens/fleet/RoutesScreen.jsx";
+import VehicleScreen from "./screens/fleet/VehicleScreen.jsx";
+import RunHeadersScreen from "./screens/fleet/RunHeadersScreen.jsx";
+import ManagementScreen from "./screens/fleet/ManagementScreen.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -454,15 +459,13 @@ const router = createHashRouter(
 
         {/* fleet routes */}
         <Route path="fleet" element={<FleetScreen />}>
-          {/* <Route index element={<FleetDashboard />}/> */}
-          {/* <Route path='fleetrequest' element={<FleetRequest/>}/>
-          <Route path='fleetregister' element={<FleetRegister/>}/>
-          <Route path='fleetmaintenance' element={<FleetMaintenance/>}/> */}
+          <Route path="drivers" element={<DriverScreen />}></Route>
+          <Route path="routes" element={<RoutesScreen />}></Route>
+          <Route path="vehicles" element={<VehicleScreen />}></Route>
+          <Route path="maintanance" element={<ManagementScreen />}></Route>
+          <Route path="runs" element={<RunHeadersScreen />}></Route>
         </Route>
-        {/* payroll */}
-        <Route path="payroll" element={<PayrollScreen />}></Route>
-        {/* payment */}
-        <Route path="payment" element={<PaymentScreen />}></Route>
+
         {/* finance routes */}
         <Route path="finance" element={<FinanceScreen />}>
           <Route path="accounts" element={<AccountsScreen />}>
