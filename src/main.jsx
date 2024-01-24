@@ -167,6 +167,20 @@ import RoutesScreen from "./screens/fleet/RoutesScreen.jsx";
 import VehicleScreen from "./screens/fleet/VehicleScreen.jsx";
 import RunHeadersScreen from "./screens/fleet/RunHeadersScreen.jsx";
 import ManagementScreen from "./screens/fleet/ManagementScreen.jsx";
+import DriversList from "./screens/fleet/drivers/DriversList.jsx";
+import CreateDrivers from "./screens/fleet/drivers/CreateDrivers.jsx";
+import RoutesList from "./screens/fleet/routes/RoutesList.jsx";
+import CreateRoutes from "./screens/fleet/routes/CreateRoutes.jsx";
+import CreateVehicle from "./screens/fleet/vehicles/CreateVehicle.jsx";
+import VehicleList from "./screens/fleet/vehicles/VehicleList.jsx";
+import RunsList from "./screens/fleet/runs/RunsList.jsx";
+import AllPostedRuns from "./screens/fleet/runs/AllPostedRuns.jsx";
+import CreateRun from "./screens/fleet/runs/CreateRun.jsx";
+import MaintenanceList from "./screens/fleet/maintenance/MaintenanceList.jsx";
+import CreateMaintenanceList from "./screens/fleet/maintenance/CreateMaintenanceList.jsx";
+import AllRunsInTransit from "./screens/fleet/runs/AllRunsInTransit.jsx";
+import AllPostedOrderHeaders from "./screens/sales/orders/AllPostedOrderHeaders.jsx";
+import AllOrderHeadersInTransit from "./screens/sales/orders/AllOrderHeadersInTransit.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -421,6 +435,11 @@ const router = createHashRouter(
             <Route index element={<Orderlist />} />
             <Route path="CreateOrder" element={<CreateOrder />} />
             <Route path="allorders" element={<Orderlist />} />
+            <Route
+              path="allordersintansit"
+              element={<AllOrderHeadersInTransit />}
+            />
+            <Route path="postedallorders" element={<AllPostedOrderHeaders />} />
           </Route>
           <Route path="returnorder" element={<ReturnOrdersScreen />}>
             <Route index element={<Orderlist />} />
@@ -459,11 +478,31 @@ const router = createHashRouter(
 
         {/* fleet routes */}
         <Route path="fleet" element={<FleetScreen />}>
-          <Route path="drivers" element={<DriverScreen />}></Route>
-          <Route path="routes" element={<RoutesScreen />}></Route>
-          <Route path="vehicles" element={<VehicleScreen />}></Route>
-          <Route path="maintanance" element={<ManagementScreen />}></Route>
-          <Route path="runs" element={<RunHeadersScreen />}></Route>
+          <Route path="drivers" element={<DriverScreen />}>
+            <Route path="alldrivers" element={<DriversList />} />
+            <Route path="createdriver" element={<CreateDrivers />} />
+          </Route>
+          <Route path="routes" element={<RoutesScreen />}>
+            <Route path="allroutes" element={<RoutesList />} />
+            <Route path="createroute" element={<CreateRoutes />} />
+          </Route>
+          <Route path="vehicles" element={<VehicleScreen />}>
+            <Route path="allvehicles" element={<VehicleList />} />
+            <Route path="createvehicle" element={<CreateVehicle />} />
+          </Route>
+          <Route path="maintanance" element={<ManagementScreen />}>
+            <Route path="allmaintenance" element={<MaintenanceList />} />
+            <Route
+              path="CreateMaintenance"
+              element={<CreateMaintenanceList />}
+            />
+          </Route>
+          <Route path="runs" element={<RunHeadersScreen />}>
+            <Route path="allruns" element={<RunsList />} />
+            <Route path="allrunsintransit" element={<AllRunsInTransit />} />
+            <Route path="allpsotedruns" element={<AllPostedRuns />} />
+            <Route path="createrun" element={<CreateRun />} />
+          </Route>
         </Route>
 
         {/* finance routes */}
