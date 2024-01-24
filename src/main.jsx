@@ -181,6 +181,8 @@ import CreateMaintenanceList from "./screens/fleet/maintenance/CreateMaintenance
 import AllRunsInTransit from "./screens/fleet/runs/AllRunsInTransit.jsx";
 import AllPostedOrderHeaders from "./screens/sales/orders/AllPostedOrderHeaders.jsx";
 import AllOrderHeadersInTransit from "./screens/sales/orders/AllOrderHeadersInTransit.jsx";
+import AllReurnOrdersInTransit from "./screens/sales/returnorders/AllReurnOrdersInTransit.jsx";
+import AllPostedReturnOrders from "./screens/sales/returnorders/AllPostedReturnOrders.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -445,6 +447,14 @@ const router = createHashRouter(
             <Route index element={<Orderlist />} />
             <Route path="allreturnorders" element={<ReturnOrderlist />} />
             <Route path="createreturnorder" element={<CreateReturnOrder />} />
+            <Route
+              path="allreturnordersintransit"
+              element={<AllReurnOrdersInTransit />}
+            />
+            <Route
+              path="allpostedreturnorders"
+              element={<AllPostedReturnOrders />}
+            />
             <Route path="allreturnorders" element={<ReturnOrderlist />} />
           </Route>
           <Route path="orderdispatch" element={<OrdersDispatchScreen />}>
