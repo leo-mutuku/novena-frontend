@@ -1,11 +1,11 @@
 import { apiSlice } from "../apiSlice";
-const PRODUCTIONHEADER_URL = "/api/v1/production/productionheaders";
+const PRODUCTIONHEADER_URL = "/api/v1/production/productionlines";
 
 export const ProductionLinesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    createProductionHeader: builder.mutation({
+    createProductionLine: builder.mutation({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/createproductionheader`,
+        url: `${PRODUCTIONHEADER_URL}/createproductionline`,
         method: "POST",
         body: data,
       }),
