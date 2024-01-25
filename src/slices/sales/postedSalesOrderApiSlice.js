@@ -1,11 +1,18 @@
 import { apiSlice } from "../apiSlice";
-const SALESPEOPLE_URL = "/api/v1/sales/salespeople";
+const POSTEDSAESORDERS_URL = "/api/v1/sales/postedsalesorders";
 
 export const orderinvoiceApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllSalesPeople: builder.query({
+    getAllPostedSalesOrders: builder.query({
       query: (data) => ({
-        url: `${SALESPEOPLE_URL}/getallsalespeople`,
+        url: `${SALESPEOPLE_URL}/getallpostedsalesorders`,
+        method: "GET",
+        body: data,
+      }),
+    }),
+    getPostedSalesOrderById: builder.query({
+      query: (id) => ({
+        url: `${SALESPEOPLE_URL}/getpostedsalesorderbyid`,
         method: "GET",
         body: data,
       }),
@@ -20,5 +27,7 @@ export const orderinvoiceApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useCreateSalesPersonMutation, useGetAllSalesPeopleQuery } =
-  orderinvoiceApiSlice;
+export const {
+  useGetAllPostedSalesOrdersQuery,
+  useGetPostedSalesOrderByIdQuery,
+} = orderinvoiceApiSlice;
