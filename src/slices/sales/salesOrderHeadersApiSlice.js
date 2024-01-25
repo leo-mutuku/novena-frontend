@@ -1,18 +1,25 @@
 import { apiSlice } from "../apiSlice";
-const SALESPEOPLE_URL = "/api/v1/sales/salespeople";
+const SALESORDERHEADER_URL = "/api/v1/sales/salesorderheaders";
 
 export const orderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllSalesPeople: builder.query({
-      query: (data) => ({
-        url: `${SALESPEOPLE_URL}/getallsalespeople`,
+    getSalesOrderHeaderById: builder.query({
+      query: (id) => ({
+        url: `${SALESORDERHEADER_URL}/getallsalesorderbyheaderid`,
         method: "GET",
         body: data,
       }),
     }),
-    createSalesPerson: builder.mutation({
+    getAllSalesOrderHeaders: builder.query({
       query: (data) => ({
-        url: `${SALESPEOPLE_URL}/createsalesperson`,
+        url: `${SALESORDERHEADER_URL}/getallsalesordersheaders`,
+        method: "GET",
+        body: data,
+      }),
+    }),
+    createSalesOrderHeader: builder.mutation({
+      query: (data) => ({
+        url: `${SALESORDERHEADER_URL}/createsalesorderheader`,
         method: "POST",
         body: data,
       }),
@@ -20,5 +27,8 @@ export const orderApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useCreateSalesPersonMutation, useGetAllSalesPeopleQuery } =
-  orderApiSlice;
+export const {
+  useCreateSalesOrderHeaderMutation,
+  useGetAllSalesOrderHeadersQuery,
+  useGetSalesOrderHeaderByIdQuery,
+} = orderApiSlice;
