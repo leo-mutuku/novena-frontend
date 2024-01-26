@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Loader from "../../../components/Loader";
-import { useGetAllStorePurchaseHeadersQuery } from "../../../slices/purchase/storePurchaseHeadersApiSlice";
+import { useGetAllDailyPackHouseHeadersQuery } from "../../../slices/production/dailyPackhouseHeadersApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa6";
@@ -8,7 +8,7 @@ import { CiEdit } from "react-icons/ci";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
-// import AddPurchaseModal from "./lines/AddPurchaseModal";
+import AddDailyPackModal from "./lines/AddDailyPackModal";
 // import DeletePurchaseModal from "./lines/DeletePurchaseModal";
 import TimeDate from "../../../components/TimeDate";
 
@@ -25,20 +25,20 @@ const DailyPackHouseHeadersList = () => {
     set_store_purchase_id(parseInt(id));
     set_mode_delete(style);
   };
-  const { data, isLoading } = useGetAllStorePurchaseHeadersQuery();
+  const { data, isLoading } = useGetAllDailyPackHouseHeadersQuery();
   const navigate = useNavigate();
   useEffect(() => {}, [data]);
   console.log(data);
   return (
     <>
       <>
-        {/* <div style={{ display: `${mode}` }}>
-          <AddPurchaseModal
+        <div style={{ display: `${mode}` }}>
+          <AddDailyPackModal
             store_purchase_id={store_purchase_id}
             set_mode={set_mode}
           />
         </div>
-        <div style={{ display: `${mode_delete}` }}>
+        {/* <div style={{ display: `${mode_delete}` }}>
           <DeletePurchaseModal
             store_purchase_id={store_purchase_id}
             set_mode_delete={set_mode_delete}
@@ -51,12 +51,12 @@ const DailyPackHouseHeadersList = () => {
         <thead>
           <tr>
             <th>#</th>
-            <th>Date</th>
-            <th>Type</th>
             <th>Pack Date</th>
+            <th>Pack Type</th>
             <th>Total</th>
             <th>Bales</th>
-            <th>Cost</th>
+            <th>Cost @ Bale</th>
+            <th>Total Cost</th>
             <th>Status</th>
             <th>Add</th>
             <th>Edit</th>
@@ -71,14 +71,13 @@ const DailyPackHouseHeadersList = () => {
             data?.data?.map((item, index) => (
               <tr>
                 <td>{index + 1}</td>
-                <td>{item.store_purchase_number}</td>
-                <td>{`${timeDate.date(item.purchase_date)} : ${timeDate.time(
-                  item.purchase_date
-                )}`}</td>
+                <td>{`${timeDate.date(item.pack_date)}`}</td>
+                <td>{item.pack_type}</td>
 
-                <td>{item.prepared_by}</td>
-                <td>{item.approved_by}</td>
-                <td>{item.total_cost}</td>
+                <td>{item.total}</td>
+                <td>{item.total_bales}</td>
+                <td>{item.pay_per_bale}</td>
+                <td>{item.total_packing_cost}</td>
                 <td>
                   {item.status === "New" ? (
                     <span style={{ color: "orange" }}>{item.status}</span>

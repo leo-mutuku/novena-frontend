@@ -8,7 +8,7 @@ import { CiEdit } from "react-icons/ci";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
-// import AddPurchaseModal from "./lines/AddPurchaseModal";
+import AddProductionModal from "./lines/AddProductionModal";
 // import DeletePurchaseModal from "./lines/DeletePurchaseModal";
 import TimeDate from "../../../components/TimeDate";
 
@@ -29,17 +29,17 @@ const ProductionHeaderList = () => {
   const navigate = useNavigate();
   useEffect(() => {});
   console.log(production?.data);
-  console.log(Error);
+
   return (
     <>
       <>
-        {/* <div style={{ display: `${mode}` }}>
-          <AddPurchaseModal
+        <div style={{ display: `${mode}` }}>
+          <AddProductionModal
             store_purchase_id={store_purchase_id}
             set_mode={set_mode}
           />
         </div>
-        <div style={{ display: `${mode_delete}` }}>
+        {/* <div style={{ display: `${mode_delete}` }}>
           <DeletePurchaseModal
             store_purchase_id={store_purchase_id}
             set_mode_delete={set_mode_delete}
@@ -76,16 +76,16 @@ const ProductionHeaderList = () => {
 
                 <td style={{ fontSize: "14px" }}>{`${timeDate.date(
                   item.production_date
-                )} : ${timeDate.time(item.production_date)}`}</td>
-                <td>{item.production_officer}</td>
+                )} `}</td>
+                <td style={{ fontSize: "14px" }}>{item.production_officer}</td>
 
                 <td style={{ fontSize: "14px" }}>{`${
                   item.production_batch_no
                 }-${timeDate.date(item.production_date)}`}</td>
-                <td>{item.production_input}</td>
-                <td>{item.expected_output}</td>
-                <td>{item.actual_output}</td>
-                <td>{item.production_variance}</td>
+                <td style={{ fontSize: "14px" }}>{item.production_input}</td>
+                <td style={{ fontSize: "14px" }}>{item.expected_output}</td>
+                <td style={{ fontSize: "14px" }}>{item.actual_output}</td>
+                <td style={{ fontSize: "14px" }}>{item.production_variance}</td>
 
                 <td>
                   {item.status === "New" ? (

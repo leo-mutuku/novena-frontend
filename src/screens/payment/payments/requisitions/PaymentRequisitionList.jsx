@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Loader from "../../../components/Loader";
-import { useGetAllDailyPackHouseHeadersQuery } from "../../../slices/production/dailyPackhouseHeadersApiSlice";
+import Loader from "../../../../components/Loader";
+import { useGetAllDailyPackHouseHeadersQuery } from "../../../../slices/production/dailyPackhouseHeadersApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa6";
@@ -10,9 +10,9 @@ import { IoMdAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 // import AddDailyPackModal from "./lines/AddDailyPackModal";
 // import DeletePurchaseModal from "./lines/DeletePurchaseModal";
-import TimeDate from "../../../components/TimeDate";
+import TimeDate from "../../../../components/TimeDate";
 
-const ReturnOrderlist = () => {
+const PaymentRequisitionList = () => {
   let timeDate = new TimeDate();
   const [mode, set_mode] = useState("none");
   const [mode_delete, set_mode_delete] = useState("none");
@@ -124,4 +124,4 @@ const ReturnOrderlist = () => {
     </>
   );
 };
-export default ReturnOrderlist;
+export default PaymentRequisitionList;

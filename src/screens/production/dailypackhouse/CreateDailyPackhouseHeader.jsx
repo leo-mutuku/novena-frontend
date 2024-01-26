@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { useCreateProductionHeaderMutation } from "../../../slices/production/productionHeaderApiSlice";
+import { useCreateDailyProductionHeaderMutation } from "../../../slices/production/dailyPackhouseHeadersApiSlice";
+import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function CreateDailyPackhouseHeader() {
-  const [production_officer, set_production_officer] = useState("");
-  const [production_input, set_production_input] = useState("");
-  const [expected_output, set_expected_output] = useState("");
+  const [pack_type, set_pack_type] = useState("");
   const [pack_date, set_pack_date] = useState("");
+  const [pay_per_bale, set_pay_per_bale] = useState("");
   const [pack_officer, set_pack_officer] = useState("");
   const [created_by, set_created_by] = useState("");
 
-  const [ProductionHeader, { isLoading }] = useCreateProductionHeaderMutation();
+  const [DailyProductionHeader, { isLoading }] =
+    useCreateDailyProductionHeaderMutation();
+  const { data: staff } = useGetAllStaffQuery();
   const { userInfo } = useSelector((state) => state.auth);
-  console.log(userInfo);
+
   const navigate = useNavigate();
   useEffect(() => {
     if (userInfo) {
@@ -27,17 +29,18 @@ function CreateDailyPackhouseHeader() {
     e.preventDefault();
 
     try {
-      const res = await CreateAccount({
-        production_officer,
-        production_input,
-        expected_output,
+      const res = await DailyProductionHeader({
+        pack_type,
+        pack_date,
+        pay_per_bale,
         pack_date,
         pack_officer,
         created_by,
       }).unwrap();
+      console.log(res);
 
-      navigate("../allproductionheaders");
-      toast.success("Production Iniated Successfully");
+      navigate("../alldailypackhouse");
+      toast.success("Daily Packhouse  Intiated Successfully");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -56,14 +59,14 @@ function CreateDailyPackhouseHeader() {
         {/* */}
         <Row>
           <Col>
-            <Form.Group className="my-2" controlId="expected_output">
+            <Form.Group className="my-2" controlId="pack_type">
               <Form.Label>Pack Type</Form.Label>
               <Form.Select
-                type="number"
+                type="option"
                 required
-                placeholder="Expected Output"
-                value={expected_output}
-                onChange={(e) => set_expected_output(e.target.value)}
+                placeholder="Pack Type"
+                value={pack_type}
+                onChange={(e) => set_pack_type(e.target.value)}
               >
                 <option>Pack Type</option>
                 <option value={1}>1 KG Bale</option>
@@ -72,14 +75,14 @@ function CreateDailyPackhouseHeader() {
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group className="my-2" controlId="production_officer">
+            <Form.Group className="my-2" controlId="pay_per_bale">
               <Form.Label>Pay Per bale</Form.Label>
               <Form.Control
                 required
                 type="number"
                 placeholder="Ksh 0.00 "
-                value={production_officer}
-                onChange={(e) => set_production_officer(e.target.value)}
+                value={pay_per_bale}
+                onChange={(e) => set_pay_per_bale(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -100,13 +103,20 @@ function CreateDailyPackhouseHeader() {
           <Col>
             <Form.Group className="my-2" controlId="pack_officer">
               <Form.Label>Pack Officer</Form.Label>
-              <Form.Control
+              <Form.Select
                 required
                 type="text"
                 placeholder=""
                 value={pack_officer}
                 onChange={(e) => set_pack_officer(e.target.value)}
-              ></Form.Control>
+              >
+                <option>Staff</option>
+                {staff?.data.map((item, index) => (
+                  <>
+                    <option value={item.staff_id}>{item.first_name}</option>
+                  </>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
         </Row>

@@ -13,8 +13,10 @@ import { useGetAllSuppliersQuery } from "../../../../slices/administration/suppl
 import { useCreateStorePurchaseLineMutation } from "../../../../slices/purchase/storePurchaseLinesApiSlice";
 import { useGetAllStoreRegisterQuery } from "../../../../slices/store/storeRegisterApiSlice";
 
-function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
+function AddProductionModal({ purchase_data, store_purchase_id, set_mode }) {
   let purchase_id = parseInt(store_purchase_id);
+  console.log(typeof purchase_id);
+  console.log();
 
   const { data: item_register } = useGetAllItemRegisterQuery();
   const { data: accounts } = useGetAllAccountsQuery();
@@ -29,6 +31,10 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
     item_name: "",
     account_number: 0,
     account_name: "",
+    supplier_name: "",
+    supplier_number: "",
+    supplier_email: "",
+    supplier_phone_number: "",
     item_cost: 0,
     quantity: 0,
     total_cost_per_item: "",
@@ -125,6 +131,21 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
     });
   };
   // handle supplier
+  const handleSupplier = (e) => {
+    let x = suppliers?.data?.filter((a) => {
+      if (a.supplier_number == e.target.value) {
+        return a.supplier_name;
+      }
+    });
+
+    set_order_items({
+      ...order_items,
+      supplier_number: e.target.value,
+      supplier_name: x[0].supplier_name,
+      supplier_email: x[0].supplier_email,
+      supplier_phone_number: x[0].supplier_phone_number,
+    });
+  };
   const handleStore = (e) => {
     let x = store?.data?.filter((a) => {
       if (a.store_code == e.target.value) {
@@ -163,20 +184,20 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
             <Modal.Header closeButton onClick={() => set_mode("none")}>
               <Modal.Title style={{ fontSize: "14px" }}>
                 <span style={{ fontSize: "14px" }}>
-                  Sales Order no. {store_purchase_id}
+                  Production batch no. {store_purchase_id}
                 </span>
               </Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
               <hr />
-              <span>*** Add Order Items ***</span>
+              <span>*** Add Production Line Items ***</span>
               <div>
                 <Form onSubmit={handleSubmit}>
                   <Row>
                     <Col>
                       <Form.Group className="my-2" controlId="item_code">
-                        <Form.Label>Order Item</Form.Label>
+                        <Form.Label>Product</Form.Label>
                         <Form.Select
                           type="text"
                           required
@@ -185,7 +206,7 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
                           onChange={handleItemCode}
                         >
                           {" "}
-                          <option>Order Item</option>
+                          <option>Product</option>
                           {item_register?.data?.map((item, index) => (
                             <option value={item.item_code} key={index}>
                               {item.item_code} | {item.item_name}
@@ -197,19 +218,7 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
 
                     <Col>
                       <Form.Group className="my-2" controlId="store">
-                        <Form.Label>Price </Form.Label>
-                        <Form.Control
-                          type="number"
-                          required
-                          placeholder="Store"
-                          value={order_items.store_code}
-                          onChange={handleStore}
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col>
-                      <Form.Group className="my-2" controlId="store">
-                        <Form.Label>Store </Form.Label>
+                        <Form.Label>Number Produced </Form.Label>
                         <Form.Control
                           type="number"
                           required
@@ -220,7 +229,66 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
                       </Form.Group>
                     </Col>
                   </Row>
-
+                  <Row>
+                    <Col>
+                      <Form.Group className="my-2" controlId="naraturation">
+                        <Form.Label>Primary Package </Form.Label>
+                        <Form.Control
+                          type="text"
+                          required
+                          placeholder="Total"
+                          value={order_items.total_cost_per_item}
+                          onChange={(e) =>
+                            set_order_items({
+                              ...order_items,
+                              naration: e.target.value,
+                            })
+                          }
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group className="my-2" controlId="naraturation">
+                        <Form.Label>Number of Packets </Form.Label>
+                        <Form.Control
+                          type="text"
+                          required
+                          placeholder="Naration"
+                          value={order_items.naration}
+                          onChange={(e) =>
+                            set_order_items({
+                              ...order_items,
+                              naration: e.target.value,
+                            })
+                          }
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group className="my-2" controlId="quantity">
+                        <Form.Label>Secondary Package</Form.Label>
+                        <Form.Control
+                          type="number"
+                          required
+                          placeholder="Quantity"
+                          value={order_items.quantity}
+                          onChange={handleQuantity}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group className="my-2" controlId="order_items">
+                        <Form.Label>Item cost per unit</Form.Label>
+                        <Form.Control
+                          type="number"
+                          required
+                          placeholder="Cost per unit (Ksh)"
+                          value={order_items.item_cost}
+                          onChange={handleItemCost}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                  </Row>
                   <br />
                   <div>
                     <Button type="submit">Add item</Button>
@@ -231,7 +299,7 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
               {/* List of items */}
               {purchase_list?.length === 0 ? (
                 <span style={{ color: "#fd7e14" }}>
-                  No items yet! Add items to Sales Order
+                  No items yet! Add items to purchase
                 </span>
               ) : (
                 <>
@@ -319,4 +387,4 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
   );
 }
 
-export default AddOrderLines;
+export default AddProductionModal;

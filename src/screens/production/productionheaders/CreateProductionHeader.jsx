@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useCreateProductionHeaderMutation } from "../../../slices/production/productionHeaderApiSlice";
+import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader";
@@ -15,6 +16,8 @@ function CreateProductionHeader() {
   const [created_by, set_created_by] = useState("");
 
   const [ProductionHeader, { isLoading }] = useCreateProductionHeaderMutation();
+  const { data: staff } = useGetAllStaffQuery();
+
   const { userInfo } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   useEffect(() => {
@@ -112,13 +115,20 @@ function CreateProductionHeader() {
           <Col>
             <Form.Group className="my-2" controlId="production_officer">
               <Form.Label>Production officer</Form.Label>
-              <Form.Control
+              <Form.Select
                 required
                 type="text"
                 placeholder="Officer "
                 value={production_officer}
                 onChange={(e) => set_production_officer(e.target.value)}
-              ></Form.Control>
+              >
+                <option>Staff</option>
+                {staff?.data.map((item) => (
+                  <>
+                    <option value={item.staff_id}>{item.first_name}</option>
+                  </>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
         </Row>

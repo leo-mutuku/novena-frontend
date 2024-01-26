@@ -134,7 +134,7 @@ import CreatePackHouse from "./screens/production/packhouse/CreatePackHouse.jsx"
 import { PackHouseEntriesScreen } from "./screens/production/PackHouseEntriesScreen.jsx";
 import { PackhouseEntriesList } from "./screens/production/packhouseentries/PackhouseEntriesList.jsx";
 import { CreatePayrollHeaders } from "./screens/payroll/payrollHeader/CreatePayrollHeaders.jsx";
-import { PayrollHeadersList } from "./screens/payroll/payrollHeader/PayrollHeadersList.jsx";
+import PayrollHeadersList from "./screens/payroll/payrollHeader/PayrollHeadersList.jsx";
 import { PayrollHeaderScreen } from "./screens/payroll/PayrollHeaderScreen.jsx";
 import { CategoryScreen } from "./screens/payroll/CategoryScreen.jsx";
 import { CategoryList } from "./screens/payroll/category/CategoryList.jsx";
@@ -147,7 +147,7 @@ import { PaymentVoucherScreen } from "./screens/payment/PaymentVoucherScreen.jsx
 import PaymentVoucherList from "./screens/payment/payments/paymentvouchers/PaymentVoucherList.jsx";
 import CreatePaymentVoucher from "./screens/payment/payments/paymentvouchers/CreatePaymentVoucher.jsx";
 import AllPaymentVouchersInTransit from "./screens/payment/payments/paymentvouchers/AllPaymentVouchersInTransit.jsx";
-import { PurchasesList } from "./screens/payment/payments/purchases/PurchasesList.jsx";
+import PurchasesList from "./screens/payment/payments/purchases/PurchasesList.jsx";
 import { StoreItemEntriesScreen } from "./screens/store/StoreItemEntriesScreen.jsx";
 import AllItemEntries from "./screens/store/storeitementries/AllItemEntries.jsx";
 import AccountEntriesScreen from "./screens/finance/AccountEntriesScreen.jsx";
@@ -183,6 +183,7 @@ import AllPostedOrderHeaders from "./screens/sales/orders/AllPostedOrderHeaders.
 import AllOrderHeadersInTransit from "./screens/sales/orders/AllOrderHeadersInTransit.jsx";
 import AllReurnOrdersInTransit from "./screens/sales/returnorders/AllReurnOrdersInTransit.jsx";
 import AllPostedReturnOrders from "./screens/sales/returnorders/AllPostedReturnOrders.jsx";
+import PaymentRequisitionList from "./screens/payment/payments/requisitions/PaymentRequisitionList.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -260,7 +261,10 @@ const router = createHashRouter(
             />
           </Route>
           <Route path="requsitions" element={<RequisitionsScreen />}>
-            <Route path="allpaymentrequisition" element={<RequisitionList />} />
+            <Route
+              path="allpaymentrequisition"
+              element={<PaymentRequisitionList />}
+            />
             <Route
               path="allpaymentrequisitionintransit"
               element={<AllPaymentRequisitionInTransit />}
