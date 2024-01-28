@@ -13,10 +13,8 @@ import { useGetAllSuppliersQuery } from "../../../../slices/administration/suppl
 import { useCreateStorePurchaseLineMutation } from "../../../../slices/purchase/storePurchaseLinesApiSlice";
 import { useGetAllStoreRegisterQuery } from "../../../../slices/store/storeRegisterApiSlice";
 
-function AddProductionModal({ purchase_data, store_purchase_id, set_mode }) {
+function AddProductionModal({ store_purchase_id, set_mode }) {
   let purchase_id = parseInt(store_purchase_id);
-  console.log(typeof purchase_id);
-  console.log();
 
   const { data: item_register } = useGetAllItemRegisterQuery();
   const { data: accounts } = useGetAllAccountsQuery();
@@ -29,19 +27,11 @@ function AddProductionModal({ purchase_data, store_purchase_id, set_mode }) {
   const [order_items, set_order_items] = useState({
     item_code: 0,
     item_name: "",
-    account_number: 0,
-    account_name: "",
-    supplier_name: "",
-    supplier_number: "",
-    supplier_email: "",
-    supplier_phone_number: "",
-    item_cost: 0,
-    quantity: 0,
-    total_cost_per_item: "",
-    purchase_header_id: "",
-    store_name: "",
-    store_code: "",
-    created_by: userInfo?.first_name,
+    items_produced: 0,
+    item_pack_one: "",
+    item_pack_one: 0,
+    item_pack_two: "",
+    item_pack_three: "",
   });
 
   const [purchase_list, set_purchase_list] = useState([]);

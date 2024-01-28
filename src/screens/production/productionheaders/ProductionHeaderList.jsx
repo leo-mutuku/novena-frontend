@@ -104,7 +104,7 @@ const ProductionHeaderList = () => {
                     <Link to={`#`}>
                       <IoMdAdd
                         onClick={(e) =>
-                          handleAdd(e, item.store_purchase_number, "block")
+                          handleAdd(e, item.production_batch_no, "block")
                         }
                       />
                     </Link>

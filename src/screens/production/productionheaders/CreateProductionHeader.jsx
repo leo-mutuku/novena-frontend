@@ -3,6 +3,7 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useCreateProductionHeaderMutation } from "../../../slices/production/productionHeaderApiSlice";
 import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
+import { useGetAllStoreRegisterQuery } from "../../../slices/store/storeRegisterApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader";
@@ -13,10 +14,13 @@ function CreateProductionHeader() {
   const [expected_output, set_expected_output] = useState("");
   const [production_date, set_production_date] = useState("");
   const [naration, set_naration] = useState("");
-  const [created_by, set_created_by] = useState("");
+  const [created_by, set_created_by] = useState(null);
+  const [store_code, set_store_code] = useState(0);
+  console.log(store_code);
 
   const [ProductionHeader, { isLoading }] = useCreateProductionHeaderMutation();
   const { data: staff } = useGetAllStaffQuery();
+  const { data: store } = useGetAllStoreRegisterQuery();
 
   const { userInfo } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -36,9 +40,11 @@ function CreateProductionHeader() {
         production_date,
         naration,
         created_by,
+        store_code,
       }).unwrap();
+      console.log(res);
       if (res.status == "failed") {
-        toast.error(err?.data?.message || err.error);
+        toast.error(res.message);
       } else {
         toast.success("Production Iniated Successfully");
         navigate("../allproductionheaders");
@@ -67,7 +73,7 @@ function CreateProductionHeader() {
                 required
                 placeholder="production_input"
                 value={production_input}
-                onChange={(e) => set_production_input(e.target.value)}
+                onChange={(e) => set_production_input(parseInt(e.target.value))}
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -79,7 +85,7 @@ function CreateProductionHeader() {
                 required
                 placeholder="Expected Output"
                 value={expected_output}
-                onChange={(e) => set_expected_output(e.target.value)}
+                onChange={(e) => set_expected_output(parseInt(e.target.value))}
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -98,7 +104,7 @@ function CreateProductionHeader() {
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group className="my-2" controlId="expected_output">
+            <Form.Group className="my-2" controlId="Naration">
               <Form.Label>Naration</Form.Label>
               <Form.Control
                 type="text"
@@ -117,15 +123,39 @@ function CreateProductionHeader() {
               <Form.Label>Production officer</Form.Label>
               <Form.Select
                 required
-                type="text"
+                type="number"
                 placeholder="Officer "
                 value={production_officer}
                 onChange={(e) => set_production_officer(e.target.value)}
               >
-                <option>Staff</option>
-                {staff?.data.map((item) => (
+                <option value={""}>Production Officer</option>
+                {staff?.data.map((item, index) => (
                   <>
-                    <option value={item.staff_id}>{item.first_name}</option>
+                    <option key={index} value={parseInt(item.staff_id)}>
+                      {item.first_name}
+                    </option>
+                  </>
+                ))}
+              </Form.Select>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="my-2" controlId="Store">
+              <Form.Label>Store</Form.Label>
+              <Form.Select
+                required
+                type="number"
+                placeholder="Officer "
+                value={store_code}
+                onChange={(e) => set_store_code(parseInt(e.target.value))}
+              >
+                <option value={""}>Store</option>
+                {store?.data.map((item, index) => (
+                  <>
+                    <option
+                      key={index}
+                      value={item.store_code}
+                    >{`${item.store_code} | ${item.store_name}`}</option>
                   </>
                 ))}
               </Form.Select>
