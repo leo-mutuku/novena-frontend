@@ -7,7 +7,7 @@ import { Prev } from "react-bootstrap/esm/PageItem";
 import { useGetAllItemRegisterQuery } from "../../../../slices/store/itemregisterApiSlice";
 import { useGetAllAccountsQuery } from "../../../../slices/finance/accountsApiSlice";
 import { useGetAllSalesOrdersIntransitBySalesOrderNumberQuery } from "../../../../slices/sales/salesOrderLinesApiSlice";
-import { usePostStorePurchaseHeaderMutation } from "../../../../slices/purchase/storePurchaseHeadersApiSlice";
+import { usePostSalesOrderMutation } from "../../../../slices/sales/salesOrderHeadersApiSlice";
 import ItemEdit from "./ItemEdit";
 import Loader from "../../../../components/Loader";
 import { toast } from "react-toastify";
@@ -18,7 +18,7 @@ function EditOrderLines({ purchase_header_id, set_edit_mode }) {
   const { data: purchase_order_lines, error } =
     useGetAllSalesOrdersIntransitBySalesOrderNumberQuery(id);
   console.log(purchase_order_lines?.data);
-  const [post_purchase, { isLoading }] = usePostStorePurchaseHeaderMutation();
+  const [post_purchase, { isLoading }] = usePostSalesOrderMutation();
 
   const [update_list, set_update_list] = useState([]);
 
@@ -76,11 +76,18 @@ function EditOrderLines({ purchase_header_id, set_edit_mode }) {
   };
 
   const handlePost = async (e) => {
-    let store_purchase_header_id = purchase_header_id;
+    let sales_order_number = purchase_header_id;
     try {
-      const res = await post_purchase({ store_purchase_header_id }).unwrap();
+      const res = await post_purchase({
+        sales_order_number: sales_order_number,
+      }).unwrap();
       console.log(res);
-      navigate("../allstorepurchase");
+      if (res.status === "failed") {
+        toast.error(err?.data?.message || err.error);
+      } else {
+        toast.success("sales order posted");
+      }
+      navigate("../allorders");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }

@@ -38,6 +38,13 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    postSalesOrder: builder.mutation({
+      query: (data) => ({
+        url: `${SALESORDERHEADER_URL}/postsalesorder`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -47,4 +54,5 @@ export const {
   useGetSalesOrderHeaderByIdQuery,
   useGetAllSalesOrdersInTransitQuery,
   useGetAllPostedSalesOrdersQuery,
+  usePostSalesOrderMutation,
 } = orderApiSlice;

@@ -68,7 +68,7 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
           sales_list,
         }).unwrap();
         if (res.status === "failed") {
-          toast.error("Purchase lines already added. Proceed to update");
+          toast.error(res.message);
         } else {
           toast.success("Sales order lines created successfully");
           navigate("../allordersintansit");

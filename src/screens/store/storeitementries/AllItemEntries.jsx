@@ -2,7 +2,7 @@ import React, { useState } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
 import { useGetAllAccountsQuery } from "../../../slices/finance/accountsApiSlice";
-import { useGetAllAccountEntriesQuery } from "../../../slices/finance/accountEntriesApiSlice";
+import { useGetAllStoreItemEntriesQuery } from "../../../slices/store/storeItemsEntriesApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa6";
@@ -13,7 +13,7 @@ import TimeDate from "../../../components/TimeDate";
 
 const AllItemEntries = () => {
   const timeDate = new TimeDate();
-  const { data, isLoading } = useGetAllAccountEntriesQuery();
+  const { data, isLoading } = useGetAllStoreItemEntriesQuery();
   const [account_entries, set_account_entries] = useState([]);
 
   console.log(data?.data);
