@@ -10,7 +10,7 @@ import { Prev } from "react-bootstrap/esm/PageItem";
 import { useGetAllItemRegisterQuery } from "../../../../slices/store/itemregisterApiSlice";
 import { useGetAllAccountsQuery } from "../../../../slices/finance/accountsApiSlice";
 import { useGetAllSuppliersQuery } from "../../../../slices/administration/suppliersApiSlice";
-import { useCreateStorePurchaseLineMutation } from "../../../../slices/purchase/storePurchaseLinesApiSlice";
+import { useCreateSalesOrderLineMutation } from "../../../../slices/sales/salesOrderLinesApiSlice";
 import { useGetAllStoreRegisterQuery } from "../../../../slices/store/storeRegisterApiSlice";
 
 function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
@@ -21,10 +21,11 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
   const { data: suppliers } = useGetAllSuppliersQuery();
   const { data: store } = useGetAllStoreRegisterQuery();
   const { userInfo } = useSelector((state) => state.auth);
-  const [purchase_line, { isLoading }] = useCreateStorePurchaseLineMutation();
+  const [sales_order_line, { isSucces }] = useCreateSalesOrderLineMutation();
   const navigate = useNavigate();
   const [total_cost, set_total_cost] = useState(0);
   const [order_items, set_order_items] = useState({
+    sales_order_number: 0,
     item_code: 0,
     item_name: "",
     account_number: 0,
@@ -32,21 +33,19 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
     item_cost: 0,
     quantity: 0,
     total_cost_per_item: "",
-    purchase_header_id: "",
     store_name: "",
     store_code: "",
     created_by: userInfo?.first_name,
   });
 
-  const [purchase_list, set_purchase_list] = useState([]);
-  console.log(purchase_list);
+  const [sales_list, set_sales_list] = useState([]);
 
   useEffect(() => {
     if (userInfo) {
       set_order_items({
         ...order_items,
         created_by: userInfo.first_name,
-        purchase_header_id: purchase_id,
+        sales_order_number: purchase_id,
       });
     }
 
@@ -55,26 +54,24 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(order_items);
     set_order_items({ ...order_items, created_by: userInfo.first_name });
-    set_purchase_list([...purchase_list, order_items]);
+    set_sales_list([...sales_list, order_items]);
   };
 
   const handleSave = async () => {
     try {
-      if (purchase_list.length === 0) {
+      if (sales_list.length === 0) {
         alert("Add items to purchase first!");
       } else {
-        const res = await purchase_line({
-          store_purchase_id,
-          created_by: order_items.created_by,
-          purchase_line: purchase_list,
+        const res = await sales_order_line({
+          sales_list,
         }).unwrap();
         if (res.status === "failed") {
           toast.error("Purchase lines already added. Proceed to update");
-          navigate("../allstorepurchasesintransit");
         } else {
-          toast.success("Purchase lines created successfully");
-          navigate("../allstorepurchasesintransit");
+          toast.success("Sales order lines created successfully");
+          navigate("../allordersintansit");
         }
       }
     } catch (err) {
@@ -120,7 +117,7 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
   const handleQuantity = (e) => {
     set_order_items({
       ...order_items,
-      quantity: e.target.value,
+      quantity: parseInt(e.target.value),
       total_cost_per_item: order_items.item_cost * e.target.value,
     });
   };
@@ -171,6 +168,8 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
             <Modal.Body>
               <hr />
               <span>*** Add Order Items ***</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span>Order Item Total : {}</span>
               <div>
                 <Form onSubmit={handleSubmit}>
                   <Row>
@@ -196,27 +195,46 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
                     </Col>
 
                     <Col>
-                      <Form.Group className="my-2" controlId="store">
-                        <Form.Label>Price </Form.Label>
+                      <Form.Group className="my-2" controlId="order_items">
+                        <Form.Label>Price</Form.Label>
                         <Form.Control
                           type="number"
                           required
-                          placeholder="Store"
-                          value={order_items.store_code}
-                          onChange={handleStore}
+                          placeholder="Cost per unit (Ksh)"
+                          value={order_items.item_cost}
+                          onChange={handleItemCost}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group className="my-2" controlId="quantity">
+                        <Form.Label>Quantity</Form.Label>
+                        <Form.Control
+                          type="number"
+                          required
+                          placeholder="Quantity"
+                          value={order_items.quantity}
+                          onChange={handleQuantity}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                     <Col>
                       <Form.Group className="my-2" controlId="store">
                         <Form.Label>Store </Form.Label>
-                        <Form.Control
+                        <Form.Select
                           type="number"
                           required
                           placeholder="Store"
                           value={order_items.store_code}
                           onChange={handleStore}
-                        ></Form.Control>
+                        >
+                          <option>Store</option>
+                          {store?.data.map((item) => (
+                            <option value={item.store_code}>
+                              {item.store_code} | {item.store_name}
+                            </option>
+                          ))}
+                        </Form.Select>
                       </Form.Group>
                     </Col>
                   </Row>
@@ -229,7 +247,7 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
                 <br />
               </div>
               {/* List of items */}
-              {purchase_list?.length === 0 ? (
+              {sales_list?.length === 0 ? (
                 <span style={{ color: "#fd7e14" }}>
                   No items yet! Add items to Sales Order
                 </span>
@@ -241,7 +259,6 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
                         <th>#</th>
                         <th>Item</th>
                         <th>Account</th>
-                        <th>Supplier</th>
                         <th>Store</th>
                         <th>@ Cost</th>
                         <th>Quantity</th>
@@ -250,14 +267,14 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
                           <Button
                             variant="outline-danger"
                             size="sm"
-                            onClick={() => set_purchase_list([])}
+                            onClick={() => set_sales_list([])}
                           >
                             Delete <MdDelete />
                           </Button>
                         </th>
                       </tr>
                     </thead>
-                    {purchase_list.map((p_items, index) => (
+                    {sales_list.map((p_items, index) => (
                       <>
                         <tbody>
                           <tr key={p_items.item_code}>
@@ -267,10 +284,6 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
                             </td>
                             <td>
                               {p_items.account_number} | {p_items.account_name}
-                            </td>
-                            <td>
-                              {p_items.supplier_number} |{" "}
-                              {p_items.supplier_name}
                             </td>
                             <td>
                               {p_items.store_code} | {p_items.store_name}
@@ -283,8 +296,8 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
                                 variant="outline-danger"
                                 size="sm"
                                 onClick={() =>
-                                  set_purchase_list(
-                                    purchase_list.filter(
+                                  set_sales_list(
+                                    sales_list.filter(
                                       (a) => a.item_code !== p_items.item_code
                                     )
                                   )

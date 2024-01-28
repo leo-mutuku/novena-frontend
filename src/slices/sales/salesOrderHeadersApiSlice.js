@@ -17,6 +17,20 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getAllSalesOrdersInTransit: builder.query({
+      query: (data) => ({
+        url: `${SALESORDERHEADER_URL}/getallsalesordersheadersintransit`,
+        method: "GET",
+        body: data,
+      }),
+    }),
+    getAllPostedSalesOrders: builder.query({
+      query: (data) => ({
+        url: `${SALESORDERHEADER_URL}/getallpostedsalesorders`,
+        method: "GET",
+        body: data,
+      }),
+    }),
     createSalesOrderHeader: builder.mutation({
       query: (data) => ({
         url: `${SALESORDERHEADER_URL}/createsalesorderheader`,
@@ -31,4 +45,6 @@ export const {
   useCreateSalesOrderHeaderMutation,
   useGetAllSalesOrderHeadersQuery,
   useGetSalesOrderHeaderByIdQuery,
+  useGetAllSalesOrdersInTransitQuery,
+  useGetAllPostedSalesOrdersQuery,
 } = orderApiSlice;

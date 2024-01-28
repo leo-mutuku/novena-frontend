@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Loader from "../../../components/Loader";
-import { useGetAllDailyPackHouseHeadersQuery } from "../../../slices/production/dailyPackhouseHeadersApiSlice";
+import { useGetAllSalesOrderHeadersQuery } from "../../../slices/sales/salesOrderHeadersApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa6";
@@ -25,7 +25,8 @@ const OrderHeaderList = () => {
     set_store_purchase_id(parseInt(id));
     set_mode_delete(style);
   };
-  const { data, isLoading } = useGetAllDailyPackHouseHeadersQuery();
+  const { data, isLoading } = useGetAllSalesOrderHeadersQuery();
+  console.log(data?.data);
   const navigate = useNavigate();
   useEffect(() => {}, [data]);
   console.log(data);
@@ -45,18 +46,19 @@ const OrderHeaderList = () => {
           />
         </div> */}
       </>
-      <p>*** Daily Pack house ***</p>
+      <p>*** All Sales Orders ***</p>
 
       <Table striped style={{ border: "1px solid #ccc" }}>
         <thead>
           <tr>
             <th>#</th>
-            <th>Pack Date</th>
-            <th>Pack Type</th>
+            <th>Sale Date</th>
+            <th>Sales Type</th>
+            <th>Order No.</th>
             <th>Total</th>
-            <th>Bales</th>
-            <th>Cost @ Bale</th>
-            <th>Total Cost</th>
+            <th>No. of Items</th>
+            <th>Cust Name</th>
+            <th>Sales .P</th>
             <th>Status</th>
             <th>Add</th>
             <th>Edit</th>
@@ -71,13 +73,14 @@ const OrderHeaderList = () => {
             data?.data?.map((item, index) => (
               <tr>
                 <td>{index + 1}</td>
-                <td>{`${timeDate.date(item.pack_date)}`}</td>
-                <td>{item.pack_type}</td>
+                <td>{`${timeDate.date(item.sales_order_date)}`}</td>
+                <td>{item.sale_order_type}</td>
 
+                <td>{item.sales_order_number}</td>
                 <td>{item.total}</td>
-                <td>{item.total_bales}</td>
                 <td>{item.pay_per_bale}</td>
-                <td>{item.total_packing_cost}</td>
+                <td>{item.customer_name}</td>
+                <td>{item.sales_person_number}</td>
                 <td>
                   {item.status === "New" ? (
                     <span style={{ color: "orange" }}>{item.status}</span>
@@ -95,7 +98,7 @@ const OrderHeaderList = () => {
                     <Link to={`#`}>
                       <IoMdAdd
                         onClick={(e) =>
-                          handleAdd(e, item.store_purchase_number, "block")
+                          handleAdd(e, item.sales_order_number, "block")
                         }
                       />
                     </Link>
