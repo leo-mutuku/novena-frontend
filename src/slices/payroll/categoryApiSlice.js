@@ -1,40 +1,40 @@
 import { apiSlice } from "../apiSlice";
-const PRODUCTIONHEADER_URL = "/api/v1/production/productionheaders";
+const PAYROLLCATEGORY_URL = "/api/v1/payroll/payrollcategories";
 
 export const categoryApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    createProductionHeader: builder.mutation({
+    createPayrollCategory: builder.mutation({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/createproductionheader`,
+        url: `${PAYROLLCATEGORY_URL}/createpayrollcategory`,
         method: "POST",
         body: data,
       }),
     }),
 
-    getAllProductionHeaders: builder.query({
+    getAllPayrollcategories: builder.query({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheaders`,
+        url: `${PAYROLLCATEGORY_URL}/getallpayrollcategories`,
         method: "GET",
         body: data,
       }),
     }),
     getAllProductionHeadersInTransit: builder.query({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheaders`,
+        url: `${PAYROLLCATEGORY_URL}/getallproductionheaders`,
         method: "GET",
         body: data,
       }),
     }),
     getAllProductionHeadersInTransit: builder.query({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheadersintransit`,
+        url: `${PAYROLLCATEGORY_URL}/getallproductionheadersintransit`,
         method: "GET",
         body: data,
       }),
     }),
     getAllPostedProductionHeaders: builder.query({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallpostedproductionheaders`,
+        url: `${PAYROLLCATEGORY_URL}/getallpostedproductionheaders`,
         method: "GET",
         body: data,
       }),
@@ -43,8 +43,6 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useCreateProductionHeaderMutation,
-  useGetAllProductionHeadersQuery,
-  useGetAllProductionHeadersInTransitQuery,
-  useGetAllPostedProductionHeadersQuery,
+  useCreatePayrollCategoryMutation,
+  useGetAllPayrollcategoriesQuery,
 } = categoryApiSlice;

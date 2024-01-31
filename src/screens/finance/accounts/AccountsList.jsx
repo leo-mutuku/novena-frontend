@@ -32,7 +32,7 @@ const AccountsList = () => {
           {isLoading ? (
             <Loader />
           ) : (
-            data.data.map((item, index) => (
+            data?.data.map((item, index) => (
               <tr>
                 <td>{index + 1}</td>
                 <td>{item.account_name}</td>

@@ -11,7 +11,6 @@ import { IoMdEye } from "react-icons/io";
 
 const StoreItemsList = () => {
   const { data, isLoading } = useGetAllStoreItemsQuery();
-  console.log(data?.data);
 
   return (
     <>

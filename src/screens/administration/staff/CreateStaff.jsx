@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useCreateStaffMutation } from "../../../slices/administration/staffApiSlice";
+import { useGetAllPayrollcategoriesQuery } from "../../../slices/payroll/categoryApiSlice";
 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -15,6 +16,7 @@ function CreateStaff() {
   const [payroll_category_code, set_payroll_category_code] = useState("");
 
   const [createStaff, { isLoading }] = useCreateStaffMutation();
+  const { data: payrollCategory } = useGetAllPayrollcategoriesQuery();
   const navigate = useNavigate();
   useEffect(() => {
     navigate();
@@ -29,7 +31,6 @@ function CreateStaff() {
         first_name,
         last_name,
         phone_number,
-
         bank_account_number,
         payroll_category_code,
       }).unwrap();
@@ -115,6 +116,7 @@ function CreateStaff() {
               <Form.Label>Phone number</Form.Label>
               <Form.Control
                 required
+                size="10"
                 type="number"
                 placeholder="Phone number"
                 value={phone_number}
@@ -140,14 +142,21 @@ function CreateStaff() {
 
           <Col>
             <Form.Group className="my-2" controlId="payroll_category_code">
-              <Form.Label>Payroll category code</Form.Label>
-              <Form.Control
+              <Form.Label>Payroll category </Form.Label>
+              <Form.Select
                 required
                 type="text"
                 placeholder="Payroll category code"
                 value={payroll_category_code}
                 onChange={(e) => set_payroll_category_code(e.target.value)}
-              ></Form.Control>
+              >
+                <option>Select Category</option>
+                {payrollCategory?.data.map((category, index) => (
+                  <option value={category.category_code}>
+                    {category.category_name}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
         </Row>

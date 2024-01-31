@@ -1,18 +1,18 @@
 import { apiSlice } from "../apiSlice";
-const CUSTOMERS_URL = "/api/v1/administration/institutions";
+const CUSTOMERS_URL = "/api/v1/administrator/customers";
 
 export const customersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllInstitutions: builder.query({
+    getAllCustomers: builder.query({
       query: (data) => ({
-        url: `${CUSTOMERS_URL}/getallinstitutions`,
+        url: `${CUSTOMERS_URL}/getallcustomers`,
         method: "GET",
         body: data,
       }),
     }),
-    createInstitution: builder.mutation({
+    createCustomer: builder.mutation({
       query: (data) => ({
-        url: `${CUSTOMERS_URL}/createinstitution`,
+        url: `${CUSTOMERS_URL}/createcustomer`,
         method: "POST",
         body: data,
       }),
@@ -20,5 +20,5 @@ export const customersApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetAllInstitutionsQuery, useCreateInstitutionMutation } =
+export const { useCreateCustomerMutation, useGetAllCustomersQuery } =
   customersApiSlice;
