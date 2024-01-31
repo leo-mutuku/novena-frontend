@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Loader from "../../../components/Loader";
 import { useGetAllProductionHeadersQuery } from "../../../slices/production/productionHeaderApiSlice";
+import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa6";
@@ -17,9 +18,11 @@ const ProductionHeaderList = () => {
   const [mode, set_mode] = useState("none");
   const [mode_delete, set_mode_delete] = useState("none");
   const [store_purchase_id, set_store_purchase_id] = useState("");
-  const handleAdd = (e, id, style) => {
+  const [batch_number, set_batch_number] = useState("");
+  const handleAdd = (e, id, batch_number, style) => {
     set_store_purchase_id(parseInt(id));
     set_mode(style);
+    set_batch_number(batch_number);
   };
   const handleDelete = (e, id, style) => {
     set_store_purchase_id(parseInt(id));
@@ -37,6 +40,7 @@ const ProductionHeaderList = () => {
           <AddProductionModal
             store_purchase_id={store_purchase_id}
             set_mode={set_mode}
+            batch_number={batch_number}
           />
         </div>
         {/* <div style={{ display: `${mode_delete}` }}>
@@ -79,9 +83,7 @@ const ProductionHeaderList = () => {
                 )} `}</td>
                 <td style={{ fontSize: "14px" }}>{item.production_officer}</td>
 
-                <td style={{ fontSize: "14px" }}>{`${
-                  item.production_batch_no
-                }-${timeDate.date(item.production_date)}`}</td>
+                <td style={{ fontSize: "14px" }}>{item.batch_number}</td>
                 <td style={{ fontSize: "14px" }}>{item.production_input}</td>
                 <td style={{ fontSize: "14px" }}>{item.expected_output}</td>
                 <td style={{ fontSize: "14px" }}>{item.actual_output}</td>
@@ -104,7 +106,12 @@ const ProductionHeaderList = () => {
                     <Link to={`#`}>
                       <IoMdAdd
                         onClick={(e) =>
-                          handleAdd(e, item.production_batch_no, "block")
+                          handleAdd(
+                            e,
+                            item.production_batch_no,
+                            item.batch_number,
+                            "block"
+                          )
                         }
                       />
                     </Link>

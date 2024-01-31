@@ -13,7 +13,8 @@ function CreateProductionHeader() {
   const [production_input, set_production_input] = useState("");
   const [expected_output, set_expected_output] = useState("");
   const [production_date, set_production_date] = useState("");
-  const [naration, set_naration] = useState("");
+  const [shift, set_shift] = useState("");
+  const [batch_number, set_batch_number] = useState("");
   const [created_by, set_created_by] = useState(null);
   const [store_code, set_store_code] = useState(0);
   console.log(store_code);
@@ -38,7 +39,8 @@ function CreateProductionHeader() {
         production_input,
         expected_output,
         production_date,
-        naration,
+        shift,
+        batch_number,
         created_by,
         store_code,
       }).unwrap();
@@ -53,6 +55,23 @@ function CreateProductionHeader() {
       toast.error(err?.data?.message || err.error);
     }
   };
+  const handleProductionDate = (e) => {
+    let day = new Date(e.target.value);
+    let d = day.getDate() < 10 ? "0" + day.getDate() : day.getDate();
+
+    let month = new Date(e.target.value);
+    let m =
+      month.getMonth() + 1 < 10
+        ? "0" + (month.getMonth() + 1)
+        : month.getMonth() + 1;
+
+    let year = new Date(e.target.value);
+    let y = year.getFullYear();
+    let date = `${y}${m}${d}`;
+    set_batch_number(date);
+    set_production_date(e.target.value);
+  };
+
   return (
     <>
       <span>*** New Production *** </span>
@@ -99,20 +118,28 @@ function CreateProductionHeader() {
                 required
                 placeholder="production_date"
                 value={production_date}
-                onChange={(e) => set_production_date(e.target.value)}
+                onChange={handleProductionDate}
               ></Form.Control>
             </Form.Group>
           </Col>
           <Col>
             <Form.Group className="my-2" controlId="Naration">
-              <Form.Label>Naration</Form.Label>
-              <Form.Control
+              <Form.Label>Shift</Form.Label>
+              <Form.Select
                 type="text"
                 required
                 placeholder="Shift"
-                value={naration}
-                onChange={(e) => set_naration(e.target.value)}
-              ></Form.Control>
+                value={shift}
+                onChange={(e) => set_shift(e.target.value)}
+              >
+                <option value={""}>Shift</option>
+                {
+                  <>
+                    <option value={"day"}>Day</option>
+                    <option value={"night"}>Night</option>
+                  </>
+                }
+              </Form.Select>
             </Form.Group>
           </Col>
         </Row>
