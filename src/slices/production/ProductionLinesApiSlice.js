@@ -1,11 +1,11 @@
 import { apiSlice } from "../apiSlice";
-const PRODUCTIONHEADER_URL = "/api/v1/production/productionlines";
+const PRODUCTIONLINE_URL = "/api/v1/production/productionlines";
 
 export const ProductionLinesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createProductionLine: builder.mutation({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/createproductionline`,
+        url: `${PRODUCTIONLINE_URL}/createproductionline`,
         method: "POST",
         body: data,
       }),
@@ -13,28 +13,28 @@ export const ProductionLinesApiSlice = apiSlice.injectEndpoints({
 
     getAllProductionHeaders: builder.query({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheaders`,
+        url: `${PRODUCTIONLINE_URL}/getallproductionheaders`,
         method: "GET",
         body: data,
       }),
     }),
     getAllProductionHeadersInTransit: builder.query({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheaders`,
+        url: `${PRODUCTIONLINE_URL}/getallproductionheaders`,
         method: "GET",
         body: data,
       }),
     }),
     getAllProductionHeadersInTransit: builder.query({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheadersintransit`,
+        url: `${PRODUCTIONLINE_URL}/getallproductionheadersintransit`,
         method: "GET",
         body: data,
       }),
     }),
     getAllPostedProductionHeaders: builder.query({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallpostedproductionheaders`,
+        url: `${PRODUCTIONLINE_URL}/getallpostedproductionheaders`,
         method: "GET",
         body: data,
       }),
@@ -42,9 +42,4 @@ export const ProductionLinesApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const {
-  useCreateProductionHeaderMutation,
-  useGetAllProductionHeadersQuery,
-  useGetAllProductionHeadersInTransitQuery,
-  useGetAllPostedProductionHeadersQuery,
-} = ProductionLinesApiSlice;
+export const { useCreateProductionLineMutation } = ProductionLinesApiSlice;

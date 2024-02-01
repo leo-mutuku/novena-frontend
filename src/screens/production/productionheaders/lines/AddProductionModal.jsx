@@ -10,7 +10,7 @@ import { Prev } from "react-bootstrap/esm/PageItem";
 import { useGetAllItemRegisterQuery } from "../../../../slices/store/itemregisterApiSlice";
 import { useGetAllAccountsQuery } from "../../../../slices/finance/accountsApiSlice";
 import { useGetAllSuppliersQuery } from "../../../../slices/administration/suppliersApiSlice";
-import { useCreateStorePurchaseLineMutation } from "../../../../slices/purchase/storePurchaseLinesApiSlice";
+import { useCreateProductionLineMutation } from "../../../../slices/production/ProductionLinesApiSlice";
 import { useGetAllStoreRegisterQuery } from "../../../../slices/store/storeRegisterApiSlice";
 
 function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
@@ -18,7 +18,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
 
   const { data: item_register } = useGetAllItemRegisterQuery();
   const { userInfo } = useSelector((state) => state.auth);
-  const [purchase_line, { isLoading }] = useCreateStorePurchaseLineMutation();
+  const [production_line, { isLoading }] = useCreateProductionLineMutation();
   const { data: stores } = useGetAllStoreRegisterQuery();
   const navigate = useNavigate();
   const [products, set_products] = useState({
@@ -37,8 +37,8 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
     production_buffer: "store",
     created_by: "",
     production_number: "",
-    batch_number: batch_number,
-    store_code: "",
+    batch_number: "",
+    store_code: 0,
     store_name: "",
   });
 
@@ -67,17 +67,16 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
       if (production_list.length === 0) {
         alert("Add items to purchase first!");
       } else {
-        const res = await purchase_line({
+        const res = await production_line({
           production_number: products.production_number,
           created_by: products.created_by,
           production_line: production_list,
         }).unwrap();
-        if (res.status === "failed") {
-          toast.error("Purchase lines already added. Proceed to update");
-          navigate("../allstorepurchasesintransit");
+        if (res.status == "failed") {
+          toast.error(res.message);
         } else {
-          toast.success("Purchase lines created successfully");
-          navigate("../allstorepurchasesintransit");
+          toast.success("Production lines created successfully");
+          navigate("../allpostedtransiactionheaderlist");
         }
       }
     } catch (err) {
@@ -97,6 +96,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
       ...products,
       product_code: parseInt(e.target.value),
       product_name: x[0].item_name,
+      batch_number: batch_number,
       production_number: parseInt(products.purchase_header_id),
       product_units_value: parseInt(x[0].item_units_value),
       weight_in_kgs:
@@ -115,7 +115,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
     });
     set_products({
       ...products,
-      first_pack: e.target.value,
+      first_pack: parseInt(e.target.value),
       first_pack_name: x[0].item_name,
     });
   };
@@ -165,7 +165,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
     });
     set_products({
       ...products,
-      store_code: e.target.value,
+      store_code: parseInt(x[0].store_code),
       store_name: x[0].store_name,
     });
   };
