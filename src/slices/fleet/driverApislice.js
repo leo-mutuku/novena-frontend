@@ -1,24 +1,62 @@
 import { apiSlice } from "../apiSlice";
-const ACCOUNTS_URL = "/api/v1/finance/accounts";
+const DRIVERS_URL = "/api/v1/fleet/drivers";
 
-export const driverApislice = apiSlice.injectEndpoints({
+export const driversApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllAccounts: builder.query({
+    addDriver: builder.mutation({
       query: (data) => ({
-        url: `${ACCOUNTS_URL}/getallacounts`,
-        method: "GET",
-        body: data,
-      }),
-    }),
-    createAccount: builder.mutation({
-      query: (data) => ({
-        url: `${ACCOUNTS_URL}/createaccount`,
+        url: `${DRIVERS_URL}/create`,
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Driver"],
+    }),
+    getDriver: builder.query({
+      query: (id) => `${DRIVERS_URL}/${id}`,
+      providesTags: ["Driver"],
+    }),
+    getAllDrivers: builder.query({
+      query: (data) => ({
+        url: `${DRIVERS_URL}/all`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Driver"],
+    }),
+    updateDriver: builder.mutation({
+      query: ({ id, data }) => {
+        alert(id);
+        alert(JSON.stringify(data));
+        console.log("Updating Driver Data:", data); // Log the data here
+        return {
+          url: `${DRIVERS_URL}/${id}`,
+          method: "PUT",
+          body: data,
+        };
+      },
+      invalidatesTags: ["Driver"],
+      onSuccess: (data, variables, context) => {
+        console.log("Updated Driver Data:", data);
+      },
+      onError: (error, variables, context) => {
+        console.error("Error updating driver:", error);
+      },
+    }),
+
+    deleteDriver: builder.mutation({
+      query: (id) => ({
+        url: `${DRIVERS_URL}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Driver"],
     }),
   }),
 });
 
-export const { useGetAllAccountsQuery, useCreateAccountMutation } =
-  driverApislice;
+export const {
+  useAddDriverMutation,
+  useGetAllDriversQuery,
+  useGetDriverQuery,
+  useUpdateDriverMutation,
+  useDeleteDriverMutation,
+} = driversApiSlice;
