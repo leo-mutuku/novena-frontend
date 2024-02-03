@@ -1,7 +1,12 @@
 import React from "react";
+import DriverDataTable from "./DriverDataTable";
 
 const DriversList = () => {
-  return <div>DriversList</div>;
+  return (
+    <>
+      <DriverDataTable />
+    </>
+  );
 };
 
 export default DriversList;
