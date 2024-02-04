@@ -11,9 +11,12 @@ import { MdDelete } from "react-icons/md";
 import AddOrderLines from "./lines/AddOrderLines";
 // import DeletePurchaseModal from "./lines/DeletePurchaseModal";
 import TimeDate from "../../../components/TimeDate";
+import PrintSalesOrder from "./lines/PrintSalesOrder";
+import { TiPrinter } from "react-icons/ti";
 
 const OrderHeaderList = () => {
   let timeDate = new TimeDate();
+  const [mode_print, set_mode_print] = useState("none");
   const [mode, set_mode] = useState("none");
   const [mode_delete, set_mode_delete] = useState("none");
   const [store_purchase_id, set_store_purchase_id] = useState("");
@@ -29,7 +32,11 @@ const OrderHeaderList = () => {
   console.log(data?.data);
   const navigate = useNavigate();
   useEffect(() => {}, [data]);
-  console.log(data);
+
+  const handlePrint = (e, id, style) => {
+    set_store_purchase_id(parseInt(id));
+    set_print_mode(style);
+  };
   return (
     <>
       <>
@@ -45,6 +52,12 @@ const OrderHeaderList = () => {
             set_mode_delete={set_mode_delete}
           />
         </div> */}
+        <div style={{ display: `${mode_print}` }}>
+          <PrintSalesOrder
+            purchase_header_id={store_purchase_id}
+            set_mode_print={set_mode_print}
+          />
+        </div>
       </>
       <p>*** All Sales Orders ***</p>
 
@@ -62,6 +75,7 @@ const OrderHeaderList = () => {
             <th>Status</th>
             <th>Add</th>
             <th>Edit</th>
+            <th>Print</th>
           </tr>
         </thead>
         <tbody>
@@ -117,6 +131,19 @@ const OrderHeaderList = () => {
                     </Link>
                   ) : (
                     "--"
+                  )}
+                </td>
+                <td>
+                  {item.status === "New" ? (
+                    <>--</>
+                  ) : (
+                    <Link to={`#`}>
+                      <TiPrinter
+                        onClick={(e) =>
+                          handlePrint(e, item.store_purchase_number, "block")
+                        }
+                      />
+                    </Link>
                   )}
                 </td>
               </tr>
