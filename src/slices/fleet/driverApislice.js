@@ -1,24 +1,50 @@
 import { apiSlice } from "../apiSlice";
-const ACCOUNTS_URL = "/api/v1/finance/accounts";
+const DRIVERS_URL = "/api/v1/fleet/drivers";
 
-export const driverApislice = apiSlice.injectEndpoints({
+export const driversApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllAccounts: builder.query({
+    addDriver: builder.mutation({
       query: (data) => ({
-        url: `${ACCOUNTS_URL}/getallacounts`,
-        method: "GET",
-        body: data,
-      }),
-    }),
-    createAccount: builder.mutation({
-      query: (data) => ({
-        url: `${ACCOUNTS_URL}/createaccount`,
+        url: `${DRIVERS_URL}/create`,
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Driver"],
+    }),
+    getDriver: builder.query({
+      query: (id) => `${DRIVERS_URL}/${id}`,
+      providesTags: ["Driver"],
+    }),
+    getAllDrivers: builder.query({
+      query: (data) => ({
+        url: `${DRIVERS_URL}/all`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Driver"],
+    }),
+    updateDriver: builder.mutation({
+      query: (id, data) => ({
+        url: `${DRIVERS_URL}/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Driver"],
+    }),
+    deleteDriver: builder.mutation({
+      query: (id) => ({
+        url: `${DRIVERS_URL}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Driver"],
     }),
   }),
 });
 
-export const { useGetAllAccountsQuery, useCreateAccountMutation } =
-  driverApislice;
+export const {
+  useAddDriverMutation,
+  useGetAllDriversQuery,
+  useGetDriverQuery,
+  useUpdateDriverMutation,
+  useDeleteDriverMutation,
+} = driversApiSlice;

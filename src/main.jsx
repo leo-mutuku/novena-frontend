@@ -178,6 +178,7 @@ import AllOrderHeadersInTransit from "./screens/sales/orders/AllOrderHeadersInTr
 import AllReurnOrdersInTransit from "./screens/sales/returnorders/AllReurnOrdersInTransit.jsx";
 import AllPostedReturnOrders from "./screens/sales/returnorders/AllPostedReturnOrders.jsx";
 import PaymentRequisitionList from "./screens/payment/payments/requisitions/PaymentRequisitionList.jsx";
+import EditDriver from "./screens/fleet/drivers/EditDriver.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -488,6 +489,7 @@ const router = createHashRouter(
           <Route path="drivers" element={<DriverScreen />}>
             <Route path="alldrivers" element={<DriversList />} />
             <Route path="createdriver" element={<CreateDrivers />} />
+            <Route path="update/:id" element={<EditDriver />} />
           </Route>
           <Route path="routes" element={<RoutesScreen />}>
             <Route path="allroutes" element={<RoutesList />} />

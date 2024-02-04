@@ -1,24 +1,49 @@
 import { apiSlice } from "../apiSlice";
-const ACCOUNTS_URL = "/api/v1/finance/accounts";
+const VEHICLES_URL = "/api/v1/fleet/vehicles";
 
 export const vehicleApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllAccounts: builder.query({
+    addVehicle: builder.mutation({
       query: (data) => ({
-        url: `${ACCOUNTS_URL}/getallacounts`,
+        url: `${VEHICLES_URL}/create`,
+        method: "POST",
+        body: data,
+      }),
+      providesTags: ["Vehicle"],
+    }),
+    getVehicle: builder.query({
+      query: (id) => `${VEHICLES_URL}/${id}`,
+      providesTags: ["Vehicle"],
+    }),
+    getAllVehicles: builder.query({
+      query: (data) => ({
+        url: `${VEHICLES_URL}/all`,
         method: "GET",
         body: data,
       }),
     }),
-    createAccount: builder.mutation({
-      query: (data) => ({
-        url: `${ACCOUNTS_URL}/createaccount`,
-        method: "POST",
-        body: data,
+    updateVehicle: builder.mutation({
+      query: ({ id, ...rest }) => ({
+        url: `${VEHICLES_URL}/${id}`,
+        method: "PUT",
+        body: rest,
       }),
+      invalidatesTags: ["Vehicle"],
+    }),
+    deleteVehicle: builder.mutation({
+      query: (id) => ({
+        url: `${VEHICLES_URL}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Vehicle"],
     }),
   }),
 });
 
-export const { useGetAllAccountsQuery, useCreateAccountMutation } =
-  vehicleApiSlice;
+export const {
+  useAddVehicleMutation,
+  useDeleteVehicleMutation,
+  useGetAllVehiclesQuery,
+  useUpdateVehicleMutation,
+  useGetVehicleQuery,
+} = vehicleApiSlice;
