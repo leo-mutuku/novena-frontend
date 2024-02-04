@@ -17,6 +17,10 @@ function CreateProductionHeader() {
   const [batch_number, set_batch_number] = useState("");
   const [created_by, set_created_by] = useState(null);
   const [store_code, set_store_code] = useState(0);
+  const [production_officer_first_name, set_production_officer_first_name] =
+    useState("");
+  const [production_officer_last_name, set_production_officer_last_name] =
+    useState("");
   console.log(store_code);
 
   const [ProductionHeader, { isLoading }] = useCreateProductionHeaderMutation();
@@ -43,6 +47,8 @@ function CreateProductionHeader() {
         batch_number,
         created_by,
         store_code,
+        production_officer_first_name,
+        production_officer_last_name,
       }).unwrap();
       console.log(res);
       if (res.status == "failed") {
@@ -72,6 +78,17 @@ function CreateProductionHeader() {
     set_production_date(e.target.value);
   };
 
+  const hadleProductionOfficer = (e) => {
+    let x = staff?.data?.filter((a) => {
+      if (a.staff_id == e.target.value) {
+        return a.first_name;
+      }
+    });
+    alert(x[0].first_name);
+    set_production_officer(e.target.value);
+    set_production_officer_first_name(x[0].first_name);
+    set_production_officer_last_name(x[0].last_name);
+  };
   return (
     <>
       <span>*** New Production *** </span>
@@ -153,7 +170,7 @@ function CreateProductionHeader() {
                 type="number"
                 placeholder="Officer "
                 value={production_officer}
-                onChange={(e) => set_production_officer(e.target.value)}
+                onChange={hadleProductionOfficer}
               >
                 <option value={""}>Production Officer</option>
                 {staff?.data.map((item, index) => (

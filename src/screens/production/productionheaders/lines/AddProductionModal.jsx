@@ -7,7 +7,11 @@ import { useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { Prev } from "react-bootstrap/esm/PageItem";
-import { useGetAllItemRegisterQuery } from "../../../../slices/store/itemregisterApiSlice";
+import {
+  useGetAllItemRegisterQuery,
+  useGetAllFinalProductsQuery,
+  useGetAllPackagingMaterialQuery,
+} from "../../../../slices/store/itemregisterApiSlice";
 import { useGetAllAccountsQuery } from "../../../../slices/finance/accountsApiSlice";
 import { useGetAllSuppliersQuery } from "../../../../slices/administration/suppliersApiSlice";
 import { useCreateProductionLineMutation } from "../../../../slices/production/ProductionLinesApiSlice";
@@ -17,6 +21,9 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
   let purchase_id = parseInt(store_purchase_id);
 
   const { data: item_register } = useGetAllItemRegisterQuery();
+  const { data: all_final_products } = useGetAllFinalProductsQuery();
+  const { data: all_packaging_material } = useGetAllPackagingMaterialQuery();
+
   const { userInfo } = useSelector((state) => state.auth);
   const [production_line, { isLoading }] = useCreateProductionLineMutation();
   const { data: stores } = useGetAllStoreRegisterQuery();
@@ -24,6 +31,8 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
   const [products, set_products] = useState({
     product_code: 0,
     product_name: "",
+    product_store_code: 0,
+    product_store_name: "",
     product_units_value: 1,
     product_output: 0,
     first_pack: "",
@@ -169,6 +178,18 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
       store_name: x[0].store_name,
     });
   };
+  const handFinalProductStore = (e) => {
+    let x = stores?.data?.filter((a) => {
+      if (a.store_code == e.target.value) {
+        return a.store_name;
+      }
+    });
+    set_products({
+      ...products,
+      product_store_code: parseInt(x[0].store_code),
+      product_store_name: x[0].store_name,
+    });
+  };
   console.log(products);
   return (
     <>
@@ -210,7 +231,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                   <Row>
                     <Col>
                       <Form.Group className="my-2" controlId="item_code">
-                        <Form.Label>Product</Form.Label>
+                        <Form.Label>Final Product</Form.Label>
                         <Form.Select
                           type="text"
                           required
@@ -219,8 +240,8 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                           onChange={handleItemCode}
                         >
                           {" "}
-                          <option>Product item</option>
-                          {item_register?.data?.map((item, index) => (
+                          <option>Final Product</option>
+                          {all_final_products?.data?.map((item, index) => (
                             <option value={item.item_code} key={index}>
                               {item.item_code} | {item.item_name}
                             </option>
@@ -231,7 +252,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
 
                     <Col>
                       <Form.Group className="my-2" controlId="product_output">
-                        <Form.Label>Product Output </Form.Label>
+                        <Form.Label>Final Product Output </Form.Label>
                         <Form.Control
                           type="number"
                           required
@@ -246,7 +267,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                         className="my-2"
                         controlId="production_buffer"
                       >
-                        <Form.Label>Product item buffer </Form.Label>
+                        <Form.Label>Final Product item buffer </Form.Label>
                         <Form.Check
                           type="radio"
                           required
@@ -271,7 +292,28 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                     <Row>
                       <Col>
                         <Form.Group className="my-2" controlId="naraturation">
-                          <Form.Label>Package </Form.Label>
+                          <Form.Label>Final Product Store </Form.Label>
+                          <Form.Select
+                            type="text"
+                            required
+                            placeholder="Total"
+                            value={products.product_store_code}
+                            onChange={handFinalProductStore}
+                          >
+                            <option value={""}>
+                              Select Final Product Store{" "}
+                            </option>
+                            {stores?.data.map((item, index) => (
+                              <option value={item.store_code}>
+                                {item.store_name}
+                              </option>
+                            ))}
+                          </Form.Select>
+                        </Form.Group>
+                      </Col>
+                      <Col>
+                        <Form.Group className="my-2" controlId="naraturation">
+                          <Form.Label>Product Packaging </Form.Label>
                           <Form.Select
                             type="text"
                             required
@@ -279,8 +321,8 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                             value={products.first_pack}
                             onChange={handFirstPack}
                           >
-                            <option value={""}>Select Package </option>
-                            {item_register?.data.map((item, index) => (
+                            <option value={""}>Select Packaging </option>
+                            {all_packaging_material?.data.map((item, index) => (
                               <option value={item.item_code}>
                                 {item.item_name}
                               </option>
@@ -302,7 +344,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                       </Col>
                       <Col>
                         <Form.Group className="my-2" controlId="naraturation">
-                          <Form.Label>Store (Packaging Material)</Form.Label>
+                          <Form.Label>Packaging Store</Form.Label>
                           <Form.Select
                             type="number"
                             required
@@ -348,6 +390,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                         <th>Product Buffer</th>
                         <th>Packaging Name</th>
                         <th>Packaging Count</th>
+                        <th>Packaging Store</th>
                         <th>T.Weight (KG)</th>
                         <th>T.Weight (90 KG)</th>
                         <th>
@@ -371,7 +414,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                             <td>{p_items.product_output}</td>
                             <td>
                               {p_items.production_buffer === "store" ? (
-                                <>{p_items.store_name}</>
+                                <>{p_items.product_store_name}</>
                               ) : (
                                 <>Pack House</>
                               )}
@@ -388,6 +431,13 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                                 <>N/A</>
                               ) : (
                                 <>{p_items.first_pack_count}</>
+                              )}
+                            </td>
+                            <td>
+                              {p_items.production_buffer === "pack_house" ? (
+                                <>N/A</>
+                              ) : (
+                                <>{p_items.store_name}</>
                               )}
                             </td>
                             <td>{p_items.weight_in_kgs}</td>

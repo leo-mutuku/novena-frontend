@@ -284,7 +284,6 @@ const router = createHashRouter(
           <Route index element={<ProductionDashboardScreen />} />
           {/* production header routes */}
           <Route path="productionheaders" element={<ProductionHeaderScreen />}>
-            <Route index element={<ProductionHeaderList />} />
             <Route
               path="createproductionheader"
               element={<CreateProductionHeader />}

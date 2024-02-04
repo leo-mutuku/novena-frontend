@@ -25,8 +25,8 @@ const AllItemEntries = () => {
         <thead>
           <tr>
             <th>#</th>
-            <th>Entry ID</th>
-            <th>AC No.</th>
+            <th>Store Code.</th>
+            <th>Item Code.</th>
             <th>SRC. Doc. Id</th>
             <th>SRC. Doc. Name</th>
             <th>Adj Type</th>
@@ -40,8 +40,8 @@ const AllItemEntries = () => {
             <>
               <tr>
                 <td>{index + 1}</td>
-                <td>{item.account_entry_id}</td>
-                <td>{item.account_number}</td>
+                <td>{item.store_code}</td>
+                <td>{item.item_code}</td>
                 <td>{item.source_document_id}</td>
                 <td>{item.source_document_name}</td>
                 <td>{item.adjustment_type}</td>

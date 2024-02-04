@@ -5,6 +5,7 @@ export const sidelinks = [
       { subMenuTitle: "Store Item Register", to: "storeitemregister" },
       { subMenuTitle: "Store Items", to: "storeitems" },
       { subMenuTitle: "Store Items Entries", to: "storeitemsentries" },
+      { subMenuTitle: "Store Items Buffer", to: "storeitemsbuffer" },
     ],
   },
   {

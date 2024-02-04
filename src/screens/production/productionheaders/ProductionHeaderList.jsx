@@ -12,6 +12,7 @@ import { MdDelete } from "react-icons/md";
 import AddProductionModal from "./lines/AddProductionModal";
 // import DeletePurchaseModal from "./lines/DeletePurchaseModal";
 import TimeDate from "../../../components/TimeDate";
+import { GiReturnArrow } from "react-icons/gi";
 
 const ProductionHeaderList = () => {
   let timeDate = new TimeDate();
@@ -63,9 +64,10 @@ const ProductionHeaderList = () => {
             <th>Expected</th>
             <th>Output</th>
             <th>Variance</th>
+            <th>Created By</th>
             <th>Status</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Add</th>
+            <th>Revert</th>
           </tr>
         </thead>
         <tbody>
@@ -81,14 +83,16 @@ const ProductionHeaderList = () => {
                 <td style={{ fontSize: "14px" }}>{`${timeDate.date(
                   item.production_date
                 )} `}</td>
-                <td style={{ fontSize: "14px" }}>{item.production_officer}</td>
+                <td style={{ fontSize: "14px" }}>
+                  {item.production_officer_first_name}
+                </td>
 
                 <td style={{ fontSize: "14px" }}>{item.batch_number}</td>
                 <td style={{ fontSize: "14px" }}>{item.production_input}</td>
                 <td style={{ fontSize: "14px" }}>{item.expected_output}</td>
                 <td style={{ fontSize: "14px" }}>{item.actual_output}</td>
                 <td style={{ fontSize: "14px" }}>{item.production_variance}</td>
-
+                <td style={{ fontSize: "14px" }}>{item.created_by}</td>
                 <td>
                   {item.status === "New" ? (
                     <span style={{ color: "orange" }}>{item.status}</span>
@@ -122,7 +126,7 @@ const ProductionHeaderList = () => {
                 <td>
                   {item.status === "New" ? (
                     <Link to={`#`}>
-                      <MdDelete
+                      <GiReturnArrow
                         onClick={(e) =>
                           handleDelete(e, item.store_purchase_number, "block")
                         }
