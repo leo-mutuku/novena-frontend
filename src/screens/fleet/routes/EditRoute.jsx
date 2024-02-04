@@ -9,7 +9,7 @@ import {
 } from "../../../slices/fleet/driverApislice";
 import Loader from "../../../components/Loader";
 
-function EditDriver() {
+function EditRoute() {
   const [name, setName] = useState("");
   const [license_number, setLicenseNumber] = useState("");
   const [contact_number, setContactNumber] = useState("");
@@ -143,4 +143,4 @@ function EditDriver() {
   );
 }
 
-export default EditDriver;
+export default EditRoute;
