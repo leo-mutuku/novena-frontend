@@ -9,6 +9,7 @@ export const productionProjectionApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: "production_headers",
     }),
 
     getAllProductionHeaders: builder.query({
@@ -17,6 +18,7 @@ export const productionProjectionApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
+      providesTags: "production_headers",
     }),
     getAllProductionHeadersInTransit: builder.query({
       query: (data) => ({
@@ -24,6 +26,7 @@ export const productionProjectionApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
+      providesTags: "production_headers",
     }),
     getAllProductionHeadersInTransit: builder.query({
       query: (data) => ({
@@ -31,6 +34,7 @@ export const productionProjectionApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
+      providesTags: "production_headers",
     }),
     getAllPostedProductionHeaders: builder.query({
       query: (data) => ({
@@ -38,6 +42,7 @@ export const productionProjectionApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
+      providesTags: "production_headers",
     }),
   }),
 });

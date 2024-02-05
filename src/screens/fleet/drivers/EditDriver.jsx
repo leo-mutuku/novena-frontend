@@ -177,7 +177,6 @@ function EditDriver() {
   useEffect(() => {
     if (error && id) {
       toast.error("Something went wrong: " + error.message);
-      console.log(JSON.stringify(error.message));
     }
   }, [id, error]);
 
@@ -197,14 +196,7 @@ function EditDriver() {
     if (!name && !license_number && !email && !contact_number) {
       toast.error("Please provide value into each input field");
     } else {
-      const dataDriver = {
-        name,
-        license_number,
-        contact_number,
-        email,
-      };
-
-      alert(JSON.stringify(dataDriver));
+      alert(name);
       await updateDriver(id, {
         name,
         license_number,

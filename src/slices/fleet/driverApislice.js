@@ -26,7 +26,7 @@ export const driversApiSlice = apiSlice.injectEndpoints({
     updateDriver: builder.mutation({
       query: (id, data) => ({
         url: `${DRIVERS_URL}/${id}`,
-        method: "PUT",
+        method: "PATCH",
         body: data,
       }),
       invalidatesTags: ["Driver"],

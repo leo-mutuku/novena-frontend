@@ -4,6 +4,7 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAddDriverMutation } from "../../../slices/fleet/driverApislice";
+import Loader from "../../../components/Loader";
 
 function CreateDrivers() {
   const [name, setName] = useState("");
