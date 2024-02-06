@@ -3,24 +3,23 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import {
-  useGetDriverQuery,
-  useUpdateDriverMutation,
-} from "../../../slices/fleet/driverApislice";
 import Loader from "../../../components/Loader";
+import { useGetRouteQuery, useUpdateRouteMutation } from "../../../slices/fleet/routesApiSlice";
 
 function EditRoute() {
   const [name, setName] = useState("");
-  const [license_number, setLicenseNumber] = useState("");
-  const [contact_number, setContactNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [updateDriver, { isError, isSuccess, error: errorUpdate }] =
-    useUpdateDriverMutation();
+  const [start_location, setStartLocation] = useState("");
+  const [end_location, setEndLocation] = useState("");
+  const [distance_km, setDistanceKm] = useState("");
+  
+  const [updateRoute, { isError, isSuccess, error: errorUpdate }] =
+    useUpdateRouteMutation();
+
   const { id } = useParams();
   const navigate = useNavigate();
 
-  //call driver get query
-  const { data: driver, error, isLoading } = useGetDriverQuery(id);
+  //call Route get query
+  const { data: Route, error, isLoading } = useGetRouteQuery(id);
 
   useEffect(() => {
     if (error && id) {
@@ -31,38 +30,38 @@ function EditRoute() {
 
   useEffect(() => {
     if (id) {
-      if (driver) {
-        setName(driver.data.name);
-        setContactNumber(driver.data.contact_number);
-        setLicenseNumber(driver.data.license_number);
-        setEmail(driver.data.email);
+      if (Route) {
+        setName(Route.data.name);
+        setStartLocation(Route.data.start_location);
+        setEndLocation(Route.data.end_location);
+        setDistanceKm(Route.data.distance_km);
       }
     }
-  }, [id, driver]);
+  }, [id, Route]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name && !license_number && !email && !contact_number) {
+    if (!name && !start_location && !end_location && !distance_km) {
       toast.error("Please provide value into each input field");
     } else {
-      const dataDriver = {
+      const dataRoute = {
         name,
-        license_number,
-        contact_number,
-        email,
+        start_location,
+        end_location,
+        distance_km,
       };
       try {
-        const result = await updateDriver({
+        const result = await updateRoute({
           id,
-          data: dataDriver,
+          data: dataRoute,
         }).unwrap();
 
         toast.success(result.message);
 
-        navigate("../alldrivers");
+        navigate("../allroutes");
       } catch (error) {
         toast.error(error.message);
-        console.error("Failed to update driver:", error);
+        console.error("Failed to update route:", error);
       }
     }
   };
@@ -81,11 +80,11 @@ function EditRoute() {
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="name">
-              <Form.Label>Driver Name</Form.Label>
+              <Form.Label>Route Name</Form.Label>
               <Form.Control
                 type="text"
                 required
-                placeholder="Driver name"
+                placeholder="Route name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               ></Form.Control>
@@ -93,41 +92,41 @@ function EditRoute() {
           </Col>
           <Col>
             {/* */}
-            <Form.Group className="my-2" controlId="license_number">
-              <Form.Label>License Number</Form.Label>
+            <Form.Group className="my-2" controlId="start_location">
+              <Form.Label>Start Location</Form.Label>
               <Form.Control
                 type="text"
                 required
-                placeholder="License Number"
-                value={license_number}
-                onChange={(e) => setLicenseNumber(e.target.value)}
+                placeholder="Start Location"
+                value={start_location}
+                onChange={(e) => setStartLocation(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
         </Row>
         <Row>
           <Col>
-            <Form.Group className="my-2" controlId="contact_number">
-              <Form.Label>Phone Number</Form.Label>
+            <Form.Group className="my-2" controlId="end_location">
+              <Form.Label>End Location</Form.Label>
               <Form.Control
-                type="number"
+                type="text"
                 required
-                placeholder="Phone Number"
-                value={contact_number}
-                onChange={(e) => setContactNumber(e.target.value)}
+                placeholder="End Location"
+                value={end_location}
+                onChange={(e) => setEndLocation(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
           <Col>
             {/* */}
-            <Form.Group className="my-2" controlId="email">
-              <Form.Label>Email</Form.Label>
+            <Form.Group className="my-2" controlId="distance_km">
+              <Form.Label>Distance (KM)</Form.Label>
               <Form.Control
-                type="email"
+                type="text"
                 required
-                placeholder="Email Address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Distance in km"
+                value={distance_km}
+                onChange={(e) => setDistanceKm(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>

@@ -4,6 +4,7 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAddRouteMutation } from "../../../slices/fleet/routesApiSlice";
+import Loader from "../../../components/Loader";
 
 function CreateRoutes() {
   const [name, setName] = useState("");
@@ -25,11 +26,8 @@ function CreateRoutes() {
         start_location,
         end_location,
         distance_km,
-      }).unwrap();
-
-      alert(JSON.stringify(res));
-
-      toast.success("Route Added Successfully");
+      }).unwrap(); //extract the actual payload from the action
+      toast.success(res.message);
       navigate("../allroutes");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
@@ -92,7 +90,7 @@ function CreateRoutes() {
             <Form.Group className="my-2" controlId="distance_km">
               <Form.Label>Distance (KM)</Form.Label>
               <Form.Control
-                type="email"
+                type="text"
                 required
                 placeholder="Distance in km"
                 value={distance_km}
