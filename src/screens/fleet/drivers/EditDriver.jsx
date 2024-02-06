@@ -8,6 +8,7 @@ import {
   useUpdateDriverMutation,
 } from "../../../slices/fleet/driverApislice";
 import Loader from "../../../components/Loader";
+import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
 
 function EditDriver() {
   const [name, setName] = useState("");
@@ -39,6 +40,17 @@ function EditDriver() {
       }
     }
   }, [id, driver]);
+  const { data: staff } = useGetAllStaffQuery();
+  const handleStaff = (e) => {
+    let x = staff?.data?.filter((a) => {
+      if (a.staff_number == e.target.value) {
+        return a.first_name;
+      }
+    });
+    setName(x[0].staff_number +" "+ x[0].first_name + " " + x[0].last_name)
+    set_first_name(x[0].first_name);
+    set_last_name(x[0].last_name);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -79,16 +91,22 @@ function EditDriver() {
         {/* */}
 
         <Row>
-          <Col>
+        <Col>
             <Form.Group className="my-2" controlId="name">
               <Form.Label>Driver Name</Form.Label>
-              <Form.Control
-                type="text"
+              <Form.Select
+                type="number"
                 required
-                placeholder="Driver name"
+                placeholder="Driver Name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
-              ></Form.Control>
+                onChange={handleStaff}
+              >
+                {staff?.data?.map((item) => (
+                  <option value={item.staff_number}>
+                    {item.staff_number} | {item.first_name}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
           <Col>
