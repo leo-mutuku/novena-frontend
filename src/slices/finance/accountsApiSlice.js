@@ -9,6 +9,7 @@ export const accountsApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
+      providesTags: ["Account"],
     }),
     createAccount: builder.mutation({
       query: (data) => ({
@@ -16,6 +17,7 @@ export const accountsApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Account"],
     }),
   }),
 });

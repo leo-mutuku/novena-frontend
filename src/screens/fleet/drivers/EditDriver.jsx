@@ -14,8 +14,7 @@ function EditDriver() {
   const [license_number, setLicenseNumber] = useState("");
   const [contact_number, setContactNumber] = useState("");
   const [email, setEmail] = useState("");
-  const [updateDriver, { isError, isSuccess, error: errorUpdate }] =
-    useUpdateDriverMutation();
+  const [updateDriver] = useUpdateDriverMutation();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -26,6 +25,7 @@ function EditDriver() {
     if (error && id) {
       toast.error("Something went wrong: " + error.message);
       console.log(JSON.stringify(error.message));
+
     }
   }, [id, error]);
 
@@ -45,12 +45,16 @@ function EditDriver() {
     if (!name && !license_number && !email && !contact_number) {
       toast.error("Please provide value into each input field");
     } else {
+
       const dataDriver = {
-        name,
+
+      await updateDriver(id, { 
+       name,
         license_number,
         contact_number,
         email,
       };
+      
       try {
         const result = await updateDriver({
           id,
@@ -64,6 +68,9 @@ function EditDriver() {
         toast.error(error.message);
         console.error("Failed to update driver:", error);
       }
+      });
+      navigate("../alldrivers");
+      toast.success("Driver Updated Successfully");
     }
   };
   return (

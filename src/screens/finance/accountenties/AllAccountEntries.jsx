@@ -16,8 +16,6 @@ const AllAccountEntries = () => {
   const { data, isLoading } = useGetAllAccountEntriesQuery();
   const [account_entries, set_account_entries] = useState([]);
 
-  console.log(data?.data);
-
   return (
     <>
       <p>*** All Accounts ***</p>

@@ -9,6 +9,7 @@ export const stockTakeApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
+      providesTags: "store_items",
     }),
     createStoreItem: builder.mutation({
       query: (data) => ({
@@ -16,6 +17,7 @@ export const stockTakeApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: "store_items",
     }),
   }),
 });
