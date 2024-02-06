@@ -78,6 +78,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
       } else {
         const res = await production_line({
           production_number: products.production_number,
+          batch_no: products.batch_number,
           created_by: products.created_by,
           production_line: production_list,
         }).unwrap();
