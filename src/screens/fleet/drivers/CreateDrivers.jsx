@@ -5,9 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAddDriverMutation } from "../../../slices/fleet/driverApislice";
 
-import Loader from "../../../components/Loader";
-
-
 function CreateDrivers() {
   const [name, setName] = useState("");
   const [license_number, setLicenseNumber] = useState("");
@@ -106,6 +103,7 @@ function CreateDrivers() {
         <Button type="submit" variant="primary" className="mt-3">
           Submit
         </Button>
+
         {isLoading && <Loader />}
       </Form>
     </>

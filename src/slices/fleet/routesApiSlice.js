@@ -8,7 +8,6 @@ export const routesApiSlice = apiSlice.injectEndpoints({
         url: `${ROUTES_URL}/create`,
         method: "POST",
         body: data,
-<<<<<<< HEAD
       }),
       invalidatesTags: ["Route"],
     }),
@@ -34,36 +33,7 @@ export const routesApiSlice = apiSlice.injectEndpoints({
         };
       },
       invalidatesTags: ["Route"],
-      onSuccess: (data, variables, context) => {},
-      onError: (error, variables, context) => {
-        console.error("Error updating Route:", error);
-      },
     }),
-
-=======
-      }),
-      providesTags: ["Route"],
-    }),
-    getRoute: builder.query({
-      query: (id) => `${ROUTES_URL}/${id}`,
-      providesTags: ["Route"],
-    }),
-    getAllRoutes: builder.query({
-      query: (data) => ({
-        url: `${ROUTES_URL}/all`,
-        method: "GET",
-        body: data,
-      }),
-    }),
-    updateRoute: builder.mutation({
-      query: ({ id, ...rest }) => ({
-        url: `${ROUTES_URL}/${id}`,
-        method: "PUT",
-        body: rest,
-      }),
-      invalidatesTags: ["Route"],
-    }),
->>>>>>> bb6a990e366dd5456e8c9cadeca4109d84eaf0f7
     deleteRoute: builder.mutation({
       query: (id) => ({
         url: `${ROUTES_URL}/${id}`,

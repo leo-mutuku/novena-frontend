@@ -16,7 +16,6 @@ export const driversApiSlice = apiSlice.injectEndpoints({
       providesTags: ["Driver"],
     }),
     getAllDrivers: builder.query({
-<<<<<<< HEAD
       query: () => ({
         url: `${DRIVERS_URL}/all`,
         method: "GET",
@@ -39,24 +38,6 @@ export const driversApiSlice = apiSlice.injectEndpoints({
         console.error("Error updating driver:", error);
       },
     }),
-
-=======
-      query: (data) => ({
-        url: `${DRIVERS_URL}/all`,
-        method: "GET",
-        body: data,
-      }),
-      providesTags: ["Driver"],
-    }),
-    updateDriver: builder.mutation({
-      query: (id, data) => ({
-        url: `${DRIVERS_URL}/${id}`,
-        method: "PATCH",
-        body: data,
-      }),
-      invalidatesTags: ["Driver"],
-    }),
->>>>>>> bb6a990e366dd5456e8c9cadeca4109d84eaf0f7
     deleteDriver: builder.mutation({
       query: (id) => ({
         url: `${DRIVERS_URL}/${id}`,
