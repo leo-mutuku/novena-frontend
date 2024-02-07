@@ -1,156 +1,3 @@
-// import React, { useState, useEffect } from "react";
-// import { Form, Button, Row, Col } from "react-bootstrap";
-
-// import { useNavigate, useParams } from "react-router-dom";
-// import { toast } from "react-toastify";
-// import {
-//   useGetDriverQuery,
-//   useUpdateDriverMutation,
-// } from "../../../slices/fleet/driverApislice";
-
-// const initialState = {
-//   name: "",
-//   license_number: "",
-//   contact_number: "",
-//   email: "",
-// };
-
-// function EditDriver() {
-//   const [formValue, setFormValue] = useState(initialState);
-//   const [editMode, setEditMode] = useState(false);
-//   const [updateDriver] = useUpdateDriverMutation();
-//   const { id } = useParams();
-//   const navigate = useNavigate();
-//   const { name, license_number, email, contact_number } = formValue;
-//   //call driver get query
-//   const { data: driver, error, isLoading } = useGetDriverQuery(id);
-
-//   useEffect(() => {
-//     if (error && id) {
-//       toast.error("Something went wrong: " + JSON.stringify(error));
-//       console.log(JSON.stringify(error));
-//     }
-//   }, [id, error]);
-
-//   useEffect(() => {
-//     if (id) {
-//       setEditMode(true);
-//       if (driver) {
-//         setFormValue({ ...driver.data });
-//       }
-//     } else {
-//       setEditMode(false);
-//       setFormValue({ ...initialState });
-//     }
-//   }, [id, driver]);
-
-//   // if (isLoading) {
-//   //   return <p>Loading...</p>;
-//   // }
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     if (!name && !license_number && !email && !contact_number) {
-//       toast.error("Please provide value into each input field");
-//     } else {
-//       if (editMode) {
-//         await updateDriver(formValue);
-//         navigate("../alldrivers");
-//         toast.success("Driver Updated Successfully");
-//       }
-//     }
-//   };
-//   // const handleInputChange = (e) => {
-//   //   setFormValue({ ...formValue, [e.target.name]: e.target.value });
-//   // };
-//   // const handleInputChange = (e) => {
-//   //   console.log(e.target.name, e.target.value);
-//   //   setFormValue({ ...formValue, [e.target.name]: e.target.value });
-//   // };
-//   const handleInputChange = (e) => {
-//     setFormValue((prevFormValue) => ({
-//       ...prevFormValue,
-//       [e.target.name]: e.target.value,
-//     }));
-//   };
-
-//   return (
-//     <>
-//       <span>*** Edit Driver ***</span>
-//       <Row>
-//         <div>
-//           {" "}
-//           <hr />
-//         </div>
-//       </Row>
-//       <Form onSubmit={handleSubmit}>
-//         {/* */}
-
-//         <Row>
-//           <Col>
-//             <Form.Group className="my-2" controlId="name">
-//               <Form.Label>Driver Name</Form.Label>
-//               <Form.Control
-//                 type="text"
-//                 required
-//                 placeholder="Driver name"
-//                 value={name || ""}
-//                 onChange={(e) => handleInputChange(e)}
-//               ></Form.Control>
-//             </Form.Group>
-//           </Col>
-//           <Col>
-//             {/* */}
-//             <Form.Group className="my-2" controlId="license_number">
-//               <Form.Label>License Number</Form.Label>
-//               <Form.Control
-//                 type="text"
-//                 required
-//                 placeholder="License Number"
-//                 value={license_number}
-//                 onChange={handleInputChange}
-//               ></Form.Control>
-//             </Form.Group>
-//           </Col>
-//         </Row>
-//         <Row>
-//           <Col>
-//             <Form.Group className="my-2" controlId="contact_number">
-//               <Form.Label>Phone Number</Form.Label>
-//               <Form.Control
-//                 type="number"
-//                 required
-//                 placeholder="Phone Number"
-//                 value={contact_number}
-//                 onChange={handleInputChange}
-//               ></Form.Control>
-//             </Form.Group>
-//           </Col>
-//           <Col>
-//             {/* */}
-//             <Form.Group className="my-2" controlId="email">
-//               <Form.Label>Email</Form.Label>
-//               <Form.Control
-//                 type="email"
-//                 required
-//                 placeholder="Email Address"
-//                 value={email}
-//                 onChange={handleInputChange}
-//               ></Form.Control>
-//             </Form.Group>
-//           </Col>
-//         </Row>
-
-//         <Button type="submit" variant="primary" className="mt-3">
-//           Update
-//         </Button>
-//       </Form>
-//     </>
-//   );
-// }
-
-// export default EditDriver;
-
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 
@@ -161,13 +8,15 @@ import {
   useUpdateDriverMutation,
 } from "../../../slices/fleet/driverApislice";
 import Loader from "../../../components/Loader";
+import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
 
 function EditDriver() {
   const [name, setName] = useState("");
   const [license_number, setLicenseNumber] = useState("");
   const [contact_number, setContactNumber] = useState("");
   const [email, setEmail] = useState("");
-  const [updateDriver] = useUpdateDriverMutation();
+  const [updateDriver, { isError, isSuccess, error: errorUpdate }] =
+    useUpdateDriverMutation();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -177,6 +26,7 @@ function EditDriver() {
   useEffect(() => {
     if (error && id) {
       toast.error("Something went wrong: " + error.message);
+      console.log(JSON.stringify(error.message));
     }
   }, [id, error]);
 
@@ -190,21 +40,42 @@ function EditDriver() {
       }
     }
   }, [id, driver]);
+  const { data: staff } = useGetAllStaffQuery();
+  const handleStaff = (e) => {
+    let x = staff?.data?.filter((a) => {
+      if (a.staff_number == e.target.value) {
+        return a.first_name;
+      }
+    });
+    setName(x[0].staff_number +" "+ x[0].first_name + " " + x[0].last_name)
+    set_first_name(x[0].first_name);
+    set_last_name(x[0].last_name);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name && !license_number && !email && !contact_number) {
       toast.error("Please provide value into each input field");
     } else {
-      alert(name);
-      await updateDriver(id, {
+      const dataDriver = {
         name,
         license_number,
         contact_number,
         email,
-      });
-      navigate("../alldrivers");
-      toast.success("Driver Updated Successfully");
+      };
+      try {
+        const result = await updateDriver({
+          id,
+          data: dataDriver,
+        }).unwrap();
+
+        toast.success(result.message);
+
+        navigate("../alldrivers");
+      } catch (error) {
+        toast.error(error.message);
+        console.error("Failed to update driver:", error);
+      }
     }
   };
   return (
@@ -220,16 +91,22 @@ function EditDriver() {
         {/* */}
 
         <Row>
-          <Col>
+        <Col>
             <Form.Group className="my-2" controlId="name">
               <Form.Label>Driver Name</Form.Label>
-              <Form.Control
-                type="text"
+              <Form.Select
+                type="number"
                 required
-                placeholder="Driver name"
+                placeholder="Driver Name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
-              ></Form.Control>
+                onChange={handleStaff}
+              >
+                {staff?.data?.map((item) => (
+                  <option value={item.staff_number}>
+                    {item.staff_number} | {item.first_name}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
           <Col>

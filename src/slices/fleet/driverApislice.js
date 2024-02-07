@@ -16,20 +16,27 @@ export const driversApiSlice = apiSlice.injectEndpoints({
       providesTags: ["Driver"],
     }),
     getAllDrivers: builder.query({
-      query: (data) => ({
+      query: () => ({
         url: `${DRIVERS_URL}/all`,
         method: "GET",
-        body: data,
       }),
+      keepUnusedDataFor: 5,
       providesTags: ["Driver"],
     }),
     updateDriver: builder.mutation({
-      query: (id, data) => ({
-        url: `${DRIVERS_URL}/${id}`,
-        method: "PATCH",
-        body: data,
-      }),
+      query: ({ id, data }) => {
+        // console.log("Updating Driver Data:", data); // Log the data here
+        return {
+          url: `${DRIVERS_URL}/${id}`,
+          method: "PUT",
+          body: data,
+        };
+      },
       invalidatesTags: ["Driver"],
+      onSuccess: (data, variables, context) => {},
+      onError: (error, variables, context) => {
+        console.error("Error updating driver:", error);
+      },
     }),
     deleteDriver: builder.mutation({
       query: (id) => ({

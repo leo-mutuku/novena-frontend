@@ -23,12 +23,14 @@ export const vehicleApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     updateVehicle: builder.mutation({
-      query: ({ id, ...rest }) => ({
-        url: `${VEHICLES_URL}/${id}`,
-        method: "PUT",
-        body: rest,
-      }),
-      invalidatesTags: ["Vehicle"],
+      query: ({ id, data }) => {
+        return {
+          url: `${VEHICLES_URL}/${id}`,
+          method: "PUT",
+          body: data,
+        };
+      },
+      invalidatesTags: ["Route"],
     }),
     deleteVehicle: builder.mutation({
       query: (id) => ({
