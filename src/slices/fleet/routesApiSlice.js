@@ -9,25 +9,29 @@ export const routesApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      providesTags: ["Route"],
+      invalidatesTags: ["Route"],
     }),
     getRoute: builder.query({
       query: (id) => `${ROUTES_URL}/${id}`,
       providesTags: ["Route"],
     }),
     getAllRoutes: builder.query({
-      query: (data) => ({
+      query: () => ({
         url: `${ROUTES_URL}/all`,
         method: "GET",
-        body: data,
       }),
+      keepUnusedDataFor: 5, //how long unused data should be kept in cache for mem utilization
+      providesTags: ["Route"],
     }),
     updateRoute: builder.mutation({
-      query: ({ id, ...rest }) => ({
-        url: `${ROUTES_URL}/${id}`,
-        method: "PUT",
-        body: rest,
-      }),
+      query: ({ id, data }) => {
+        // console.log("Updating Route Data:", data); // Log the data here
+        return {
+          url: `${ROUTES_URL}/${id}`,
+          method: "PUT",
+          body: data,
+        };
+      },
       invalidatesTags: ["Route"],
     }),
     deleteRoute: builder.mutation({

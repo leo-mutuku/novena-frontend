@@ -1,45 +1,70 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader";
-import { useAddVehicleMutation } from "../../../slices/fleet/vehicleApiSlice";
+import { useGetVehicleQuery, useUpdateVehicleMutation } from "../../../slices/fleet/vehicleApiSlice";
 
-function CreateVehicle() {
+function EditVehicle() {
   const [registration_number, setRegNumber] = useState("");
   const [model, setModel] = useState("");
   const [year, setYear] = useState("");
+  
+  const [updateVehicle, { isError, isSuccess, error: errorUpdate }] =
+    useUpdateVehicleMutation();
 
-  //call vehicle add mutation
-  const [addVehicle, { isLoading,error }] = useAddVehicleMutation();
-
+  const { id } = useParams();
   const navigate = useNavigate();
 
+  //call Vehicle get query
+  const { data: Vehicle, error, isLoading } = useGetVehicleQuery(id);
+
   useEffect(() => {
-    if (error) {
-      toast.error("Something went wrong: " + error.message);
+    if (errorUpdate && id) {
+      toast.error("Something went wrong: " + errorUpdate.message);
+      console.log(JSON.stringify(errorUpdate.message));
     }
-  }, [error]);
+  }, [id, errorUpdate]);
+
+  useEffect(() => {
+    if (id) {
+      if (Vehicle) {
+        setRegNumber(Vehicle.data.registration_number);
+        setModel(Vehicle.data.model);
+        setYear(Vehicle.data.year);
+      }
+    }
+  }, [id, Vehicle]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const res = await addVehicle({
+    if (!registration_number && !model && !year) {
+      toast.error("Please provide value into each input field");
+    } else {
+      const dataVehicle = {
         registration_number,
         model,
         year,
-      }).unwrap(); //extract the actual payload from the action
-      toast.success(res.message);
-      navigate("../allvehicles");
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
+      };
+      try {
+        const result = await updateVehicle({
+          id,
+          data: dataVehicle,
+        }).unwrap();
+
+        toast.success(result.message);
+
+        navigate("../allvehicles");
+      } catch (error) {
+        toast.error(error.message);
+        console.error("Failed to update vehicle:", error);
+      }
     }
   };
   return (
     <>
-      <span>*** Add Vehicle ***</span>
+      <span>*** Edit Vehicle ***</span>
       <Row>
         <div>
           {" "}
@@ -93,7 +118,7 @@ function CreateVehicle() {
         </Row>
 
         <Button type="submit" variant="primary" className="mt-3">
-          Submit
+          Update
         </Button>
 
         {isLoading && <Loader />}
@@ -102,4 +127,4 @@ function CreateVehicle() {
   );
 }
 
-export default CreateVehicle;
+export default EditVehicle;

@@ -1,41 +1,73 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useAddRouteMutation } from "../../../slices/fleet/routesApiSlice";
 import Loader from "../../../components/Loader";
+import { useGetRouteQuery, useUpdateRouteMutation } from "../../../slices/fleet/routesApiSlice";
 
-function CreateRoutes() {
+function EditRoute() {
   const [name, setName] = useState("");
   const [start_location, setStartLocation] = useState("");
   const [end_location, setEndLocation] = useState("");
   const [distance_km, setDistanceKm] = useState("");
+  
+  const [updateRoute, { isError, isSuccess, error: errorUpdate }] =
+    useUpdateRouteMutation();
 
-  //call route add mutation
-  const [addRoute, { isLoading }] = useAddRouteMutation();
-
+  const { id } = useParams();
   const navigate = useNavigate();
+
+  //call Route get query
+  const { data: Route, error, isLoading } = useGetRouteQuery(id);
+
+  useEffect(() => {
+    if (error && id) {
+      toast.error("Something went wrong: " + error.message);
+      console.log(JSON.stringify(error.message));
+    }
+  }, [id, error]);
+
+  useEffect(() => {
+    if (id) {
+      if (Route) {
+        setName(Route.data.name);
+        setStartLocation(Route.data.start_location);
+        setEndLocation(Route.data.end_location);
+        setDistanceKm(Route.data.distance_km);
+      }
+    }
+  }, [id, Route]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const res = await addRoute({
+    if (!name && !start_location && !end_location && !distance_km) {
+      toast.error("Please provide value into each input field");
+    } else {
+      const dataRoute = {
         name,
         start_location,
         end_location,
         distance_km,
-      }).unwrap(); //extract the actual payload from the action
-      toast.success(res.message);
-      navigate("../allroutes");
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
+      };
+      try {
+        const result = await updateRoute({
+          id,
+          data: dataRoute,
+        }).unwrap();
+
+        toast.success(result.message);
+
+        navigate("../allroutes");
+      } catch (error) {
+        toast.error(error.message);
+        console.error("Failed to update route:", error);
+      }
     }
   };
   return (
     <>
-      <span>*** Add Route ***</span>
+      <span>*** Edit Route ***</span>
       <Row>
         <div>
           {" "}
@@ -101,7 +133,7 @@ function CreateRoutes() {
         </Row>
 
         <Button type="submit" variant="primary" className="mt-3">
-          Submit
+          Update
         </Button>
 
         {isLoading && <Loader />}
@@ -110,4 +142,4 @@ function CreateRoutes() {
   );
 }
 
-export default CreateRoutes;
+export default EditRoute;
