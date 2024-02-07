@@ -1,7 +1,7 @@
 import { apiSlice } from "../apiSlice";
 const PRODUCTIONHEADER_URL = "/api/v1/production/productionheaders";
 
-export const productionProjectionApiSlice = apiSlice.injectEndpoints({
+export const productionHeaderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createProductionHeader: builder.mutation({
       query: (data) => ({
@@ -10,6 +10,15 @@ export const productionProjectionApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
       invalidatesTags: "production_headers",
+    }),
+
+    getAllPostedProductionHeaders: builder.query({
+      query: (data) => ({
+        url: `${PRODUCTIONHEADER_URL}/getallpostedproductionheaders`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: "production_headers",
     }),
 
     getAllProductionHeaders: builder.query({
@@ -36,14 +45,6 @@ export const productionProjectionApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: "production_headers",
     }),
-    getAllPostedProductionHeaders: builder.query({
-      query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallpostedproductionheaders`,
-        method: "GET",
-        body: data,
-      }),
-      providesTags: "production_headers",
-    }),
   }),
 });
 
@@ -52,4 +53,4 @@ export const {
   useGetAllProductionHeadersQuery,
   useGetAllProductionHeadersInTransitQuery,
   useGetAllPostedProductionHeadersQuery,
-} = productionProjectionApiSlice;
+} = productionHeaderApiSlice;

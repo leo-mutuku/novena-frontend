@@ -1,5 +1,160 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Form, Button, Row, Col } from "react-bootstrap";
+import { useGetAllPayrollcategoriesQuery } from "../../../slices/payroll/categoryApiSlice";
 
-export const CreatePayrollHeaders = () => {
-  return <div>CreatePayrollHeaders</div>;
-};
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Monthly from "./categories/Monthly";
+import Sales from "./categories/Sales";
+import Production from "./categories/Production";
+import PackHouse from "./categories/PackHouse";
+
+function CreatePayrollHeaders() {
+  const { data: payroll_category } = useGetAllPayrollcategoriesQuery();
+  const [category_name, set_category_name] = useState("");
+  const [category_code, set_category_code] = useState("");
+  const [pay_interval, set_pay_interval] = useState("");
+  const [created_by, set_created_by] = useState("");
+
+  const { userInfo } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (userInfo) {
+      set_created_by(userInfo.first_name);
+    }
+    navigate();
+  }, [navigate, userInfo]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      if (res.status == "failed") {
+        toast.error(err?.data?.message || err.error);
+      } else {
+        navigate("../categories");
+        toast.success("Payroll Category created successfully");
+      }
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
+  const handleCategory = (e) => {
+    set_category_code(e.target.value);
+  };
+  return (
+    <>
+      <span>*** Create Payroll ***</span>
+      <Row>
+        <div>
+          {" "}
+          <hr />
+        </div>
+      </Row>
+      <Form onSubmit={handleSubmit}>
+        {/* */}
+
+        <Row>
+          <Col>
+            <Form.Group className="my-2" controlId="category_name">
+              <Form.Label>Start Daye</Form.Label>
+              <Form.Control
+                type="date"
+                required
+                placeholder="Category Name"
+                value={category_name}
+                onChange={(e) => set_category_name(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="my-2" controlId="category_name">
+              <Form.Label>End Date</Form.Label>
+              <Form.Control
+                type="date"
+                required
+                placeholder="Category Name"
+                value={category_name}
+                onChange={(e) => set_category_name(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+          <Col>
+            {/* */}
+            <Form.Group className="my-2" controlId="category_code">
+              <Form.Label>Category_code</Form.Label>
+              <Form.Select
+                type="number"
+                required
+                placeholder="category code"
+                value={category_code}
+                onChange={handleCategory}
+              >
+                <option value={""}> Select Category</option>
+                {payroll_category?.data.map((item, index) => (
+                  <>
+                    <option key={index} value={item.category_code}>
+                      {item.category_name}
+                    </option>
+                  </>
+                ))}
+              </Form.Select>
+            </Form.Group>
+          </Col>
+        </Row>
+
+        {category_code == "1" ? (
+          <>
+            <div>
+              <Monthly />
+            </div>
+          </>
+        ) : category_code == "2" ? (
+          <>
+            <div>
+              <Sales />
+            </div>
+          </>
+        ) : category_code == "3" ? (
+          <>
+            <div>
+              <Production />
+            </div>
+          </>
+        ) : category_code == "4" ? (
+          <>
+            <div>
+              <PackHouse />
+            </div>
+          </>
+        ) : (
+          <>
+            <div style={{ color: "red" }}>Select category</div>
+          </>
+        )}
+        {/* <Row>
+          <Col>
+            {/* staff_number field */}
+        {/* <Form.Group className="my-2" controlId="pay_interval">
+              <Form.Label>Pay Interval</Form.Label>
+              <Form.Control
+                required
+                type="number"
+                placeholder="pay_interval"
+                value={pay_interval}
+                onChange={(e) => set_pay_interval(parseInt(e.target.value))}
+              ></Form.Control>
+            </Form.Group>
+          </Col> */}
+        {/* </Row>  */}
+        <Button type="submit" variant="primary" className="mt-3">
+          submit
+        </Button>
+
+        {/* {isLoading && <Loader />} */}
+      </Form>
+    </>
+  );
+}
+
+export default CreatePayrollHeaders;

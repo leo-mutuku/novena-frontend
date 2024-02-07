@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Loader from "../../../components/Loader";
-import { useGetAllPostedProductionHeadersQuery } from "../../../slices/production/productionHeaderApiSlice";
+import { useGetAllProductionHeadersInTransitQuery } from "../../../slices/production/productionHeaderApiSlice";
+import { useGetAllPurchaseLinesByHeaderIdQuery } from "../../../slices/purchase/storePurchaseLinesApiSlice";
+
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa6";
@@ -8,20 +10,31 @@ import { CiEdit } from "react-icons/ci";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdEye } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
-// import PostedPurchaseModal from "./lines/PostedPurchaseModal";
 import TimeDate from "../../../components/TimeDate";
+// import EditPurchaseModal from "./lines/EditPurchaseModal";
 const AllPostedProductionHeaderList = () => {
+  const [edit_mode, set_edit_mode] = useState("none");
+  const [purchase_header_id, set_purchase_header_id] = useState("");
   const timeDate = new TimeDate();
-  const handleAdd = (e) => {};
-  const { data: posted_production, isLoading } =
-    useGetAllPostedProductionHeadersQuery();
-  const [posted_mode, set_posted_mode] = useState("");
+  const { data: production_intransit, isLoading } =
+    useGetAllProductionHeadersInTransitQuery();
+
+  console.log();
+  const handleEdit = (e, id, mode) => {
+    set_edit_mode(mode);
+    set_purchase_header_id(parseInt(id));
+  };
   return (
     <>
-      <p>*** All Posted Production ***</p>
-      {/* <div>
-        <PostedPurchaseModal />
+      <p>*** All Production In Transit ***</p>
+      {/* <div style={{ display: `${edit_mode}` }}>
+        <EditPurchaseModal
+          set_edit_mode={set_edit_mode}
+          edit_mode={edit_mode}
+          purchase_header_id={purchase_header_id}
+        />
       </div> */}
+
       <Table striped style={{ border: "1px solid #ccc" }}>
         <thead>
           <tr>
@@ -41,10 +54,10 @@ const AllPostedProductionHeaderList = () => {
         <tbody>
           {isLoading ? (
             <Loader />
-          ) : posted_production?.data[0] === null ? (
+          ) : production_intransit?.data[0] === null ? (
             <>No data</>
           ) : (
-            posted_production?.data?.map((item, index) => (
+            production_intransit?.data?.map((item, index) => (
               <tr>
                 <td>{index + 1}</td>
 
