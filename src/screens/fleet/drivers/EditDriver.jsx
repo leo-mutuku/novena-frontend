@@ -52,7 +52,7 @@ function EditDriver() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name && !license_number) {
+    if (!staff_id && !license_number) {
       toast.error("Please provide value into each input field");
     } else {
       const dataDriver = {
