@@ -57,10 +57,10 @@ const DriverDataTable = () => {
   // Map the drivers data to rows
   const rows = tableData.map((driver) => ({
     driver_id: driver.driver_id,
-    name: driver.name,
+    driver_name: driver.driver_name,
     license_number: driver.license_number,
-    contact_number: driver.contact_number,
-    email: driver.email,
+    phone_number: driver.phone_number,
+    staff_email: driver.staff_email,
     edit: (
       <Link to={`/fleet/drivers/update/${driver.driver_id}`}>
         <button className="btn btn-edit">Edit</button>
@@ -79,7 +79,7 @@ const DriverDataTable = () => {
   // Define the columns
   const columns = [
     { label: "ID", field: "driver_id", sort: "asc", width: 50 },
-    { label: "Name", field: "name", sort: "asc", width: 150 },
+    { label: "Name", field: "driver_name", sort: "asc", width: 150 },
     {
       label: "License Number",
       field: "license_number",
@@ -88,11 +88,11 @@ const DriverDataTable = () => {
     },
     {
       label: "Contact Number",
-      field: "contact_number",
+      field: "phone_number",
       sort: "asc",
       width: 120,
     },
-    { label: "Email", field: "email", sort: "asc", width: 200 },
+    { label: "Email", field: "staff_email", sort: "asc", width: 200 },
     { label: "Edit", field: "edit", width: 50 },
     { label: "Delete", field: "delete", width: 50 },
   ];
