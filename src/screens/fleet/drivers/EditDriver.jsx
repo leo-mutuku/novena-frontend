@@ -13,15 +13,16 @@ import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlic
 function EditDriver() {
   const [name, setName] = useState("");
   const [license_number, setLicenseNumber] = useState("");
-  const [contact_number, setContactNumber] = useState("");
-  const [email, setEmail] = useState("");
+  const { data: staff } = useGetAllStaffQuery();
+  const [staff_id, setStaffId] = useState();
   const [updateDriver, { isError, isSuccess, error: errorUpdate }] =
     useUpdateDriverMutation();
   const { id } = useParams();
   const navigate = useNavigate();
 
   //call driver get query
-  const { data: driver, error, isLoading } = useGetDriverQuery(id);
+  const { data: driver, error, isLoading } = useGetDriverQuery(id)
+
 
   useEffect(() => {
     if (error && id) {
@@ -29,39 +30,34 @@ function EditDriver() {
       console.log(JSON.stringify(error.message));
     }
   }, [id, error]);
-
+  // console.log(driver.data.staff_id);
   useEffect(() => {
     if (id) {
       if (driver) {
-        setName(driver.data.name);
-        setContactNumber(driver.data.contact_number);
+        setStaffId(driver.data.staff_id);
         setLicenseNumber(driver.data.license_number);
-        setEmail(driver.data.email);
       }
     }
   }, [id, driver]);
-  const { data: staff } = useGetAllStaffQuery();
+
   const handleStaff = (e) => {
     let x = staff?.data?.filter((a) => {
-      if (a.staff_number == e.target.value) {
+      if (a.staff_id == e.target.value) {
         return a.first_name;
       }
     });
-    setName(x[0].staff_number +" "+ x[0].first_name + " " + x[0].last_name)
-    set_first_name(x[0].first_name);
-    set_last_name(x[0].last_name);
+    setStaffId(x[0].staff_id);
+    setName(x[0].staff_id);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name && !license_number && !email && !contact_number) {
+    if (!name && !license_number) {
       toast.error("Please provide value into each input field");
     } else {
       const dataDriver = {
-        name,
+        staff_id,
         license_number,
-        contact_number,
-        email,
       };
       try {
         const result = await updateDriver({
@@ -70,7 +66,6 @@ function EditDriver() {
         }).unwrap();
 
         toast.success(result.message);
-
         navigate("../alldrivers");
       } catch (error) {
         toast.error(error.message);
@@ -91,18 +86,19 @@ function EditDriver() {
         {/* */}
 
         <Row>
-        <Col>
-            <Form.Group className="my-2" controlId="name">
+          <Col>
+            <Form.Group className="my-2" controlId="staff_number">
               <Form.Label>Driver Name</Form.Label>
               <Form.Select
-                type="number"
+                type="text"
                 required
                 placeholder="Driver Name"
-                value={name}
+                value={staff_id}
                 onChange={handleStaff}
               >
+                <option value=""> Select Name</option>
                 {staff?.data?.map((item) => (
-                  <option value={item.staff_number}>
+                  <option key={item.staff_id} value={item.staff_number}>
                     {item.staff_number} | {item.first_name}
                   </option>
                 ))}
@@ -119,33 +115,6 @@ function EditDriver() {
                 placeholder="License Number"
                 value={license_number}
                 onChange={(e) => setLicenseNumber(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Form.Group className="my-2" controlId="contact_number">
-              <Form.Label>Phone Number</Form.Label>
-              <Form.Control
-                type="number"
-                required
-                placeholder="Phone Number"
-                value={contact_number}
-                onChange={(e) => setContactNumber(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-          </Col>
-          <Col>
-            {/* */}
-            <Form.Group className="my-2" controlId="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                required
-                placeholder="Email Address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
