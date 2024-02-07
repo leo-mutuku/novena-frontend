@@ -126,7 +126,7 @@ import AllDailyPackhouseHeaderInTransit from "./screens/production/dailypackhous
 import PackhouseList from "./screens/production/packhouse/PackhouseList.jsx";
 import CreatePackHouse from "./screens/production/packhouse/CreatePackHouse.jsx";
 import { PackHouseEntriesScreen } from "./screens/production/PackHouseEntriesScreen.jsx";
-import { PackhouseEntriesList } from "./screens/production/packhouseentries/PackhouseEntriesList.jsx";
+import PackhouseEntriesList from "./screens/production/packhouseentries/PackhouseEntriesList.jsx";
 import CreatePayrollHeaders from "./screens/payroll/payrollHeader/CreatePayrollHeaders.jsx";
 import PayrollHeadersList from "./screens/payroll/payrollHeader/PayrollHeadersList.jsx";
 import { PayrollHeaderScreen } from "./screens/payroll/PayrollHeaderScreen.jsx";

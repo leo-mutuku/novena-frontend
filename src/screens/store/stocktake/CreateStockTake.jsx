@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { useGetAllStoreItemsQuery } from "../../../slices/store/storeItemsApiSlice";
+import { useGetAllStoreRegisterQuery } from "../../../slices/store/storeRegisterApiSlice";
+// import { use } from "../../../slices/store/itemregisterApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -14,7 +15,7 @@ function CreateStockTake() {
   const [created_by, set_created_by] = useState("");
   const [stock_take_list, set_stock_take_list] = useState([]);
 
-  const { data: store_items } = useGetAllStoreItemsQuery();
+  const { data: store_items } = useGetAllStoreRegisterQuery();
   const { userInfo } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();

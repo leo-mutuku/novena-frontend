@@ -32,13 +32,6 @@ export const dailyPackhouseHeadersApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
-    getAllPostedProductionHeaders: builder.query({
-      query: (data) => ({
-        url: `${DAILYPACKHOUSEHEADER_URL}/getallpostedproductionheaders`,
-        method: "GET",
-        body: data,
-      }),
-    }),
   }),
 });
 

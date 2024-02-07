@@ -18,27 +18,27 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
-    getAllProductionHeadersInTransit: builder.query({
-      query: (data) => ({
-        url: `${PAYROLLCATEGORY_URL}/getallproductionheaders`,
-        method: "GET",
-        body: data,
-      }),
-    }),
-    getAllProductionHeadersInTransit: builder.query({
-      query: (data) => ({
-        url: `${PAYROLLCATEGORY_URL}/getallproductionheadersintransit`,
-        method: "GET",
-        body: data,
-      }),
-    }),
-    getAllPostedProductionHeaders: builder.query({
-      query: (data) => ({
-        url: `${PAYROLLCATEGORY_URL}/getallpostedproductionheaders`,
-        method: "GET",
-        body: data,
-      }),
-    }),
+    // getAllProductionHeadersInTransit: builder.query({
+    //   query: (data) => ({
+    //     url: `${PAYROLLCATEGORY_URL}/getallproductionheaders`,
+    //     method: "GET",
+    //     body: data,
+    //   }),
+    // }),
+    // getAllProductionHeadersInTransit: builder.query({
+    //   query: (data) => ({
+    //     url: `${PAYROLLCATEGORY_URL}/getallproductionheadersintransit`,
+    //     method: "GET",
+    //     body: data,
+    //   }),
+    // }),
+    // getAllPostedProductionHeaders: builder.query({
+    //   query: (data) => ({
+    //     url: `${PAYROLLCATEGORY_URL}/getallpostedproductionheaders`,
+    //     method: "GET",
+    //     body: data,
+    //   }),
+    // }),
   }),
 });
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Loader from "../../../components/Loader";
-import { useGetAllProductionHeadersInTransitQuery } from "../../../slices/production/productionHeaderApiSlice";
+import { useGetAllPostedProductionHeadersQuery } from "../../../slices/production/productionHeaderApiSlice";
 import { useGetAllPurchaseLinesByHeaderIdQuery } from "../../../slices/purchase/storePurchaseLinesApiSlice";
 
 import { Table, Button } from "react-bootstrap";
@@ -16,14 +16,17 @@ const AllPostedProductionHeaderList = () => {
   const [edit_mode, set_edit_mode] = useState("none");
   const [purchase_header_id, set_purchase_header_id] = useState("");
   const timeDate = new TimeDate();
-  const { data: production_intransit, isLoading } =
-    useGetAllProductionHeadersInTransitQuery();
+  const {
+    data: posted_production_headers,
+    error,
+    isLoading,
+  } = useGetAllPostedProductionHeadersQuery();
 
-  console.log();
   const handleEdit = (e, id, mode) => {
     set_edit_mode(mode);
     set_purchase_header_id(parseInt(id));
   };
+  console.log(posted_production_headers?.data);
   return (
     <>
       <p>*** All Production In Transit ***</p>
@@ -54,10 +57,10 @@ const AllPostedProductionHeaderList = () => {
         <tbody>
           {isLoading ? (
             <Loader />
-          ) : production_intransit?.data[0] === null ? (
+          ) : posted_production_headers?.data[0] === null ? (
             <>No data</>
           ) : (
-            production_intransit?.data?.map((item, index) => (
+            posted_production_headers?.data?.map((item, index) => (
               <tr>
                 <td>{index + 1}</td>
 

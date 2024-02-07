@@ -1,61 +1,47 @@
 import React, { useState } from "react";
-import { Row, Col } from "react-bootstrap";
+import Table from "react-bootstrap/Table";
+import { useGetAllSalesPeopleQuery } from "../../../../slices/sales/salesPeopleApiSlice";
+import { IoMdHeartEmpty } from "react-icons/io";
 import { MDBCheckbox } from "mdb-react-ui-kit";
 
 const Monthly = () => {
-  const [nhif, set_nhif] = useState(false);
-  const [nssf, set_nssf] = useState(false);
+  const { data: sales_people } = useGetAllSalesPeopleQuery();
+  const [staff, set_staff] = useState(false);
   return (
     <>
-      <hr></hr>
-
-      <Row>
-        <Col>
-          <div>Statutory Dedauctions: </div>
-          <MDBCheckbox
-            id="controlledCheckbox"
-            label="NHIF"
-            checked={nhif}
-            onChange={() => set_nhif(!nhif)}
-          />
-          <MDBCheckbox
-            id="controlledCheckbox"
-            label="NHIF"
-            checked={nssf}
-            onChange={() => set_nssf(!nssf)}
-          />
-        </Col>
-        <Col>
-          <div>Statutory Dedauctions: </div>
-          <MDBCheckbox
-            id="controlledCheckbox"
-            label="NHIF"
-            checked={nhif}
-            onChange={() => set_nhif(!nhif)}
-          />
-          <MDBCheckbox
-            id="controlledCheckbox"
-            label="NHIF"
-            checked={nssf}
-            onChange={() => set_nssf(!nssf)}
-          />
-        </Col>
-        <Col>
-          <div>Statutory Dedauctions: </div>
-          <MDBCheckbox
-            id="controlledCheckbox"
-            label="NHIF"
-            checked={nhif}
-            onChange={() => set_nhif(!nhif)}
-          />
-          <MDBCheckbox
-            id="controlledCheckbox"
-            label="NHIF"
-            checked={nssf}
-            onChange={() => set_nssf(!nssf)}
-          />
-        </Col>
-      </Row>
+      <div>
+        {" "}
+        <hr></hr>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Staff No</th>
+              <th>Add Staff</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sales_people?.data.map((item, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{item.first_name}</td>
+                <td>{item.last_name}</td>
+                <td>{item.staff_ID}</td>
+                <td>
+                  <MDBCheckbox
+                    id="controlledCheckbox"
+                    label=""
+                    checked={staff}
+                    onChange={() => set_staff(!staff)}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
     </>
   );
 };

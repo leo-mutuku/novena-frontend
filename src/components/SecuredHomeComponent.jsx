@@ -1,4 +1,4 @@
-import { Container, Card, Button, Row } from "react-bootstrap";
+import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import { TbBuildingFactory } from "react-icons/tb";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
@@ -36,7 +36,7 @@ const SecuredHomeComponent = () => {
             style={{ width: "100%" }}
           >
             {moduleMenu.map((module) => (
-              <Card className="w-25 m-2 " key={module.module_name}>
+              <Card className="w-75 m-2 " key={module.module_name}>
                 <Link to={module.to}>
                   <Card.Body>
                     <Card.Title
@@ -55,6 +55,10 @@ const SecuredHomeComponent = () => {
           </Card>
         </Container>
       </div>
+      <Row>
+        <Col>Production</Col>
+        <Col>Sales</Col>
+      </Row>
       <Outlet />
     </>
   );

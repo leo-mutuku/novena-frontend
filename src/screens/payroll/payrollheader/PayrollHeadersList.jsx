@@ -51,15 +51,15 @@ const PayrollHeadersList = () => {
         <thead>
           <tr>
             <th>#</th>
-            <th>Pack Date</th>
-            <th>Pack Type</th>
-            <th>Total</th>
-            <th>Bales</th>
-            <th>Cost @ Bale</th>
-            <th>Total Cost</th>
+            <th>Payroll Number</th>
+            <th>Period</th>
+            <th>Number.of Staff</th>
+            <th>Total Payroll</th>
+            <th>Prepared By</th>
+            <th>Approved By</th>
             <th>Status</th>
-            <th>Add</th>
-            <th>Edit</th>
+            <th>Print</th>
+            <th>View</th>
           </tr>
         </thead>
         <tbody>

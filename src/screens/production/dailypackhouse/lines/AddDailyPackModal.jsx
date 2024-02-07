@@ -197,7 +197,7 @@ function AddProductionModal({ purchase_data, store_purchase_id, set_mode }) {
                   <Row>
                     <Col>
                       <Form.Group className="my-2" controlId="item_code">
-                        <Form.Label>Product</Form.Label>
+                        <Form.Label>Cost of 1 Kg Bale </Form.Label>
                         <Form.Select
                           type="text"
                           required
@@ -215,10 +215,50 @@ function AddProductionModal({ purchase_data, store_purchase_id, set_mode }) {
                         </Form.Select>
                       </Form.Group>
                     </Col>
+                    <Col>
+                      <Form.Group className="my-2" controlId="item_code">
+                        <Form.Label>No. of 1KG Bale</Form.Label>
+                        <Form.Select
+                          type="text"
+                          required
+                          placeholder="Item Code"
+                          value={order_items.item_code}
+                          onChange={handleItemCode}
+                        >
+                          {" "}
+                          <option>Product</option>
+                          {item_register?.data?.map((item, index) => (
+                            <option value={item.item_code} key={index}>
+                              {item.item_code} | {item.item_name}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group className="my-2" controlId="item_code">
+                        <Form.Label>Number </Form.Label>
+                        <Form.Select
+                          type="text"
+                          required
+                          placeholder="Item Code"
+                          value={order_items.item_code}
+                          onChange={handleItemCode}
+                        >
+                          {" "}
+                          <option>Cost of 1/2 KG</option>
+                          {item_register?.data?.map((item, index) => (
+                            <option value={item.item_code} key={index}>
+                              {item.item_code} | {item.item_name}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
 
                     <Col>
                       <Form.Group className="my-2" controlId="store">
-                        <Form.Label>Number Produced </Form.Label>
+                        <Form.Label>No. of 1/2 Bale</Form.Label>
                         <Form.Control
                           type="number"
                           required
@@ -232,7 +272,7 @@ function AddProductionModal({ purchase_data, store_purchase_id, set_mode }) {
                   <Row>
                     <Col>
                       <Form.Group className="my-2" controlId="naraturation">
-                        <Form.Label>Primary Package </Form.Label>
+                        <Form.Label>Pack house Staff</Form.Label>
                         <Form.Control
                           type="text"
                           required
