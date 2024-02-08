@@ -2,18 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useCreateDailyProductionHeaderMutation } from "../../../slices/production/dailyPackhouseHeadersApiSlice";
-import { useGetAllPackHousePeopleQuery } from "../../../slices/production/packHousePeopleApiSlice";
+import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function CreateDailyPackhouseHeader() {
   const [batch_no, set_batch_no] = useState("");
+  const [pack_date, set_pack_date] = useState("");
   const [pack_officer, set_pack_officer] = useState("");
   const [created_by, set_created_by] = useState("");
 
   const [DailyProductionHeader, { isLoading }] =
     useCreateDailyProductionHeaderMutation();
-  const { data: staff } = useGetAllPackHousePeopleQuery();
+  const { data: staff } = useGetAllStaffQuery();
   const { userInfo } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
@@ -91,7 +92,7 @@ function CreateDailyPackhouseHeader() {
                 value={pack_officer}
                 onChange={(e) => set_pack_officer(e.target.value)}
               >
-                <option>Staff</option>
+                <option value={""}>Staff</option>
                 {staff?.data.map((item, index) => (
                   <>
                     <option value={item.staff_id}>{item.first_name}</option>

@@ -10,33 +10,43 @@ import { Prev } from "react-bootstrap/esm/PageItem";
 import { useCreateStorePurchaseLineMutation } from "../../../../slices/purchase/storePurchaseLinesApiSlice";
 import { useGetAllPackHousePeopleQuery } from "../../../../slices/production/packHousePeopleApiSlice";
 
-function AddProductionModal({ purchase_data, store_purchase_id, set_mode }) {
+function AddProductionModal({
+  purchase_data,
+  store_purchase_id,
+  set_mode,
+  batch_no,
+}) {
   let purchase_id = parseInt(store_purchase_id);
 
-  const { data: pack_house_people } = useGetAllPackHousePeopleQuery();
+  const { data: pack_house_people, error } = useGetAllPackHousePeopleQuery();
   console.log(pack_house_people?.data);
   const { userInfo } = useSelector((state) => state.auth);
   const [purchase_line, { isLoading }] = useCreateStorePurchaseLineMutation();
   const navigate = useNavigate();
-  const [total_cost, set_total_cost] = useState(0);
 
   const [cost_of_packing_one_kg_bale, set_cost_of_packing_one_kg_bale] =
     useState("");
   const [number_of_one_kg_bale_packed, set_number_of_one_kg_bale_packed] =
-    useState("");
+    useState(null);
+  const [number_of_one_packets, set_number_of_one_kg_packets] = useState();
+
+  const [one_kg_packet_item_code, set_one_kg_packet_item_code] = useState();
+  const [one_kg_bale_item_code, set_one_kg_bale_item_code] = useState(0);
+  const [one_kg_bale_packet_item_code, set_one_kg_bale_packet_item_code] =
+    useState(0);
   const [cost_of_packing_half_kg_bale, set_cost_of_packing_half_kg_bale] =
     useState("");
   const [number_of_half_kg_bale_packed, set_number_of_half_kg_bale_packed] =
     useState("");
   const [staff_id, set_staff_id] = useState("");
+  const [staff_name, set_staff_name] = useState("");
   const [one_kg_bale_code, set_one_kg_bale_code] = useState("");
   const [half_kg_bale_code, set_half_kg_bale_code] = useState("");
   const [one_kg_packet_code, set_one_kg_packet_code] = useState("");
   const [half_kg_packet_code, set_half_kg_packet_code] = useState();
 
-  const [purchase_list, set_purchase_list] = useState([]);
-  console.log(purchase_list);
-
+  const [packhouse_list, set_packhouse_list] = useState([]);
+  console.log(error);
   useEffect(() => {
     if (userInfo) {
     }
@@ -50,7 +60,17 @@ function AddProductionModal({ purchase_data, store_purchase_id, set_mode }) {
 
   // handle packed one kg bale
   const handlePackedOneKgBale = (e) => {
-    alert("kk");
+    set_number_of_one_kg_bale_packed(parseInt(e.target.value));
+    set_;
+  };
+  const handlePachhouseStaff = (e) => {
+    let x = pack_house_people?.data?.filter((a) => {
+      if (a.staff_id == e.target.value) {
+        return a.staff_id;
+      }
+    });
+    set_staff_id(e.target.value);
+    set_staff_name(x[0].first_name);
   };
 
   // const handleStore = (e) => {
@@ -91,14 +111,15 @@ function AddProductionModal({ purchase_data, store_purchase_id, set_mode }) {
             <Modal.Header closeButton onClick={() => set_mode("none")}>
               <Modal.Title style={{ fontSize: "14px" }}>
                 <span style={{ fontSize: "14px" }}>
-                  Production batch no. {store_purchase_id}
+                  Pack house no. {store_purchase_id}
+                  &nbsp; &nbsp; &nbsp;Batch no :{batch_no}
                 </span>
               </Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
               <hr />
-              <span>*** Add Production Line Items ***</span>
+              <span>*** Add Pack House Line Items ***</span>
               <div>
                 <Form onSubmit={handleSubmit}>
                   <Row>
@@ -110,7 +131,7 @@ function AddProductionModal({ purchase_data, store_purchase_id, set_mode }) {
                           required
                           placeholder="Pack Date"
                           value={staff_id}
-                          onChange={(e) => set_staff_id(e.target.value)}
+                          onChange={handlePachhouseStaff}
                         >
                           <option value={""}>Select Pack house Staff</option>
                           {pack_house_people?.data.map((item, key) => (
@@ -191,20 +212,6 @@ function AddProductionModal({ purchase_data, store_purchase_id, set_mode }) {
                         ></Form.Control>
                       </Form.Group>
                     </Col>
-                    <Col>
-                      <Form.Group className="my-2" controlId="pack_type">
-                        <Form.Label>Batch Number</Form.Label>
-                        <Form.Control
-                          type="text"
-                          required
-                          placeholder=""
-                          value={number_of_half_kg_bale_packed}
-                          onChange={(e) =>
-                            set_number_of_half_kg_bale_packed(e.target.value)
-                          }
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
                   </Row>
 
                   <br />
@@ -215,7 +222,7 @@ function AddProductionModal({ purchase_data, store_purchase_id, set_mode }) {
                 <br />
               </div>
               {/* List of items */}
-              {purchase_list?.length === 0 ? (
+              {packhouse_list?.length === 0 ? (
                 <span style={{ color: "#fd7e14" }}>No items yet!</span>
               ) : (
                 <>
@@ -228,19 +235,19 @@ function AddProductionModal({ purchase_data, store_purchase_id, set_mode }) {
                         <th>Pay 1 KG Bales</th>
                         <th>1/2 KG Bales</th>
                         <th>Pay 1/2 KG Bales</th>
-                        <th>Total</th>
+                        <th>Total Pay</th>
                         <th>
                           <Button
                             variant="outline-danger"
                             size="sm"
-                            onClick={() => set_purchase_list([])}
+                            onClick={() => set_packhouse_list()}
                           >
                             Delete <MdDelete />
                           </Button>
                         </th>
                       </tr>
                     </thead>
-                    {purchase_list.map((p_items, index) => (
+                    {packhouse_list?.map((p_items, index) => (
                       <>
                         <tbody>
                           <tr key={p_items.item_code}>
@@ -267,7 +274,7 @@ function AddProductionModal({ purchase_data, store_purchase_id, set_mode }) {
                                 size="sm"
                                 onClick={() =>
                                   set_purchase_list(
-                                    purchase_list.filter(
+                                    packhouse_list.filter(
                                       (a) => a.item_code !== p_items.item_code
                                     )
                                   )
