@@ -1,9 +1,7 @@
-import SecuredHomeComponent from "../components/SecuredHomeComponent.jsx"
+import SecuredHomeComponent from "../components/SecuredHomeComponent.jsx";
 
 function SecuredHomeHomeScreen() {
-  return (
-    <SecuredHomeComponent />
-  )
+  return <SecuredHomeComponent />;
 }
 
-export default SecuredHomeHomeScreen
+export default SecuredHomeHomeScreen;

@@ -7,157 +7,64 @@ import { useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { Prev } from "react-bootstrap/esm/PageItem";
-import { useGetAllItemRegisterQuery } from "../../../../slices/store/itemregisterApiSlice";
-import { useGetAllAccountsQuery } from "../../../../slices/finance/accountsApiSlice";
-import { useGetAllSuppliersQuery } from "../../../../slices/administration/suppliersApiSlice";
 import { useCreateStorePurchaseLineMutation } from "../../../../slices/purchase/storePurchaseLinesApiSlice";
-import { useGetAllStoreRegisterQuery } from "../../../../slices/store/storeRegisterApiSlice";
+import { useGetAllPackHousePeopleQuery } from "../../../../slices/production/packHousePeopleApiSlice";
 
 function AddProductionModal({ purchase_data, store_purchase_id, set_mode }) {
   let purchase_id = parseInt(store_purchase_id);
-  console.log(typeof purchase_id);
-  console.log();
 
-  const { data: item_register } = useGetAllItemRegisterQuery();
-  const { data: accounts } = useGetAllAccountsQuery();
-  const { data: suppliers } = useGetAllSuppliersQuery();
-  const { data: store } = useGetAllStoreRegisterQuery();
+  const { data: pack_house_people } = useGetAllPackHousePeopleQuery();
+  console.log(pack_house_people?.data);
   const { userInfo } = useSelector((state) => state.auth);
   const [purchase_line, { isLoading }] = useCreateStorePurchaseLineMutation();
   const navigate = useNavigate();
   const [total_cost, set_total_cost] = useState(0);
-  const [order_items, set_order_items] = useState({
-    item_code: 0,
-    item_name: "",
-    account_number: 0,
-    account_name: "",
-    supplier_name: "",
-    supplier_number: "",
-    supplier_email: "",
-    supplier_phone_number: "",
-    item_cost: 0,
-    quantity: 0,
-    total_cost_per_item: "",
-    purchase_header_id: "",
-    store_name: "",
-    store_code: "",
-    created_by: userInfo?.first_name,
-  });
+
+  const [cost_of_packing_one_kg_bale, set_cost_of_packing_one_kg_bale] =
+    useState("");
+  const [number_of_one_kg_bale_packed, set_number_of_one_kg_bale_packed] =
+    useState("");
+  const [cost_of_packing_half_kg_bale, set_cost_of_packing_half_kg_bale] =
+    useState("");
+  const [number_of_half_kg_bale_packed, set_number_of_half_kg_bale_packed] =
+    useState("");
+  const [staff_id, set_staff_id] = useState("");
+  const [one_kg_bale_code, set_one_kg_bale_code] = useState("");
+  const [half_kg_bale_code, set_half_kg_bale_code] = useState("");
+  const [one_kg_packet_code, set_one_kg_packet_code] = useState("");
+  const [half_kg_packet_code, set_half_kg_packet_code] = useState();
 
   const [purchase_list, set_purchase_list] = useState([]);
   console.log(purchase_list);
 
   useEffect(() => {
     if (userInfo) {
-      set_order_items({
-        ...order_items,
-        created_by: userInfo.first_name,
-        purchase_header_id: purchase_id,
-      });
     }
 
     navigate();
-  }, [userInfo, navigate, purchase_id]);
+  }, [userInfo, navigate]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    set_order_items({ ...order_items, created_by: userInfo.first_name });
-    set_purchase_list([...purchase_list, order_items]);
+  const handleSubmit = async (e) => {};
+
+  const handleSave = async () => {};
+
+  // handle packed one kg bale
+  const handlePackedOneKgBale = (e) => {
+    alert("kk");
   };
 
-  const handleSave = async () => {
-    try {
-      if (purchase_list.length === 0) {
-        alert("Add items to purchase first!");
-      } else {
-        const res = await purchase_line({
-          store_purchase_id,
-          created_by: order_items.created_by,
-          purchase_line: purchase_list,
-        }).unwrap();
-        if (res.status === "failed") {
-          toast.error("Purchase lines already added. Proceed to update");
-          navigate("../allstorepurchasesintransit");
-        } else {
-          toast.success("Purchase lines created successfully");
-          navigate("../allstorepurchasesintransit");
-        }
-      }
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
-    }
-  };
-
-  //handle item
-  const handleItemCode = (e) => {
-    let x = item_register?.data?.filter((a) => {
-      if (a.item_code == e.target.value) {
-        return a.item_name;
-      }
-    });
-
-    let y = accounts?.data?.filter((a) => {
-      if (a.account_number == x[0].account_number) {
-        return a.account_name;
-      }
-    });
-
-    set_order_items({
-      ...order_items,
-      item_code: parseInt(e.target.value),
-      item_name: x[0].item_name,
-      item_cost: parseInt(x[0].current_price),
-      account_name: y[0].account_name,
-      account_number: x[0].account_number,
-
-      total_cost_per_item: x[0].current_price * order_items.quantity,
-    });
-  };
-
-  // handle cost
-  const handleItemCost = (e) => {
-    set_order_items({
-      ...order_items,
-      item_cost: e.target.value,
-      total_cost_per_item: e.target.value * order_items.quantity,
-    });
-  };
-  // handle quantity
-  const handleQuantity = (e) => {
-    set_order_items({
-      ...order_items,
-      quantity: e.target.value,
-      total_cost_per_item: order_items.item_cost * e.target.value,
-    });
-  };
-  // handle supplier
-  const handleSupplier = (e) => {
-    let x = suppliers?.data?.filter((a) => {
-      if (a.supplier_number == e.target.value) {
-        return a.supplier_name;
-      }
-    });
-
-    set_order_items({
-      ...order_items,
-      supplier_number: e.target.value,
-      supplier_name: x[0].supplier_name,
-      supplier_email: x[0].supplier_email,
-      supplier_phone_number: x[0].supplier_phone_number,
-    });
-  };
-  const handleStore = (e) => {
-    let x = store?.data?.filter((a) => {
-      if (a.store_code == e.target.value) {
-        return a.store_name;
-      }
-    });
-    set_order_items({
-      ...order_items,
-      store_code: e.target.value,
-      store_name: x[0].store_name,
-    });
-  };
+  // const handleStore = (e) => {
+  //   let x = store?.data?.filter((a) => {
+  //     if (a.store_code == e.target.value) {
+  //       return a.store_name;
+  //     }
+  //   });
+  //   set_order_items({
+  //     ...order_items,
+  //     store_code: e.target.value,
+  //     store_name: x[0].store_name,
+  //   });
+  // };
 
   return (
     <>
@@ -196,139 +103,110 @@ function AddProductionModal({ purchase_data, store_purchase_id, set_mode }) {
                 <Form onSubmit={handleSubmit}>
                   <Row>
                     <Col>
-                      <Form.Group className="my-2" controlId="item_code">
-                        <Form.Label>Cost of 1 Kg Bale </Form.Label>
+                      <Form.Group className="my-2" controlId="pack_date">
+                        <Form.Label>Pack house staff</Form.Label>
                         <Form.Select
-                          type="text"
-                          required
-                          placeholder="Item Code"
-                          value={order_items.item_code}
-                          onChange={handleItemCode}
-                        >
-                          {" "}
-                          <option>Product</option>
-                          {item_register?.data?.map((item, index) => (
-                            <option value={item.item_code} key={index}>
-                              {item.item_code} | {item.item_name}
-                            </option>
-                          ))}
-                        </Form.Select>
-                      </Form.Group>
-                    </Col>
-                    <Col>
-                      <Form.Group className="my-2" controlId="item_code">
-                        <Form.Label>No. of 1KG Bale</Form.Label>
-                        <Form.Select
-                          type="text"
-                          required
-                          placeholder="Item Code"
-                          value={order_items.item_code}
-                          onChange={handleItemCode}
-                        >
-                          {" "}
-                          <option>Product</option>
-                          {item_register?.data?.map((item, index) => (
-                            <option value={item.item_code} key={index}>
-                              {item.item_code} | {item.item_name}
-                            </option>
-                          ))}
-                        </Form.Select>
-                      </Form.Group>
-                    </Col>
-                    <Col>
-                      <Form.Group className="my-2" controlId="item_code">
-                        <Form.Label>Number </Form.Label>
-                        <Form.Select
-                          type="text"
-                          required
-                          placeholder="Item Code"
-                          value={order_items.item_code}
-                          onChange={handleItemCode}
-                        >
-                          {" "}
-                          <option>Cost of 1/2 KG</option>
-                          {item_register?.data?.map((item, index) => (
-                            <option value={item.item_code} key={index}>
-                              {item.item_code} | {item.item_name}
-                            </option>
-                          ))}
-                        </Form.Select>
-                      </Form.Group>
-                    </Col>
-
-                    <Col>
-                      <Form.Group className="my-2" controlId="store">
-                        <Form.Label>No. of 1/2 Bale</Form.Label>
-                        <Form.Control
                           type="number"
                           required
-                          placeholder="Store"
-                          value={order_items.store_code}
-                          onChange={handleStore}
+                          placeholder="Pack Date"
+                          value={staff_id}
+                          onChange={(e) => set_staff_id(e.target.value)}
+                        >
+                          <option value={""}>Select Pack house Staff</option>
+                          {pack_house_people?.data.map((item, key) => (
+                            <option key={key} value={item.staff_id}>
+                              {item.first_name} {item.last_name}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group className="my-2" controlId="pack_officer">
+                        <Form.Label>No of 1kg bales packed</Form.Label>
+                        <Form.Control
+                          required
+                          type="number"
+                          placeholder=""
+                          value={number_of_one_kg_bale_packed}
+                          onChange={handlePackedOneKgBale}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group className="my-2" controlId="pack_type">
+                        <Form.Label>Number of 1/2 Kg Bale Packed</Form.Label>
+                        <Form.Control
+                          type="option"
+                          required
+                          placeholder=""
+                          value={number_of_half_kg_bale_packed}
+                          onChange={(e) =>
+                            set_number_of_half_kg_bale_packed(e.target.value)
+                          }
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                   </Row>
                   <Row>
                     <Col>
-                      <Form.Group className="my-2" controlId="naraturation">
-                        <Form.Label>Pack house Staff</Form.Label>
+                      <Form.Group className="my-2" controlId="pack_type">
+                        <Form.Label>Pack Date</Form.Label>
                         <Form.Control
-                          type="text"
+                          type="date"
                           required
-                          placeholder="Total"
-                          value={order_items.total_cost_per_item}
+                          placeholder=""
+                          value={number_of_half_kg_bale_packed}
                           onChange={(e) =>
-                            set_order_items({
-                              ...order_items,
-                              naration: e.target.value,
-                            })
+                            set_number_of_half_kg_bale_packed(e.target.value)
                           }
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                     <Col>
-                      <Form.Group className="my-2" controlId="naraturation">
-                        <Form.Label>Number of Packets </Form.Label>
+                      <Form.Group className="my-2" controlId="pack_type">
+                        <Form.Label>Pay 1 KG Bale</Form.Label>
                         <Form.Control
-                          type="text"
+                          type="number"
                           required
-                          placeholder="Naration"
-                          value={order_items.naration}
+                          placeholder=""
+                          value={number_of_half_kg_bale_packed}
                           onChange={(e) =>
-                            set_order_items({
-                              ...order_items,
-                              naration: e.target.value,
-                            })
+                            set_number_of_half_kg_bale_packed(e.target.value)
                           }
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                     <Col>
-                      <Form.Group className="my-2" controlId="quantity">
-                        <Form.Label>Secondary Package</Form.Label>
+                      <Form.Group className="my-2" controlId="pack_type">
+                        <Form.Label>Pay 1 KG Bale</Form.Label>
                         <Form.Control
                           type="number"
                           required
-                          placeholder="Quantity"
-                          value={order_items.quantity}
-                          onChange={handleQuantity}
+                          placeholder=""
+                          value={number_of_half_kg_bale_packed}
+                          onChange={(e) =>
+                            set_number_of_half_kg_bale_packed(e.target.value)
+                          }
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                     <Col>
-                      <Form.Group className="my-2" controlId="order_items">
-                        <Form.Label>Item cost per unit</Form.Label>
+                      <Form.Group className="my-2" controlId="pack_type">
+                        <Form.Label>Batch Number</Form.Label>
                         <Form.Control
-                          type="number"
+                          type="text"
                           required
-                          placeholder="Cost per unit (Ksh)"
-                          value={order_items.item_cost}
-                          onChange={handleItemCost}
+                          placeholder=""
+                          value={number_of_half_kg_bale_packed}
+                          onChange={(e) =>
+                            set_number_of_half_kg_bale_packed(e.target.value)
+                          }
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                   </Row>
+
                   <br />
                   <div>
                     <Button type="submit">Add item</Button>
@@ -338,21 +216,18 @@ function AddProductionModal({ purchase_data, store_purchase_id, set_mode }) {
               </div>
               {/* List of items */}
               {purchase_list?.length === 0 ? (
-                <span style={{ color: "#fd7e14" }}>
-                  No items yet! Add items to purchase
-                </span>
+                <span style={{ color: "#fd7e14" }}>No items yet!</span>
               ) : (
                 <>
                   <Table>
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Item</th>
-                        <th>Account</th>
-                        <th>Supplier</th>
-                        <th>Store</th>
-                        <th>@ Cost</th>
-                        <th>Quantity</th>
+                        <th>Name</th>
+                        <th>1 KG Bales</th>
+                        <th>Pay 1 KG Bales</th>
+                        <th>1/2 KG Bales</th>
+                        <th>Pay 1/2 KG Bales</th>
                         <th>Total</th>
                         <th>
                           <Button

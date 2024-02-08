@@ -10,7 +10,7 @@ import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import AddProductionModal from "./lines/AddProductionModal";
-// import DeletePurchaseModal from "./lines/DeletePurchaseModal";
+
 import TimeDate from "../../../components/TimeDate";
 import { GiReturnArrow } from "react-icons/gi";
 
@@ -44,12 +44,6 @@ const ProductionHeaderList = () => {
             batch_number={batch_number}
           />
         </div>
-        {/* <div style={{ display: `${mode_delete}` }}>
-          <DeletePurchaseModal
-            store_purchase_id={store_purchase_id}
-            set_mode_delete={set_mode_delete}
-          />
-        </div> */}
       </>
       <p>*** All Production ***</p>
 
