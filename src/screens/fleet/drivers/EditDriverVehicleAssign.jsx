@@ -1,21 +1,42 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import Loader from "../../../components/Loader";
-import { useNavigate } from "react-router-dom";
+
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import Loader from "../../../components/Loader";
 import { useGetAllDriversQuery } from "../../../slices/fleet/driverApislice";
 import { useGetAllVehiclesQuery } from "../../../slices/fleet/vehicleApiSlice";
-import { useAddDriverVehicleAssignMutation } from "../../../slices/fleet/driverVehicleAssignApiSlice";
+import { useGetDriverVehicleAssignQuery, useUpdateDriverVehicleAssignMutation } from "../../../slices/fleet/driverVehicleAssignApiSlice";
 import DriverVehicleAssignmentsList from "./DriverVehicleAssignmentsList";
 
-function AssignDriverVehicle() {
+function EditDriverVehicleAssign() {
   const [driver_id, setDriverId] = useState();
   const [vehicle_id, setVehicleId] = useState();
   const { data: drivers } = useGetAllDriversQuery();
   const { data: vehicles } = useGetAllVehiclesQuery();
-  //call driver vehicle assign add mutation
-  const [addDriverVehicleAssign, { isLoading }] = useAddDriverVehicleAssignMutation();
+
+  const [updateDriverVehicleAssign, { isError, isSuccess, error: errorUpdate }] =
+  useUpdateDriverVehicleAssignMutation();
+  const { id } = useParams();
   const navigate = useNavigate();
+  //call driver get query
+  const { data: driverVehicleAssign, error, isLoading } = useGetDriverVehicleAssignQuery(id)
+
+  useEffect(() => {
+    if (errorUpdate && id) {
+      toast.error("Something went wrong: " + error.message);
+      console.log(JSON.stringify(error.message));
+    }
+  }, [id, error]);
+  // console.log(driver.data.staff_id);
+  useEffect(() => {
+    if (id) {
+      if (driverVehicleAssign) {
+        setDriverId(driverVehicleAssign.data.driver_id);
+        setVehicleId(driverVehicleAssign.data.vehicle_id);
+      }
+    }
+  }, [id, driverVehicleAssign]);
 
   const handleDriver = (e) => {
     let x = drivers?.data?.filter((a) => {
@@ -34,22 +55,33 @@ function AssignDriverVehicle() {
     });
     setVehicleId(x[0].vehicle_id);
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const res = await addDriverVehicleAssign({
+    if (!driver_id && !vehicle_id) {
+      toast.error("Please provide value into each input field");
+    } else {
+      const dataDriver = {
         driver_id,
         vehicle_id,
-      }).unwrap();
-      toast.success(res.message);
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
+      };
+      try {
+        const result = await updateDriverVehicleAssign({
+          id,
+          data: dataDriver,
+        }).unwrap();
+
+        toast.success(result.message);
+        navigate("../assignments");
+      } catch (error) {
+        toast.error(error.message);
+        console.error("Failed to update driver vehicle assign:", error);
+      }
     }
   };
   return (
     <>
-      <span>*** Add Driver Vehicle Assignment ***</span>
+      <span>*** Edit Driver Vehicle Assignment ***</span>
       <Row>
         <div>
           {" "}
@@ -58,6 +90,7 @@ function AssignDriverVehicle() {
       </Row>
       <Form onSubmit={handleSubmit}>
         {/* */}
+
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="driver_name">
@@ -99,16 +132,13 @@ function AssignDriverVehicle() {
         </Row>
 
         <Button type="submit" variant="primary" className="mt-3">
-          Assign
+          Update
         </Button>
 
         {isLoading && <Loader />}
       </Form>
-      <br />
-      <DriverVehicleAssignmentsList />
     </>
   );
 }
 
-export default AssignDriverVehicle;
-
+export default EditDriverVehicleAssign;

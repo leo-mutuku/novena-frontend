@@ -25,7 +25,7 @@ function EditDriver() {
 
 
   useEffect(() => {
-    if (error && id) {
+    if (errorUpdate && id) {
       toast.error("Something went wrong: " + error.message);
       console.log(JSON.stringify(error.message));
     }
