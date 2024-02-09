@@ -21,6 +21,8 @@ export const vehicleApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
+      keepUnusedDataFor: 5,
+      providesTags: ["Vehicle"],
     }),
     updateVehicle: builder.mutation({
       query: ({ id, data }) => {
@@ -30,7 +32,7 @@ export const vehicleApiSlice = apiSlice.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: ["Route"],
+      invalidatesTags: ["Vehicle"],
     }),
     deleteVehicle: builder.mutation({
       query: (id) => ({

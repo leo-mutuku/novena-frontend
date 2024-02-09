@@ -2,6 +2,7 @@ import PageActionComponent from "../../components/PageActionComponent";
 const pagemenus = [
   { pagename: "All Drivers", to: "alldrivers" },
   { pagename: "Create Driver", to: "createdriver" },
+  { pagename: "Assign Driver Vehicle", to: "assignments" },
 ];
 function DriverScreen() {
   return (

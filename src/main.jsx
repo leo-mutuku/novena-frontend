@@ -181,6 +181,8 @@ import PaymentRequisitionList from "./screens/payment/payments/requisitions/Paym
 import EditDriver from "./screens/fleet/drivers/EditDriver.jsx";
 import EditRoute from "./screens/fleet/routes/EditRoute.jsx";
 import EditVehicle from "./screens/fleet/vehicles/EditVehicle.jsx";
+import AssignDriverVehicle from "./screens/fleet/drivers/AssignDriverVehicle.jsx";
+import EditDriverVehicleAssign from "./screens/fleet/drivers/EditDriverVehicleAssign.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -492,6 +494,8 @@ const router = createHashRouter(
             <Route path="alldrivers" element={<DriversList />} />
             <Route path="createdriver" element={<CreateDrivers />} />
             <Route path="update/:id" element={<EditDriver />} />
+            <Route path="assignments" element={<AssignDriverVehicle />} />
+            <Route path="assignments/update/:id" element={<EditDriverVehicleAssign />} />
           </Route>
           <Route path="routes" element={<RoutesScreen />}>
             <Route path="allroutes" element={<RoutesList />} />
