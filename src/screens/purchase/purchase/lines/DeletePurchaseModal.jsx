@@ -1,7 +1,6 @@
 import { Table, Button, Row, Col, Form } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { useState, useEffect } from "react";
-import Select from "react-select";
 import { MdDelete } from "react-icons/md";
 import { Prev } from "react-bootstrap/esm/PageItem";
 import { useGetAllItemRegisterQuery } from "../../../../slices/store/itemregisterApiSlice";
