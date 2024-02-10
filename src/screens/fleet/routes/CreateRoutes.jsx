@@ -27,7 +27,11 @@ function CreateRoutes() {
         end_location,
         distance_km,
       }).unwrap(); //extract the actual payload from the action
-      toast.success(res.message);
+      if (res.status === "failed") {
+        toast.error(res.message);
+      } else {
+        toast.success(res.message);
+      }
       navigate("../allroutes");
     } catch (err) {
       toast.error(err?.data?.message || err.error);

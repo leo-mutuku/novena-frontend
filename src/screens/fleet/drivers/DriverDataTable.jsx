@@ -42,9 +42,12 @@ const DriverDataTable = () => {
       deleteDriver(driverId)
         .unwrap()
         .then((response) => {
-          navigate("../alldrivers");
-          console.log("Driver deleted successfully", response);
-          toast.success("Driver deleted successfully");
+          if (response.status === "failed") {
+            toast.error(response.message);
+          } else {
+            toast.success(response.message);
+            navigate("../alldrivers");
+          }
         })
         .catch((error) => {
           // Handle error during deletion

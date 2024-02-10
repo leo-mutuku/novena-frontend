@@ -21,8 +21,7 @@ function EditDriver() {
   const navigate = useNavigate();
 
   //call driver get query
-  const { data: driver, error, isLoading } = useGetDriverQuery(id)
-
+  const { data: driver, error, isLoading } = useGetDriverQuery(id);
 
   useEffect(() => {
     if (errorUpdate && id) {
@@ -60,12 +59,16 @@ function EditDriver() {
         license_number,
       };
       try {
-        const result = await updateDriver({
+        const res = await updateDriver({
           id,
           data: dataDriver,
         }).unwrap();
 
-        toast.success(result.message);
+        if (res.status === "failed") {
+          toast.error(res.message);
+        } else {
+          toast.success(res.message);
+        }
         navigate("../alldrivers");
       } catch (error) {
         toast.error(error.message);

@@ -3,13 +3,16 @@ import { MDBDataTable } from "mdbreact";
 import Loader from "../../../components/Loader";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import { useDeleteVehicleMutation, useGetAllVehiclesQuery } from "../../../slices/fleet/vehicleApiSlice";
+import {
+  useDeleteVehicleMutation,
+  useGetAllVehiclesQuery,
+} from "../../../slices/fleet/vehicleApiSlice";
 
 const VehicleDataTable = () => {
   const { data: vehicles, isLoading } = useGetAllVehiclesQuery();
   const [tableData, setTableData] = useState([]);
   const navigate = useNavigate();
- 
+
   const [deleteVehicle, { isLoading: isDeleting }] = useDeleteVehicleMutation();
 
   useEffect(() => {
@@ -31,9 +34,12 @@ const VehicleDataTable = () => {
       deleteVehicle(vehicleId)
         .unwrap()
         .then((response) => {
-          navigate("../allvehicles");
-          console.log("Vehicle deleted successfully", response);
-          toast.success("Vehicle deleted successfully");
+          if (response.status === "failed") {
+            toast.error(response.message);
+          } else {
+            toast.success(response.message);
+            navigate("../allvehicles");
+          }
         })
         .catch((error) => {
           // Handle error during deletion
@@ -67,7 +73,12 @@ const VehicleDataTable = () => {
   // Define the columns
   const columns = [
     { label: "ID", field: "vehicle_id", sort: "asc", width: 50 },
-    { label: "Registration Number", field: "registration_number", sort: "asc", width: 150 },
+    {
+      label: "Registration Number",
+      field: "registration_number",
+      sort: "asc",
+      width: 150,
+    },
     {
       label: "Vehicle Model",
       field: "model",

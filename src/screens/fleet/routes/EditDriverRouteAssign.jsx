@@ -5,32 +5,31 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader";
 import { useGetAllDriversQuery } from "../../../slices/fleet/driverApislice";
-import { useGetAllVehiclesQuery } from "../../../slices/fleet/vehicleApiSlice";
+
 import {
-  useGetDriverVehicleAssignQuery,
-  useUpdateDriverVehicleAssignMutation,
-} from "../../../slices/fleet/driverVehicleAssignApiSlice";
-import DriverVehicleAssignmentsList from "./DriverVehicleAssignmentsList";
+  useGetDriverRouteAssignQuery,
+  useUpdateDriverRouteAssignMutation,
+} from "../../../slices/fleet/driverRouteAssignApiSlice";
+import { useGetAllRoutesQuery } from "../../../slices/fleet/routesApiSlice";
 
-function EditDriverVehicleAssign() {
+function EditDriverRouteAssign() {
   const [driver_id, setDriverId] = useState();
-  const [vehicle_id, setVehicleId] = useState();
+  const [route_id, setRouteId] = useState();
   const { data: drivers } = useGetAllDriversQuery();
-  const { data: vehicles } = useGetAllVehiclesQuery();
+  const { data: routes } = useGetAllRoutesQuery();
 
-  const [
-    updateDriverVehicleAssign,
-    { isError, isSuccess, error: errorUpdate },
-  ] = useUpdateDriverVehicleAssignMutation();
+  const [updateDriverRouteAssign, { isError, isSuccess, error: errorUpdate }] =
+    useUpdateDriverRouteAssignMutation();
 
   const { id } = useParams();
   const navigate = useNavigate();
+
   //call driver get query
   const {
-    data: driverVehicleAssign,
+    data: driverRouteAssign,
     error,
     isLoading,
-  } = useGetDriverVehicleAssignQuery(id);
+  } = useGetDriverRouteAssignQuery(id);
 
   useEffect(() => {
     if (errorUpdate && id) {
@@ -41,12 +40,12 @@ function EditDriverVehicleAssign() {
   // console.log(driver.data.staff_id);
   useEffect(() => {
     if (id) {
-      if (driverVehicleAssign) {
-        setDriverId(driverVehicleAssign.data.driver_id);
-        setVehicleId(driverVehicleAssign.data.vehicle_id);
+      if (driverRouteAssign) {
+        setDriverId(driverRouteAssign.data.driver_id);
+        setRouteId(driverRouteAssign.data.route_id);
       }
     }
-  }, [id, driverVehicleAssign]);
+  }, [id, driverRouteAssign]);
 
   const handleDriver = (e) => {
     let x = drivers?.data?.filter((a) => {
@@ -57,26 +56,26 @@ function EditDriverVehicleAssign() {
     setDriverId(x[0].driver_id);
   };
 
-  const handleVehicle = (e) => {
-    let x = vehicles?.data?.filter((a) => {
-      if (a.vehicle_id == e.target.value) {
-        return a.registration_number;
+  const handleRoute = (e) => {
+    let x = routes?.data?.filter((a) => {
+      if (a.route_id == e.target.value) {
+        return a.name;
       }
     });
-    setVehicleId(x[0].vehicle_id);
+    setRouteId(x[0].route_id);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!driver_id && !vehicle_id) {
+    if (!driver_id && !route_id) {
       toast.error("Please provide value into each input field");
     } else {
       const dataDriver = {
         driver_id,
-        vehicle_id,
+        route_id,
       };
       try {
-        const res = await updateDriverVehicleAssign({
+        const res = await updateDriverRouteAssign({
           id,
           data: dataDriver,
         }).unwrap();
@@ -89,7 +88,7 @@ function EditDriverVehicleAssign() {
         navigate("../assignments");
       } catch (error) {
         toast.error(error.message);
-        console.error("Failed to update driver vehicle assign:", error);
+        console.error("Failed to update driver route assign:", error);
       }
     }
   };
@@ -125,18 +124,18 @@ function EditDriverVehicleAssign() {
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group className="my-2" controlId="vehicle_id">
-              <Form.Label>Vehicle Name</Form.Label>
+            <Form.Group className="my-2" controlId="route_id">
+              <Form.Label>Route Name</Form.Label>
               <Form.Select
                 type="text"
                 required
-                value={vehicle_id}
-                onChange={handleVehicle}
+                value={route_id}
+                onChange={handleRoute}
               >
-                <option value="">Select Vehicle Name</option>
-                {vehicles?.data?.map((item) => (
-                  <option key={item.vehicle_id} value={item.vehicle_id}>
-                    {item.registration_number}
+                <option value="">Select Route Name</option>
+                {routes?.data?.map((item) => (
+                  <option key={item.route_id} value={item.route_id}>
+                    {item.name}
                   </option>
                 ))}
               </Form.Select>
@@ -154,4 +153,4 @@ function EditDriverVehicleAssign() {
   );
 }
 
-export default EditDriverVehicleAssign;
+export default EditDriverRouteAssign;

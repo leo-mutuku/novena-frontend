@@ -4,19 +4,18 @@ import Loader from "../../../components/Loader";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useGetAllDriversQuery } from "../../../slices/fleet/driverApislice";
-import { useGetAllVehiclesQuery } from "../../../slices/fleet/vehicleApiSlice";
-import { useAddDriverVehicleAssignMutation } from "../../../slices/fleet/driverVehicleAssignApiSlice";
-import DriverVehicleAssignmentsList from "./DriverVehicleAssignmentsList";
+import DriverRouteAssignmentsList from "./DriverRouteAssignmentsList";
+import { useGetAllRoutesQuery } from "../../../slices/fleet/routesApiSlice";
+import { useAddDriverRouteAssignMutation } from "../../../slices/fleet/driverRouteAssignApiSlice";
 
-function AssignDriverVehicle() {
+function AssignDriverRoute() {
   const [driver_id, setDriverId] = useState();
-  const [vehicle_id, setVehicleId] = useState();
+  const [route_id, setRouteId] = useState();
   const { data: drivers } = useGetAllDriversQuery();
-  const { data: vehicles } = useGetAllVehiclesQuery();
+  const { data: routes } = useGetAllRoutesQuery();
   //call driver vehicle assign add mutation
-  const [addDriverVehicleAssign, { isLoading }] =
-    useAddDriverVehicleAssignMutation();
-  const navigate = useNavigate();
+  const [addDriverRouteAssign, { isLoading }] =
+    useAddDriverRouteAssignMutation();
 
   const handleDriver = (e) => {
     let x = drivers?.data?.filter((a) => {
@@ -27,21 +26,21 @@ function AssignDriverVehicle() {
     setDriverId(x[0].driver_id);
   };
 
-  const handleVehicle = (e) => {
-    let x = vehicles?.data?.filter((a) => {
-      if (a.vehicle_id == e.target.value) {
-        return a.registration_number;
+  const handleRoute = (e) => {
+    let x = routes?.data?.filter((a) => {
+      if (a.route_id == e.target.value) {
+        return a.name;
       }
     });
-    setVehicleId(x[0].vehicle_id);
+    setRouteId(x[0].route_id);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await addDriverVehicleAssign({
+      const res = await addDriverRouteAssign({
         driver_id,
-        vehicle_id,
+        route_id,
       }).unwrap();
 
       if (res.status === "failed") {
@@ -55,7 +54,7 @@ function AssignDriverVehicle() {
   };
   return (
     <>
-      <span>*** Add Driver Vehicle Assignment ***</span>
+      <span>*** Add Driver Route Assignment ***</span>
       <Row>
         <div>
           {" "}
@@ -84,18 +83,18 @@ function AssignDriverVehicle() {
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group className="my-2" controlId="vehicle_id">
-              <Form.Label>Vehicle Name</Form.Label>
+            <Form.Group className="my-2" controlId="route_id">
+              <Form.Label>Route Name</Form.Label>
               <Form.Select
                 type="text"
                 required
-                value={vehicle_id}
-                onChange={handleVehicle}
+                value={route_id}
+                onChange={handleRoute}
               >
-                <option value="">Select Vehicle Name</option>
-                {vehicles?.data?.map((item) => (
-                  <option key={item.vehicle_id} value={item.vehicle_id}>
-                    {item.registration_number}
+                <option value="">Select Route Name</option>
+                {routes?.data?.map((item) => (
+                  <option key={item.route_id} value={item.route_id}>
+                    {item.name}
                   </option>
                 ))}
               </Form.Select>
@@ -108,9 +107,9 @@ function AssignDriverVehicle() {
         {isLoading && <Loader />}
       </Form>
       <br />
-      <DriverVehicleAssignmentsList />
+      <DriverRouteAssignmentsList />
     </>
   );
 }
 
-export default AssignDriverVehicle;
+export default AssignDriverRoute;
