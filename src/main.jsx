@@ -183,6 +183,8 @@ import EditRoute from "./screens/fleet/routes/EditRoute.jsx";
 import EditVehicle from "./screens/fleet/vehicles/EditVehicle.jsx";
 import AssignDriverVehicle from "./screens/fleet/drivers/AssignDriverVehicle.jsx";
 import EditDriverVehicleAssign from "./screens/fleet/drivers/EditDriverVehicleAssign.jsx";
+import AssignDriverRoute from "./screens/fleet/routes/AssignDriverRoute.jsx";
+import EditDriverRouteAssign from "./screens/fleet/routes/EditDriverRouteAssign.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -495,12 +497,20 @@ const router = createHashRouter(
             <Route path="createdriver" element={<CreateDrivers />} />
             <Route path="update/:id" element={<EditDriver />} />
             <Route path="assignments" element={<AssignDriverVehicle />} />
-            <Route path="assignments/update/:id" element={<EditDriverVehicleAssign />} />
+            <Route
+              path="assignments/update/:id"
+              element={<EditDriverVehicleAssign />}
+            />
           </Route>
           <Route path="routes" element={<RoutesScreen />}>
             <Route path="allroutes" element={<RoutesList />} />
             <Route path="createroute" element={<CreateRoutes />} />
             <Route path="update/:id" element={<EditRoute />} />
+            <Route path="assignments" element={<AssignDriverRoute />} />
+            <Route
+              path="assignments/update/:id"
+              element={<EditDriverRouteAssign />}
+            />
           </Route>
           <Route path="vehicles" element={<VehicleScreen />}>
             <Route path="allvehicles" element={<VehicleList />} />

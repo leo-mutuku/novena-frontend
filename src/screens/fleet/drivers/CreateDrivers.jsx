@@ -33,7 +33,11 @@ function CreateDrivers() {
         staff_id,
         license_number,
       }).unwrap();
-      toast.success(res.message);
+      if (res.status === "failed") {
+        toast.error(res.message);
+      } else {
+        toast.success(res.message);
+      }
       navigate("../alldrivers");
     } catch (err) {
       toast.error(err?.data?.message || err.error);

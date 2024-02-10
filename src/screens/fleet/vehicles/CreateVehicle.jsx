@@ -12,7 +12,7 @@ function CreateVehicle() {
   const [year, setYear] = useState("");
 
   //call vehicle add mutation
-  const [addVehicle, { isLoading,error }] = useAddVehicleMutation();
+  const [addVehicle, { isLoading, error }] = useAddVehicleMutation();
 
   const navigate = useNavigate();
 
@@ -31,7 +31,11 @@ function CreateVehicle() {
         model,
         year,
       }).unwrap(); //extract the actual payload from the action
-      toast.success(res.message);
+      if (res.status === "failed") {
+        toast.error(res.message);
+      } else {
+        toast.success(res.message);
+      }
       navigate("../allvehicles");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
@@ -89,7 +93,6 @@ function CreateVehicle() {
               ></Form.Control>
             </Form.Group>
           </Col>
-          
         </Row>
 
         <Button type="submit" variant="primary" className="mt-3">
