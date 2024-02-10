@@ -9,6 +9,7 @@ import { FaTrailer } from "react-icons/fa";
 import { Link, Outlet } from "react-router-dom";
 import { GiWallet } from "react-icons/gi";
 import { RiSecurePaymentFill } from "react-icons/ri";
+import SalesProduction from "../components/graph/SalesProduction";
 
 const SecuredHomeComponent = () => {
   const moduleMenu = [
@@ -55,9 +56,13 @@ const SecuredHomeComponent = () => {
           </Card>
         </Container>
       </div>
-      <Row>
-        <Col>Production</Col>
-        <Col>Sales</Col>
+      <Row className="flex items-center">
+        <div style={{ textAlign: "center" }}>
+          Production Vs Sales in 90KG Bags Unit
+        </div>
+        <div className="d-flex align-items-center">
+          <SalesProduction />
+        </div>
       </Row>
       <Outlet />
     </>

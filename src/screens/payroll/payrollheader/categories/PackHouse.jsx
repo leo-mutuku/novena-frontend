@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import { useGetAllPackHousePeopleQuery } from "../../../../slices/production/packHousePeopleApiSlice";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MDBCheckbox } from "mdb-react-ui-kit";
 
-const PackHouse = () => {
+const PackHouse = ({ staff_list, set_staff_list }) => {
   const { data: pack_housepeople } = useGetAllPackHousePeopleQuery();
   const [staff, set_staff] = useState(false);
+  useEffect(() => {
+    if (pack_housepeople) {
+      set_staff_list(pack_housepeople.data);
+    }
+  }, [pack_housepeople]);
   return (
     <>
       <div>

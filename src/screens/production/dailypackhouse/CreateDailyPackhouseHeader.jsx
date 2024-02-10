@@ -7,9 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function CreateDailyPackhouseHeader() {
-  const [pack_type, set_pack_type] = useState("");
+  const [batch_no, set_batch_no] = useState("");
   const [pack_date, set_pack_date] = useState("");
-  const [pay_per_bale, set_pay_per_bale] = useState("");
   const [pack_officer, set_pack_officer] = useState("");
   const [created_by, set_created_by] = useState("");
 
@@ -30,9 +29,7 @@ function CreateDailyPackhouseHeader() {
 
     try {
       const res = await DailyProductionHeader({
-        pack_type,
-        pack_date,
-        pay_per_bale,
+        batch_no,
         pack_date,
         pack_officer,
         created_by,
@@ -59,30 +56,15 @@ function CreateDailyPackhouseHeader() {
         {/* */}
         <Row>
           <Col>
-            <Form.Group className="my-2" controlId="pack_type">
-              <Form.Label>Pack Type</Form.Label>
-              <Form.Select
-                type="option"
-                required
-                placeholder="Pack Type"
-                value={pack_type}
-                onChange={(e) => set_pack_type(e.target.value)}
-              >
-                <option>Pack Type</option>
-                <option value={1}>1 KG Bale</option>
-                <option value={0.5}>1/2 KG Bale</option>
-              </Form.Select>
-            </Form.Group>
-          </Col>
-          <Col>
             <Form.Group className="my-2" controlId="pay_per_bale">
-              <Form.Label>Pay Per bale</Form.Label>
+              <Form.Label>Batch no.</Form.Label>
               <Form.Control
                 required
-                type="number"
-                placeholder="Ksh 0.00 "
-                value={pay_per_bale}
-                onChange={(e) => set_pay_per_bale(e.target.value)}
+                style={{ textTransform: "uppercase" }}
+                type="text"
+                placeholder="Enter Batch no."
+                value={batch_no}
+                onChange={(e) => set_batch_no(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -110,7 +92,7 @@ function CreateDailyPackhouseHeader() {
                 value={pack_officer}
                 onChange={(e) => set_pack_officer(e.target.value)}
               >
-                <option>Staff</option>
+                <option value={""}>Staff</option>
                 {staff?.data.map((item, index) => (
                   <>
                     <option value={item.staff_id}>{item.first_name}</option>

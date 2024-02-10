@@ -1,16 +1,15 @@
-import PageActionComponent from '../../components/PageActionComponent'
-const pagemenus =
-[
-  {pagename:'All GL', to:"allgl"},
-  {pagename:'Create GL', to:"creategl"},
-]
+import PageActionComponent from "../../components/PageActionComponent";
+const pagemenus = [
+  { pagename: "All GL", to: "allgl" },
+  { pagename: "Create GL", to: "creategl" },
+];
 
 function GeneralledgerScreen() {
   return (
     <>
-    <PageActionComponent pagemenus={pagemenus}/>
-     </>
-  )
+      <PageActionComponent pagemenus={pagemenus} />
+    </>
+  );
 }
 
-export default GeneralledgerScreen
+export default GeneralledgerScreen;

@@ -15,20 +15,23 @@ import TimeDate from "../../../components/TimeDate";
 const DailyPackHouseHeadersList = () => {
   let timeDate = new TimeDate();
   const [mode, set_mode] = useState("none");
+  const [batch_no, set_batch_no] = useState("");
   const [mode_delete, set_mode_delete] = useState("none");
   const [store_purchase_id, set_store_purchase_id] = useState("");
-  const handleAdd = (e, id, style) => {
+  const handleAdd = (e, id, batch_no, style) => {
+    set_batch_no(batch_no);
     set_store_purchase_id(parseInt(id));
     set_mode(style);
   };
   const handleDelete = (e, id, style) => {
     set_store_purchase_id(parseInt(id));
+
     set_mode_delete(style);
   };
   const { data, isLoading } = useGetAllDailyPackHouseHeadersQuery();
   const navigate = useNavigate();
   useEffect(() => {}, [data]);
-  console.log(data);
+
   return (
     <>
       <>
@@ -36,6 +39,7 @@ const DailyPackHouseHeadersList = () => {
           <AddDailyPackModal
             store_purchase_id={store_purchase_id}
             set_mode={set_mode}
+            batch_no={batch_no}
           />
         </div>
         {/* <div style={{ display: `${mode_delete}` }}>
@@ -52,14 +56,14 @@ const DailyPackHouseHeadersList = () => {
           <tr>
             <th>#</th>
             <th>Pack Date</th>
-            <th>Pack Type</th>
-            <th>Total</th>
-            <th>Bales</th>
-            <th>Cost @ Bale</th>
-            <th>Total Cost</th>
+            <th>Batch no.</th>
+            <th>1 KG Bales</th>
+            <th>1/2 KG Bales</th>
+            <th>Total (90 Kg)</th>
+            <th>Created By</th>
             <th>Status</th>
             <th>Add</th>
-            <th>Edit</th>
+            <th>Revert</th>
           </tr>
         </thead>
         <tbody>
@@ -72,11 +76,11 @@ const DailyPackHouseHeadersList = () => {
               <tr>
                 <td>{index + 1}</td>
                 <td>{`${timeDate.date(item.pack_date)}`}</td>
-                <td>{item.pack_type}</td>
+                <td>{item.batch_no}</td>
 
                 <td>{item.total}</td>
                 <td>{item.total_bales}</td>
-                <td>{item.pay_per_bale}</td>
+                <td>{item.total_bales}</td>
                 <td>{item.total_packing_cost}</td>
                 <td>
                   {item.status === "New" ? (
@@ -95,7 +99,12 @@ const DailyPackHouseHeadersList = () => {
                     <Link to={`#`}>
                       <IoMdAdd
                         onClick={(e) =>
-                          handleAdd(e, item.store_purchase_number, "block")
+                          handleAdd(
+                            e,
+                            item.daily_packhouse_id,
+                            item.batch_no,
+                            "block"
+                          )
                         }
                       />
                     </Link>

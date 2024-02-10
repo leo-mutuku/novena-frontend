@@ -15,9 +15,13 @@ function CreatePayrollHeaders() {
   const { data: payroll_category } = useGetAllPayrollcategoriesQuery();
 
   const [category_name, set_category_name] = useState("");
+  const [start_date, set_start_date] = useState("");
+  const [end_date, set_end_date] = useState("");
   const [category_code, set_category_code] = useState("");
   const [pay_interval, set_pay_interval] = useState("");
   const [created_by, set_created_by] = useState("");
+  const [staff_list, set_staff_list] = useState([]);
+  console.log(staff_list);
 
   const [nhif, set_nhif] = useState(true);
   const [nssf, set_nssf] = useState(true);
@@ -78,8 +82,8 @@ function CreatePayrollHeaders() {
                 type="date"
                 required
                 placeholder="Category Name"
-                value={category_name}
-                onChange={(e) => set_category_name(e.target.value)}
+                value={start_date}
+                onChange={(e) => set_start_date(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -90,23 +94,12 @@ function CreatePayrollHeaders() {
                 type="date"
                 required
                 placeholder="Category Name"
-                value={category_name}
-                onChange={(e) => set_category_name(e.target.value)}
+                value={end_date}
+                onChange={(e) => set_end_date(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
-          <Col>
-            <Form.Group className="my-2" controlId="pay_interval">
-              <Form.Label>Payroll Interval</Form.Label>
-              <Form.Control
-                type="number"
-                required
-                placeholder="Payroll interval"
-                value={pay_interval}
-                onChange={(e) => set_pay_interval(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-          </Col>
+
           <Col>
             {/* */}
             <Form.Group className="my-2" controlId="category_code">
@@ -131,77 +124,35 @@ function CreatePayrollHeaders() {
           </Col>
         </Row>
         <hr></hr>
-        <Row>
-          <Col>
-            <div>Statutory Dedauctions: </div>
-            <MDBCheckbox
-              id="controlledCheckbox"
-              label="NHIF"
-              checked={nhif}
-              onChange={() => set_nhif(!nhif)}
-            />
-            <MDBCheckbox
-              id="controlledCheckbox"
-              label="NSSF"
-              checked={nssf}
-              onChange={() => set_nssf(!nssf)}
-            />
-          </Col>
-          <Col>
-            <div>Contribution Scheme </div>
-            <MDBCheckbox
-              id="controlledCheckbox"
-              label="SACCO"
-              checked={sacco}
-              onChange={() => set_sacco(!sacco)}
-            />
-            <MDBCheckbox
-              id="controlledCheckbox"
-              label="Profident"
-              checked={profident}
-              onChange={() => set_profident(!profident)}
-            />
-          </Col>
-          <Col>
-            <div>Deductions </div>
-
-            <MDBCheckbox
-              id="controlledCheckbox"
-              label="advance"
-              checked={advance}
-              onChange={() => set_advance(!advance)}
-            />
-            <MDBCheckbox
-              id="controlledCheckbox"
-              label="Other Deductions"
-              checked={other_deductions}
-              onChange={() => set_other_deductions(!other_deductions)}
-            />
-          </Col>
-        </Row>
 
         {category_code == "1" ? (
           <>
             <div>
-              <Monthly />
+              <Monthly set_staff_list={set_staff_list} />
             </div>
           </>
         ) : category_code == "2" ? (
           <>
             <div>
-              <Sales />
+              <Sales staff_list={staff_list} set_staff_list={set_staff_list} />
             </div>
           </>
         ) : category_code == "3" ? (
           <>
             <div>
-              <Production />
+              <Production
+                staff_list={staff_list}
+                set_staff_list={set_staff_list}
+              />
             </div>
           </>
         ) : category_code == "4" ? (
           <>
             <div>
-              <PackHouse />
+              <PackHouse
+                staff_list={staff_list}
+                set_staff_list={set_staff_list}
+              />
             </div>
           </>
         ) : (

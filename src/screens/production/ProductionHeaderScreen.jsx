@@ -1,7 +1,7 @@
 import PageActionComponent from "../../components/PageActionComponent";
 const pagemenus = [
   { pagename: "All production", to: "allproductionheaders" },
-  { pagename: "In Transit", to: "allproductionheaderlistintransit" },
+
   { pagename: "Posted", to: "allpostedtransiactionheaderlist" },
   { pagename: "New Production", to: "createproductionheader" },
 ];

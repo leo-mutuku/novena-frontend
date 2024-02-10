@@ -1,40 +1,18 @@
 import { apiSlice } from "../apiSlice";
-const PRODUCTIONHEADER_URL = "/api/v1/production/productionheaders";
-
+const PAYMENTREQUISITION_URL = "/api/v1/payment/requisitions";
 export const paymentRequisitionApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    createProductionHeader: builder.mutation({
+    createPaymentRequisition: builder.mutation({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/createproductionheader`,
+        url: `${PAYMENTREQUISITION_URL}/createpaymentrequisition`,
         method: "POST",
         body: data,
       }),
     }),
 
-    getAllProductionHeaders: builder.query({
+    getAllPaymentRequisition: builder.query({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheaders`,
-        method: "GET",
-        body: data,
-      }),
-    }),
-    getAllProductionHeadersInTransit: builder.query({
-      query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheaders`,
-        method: "GET",
-        body: data,
-      }),
-    }),
-    getAllProductionHeadersInTransit: builder.query({
-      query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheadersintransit`,
-        method: "GET",
-        body: data,
-      }),
-    }),
-    getAllPostedProductionHeaders: builder.query({
-      query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallpostedproductionheaders`,
+        url: `${PAYMENTREQUISITION_URL}/getallpaymentrequisition`,
         method: "GET",
         body: data,
       }),
@@ -43,8 +21,6 @@ export const paymentRequisitionApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useCreateProductionHeaderMutation,
-  useGetAllProductionHeadersQuery,
-  useGetAllProductionHeadersInTransitQuery,
-  useGetAllPostedProductionHeadersQuery,
+  useCreatePaymentRequisitionMutation,
+  useGetAllPaymentRequisitionQuery,
 } = paymentRequisitionApiSlice;
