@@ -187,6 +187,7 @@ import UpdateGL from "./screens/finance/gl/UpdateGL.jsx";
 import AssignDriverRoute from "./screens/fleet/routes/AssignDriverRoute.jsx";
 import EditDriverRouteAssign from "./screens/fleet/routes/EditDriverRouteAssign.jsx";
 import UpdateAccounts from "./screens/finance/accounts/UpdateAccounts.jsx";
+import UpdateStaff from "./screens/administration/staff/UpdateStaff.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -219,6 +220,7 @@ const router = createHashRouter(
           <Route path="staff" element={<StaffScreen />}>
             <Route index element={<StaffList />} />
             <Route path="createstaff" element={<CreateStaff />} />
+            <Route path="update/:id" element={<UpdateStaff />} />
             <Route path="allstaff" element={<StaffList />} />
           </Route>
           <Route path="customers" element={<CustomersScreen />}>

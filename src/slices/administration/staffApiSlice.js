@@ -1,26 +1,46 @@
-import { apiSlice } from '../apiSlice';
-const STAFF_URL = '/api/v1/administration/staff';
+import { apiSlice } from "../apiSlice";
+const STAFF_URL = "/api/v1/administration/staff";
 
 export const staffApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    tagTypes: ["Staff"],
     getAllStaff: builder.query({
       query: (data) => ({
         url: `${STAFF_URL}/getallstaff`,
-        method: 'GET',
+        method: "GET",
         body: data,
       }),
+      providesTags: ["Staff"],
+    }),
+    getAllStaffById: builder.query({
+      query: (id) => ({
+        url: `${STAFF_URL}/getstaffbyid/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Staff"],
     }),
     createStaff: builder.mutation({
       query: (data) => ({
         url: `${STAFF_URL}/createstaff`,
-        method: 'POST',
+        method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Staff"],
+    }),
+    updateStaff: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `${STAFF_URL}/updatestaffbyid/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Staff"],
     }),
   }),
 });
 
-export const { 
+export const {
   useGetAllStaffQuery,
-  useCreateStaffMutation
+  useCreateStaffMutation,
+  useUpdateStaffMutation,
+  useGetAllStaffByIdQuery,
 } = staffApiSlice;

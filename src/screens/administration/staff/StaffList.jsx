@@ -38,7 +38,7 @@ const StaffList = () => {
                 <td>{user.phone_number}</td>
                 <td>{user.staff_email}</td>
                 <td>
-                  <Link to="#">
+                  <Link to={`/administration/staff/update/${user.staff_id}`}>
                     <CiEdit />
                   </Link>
                 </td>
