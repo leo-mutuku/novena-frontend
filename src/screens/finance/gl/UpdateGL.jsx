@@ -5,17 +5,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader";
 import { useGetGLByIdQuery } from "../../../slices/finance/glApiSlice";
+import { useUpdateGLAccountByIdMutation } from "../../../slices/finance/glApiSlice";
 
 function UpdateGL() {
   const [gl_name, set_gl_name] = useState("");
   const [gl_number, set_gl_number] = useState("");
 
-  // const [updateVehicle, { isError, isSuccess, error: errorUpdate }] =
-  //   useUpdateVehicleMutation();
+  const [updateGL, { isError, isSuccess, error: errorUpdate }] =
+    useUpdateGLAccountByIdMutation();
 
   const { id: _new_id } = useParams();
   const id = parseInt(_new_id);
-  console.log(typeof id);
 
   const navigate = useNavigate();
 
@@ -23,7 +23,8 @@ function UpdateGL() {
   const { data: gl, error, isLoading } = useGetGLByIdQuery(id);
   console.log(error);
   useEffect(() => {
-    if (id) {
+    if (id && errorUpdate) {
+      toast.error(`Error occured `);
     }
   }, [id, gl]);
 
@@ -38,27 +39,21 @@ function UpdateGL() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!registration_number && !model && !year) {
-      toast.error("Please provide value into each input field");
-    } else {
-      const dataVehicle = {
-        registration_number,
-        model,
-        year,
-      };
-      try {
-        const result = await updateVehicle({
-          id,
-          data: dataVehicle,
-        }).unwrap();
+    console.log(errorUpdate);
+    try {
+      const result = await updateGL({
+        id: id,
+        data: { gl_name, gl_number },
+      }).unwrap();
 
-        toast.success(result.message);
-
-        navigate("../allvehicles");
-      } catch (error) {
+      if (result == "failed") {
         toast.error(error.message);
-        console.error("Failed to update vehicle:", error);
+      } else {
+        toast.success(result.message);
+        navigate("../allgl");
       }
+    } catch (error) {
+      toast.error(error.message);
     }
   };
   return (
@@ -71,8 +66,6 @@ function UpdateGL() {
         </div>
       </Row>
       <Form onSubmit={handleSubmit}>
-        {/* */}
-
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="gl_name">

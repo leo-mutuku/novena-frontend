@@ -6,10 +6,11 @@ import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa6";
 import { CiEdit } from "react-icons/ci";
-import { BsFileEarmarkPdf } from "react-icons/bs";
+import TimeDate from "../../../components/TimeDate";
 import { IoMdEye } from "react-icons/io";
 
 const AccountsList = () => {
+  const timeDate = new TimeDate();
   const { data, isLoading } = useGetAllAccountsQuery();
 
   return (
@@ -37,12 +38,16 @@ const AccountsList = () => {
                 <td>{index + 1}</td>
                 <td>{item.account_name}</td>
                 <td>{item.account_number}</td>
-                <td>{item.created_at}</td>
+                <td>
+                  {timeDate.date(item.created_at) +
+                    ":" +
+                    timeDate.time(item.created_at)}
+                </td>
                 <td>{item.account_balance}</td>
                 <td>{item.gl_number}</td>
                 {/* <td>{item.updated_at}</td> */}
                 <td>
-                  <Link to="#">
+                  <Link to={`/finance/accounts/update/${item.account_id}`}>
                     <CiEdit />
                   </Link>
                 </td>

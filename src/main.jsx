@@ -184,6 +184,7 @@ import EditVehicle from "./screens/fleet/vehicles/EditVehicle.jsx";
 import AssignDriverVehicle from "./screens/fleet/drivers/AssignDriverVehicle.jsx";
 import EditDriverVehicleAssign from "./screens/fleet/drivers/EditDriverVehicleAssign.jsx";
 import UpdateGL from "./screens/finance/gl/UpdateGL.jsx";
+import UpdateAccounts from "./screens/finance/accounts/UpdateAccounts.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -533,6 +534,7 @@ const router = createHashRouter(
             <Route path="allaccounts" element={<AccountsList />} />
             <Route path="createaccount" element={<CreateAccount />} />
             <Route path="updateaccount" element={<UpdateAccount />} />
+            <Route path="update/:id" element={<UpdateAccounts />} />
             <Route path="viewaccount" element={<ViewAccounts />} />
           </Route>
           <Route path="allaccountentries" element={<AccountEntriesScreen />}>

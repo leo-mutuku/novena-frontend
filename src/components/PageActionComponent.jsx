@@ -17,14 +17,14 @@ function PageActionComponent({ pagemenus }) {
             </Link>
           ))}
         </span>
-        <span style={{ float: "right" }}>
+        {/* <span style={{ float: "right" }}>
           <Button variant="light">
             <BsFileEarmarkPdf size={18} style={{ color: "orange" }} /> PDF
           </Button>
           <Button variant="light">
             <FaRegFileExcel size={18} style={{ color: "green" }} /> Excel
           </Button>
-        </span>
+        </span> */}
       </div>
       <hr></hr>
       <Outlet />
