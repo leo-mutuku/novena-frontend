@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
-import { useGetAllSalesPeopleQuery } from "../../../../slices/sales/salesPeopleApiSlice";
+import { useProductionQuery } from "../../../../slices/administration/staffApiSlice";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MDBCheckbox } from "mdb-react-ui-kit";
 
 const Production = ({ staff_list, set_staff_list }) => {
-  const { data: sales_people } = useGetAllSalesPeopleQuery();
+  const { data: production_people } = useProductionQuery();
   const [staff, set_staff] = useState(false);
   const [checked, set_checked] = useState([]);
 
@@ -14,10 +14,10 @@ const Production = ({ staff_list, set_staff_list }) => {
     alert(e.target.id);
   };
   useEffect(() => {
-    if (sales_people) {
-      set_staff_list(sales_people.data);
+    if (production_people) {
+      set_staff_list(production_people.data);
     }
-  }, [sales_people]);
+  }, [production_people]);
 
   return (
     <>
@@ -34,7 +34,7 @@ const Production = ({ staff_list, set_staff_list }) => {
             </tr>
           </thead>
           <tbody>
-            {staff_list?.map((item, index) => (
+            {production_people?.data.map((item, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{item.first_name}</td>

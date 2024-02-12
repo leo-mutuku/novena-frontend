@@ -1,50 +1,67 @@
 import { apiSlice } from "../apiSlice";
-const PRODUCTIONHEADER_URL = "/api/v1/payroll/payrollheaders";
+const PAYROLLHEADER_URL = "/api/v1/payroll/payrollheaders";
 
 export const payrollHeadersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    tagTypes: ["Payroll_headers"],
     createPayrollheader: builder.mutation({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/createpayrollheader`,
+        url: `${PAYROLLHEADER_URL}/createpayrollheader`,
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Payroll_headers"],
     }),
 
     getAllPayRollHeaders: builder.query({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getAllPayrollHeaders`,
+        url: `${PAYROLLHEADER_URL}/getAllPayrollHeaders`,
         method: "GET",
         body: data,
       }),
+      providesTags: ["Payroll_headers"],
     }),
-    getAllProductionHeadersInTransit: builder.query({
+
+    startswith1: builder.query({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheaders`,
+        url: `${PAYROLLHEADER_URL}/startswith1`,
         method: "GET",
         body: data,
       }),
+      providesTags: ["Payroll_headers"],
     }),
-    getAllProductionHeadersInTransit: builder.query({
+    startswith2: builder.query({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheadersintransit`,
+        url: `${PAYROLLHEADER_URL}/startswith2`,
         method: "GET",
         body: data,
       }),
+      providesTags: ["Payroll_headers"],
     }),
-    getAllPostedProductionHeaders: builder.query({
+    startswith3: builder.query({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallpostedproductionheaders`,
+        url: `${PAYROLLHEADER_URL}/startswith3`,
         method: "GET",
         body: data,
       }),
+      providesTags: ["Payroll_headers"],
+    }),
+    startswith4: builder.query({
+      query: (data) => ({
+        url: `${PAYROLLHEADER_URL}/startswith4`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Payroll_headers"],
     }),
   }),
 });
 
 export const {
-  useCreateProductionHeaderMutation,
-  useGetAllProductionHeadersQuery,
-  useGetAllProductionHeadersInTransitQuery,
-  useGetAllPostedProductionHeadersQuery,
+  useCreatePayrollheaderMutation,
+  useGetAllPayRollHeadersQuery,
+  useStartswith1Query,
+  useStartswith2Query,
+  useStartswith3Query,
+  useStartswith4Query,
 } = payrollHeadersApiSlice;

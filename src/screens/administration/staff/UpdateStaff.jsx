@@ -46,7 +46,7 @@ function UpdateStaff() {
         set_last_name(staff.data.last_name);
         set_phone_number(staff.data.phone_number);
         set_bank_account_number(staff.data.bank_account_number);
-        set_payroll_category_code(staff.data.category_code);
+        set_payroll_category_code(staff.data.payroll_category_code);
       }
     }
   }, [id, staff]);
@@ -64,7 +64,7 @@ function UpdateStaff() {
           last_name,
           phone_number,
           bank_account_number,
-          payroll_category,
+          payroll_category_code,
         },
       }).unwrap();
 

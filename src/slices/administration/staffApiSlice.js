@@ -12,6 +12,23 @@ export const staffApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Staff"],
     }),
+    general: builder.query({
+      query: (data) => ({
+        url: `${STAFF_URL}/general`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Staff"],
+    }),
+    production: builder.query({
+      query: (data) => ({
+        url: `${STAFF_URL}/production`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Staff"],
+    }),
+
     getAllStaffById: builder.query({
       query: (id) => ({
         url: `${STAFF_URL}/getstaffbyid/${id}`,
@@ -43,4 +60,6 @@ export const {
   useCreateStaffMutation,
   useUpdateStaffMutation,
   useGetAllStaffByIdQuery,
+  useGeneralQuery,
+  useProductionQuery,
 } = staffApiSlice;

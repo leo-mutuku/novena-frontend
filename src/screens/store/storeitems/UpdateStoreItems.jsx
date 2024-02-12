@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
-function UpdateStoreItems() {
-  return (
-    <div>UpdateStoreItems</div>
-  )
-}
+const UpdateStoreItems = () => {
+  return <div>UpdateStoreItems</div>;
+};
 
-export default UpdateStoreItems
+export default UpdateStoreItems;

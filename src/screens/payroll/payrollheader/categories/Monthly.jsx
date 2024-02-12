@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Table from "react-bootstrap/Table";
-import { useGetAllSalesPeopleQuery } from "../../../../slices/sales/salesPeopleApiSlice";
+import { useGeneralQuery } from "../../../../slices/administration/staffApiSlice";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MDBCheckbox } from "mdb-react-ui-kit";
 
 const Monthly = () => {
-  const { data: sales_people } = useGetAllSalesPeopleQuery();
+  const { data: general } = useGeneralQuery();
   const [staff, set_staff] = useState(false);
+
   return (
     <>
       <div>
@@ -23,7 +24,7 @@ const Monthly = () => {
             </tr>
           </thead>
           <tbody>
-            {sales_people?.data.map((item, index) => (
+            {general?.data.map((item, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{item.first_name}</td>

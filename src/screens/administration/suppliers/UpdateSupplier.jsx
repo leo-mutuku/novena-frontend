@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
-function UpdateSupplier() {
-  return (
-    <div>UpdateSupplier</div>
-  )
-}
+const UpdateSupplier = () => {
+  return <div>UpdateSupplier</div>;
+};
 
-export default UpdateSupplier
+export default UpdateSupplier;

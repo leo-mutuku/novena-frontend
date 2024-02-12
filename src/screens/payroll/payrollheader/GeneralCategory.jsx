@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Loader from "../../../components/Loader";
-import { useGetAllPayRollHeadersQuery } from "../../../slices/payroll/payrollHeadersApiSlice";
+import { useStartswith1Query } from "../../../slices/payroll/payrollHeadersApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa6";
@@ -12,7 +12,7 @@ import { MdDelete } from "react-icons/md";
 // import DeletePurchaseModal from "./lines/DeletePurchaseModal";
 import TimeDate from "../../../components/TimeDate";
 
-const PayrollHeadersList = () => {
+const GeneralCategory = () => {
   let timeDate = new TimeDate();
   const [mode, set_mode] = useState("none");
   const [mode_delete, set_mode_delete] = useState("none");
@@ -25,10 +25,10 @@ const PayrollHeadersList = () => {
     set_store_purchase_id(parseInt(id));
     set_mode_delete(style);
   };
-  const { data, isLoading } = useGetAllPayRollHeadersQuery();
+  const { data, isLoading } = useStartswith1Query();
   const navigate = useNavigate();
   useEffect(() => {}, [data]);
-
+  console.log(data);
   return (
     <>
       <>
@@ -45,7 +45,7 @@ const PayrollHeadersList = () => {
           />
         </div> */}
       </>
-      <p>*** All Payroll Lists ***</p>
+      <p>*** General Payroll List ***</p>
 
       <Table striped style={{ border: "1px solid #ccc" }}>
         <thead>
@@ -126,4 +126,4 @@ const PayrollHeadersList = () => {
     </>
   );
 };
-export default PayrollHeadersList;
+export default GeneralCategory;

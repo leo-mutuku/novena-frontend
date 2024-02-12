@@ -22,6 +22,8 @@ const StaffList = () => {
             <th>Last Name</th>
             <th>Phone Number</th>
             <th>EMAIL</th>
+            <th>Bank</th>
+            <th>Payroll_code</th>
             <th>Edit</th>
             <th>View</th>
           </tr>
@@ -37,6 +39,8 @@ const StaffList = () => {
                 <td>{user.last_name}</td>
                 <td>{user.phone_number}</td>
                 <td>{user.staff_email}</td>
+                <td>{user.bank_account_number}</td>
+                <td>{user.payroll_category_code}</td>
                 <td>
                   <Link to={`/administration/staff/update/${user.staff_id}`}>
                     <CiEdit />

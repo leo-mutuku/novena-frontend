@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useGetAllPayrollcategoriesQuery } from "../../../slices/payroll/categoryApiSlice";
+import { useCreatePayrollheaderMutation } from "../../../slices/payroll/payrollHeadersApiSlice";
 
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -13,22 +14,13 @@ import { MDBCheckbox } from "mdb-react-ui-kit";
 
 function CreatePayrollHeaders() {
   const { data: payroll_category } = useGetAllPayrollcategoriesQuery();
+  const [createPayrollHeader, { isLoading }] = useCreatePayrollheaderMutation();
 
-  const [category_name, set_category_name] = useState("");
   const [start_date, set_start_date] = useState("");
   const [end_date, set_end_date] = useState("");
   const [category_code, set_category_code] = useState("");
-  const [pay_interval, set_pay_interval] = useState("");
   const [created_by, set_created_by] = useState("");
   const [staff_list, set_staff_list] = useState([]);
-  console.log(staff_list);
-
-  const [nhif, set_nhif] = useState(true);
-  const [nssf, set_nssf] = useState(true);
-  const [sacco, set_sacco] = useState(false);
-  const [profident, set_profident] = useState(false);
-  const [advance, set_advance] = useState(false);
-  const [other_deductions, set_other_deductions] = useState(false);
 
   const { userInfo } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -42,6 +34,9 @@ function CreatePayrollHeaders() {
     e.preventDefault();
 
     try {
+      const res = await createPayrollHeader({
+        staff_list,
+      }).unwrap();
       if (res.status == "failed") {
         toast.error(err?.data?.message || err.error);
       } else {

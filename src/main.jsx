@@ -133,8 +133,6 @@ import { PayrollHeaderScreen } from "./screens/payroll/PayrollHeaderScreen.jsx";
 import { CategoryScreen } from "./screens/payroll/CategoryScreen.jsx";
 import CategoryList from "./screens/payroll/category/CategoryList.jsx";
 import CreateCategory from "./screens/payroll/category/CreateCategory.jsx";
-import { AllPayrollHeadersInTransit } from "./screens/payroll/payrollheader/AllPayrollHeadersInTransit.jsx";
-import { AllPostedPayrollHeaders } from "./screens/payroll/payrollheader/AllPostedPayrollHeaders.jsx";
 import { PurchasesScreen } from "./screens/payment/PurchasesScreen.jsx";
 import { RequisitionsScreen } from "./screens/payment/RequisitionsScreen.jsx";
 import { PaymentVoucherScreen } from "./screens/payment/PaymentVoucherScreen.jsx";
@@ -188,6 +186,13 @@ import AssignDriverRoute from "./screens/fleet/routes/AssignDriverRoute.jsx";
 import EditDriverRouteAssign from "./screens/fleet/routes/EditDriverRouteAssign.jsx";
 import UpdateAccounts from "./screens/finance/accounts/UpdateAccounts.jsx";
 import UpdateStaff from "./screens/administration/staff/UpdateStaff.jsx";
+import UpdateSupplier from "./screens/administration/suppliers/UpdateSupplier.jsx";
+import UpdateStoreItems from "./screens/store/storeitems/UpdateStoreItems.jsx";
+import UpdateItemsRegister from "./screens/store/itemregister/UpdateItemsRegister.jsx";
+import GeneralCategory from "./screens/payroll/payrollheader/GeneralCategory.jsx";
+import ProductionCategory from "./screens/payroll/payrollheader/ProductionCategory.jsx";
+import SalesCategory from "./screens/payroll/payrollheader/SalesCategory.jsx";
+import PackHouseCategory from "./screens/payroll/payrollheader/PackHouseCategory.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -215,6 +220,7 @@ const router = createHashRouter(
           <Route path="suppliers" element={<SuppliersScreen />}>
             <Route index element={<SupplierList />} />
             <Route path="createsupplier" element={<CreateSupplier />} />
+            <Route path="update/:id" element={<UpdateSupplier />} />
             <Route path="allsuppliers" element={<SupplierList />} />
           </Route>
           <Route path="staff" element={<StaffScreen />}>
@@ -236,14 +242,12 @@ const router = createHashRouter(
           </Route>
           <Route path="payrollheader" element={<PayrollHeaderScreen />}>
             <Route path="allpayroll" element={<PayrollHeadersList />} />
-            <Route
-              path="allpayrollintransit"
-              element={<AllPayrollHeadersInTransit />}
-            />
-            <Route
-              path="allpostedpayroll"
-              element={<AllPostedPayrollHeaders />}
-            />
+            <Route path="packHousecategory" element={<PackHouseCategory />} />
+            <Route path="salescategory" element={<SalesCategory />} />
+            <Route path="productioncategory" element={<ProductionCategory />} />
+            <Route path="generalcategory" element={<GeneralCategory />} />
+            <Route path="" element="" />
+
             <Route path="createpayroll" element={<CreatePayrollHeaders />} />
           </Route>
         </Route>
@@ -357,6 +361,7 @@ const router = createHashRouter(
           <Route path="storeitemregister" element={<StoreItemRegister />}>
             <Route index element={<ItemListList />} />
             <Route path="registeritem" element={<CreateItemList />} />
+            <Route path="update/:id" element={<UpdateItemsRegister />} />
             <Route path="allregistereditems" element={<ItemListList />} />
           </Route>
           <Route path="stocktake" element={<StockTakeScreen />}>
@@ -392,6 +397,7 @@ const router = createHashRouter(
           <Route path="storeitems" element={<StoreItemsScreen />}>
             <Route index element={<StoreItemslist />} />
             <Route path="createstoreitem" element={<CreateStoreItemslist />} />
+            <Route path="update/:id" element={<UpdateStoreItems />} />
             <Route path="allstoreitems" element={<StoreItemslist />} />
           </Route>
           <Route path="storeitemsentries" element={<StoreItemEntriesScreen />}>

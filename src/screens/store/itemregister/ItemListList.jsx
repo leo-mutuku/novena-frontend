@@ -43,7 +43,9 @@ const ItemListList = () => {
                 <td>{item.item_units}</td>
                 <td>{item.item_units_value}</td>
                 <td>
-                  <Link to="#">
+                  <Link
+                    to={`/store/storeitemregister/update/${item.item_register_id}`}
+                  >
                     <CiEdit />
                   </Link>
                 </td>
