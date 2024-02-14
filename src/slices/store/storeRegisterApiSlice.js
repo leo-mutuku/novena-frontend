@@ -2,6 +2,7 @@ import { apiSlice } from "../apiSlice";
 const STOREREGISTER_URL = "/api/v1/store/storeregister";
 
 export const storeRegisterApiSlice = apiSlice.injectEndpoints({
+  tagTypes: ["STOREREGISTER"],
   endpoints: (builder) => ({
     getAllStoreRegister: builder.query({
       query: (data) => ({
@@ -9,6 +10,7 @@ export const storeRegisterApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
+      providesTags: ["STOREREGISTER"],
     }),
     registerStore: builder.mutation({
       query: (data) => ({
@@ -16,6 +18,7 @@ export const storeRegisterApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["STOREREGISTER"],
     }),
   }),
 });
