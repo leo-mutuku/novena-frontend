@@ -4,7 +4,8 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import { Box, Button } from "@mui/material";
-import { FileDownloadIcon } from "@mui/icons-material";
+
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { jsPDF } from "jspdf"; //or use your library of choice here
 import autoTable from "jspdf-autotable";
 // import { data } from "./makeData";
