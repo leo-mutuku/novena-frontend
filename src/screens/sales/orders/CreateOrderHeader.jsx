@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useCreateSalesOrderHeaderMutation } from "../../../slices/sales/salesOrderHeadersApiSlice";
-import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
+import { useGetAllSalesPeopleQuery } from "../../../slices/sales/salesPeopleApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -16,7 +16,7 @@ function CreateOrderHeader() {
 
   const [CreateSalesOrderHeader, { isLoading }] =
     useCreateSalesOrderHeaderMutation();
-  const { data: staff } = useGetAllStaffQuery();
+  const { data: staff } = useGetAllSalesPeopleQuery();
   const { userInfo } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
@@ -125,7 +125,7 @@ function CreateOrderHeader() {
                 value={sales_person_number}
                 onChange={(e) => set_sales_person_number(e.target.value)}
               >
-                <option>Staff</option>
+                <option>Sales Person</option>
                 {staff?.data.map((item, index) => (
                   <>
                     <option value={item.staff_id}>{item.first_name}</option>

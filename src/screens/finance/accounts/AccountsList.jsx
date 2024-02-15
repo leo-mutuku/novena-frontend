@@ -1,25 +1,13 @@
-// import DataTable from "../../../components/DataTable";
-
-// const AccountsList = () => {
-//   return (
-//     <>
-//       <DataTable />
-//     </>
-//   );
-// };
-
-// export default AccountsList;
-
 import React from "react";
-//import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
 import { useGetAllAccountsQuery } from "../../../slices/finance/accountsApiSlice";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FaRegFileExcel } from "react-icons/fa6";
+
 import { CiEdit } from "react-icons/ci";
 import TimeDate from "../../../components/TimeDate";
 import { IoMdEye } from "react-icons/io";
+import PrintA4A5ExcelButton from "../../../components/PrintA4A5ExcelButton";
 
 const AccountsList = () => {
   const timeDate = new TimeDate();
@@ -27,7 +15,14 @@ const AccountsList = () => {
 
   return (
     <>
-      <p>*** All Accounts ***</p>
+      <Row>
+        <Col>
+          <p>*** All Accounts ***</p>
+        </Col>
+        <Col className="pull-right">
+          <PrintA4A5ExcelButton />
+        </Col>
+      </Row>
       <Table striped style={{ border: "1px solid #ccc" }}>
         <thead>
           <tr>
