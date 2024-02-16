@@ -4,7 +4,7 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import {} from "../../../slices/sales/salesOrderLinesApiSlice";
-import { useGetAllPostedSalesOrdersBySalesOrderNumberQuery } from "../../../slices/sales/salesOrderLinesApiSlice";
+import { useGetSalesLinesByHeaderIdQuery } from "../../../slices/sales/salesOrderLinesApiSlice";
 import { useCreatePrintToPosMutation } from "../../../slices/sales/salesPOSApiSlice";
 import TimeDate from "../../../components/TimeDate";
 
@@ -13,7 +13,7 @@ const PostedOrderPreview = () => {
   const { id: _new_id } = useParams();
   const id = parseInt(_new_id);
   const { data: posted_sales_order_line_id } =
-    useGetAllPostedSalesOrdersBySalesOrderNumberQuery(id);
+    useGetSalesLinesByHeaderIdQuery(id);
   const [printToPOS, { isLoading }] = useCreatePrintToPosMutation();
 
   useEffect(() => {}, [id, posted_sales_order_line_id]);
@@ -29,7 +29,7 @@ const PostedOrderPreview = () => {
       sales_order_number: id,
     }).unwrap();
 
-    console.log(res.status);
+    console.log(re.status);
   };
 
   console.log(posted_sales_order_line_id?.data);

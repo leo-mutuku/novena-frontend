@@ -2,23 +2,24 @@ import { Button, Row, Col } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useGetAllSalesOrdersIntransitBySalesOrderNumberQuery } from "../../../../slices/sales/salesOrderLinesApiSlice";
+import { useGetSalesLinesByHeaderIdQuery } from "../../../../slices/sales/salesOrderLinesApiSlice";
 import { usePostSalesOrderMutation } from "../../../../slices/sales/salesOrderHeadersApiSlice";
 import { toast } from "react-toastify";
 
 function EditOrderLines({ purchase_header_id, set_edit_mode }) {
   const id = purchase_header_id.toString();
-  const { data: purchase_order_lines, error } =
-    useGetAllSalesOrdersIntransitBySalesOrderNumberQuery(id);
-  console.log(purchase_order_lines?.data);
+  const { data: sales_order_lines, error } =
+    useGetSalesLinesByHeaderIdQuery(id);
+  console.log(sales_order_lines);
+
   const [post_purchase, { isLoading }] = usePostSalesOrderMutation();
   const [update_list, set_update_list] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    if (purchase_order_lines?.data) {
+    if (sales_order_lines?.data) {
       set_update_list(purchase_header_id.data);
     }
-  }, [purchase_order_lines?.data]);
+  }, [sales_order_lines, id]);
   const inputRef = useRef(null);
   const handleQuantity = (e) => {
     console.log(inputRef.focus());
@@ -43,7 +44,7 @@ function EditOrderLines({ purchase_header_id, set_edit_mode }) {
   };
   const handleToggleCheck = (e) => {
     console.log(e.target.value);
-    purchase_order_lines?.data.map((item) => {
+    sales_order_lines?.data.map((item) => {
       if (item.store_purchase_line_id == e.target.value) {
         set_items_to_edit(null);
         set_items_to_edit(item);
@@ -105,7 +106,7 @@ function EditOrderLines({ purchase_header_id, set_edit_mode }) {
             <Modal.Body>
               <>
                 <div>
-                  {purchase_order_lines?.data?.map((item, index) => (
+                  {sales_order_lines?.data?.order?.map((item, index) => (
                     <>
                       <div key={index} style={{ display: "block" }}>
                         <p>

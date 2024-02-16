@@ -13,14 +13,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Sales_orderLines"],
     }),
-    getAllSalesOrdersIntransitBySalesOrderNumber: builder.query({
-      query: (sales_order_number) => ({
-        url: `${SALESORDERLINES_URL}/getallsalesorderslinesbysalesordernumber/${sales_order_number}`,
-        method: "GET",
-      }),
-      providesTags: ["Sales_orderLines"],
-    }),
-    getAllPostedSalesOrdersBySalesOrderNumber: builder.query({
+    getSalesLinesByHeaderId: builder.query({
       query: (sales_order_number) => ({
         url: `${SALESORDERLINES_URL}/getallsalesorderslinesbysalesordernumber/${sales_order_number}`,
         method: "GET",
@@ -42,6 +35,5 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 export const {
   useCreateSalesOrderLineMutation,
   useGetSalesOrderLineByHeaderIdQuery,
-  useGetAllSalesOrdersIntransitBySalesOrderNumberQuery,
-  useGetAllPostedSalesOrdersBySalesOrderNumberQuery,
+  useGetSalesLinesByHeaderIdQuery,
 } = orderApiSlice;

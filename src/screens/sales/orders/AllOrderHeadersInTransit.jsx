@@ -17,6 +17,7 @@ const AllOrderHeadersInTransit = () => {
     useGetAllSalesOrdersInTransitQuery();
 
   const handleAdd = (e) => {};
+
   const handleEdit = (e, id, mode) => {
     set_edit_mode(mode);
     set_purchase_header_id(parseInt(id));
