@@ -1,28 +1,18 @@
-import { Table, Button, Row, Col, Form } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { useState, useEffect, useRef } from "react";
-
-import { Link, useNavigate } from "react-router-dom";
-import { Prev } from "react-bootstrap/esm/PageItem";
-import { useGetAllItemRegisterQuery } from "../../../../slices/store/itemregisterApiSlice";
-import { useGetAllAccountsQuery } from "../../../../slices/finance/accountsApiSlice";
+import { useNavigate } from "react-router-dom";
 import { useGetAllSalesOrdersIntransitBySalesOrderNumberQuery } from "../../../../slices/sales/salesOrderLinesApiSlice";
 import { usePostSalesOrderMutation } from "../../../../slices/sales/salesOrderHeadersApiSlice";
-import ItemEdit from "./ItemEdit";
-import Loader from "../../../../components/Loader";
 import { toast } from "react-toastify";
 
 function EditOrderLines({ purchase_header_id, set_edit_mode }) {
-  const [checked, setChecked] = useState(false);
   const id = purchase_header_id.toString();
   const { data: purchase_order_lines, error } =
     useGetAllSalesOrdersIntransitBySalesOrderNumberQuery(id);
   console.log(purchase_order_lines?.data);
   const [post_purchase, { isLoading }] = usePostSalesOrderMutation();
-
   const [update_list, set_update_list] = useState([]);
-
-  const [new_quantity, set_new_quantiry] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     if (purchase_order_lines?.data) {
@@ -39,21 +29,7 @@ function EditOrderLines({ purchase_header_id, set_edit_mode }) {
 
     set_purchase_list([...purchase_list, order_items]);
   };
-  // const handleQuantity = (e, store_purchase_line_id) => {
-  //   const newItem = purchase_order_lines?.data?.map((item) => {
-  //     if (item.store_purchase_line_id == store_purchase_line_id) {
-  //       return {
-  //         ...item,
 
-  //         item_cost: e.target.value * item.item_cost,
-  //       };
-  //     }
-
-  //     return item;
-  //   });
-
-  //   set_update_list(newItem);
-  // };
   const [item_edit_state, set_item_edit_state] = useState("none");
   const [items_to_edit, set_items_to_edit] = useState(null);
   const handleItemEdit = (e) => {
@@ -106,12 +82,7 @@ function EditOrderLines({ purchase_header_id, set_edit_mode }) {
           bottom: "0%",
         }}
       >
-        <div style={{ display: `${item_edit_state}` }}>
-          <ItemEdit
-            set_item_edit_state={set_item_edit_state}
-            items_to_edit={items_to_edit}
-          />
-        </div>
+        <div style={{ display: `${item_edit_state}` }}></div>
         <div
           style={{
             background: "#fff",
@@ -123,7 +94,10 @@ function EditOrderLines({ purchase_header_id, set_edit_mode }) {
             <Modal.Header closeButton onClick={(e) => set_edit_mode("none")}>
               <Modal.Title style={{ fontSize: "14px" }}>
                 <span style={{ fontSize: "14px" }}>
-                  Sales order no.{purchase_header_id}
+                  SALES ORDER NUMBER.{" "}
+                  <span style={{ fontStyle: "italic", fontWeight: "bold" }}>
+                    {purchase_header_id}{" "}
+                  </span>
                 </span>
               </Modal.Title>
             </Modal.Header>
@@ -135,23 +109,46 @@ function EditOrderLines({ purchase_header_id, set_edit_mode }) {
                     <>
                       <div key={index} style={{ display: "block" }}>
                         <p>
-                          Item order no: {item.store_purchase_line_id}{" "}
-                          &nbsp;&nbsp;&nbsp; Item name: {item.item_name}{" "}
-                          &nbsp;&nbsp;&nbsp; Supplied by: {item.supplier_name}{" "}
-                          &nbsp;&nbsp;&nbsp; Total Cost
+                          ITEM NUMBER:{" "}
+                          <span style={{ fontStyle: "italic" }}>
+                            {" "}
+                            {item.order_line_id}{" "}
+                          </span>{" "}
+                          &nbsp;&nbsp;&nbsp; ITEM NAME:{" "}
+                          <span style={{ fontStyle: "italic" }}>
+                            {item.item_name}{" "}
+                          </span>
+                          &nbsp;&nbsp;&nbsp; ITEM COST :{" "}
+                          <span style={{ fontStyle: "italic" }}>
+                            {item.total}{" "}
+                          </span>
                         </p>
                         <hr style={{ width: "50%" }} />
                         <Row>
                           <Col>
                             <p>Cost per unit</p>
-                            <p>Ksh. {item.item_cost}</p>
+                            <p>Ksh. {item.cost_per_item}</p>
                           </Col>
                           <Col>
                             <p>Quantity Purchased</p>
                             <p>{item.quantity}</p>
                           </Col>
-
                           <Col>
+                            <p>Total Cost</p>
+                            <p>
+                              {" "}
+                              <span
+                                style={{
+                                  fontStyle: "italic",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                Kshs. {item.total}
+                              </span>
+                            </p>
+                          </Col>
+
+                          {/* <Col>
                             <div>
                               <Form.Check
                                 type="switch"
@@ -171,7 +168,7 @@ function EditOrderLines({ purchase_header_id, set_edit_mode }) {
                                 Edit
                               </Button>
                             </div>
-                          </Col>
+                          </Col> */}
                         </Row>
                       </div>
                       <hr />
@@ -182,8 +179,9 @@ function EditOrderLines({ purchase_header_id, set_edit_mode }) {
             </Modal.Body>
 
             <Modal.Footer className="gap-2">
+              <Button variant="danger">Reverse</Button>
               <Button variant="success" onClick={(e) => handlePost()}>
-                Post purchase order
+                Post Sales Order
               </Button>
               <Button
                 variant="secondary"

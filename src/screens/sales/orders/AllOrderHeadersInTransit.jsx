@@ -1,21 +1,17 @@
 import React, { useState } from "react";
 import Loader from "../../../components/Loader";
 import { useGetAllSalesOrdersInTransitQuery } from "../../../slices/sales/salesOrderHeadersApiSlice";
-import { useGetAllPurchaseLinesByHeaderIdQuery } from "../../../slices/purchase/storePurchaseLinesApiSlice";
 
-import { Table, Button } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FaRegFileExcel } from "react-icons/fa6";
+
 import { CiEdit } from "react-icons/ci";
-import { BsFileEarmarkPdf } from "react-icons/bs";
-import { IoMdEye } from "react-icons/io";
-import { MdDelete } from "react-icons/md";
+
 import TimeDate from "../../../components/TimeDate";
 import EditOrderLines from "./lines/EditOrderLines";
 const AllOrderHeadersInTransit = () => {
   const [edit_mode, set_edit_mode] = useState("none");
   const [purchase_header_id, set_purchase_header_id] = useState("");
-  const [sales_order_number, set_sales_order_number] = useState("");
   const timeDate = new TimeDate();
   const { data: purchase_order_intransit, isLoading } =
     useGetAllSalesOrdersInTransitQuery();

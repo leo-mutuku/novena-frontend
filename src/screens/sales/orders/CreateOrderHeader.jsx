@@ -9,8 +9,8 @@ import { toast } from "react-toastify";
 function CreateOrderHeader() {
   const [sale_order_type, set_sale_order_type] = useState("");
   const [sales_person_number, set_sales_person_number] = useState("");
-  const [customer_name, set_customer_name] = useState("");
-  const [phone_number, set_phone_number] = useState("");
+  const [customer_name, set_customer_name] = useState("null");
+  const [phone_number, set_phone_number] = useState("null");
   const [created_by, set_created_by] = useState("");
   const [sales_order_date, set_sales_order_date] = useState("");
 

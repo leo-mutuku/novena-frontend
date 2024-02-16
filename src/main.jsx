@@ -193,6 +193,7 @@ import GeneralCategory from "./screens/payroll/payrollheader/GeneralCategory.jsx
 import ProductionCategory from "./screens/payroll/payrollheader/ProductionCategory.jsx";
 import SalesCategory from "./screens/payroll/payrollheader/SalesCategory.jsx";
 import PackHouseCategory from "./screens/payroll/payrollheader/PackHouseCategory.jsx";
+import PostedOrderPreview from "./screens/sales/orders/PostedOrderPreview.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -456,6 +457,10 @@ const router = createHashRouter(
               element={<AllOrderHeadersInTransit />}
             />
             <Route path="postedallorders" element={<AllPostedOrderHeaders />} />
+            <Route
+              path="postedorderpreview/:id"
+              element={<PostedOrderPreview />}
+            />
           </Route>
           <Route path="returnorder" element={<ReturnOrdersScreen />}>
             <Route index element={<Orderlist />} />
