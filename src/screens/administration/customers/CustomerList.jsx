@@ -1,28 +1,79 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
 import { useGetAllCustomersQuery } from "../../../slices/administration/customersApiSlice";
-import { Table, Button } from "react-bootstrap";
+import { Table, Row, Col } from "react-bootstrap";
+import { Button, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa6";
 import { CiEdit } from "react-icons/ci";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdEye } from "react-icons/io";
+import { handlePrintA4 } from "../../../components/printFunction";
+import { handlePrintA4Color } from "../../../components/printFunctionColor";
 
 const CustomerList = () => {
+  const [customer, set_customer] = useState({
+    customer_outlet_name: "",
+    customer_contact_person: "",
+    customer_contact: "",
+    customer_location: "",
+  });
+  const [customers, set_customers] = useState([]);
   const { data, isLoading } = useGetAllCustomersQuery();
-  console.log(data);
+  useEffect(() => {
+    set_customers(data?.data);
+  }, [data]);
+  const columns = [
+    { header: "Outlet", dataKey: "customer_outlet_name" },
+    { header: "Contact Person", dataKey: "customer_contact_person" },
+    { header: "Contact", dataKey: "customer_contact" },
+    { header: "Location", dataKey: "customer_location" },
+  ];
+  const footer_header = [
+    { header: "Outlet", dataKey: "customer_outlet_name" },
+    { header: "Outlet", dataKey: "customer_outlet_name" },
+  ];
+  const footer_body = [
+    { header: "Outlet", dataKey: "customer_outlet_name" },
+    { header: "Outlet", dataKey: "customer_outlet_name" },
+  ];
+  const handleExcel = () => {};
+  const handleA4PDF = (e) => {
+    handlePrintA4Color(columns, customers, footer_header, footer_body);
+  };
+  const handleA5PDF = (e) => {
+    handlePrintA4(columns, customers, footer_header, footer_body);
+  };
 
   return (
     <>
-      <p>*** All Customer ****</p>
+      <Row>
+        <Col>
+          <p>*** All Customer ****</p>
+        </Col>
+
+        <Col>
+          <Stack spacing={2} direction="row">
+            <Button variant="outlined" onClick={handleExcel}>
+              Excel
+            </Button>
+            <Button variant="outlined" onClick={handleA4PDF}>
+              PDF
+            </Button>
+            <Button variant="outlined" onClick={handleA5PDF}>
+              PDF
+            </Button>
+          </Stack>
+        </Col>
+      </Row>
       <Table striped style={{ border: "1px solid #ccc" }}>
         <thead>
           <tr>
             <th>#</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone Number</th>
+            <th>Outlet Name</th>
+            <th>Contact Person</th>
+            <th>Contact</th>
             <th>Location</th>
             <th>Edit</th>
             <th>View</th>
@@ -35,9 +86,9 @@ const CustomerList = () => {
             data?.data.map((customer, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{customer.customer_name}</td>
-                <td>{customer.customer_email}</td>
-                <td>{customer.phone_number}</td>
+                <td>{customer.customer_outlet_name}</td>
+                <td>{customer.customer_contact_person}</td>
+                <td>{customer.customer_contact}</td>
                 <td>{customer.customer_location}</td>
                 <td>
                   <Link to="#">

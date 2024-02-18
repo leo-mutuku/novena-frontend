@@ -7,6 +7,8 @@ import {} from "../../../slices/sales/salesOrderLinesApiSlice";
 import { useGetSalesLinesByHeaderIdQuery } from "../../../slices/sales/salesOrderLinesApiSlice";
 import { useCreatePrintToPosMutation } from "../../../slices/sales/salesPOSApiSlice";
 import TimeDate from "../../../components/TimeDate";
+import { toast } from "react-toastify";
+import { handlePrintA4 } from "../../../components/printFunction";
 
 const PostedOrderPreview = () => {
   const timeDate = new TimeDate();
@@ -24,15 +26,8 @@ const PostedOrderPreview = () => {
   const handleA4PDF = () => {};
   const handleA5PDF = () => {};
   const handlePOS = (e) => {
-    alert(id);
-    const res = printToPOS({
-      sales_order_number: id,
-    }).unwrap();
-
-    console.log(re.status);
+    handlePrintA4();
   };
-
-  console.log(posted_sales_order_line_id?.data);
 
   return (
     <>
