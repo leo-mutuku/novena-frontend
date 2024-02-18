@@ -1,7 +1,12 @@
 import React from "react";
+import MaintenanceDataTable from "./MaintenanceDataTable";
 
 const MaintenanceList = () => {
-  return <div>MaintenanceList</div>;
+  return (
+    <>
+      <MaintenanceDataTable />
+    </>
+  );
 };
 
 export default MaintenanceList;

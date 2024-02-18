@@ -193,6 +193,8 @@ import GeneralCategory from "./screens/payroll/payrollheader/GeneralCategory.jsx
 import ProductionCategory from "./screens/payroll/payrollheader/ProductionCategory.jsx";
 import SalesCategory from "./screens/payroll/payrollheader/SalesCategory.jsx";
 import PackHouseCategory from "./screens/payroll/payrollheader/PackHouseCategory.jsx";
+import EditRuns from "./screens/fleet/runs/EditRuns.jsx";
+import EditMaintenance from "./screens/fleet/maintenance/EditMaintenance.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -533,11 +535,13 @@ const router = createHashRouter(
               path="CreateMaintenance"
               element={<CreateMaintenanceList />}
             />
+            <Route path="update/:id" element={<EditMaintenance />} />
           </Route>
           <Route path="runs" element={<RunHeadersScreen />}>
             <Route path="allruns" element={<RunsList />} />
             <Route path="allrunsintransit" element={<AllRunsInTransit />} />
             <Route path="allpsotedruns" element={<AllPostedRuns />} />
+            <Route path="update/:id" element={<EditRuns />} />
             <Route path="createrun" element={<CreateRun />} />
           </Route>
         </Route>
