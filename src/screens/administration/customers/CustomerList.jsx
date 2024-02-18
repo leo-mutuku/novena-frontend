@@ -9,6 +9,7 @@ import { FaRegFileExcel } from "react-icons/fa6";
 import { CiEdit } from "react-icons/ci";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdEye } from "react-icons/io";
+import { useSelector } from "react-redux";
 import { handlePrintA4 } from "../../../components/printFunction";
 import { handlePrintA4Color } from "../../../components/printFunctionColor";
 
@@ -19,11 +20,15 @@ const CustomerList = () => {
     customer_contact: "",
     customer_location: "",
   });
+  const { userInfo } = useSelector((state) => state.auth);
   const [customers, set_customers] = useState([]);
   const { data, isLoading } = useGetAllCustomersQuery();
   useEffect(() => {
+    if (userInfo) {
+      set_created_by(userInfo.first_name);
+    }
     set_customers(data?.data);
-  }, [data]);
+  }, [data, userInfo]);
   const columns = [
     { header: "Outlet", dataKey: "customer_outlet_name" },
     { header: "Contact Person", dataKey: "customer_contact_person" },
@@ -38,12 +43,18 @@ const CustomerList = () => {
     { header: "Outlet", dataKey: "customer_outlet_name" },
     { header: "Outlet", dataKey: "customer_outlet_name" },
   ];
+  const headers = {
+    file_name: customers,
+    file_title: `List of All customer`,
+    created_by: user,
+    date: date,
+  };
   const handleExcel = () => {};
   const handleA4PDF = (e) => {
-    handlePrintA4Color(columns, customers, footer_header, footer_body);
+    handlePrintA4Color(headers, columns, customers, footer_header, footer_body);
   };
   const handleA5PDF = (e) => {
-    handlePrintA4(columns, customers, footer_header, footer_body);
+    handlePrintA4(headers, columns, customers, footer_header, footer_body);
   };
 
   return (
@@ -59,10 +70,10 @@ const CustomerList = () => {
               Excel
             </Button>
             <Button variant="outlined" onClick={handleA4PDF}>
-              PDF
+              PDF Grid
             </Button>
             <Button variant="outlined" onClick={handleA5PDF}>
-              PDF
+              PDF Plain
             </Button>
           </Stack>
         </Col>
