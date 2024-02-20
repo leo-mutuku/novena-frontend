@@ -197,6 +197,7 @@ import PostedOrderPreview from "./screens/sales/orders/PostedOrderPreview.jsx";
 import BulkSMSScreen from "./screens/administration/BulkSMSScreen.jsx";
 import SendBulkSMS from "./screens/administration/bulksms/SendBulkSMS.jsx";
 import SendToCustom from "./screens/administration/bulksms/SendToCustom.jsx";
+import DeleteStaff from "./screens/administration/staff/DeleteStaff.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -232,6 +233,7 @@ const router = createHashRouter(
             <Route path="createstaff" element={<CreateStaff />} />
             <Route path="update/:id" element={<UpdateStaff />} />
             <Route path="allstaff" element={<StaffList />} />
+            <Route path="delete/:id" element={<DeleteStaff />} />
           </Route>
           <Route path="bulksms" element={<BulkSMSScreen />}>
             <Route path="bulkmessages" element={<SendBulkSMS />} />
