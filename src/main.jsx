@@ -194,6 +194,9 @@ import ProductionCategory from "./screens/payroll/payrollheader/ProductionCatego
 import SalesCategory from "./screens/payroll/payrollheader/SalesCategory.jsx";
 import PackHouseCategory from "./screens/payroll/payrollheader/PackHouseCategory.jsx";
 import PostedOrderPreview from "./screens/sales/orders/PostedOrderPreview.jsx";
+import BulkSMSScreen from "./screens/administration/BulkSMSScreen.jsx";
+import SendBulkSMS from "./screens/administration/bulksms/SendBulkSMS.jsx";
+import SendToCustom from "./screens/administration/bulksms/SendToCustom.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -230,11 +233,16 @@ const router = createHashRouter(
             <Route path="update/:id" element={<UpdateStaff />} />
             <Route path="allstaff" element={<StaffList />} />
           </Route>
+          <Route path="bulksms" element={<BulkSMSScreen />}>
+            <Route path="bulkmessages" element={<SendBulkSMS />} />
+            <Route path="bulkcustom" element={<SendToCustom />} />
+          </Route>
           <Route path="customers" element={<CustomersScreen />}>
             <Route path="createcustomer" element={<CreateCustomer />} />
             <Route path="allcustomers" element={<CustomerList />} />
           </Route>
         </Route>
+
         {/* payroll */}
         <Route path="payroll" element={<PayrollScreen />}>
           <Route path="category" element={<CategoryScreen />}>

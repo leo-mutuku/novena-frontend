@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa6";
 import { CiEdit } from "react-icons/ci";
 import { BsFileEarmarkPdf } from "react-icons/bs";
+import { MdDelete } from "react-icons/md";
 import { IoMdEye } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { handlePrintA4 } from "../../../components/printFunction";
@@ -20,12 +21,14 @@ const CustomerList = () => {
     customer_contact: "",
     customer_location: "",
   });
+  const [user, set_user] = useState("");
   const { userInfo } = useSelector((state) => state.auth);
   const [customers, set_customers] = useState([]);
   const { data, isLoading } = useGetAllCustomersQuery();
+  const date = new Date();
   useEffect(() => {
     if (userInfo) {
-      set_created_by(userInfo.first_name);
+      set_user(userInfo.first_name);
     }
     set_customers(data?.data);
   }, [data, userInfo]);
@@ -51,10 +54,10 @@ const CustomerList = () => {
   };
   const handleExcel = () => {};
   const handleA4PDF = (e) => {
-    handlePrintA4Color(headers, columns, customers, footer_header, footer_body);
+    handlePrintA4Color(columns, customers, footer_header, footer_body);
   };
   const handleA5PDF = (e) => {
-    handlePrintA4(headers, columns, customers, footer_header, footer_body);
+    handlePrintA4(columns, customers, footer_header, footer_body);
   };
 
   return (
@@ -88,6 +91,7 @@ const CustomerList = () => {
             <th>Location</th>
             <th>Edit</th>
             <th>View</th>
+            <th>Del</th>
           </tr>
         </thead>
         <tbody>
@@ -109,6 +113,11 @@ const CustomerList = () => {
                 <td>
                   <Link to="#">
                     <IoMdEye />
+                  </Link>
+                </td>
+                <td>
+                  <Link to="#">
+                    <MdDelete />
                   </Link>
                 </td>
               </tr>
