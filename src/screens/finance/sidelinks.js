@@ -8,10 +8,7 @@ export const sidelinks = [
   },
   {
     menuTitle: "General Ledger (gl)",
-    subMenus: [
-      { subMenuTitle: "General ledger(gl)", to: "gl" },
-      { subMenuTitle: "Leger Entry", to: "ledgerentry" },
-    ],
+    subMenus: [{ subMenuTitle: "General ledger(gl)", to: "gl" }],
   },
   {
     menuTitle: "Mpesa Accounts",
@@ -36,13 +33,17 @@ export const sidelinks = [
     ],
   },
 
+  // {
+  //   menuTitle: "General Journal",
+  //   subMenus: [
+  //     { subMenuTitle: "General Journal", to: "generaljournal" },
+  //   ],
+  // },
   {
     menuTitle: "Financial Reports",
     subMenus: [
       { subMenuTitle: "Trial Balance", to: "trialbalance" },
       { subMenuTitle: "Profit & Loss Statement", to: "profitandlossstatement" },
-      { subMenuTitle: "Cash Flow Analysis", to: "cashflowanalysis" },
-      { subMenuTitle: "Cost of Production", to: "costofproduction" },
     ],
   },
 ];

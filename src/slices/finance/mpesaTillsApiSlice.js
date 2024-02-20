@@ -3,14 +3,12 @@ const MPESATILLS_URL = "/api/v1/finance/mpesatills";
 
 export const mpesaTillsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    tagsTypes: ["Mpesa"],
     getAllMpesaTills: builder.query({
       query: (data) => ({
         url: `${MPESATILLS_URL}/getallmpesatills`,
         method: "GET",
         body: data,
       }),
-      providesTags: ["Mpesa"],
     }),
     createMpesaTill: builder.mutation({
       query: (data) => ({
@@ -18,7 +16,6 @@ export const mpesaTillsApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Mpesa"],
     }),
   }),
 });

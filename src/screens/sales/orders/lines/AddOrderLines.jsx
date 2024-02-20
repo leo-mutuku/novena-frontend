@@ -229,8 +229,8 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
                           onChange={handleStore}
                         >
                           <option>Store</option>
-                          {store?.data.map((item, index) => (
-                            <option key={index} value={item.store_code}>
+                          {store?.data.map((item) => (
+                            <option value={item.store_code}>
                               {item.store_code} | {item.store_name}
                             </option>
                           ))}
@@ -274,40 +274,42 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
                         </th>
                       </tr>
                     </thead>
-                    <tbody>
-                      {sales_list.map((p_items, index) => (
-                        <tr key={p_items.index}>
-                          <td>{index + 1}</td>
-                          <td>
-                            {p_items.item_code} | {p_items.item_name}
-                          </td>
-                          <td>
-                            {p_items.account_number} | {p_items.account_name}
-                          </td>
-                          <td>
-                            {p_items.store_code} | {p_items.store_name}
-                          </td>
-                          <td>{p_items.item_cost}</td>
-                          <td>{p_items.quantity}</td>
-                          <td>{p_items.total_cost_per_item}</td>
-                          <td>
-                            <Button
-                              variant="outline-danger"
-                              size="sm"
-                              onClick={() =>
-                                set_sales_list(
-                                  sales_list.filter(
-                                    (a) => a.item_code !== p_items.item_code
+                    {sales_list.map((p_items, index) => (
+                      <>
+                        <tbody>
+                          <tr key={p_items.item_code}>
+                            <td>{index + 1}</td>
+                            <td>
+                              {p_items.item_code} | {p_items.item_name}
+                            </td>
+                            <td>
+                              {p_items.account_number} | {p_items.account_name}
+                            </td>
+                            <td>
+                              {p_items.store_code} | {p_items.store_name}
+                            </td>
+                            <td>{p_items.item_cost}</td>
+                            <td>{p_items.quantity}</td>
+                            <td>{p_items.total_cost_per_item}</td>
+                            <td>
+                              <Button
+                                variant="outline-danger"
+                                size="sm"
+                                onClick={() =>
+                                  set_sales_list(
+                                    sales_list.filter(
+                                      (a) => a.item_code !== p_items.item_code
+                                    )
                                   )
-                                )
-                              }
-                            >
-                              Delete <MdDelete />
-                            </Button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
+                                }
+                              >
+                                Delete <MdDelete />
+                              </Button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </>
+                    ))}
                   </Table>
                 </>
               )}

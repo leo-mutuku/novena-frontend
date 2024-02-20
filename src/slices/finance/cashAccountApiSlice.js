@@ -10,6 +10,13 @@ export const cashAccountApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    // createAccount: builder.mutation({
+    //   query: (data) => ({
+    //     url: `${ACCOUNTENTRIES_URL}/createaccount`,
+    //     method: "POST",
+    //     body: data,
+    //   }),
+    // }),
   }),
 });
 

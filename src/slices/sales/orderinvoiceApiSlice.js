@@ -1,7 +1,7 @@
 import { apiSlice } from "../apiSlice";
 const SALESPEOPLE_URL = "/api/v1/sales/salespeople";
 
-export const packHousePeopleApiSlice = apiSlice.injectEndpoints({
+export const orderinvoiceApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllSalesPeople: builder.query({
       query: (data) => ({
@@ -21,4 +21,4 @@ export const packHousePeopleApiSlice = apiSlice.injectEndpoints({
 });
 
 export const { useCreateSalesPersonMutation, useGetAllSalesPeopleQuery } =
-  packHousePeopleApiSlice;
+  orderinvoiceApiSlice;

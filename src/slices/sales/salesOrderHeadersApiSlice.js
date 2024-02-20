@@ -3,14 +3,12 @@ const SALESORDERHEADER_URL = "/api/v1/sales/salesorderheaders";
 
 export const orderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    tagTypes: ["Sales_order"],
     getSalesOrderHeaderById: builder.query({
       query: (id) => ({
         url: `${SALESORDERHEADER_URL}/getallsalesorderbyheaderid`,
         method: "GET",
         body: data,
       }),
-      providesTags: ["Sales_order"],
     }),
     getAllSalesOrderHeaders: builder.query({
       query: (data) => ({
@@ -18,7 +16,6 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["Sales_order"],
     }),
     getAllSalesOrdersInTransit: builder.query({
       query: (data) => ({
@@ -26,7 +23,6 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["Sales_order"],
     }),
     getAllPostedSalesOrders: builder.query({
       query: (data) => ({
@@ -34,7 +30,6 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["Sales_order"],
     }),
     createSalesOrderHeader: builder.mutation({
       query: (data) => ({
@@ -42,7 +37,6 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Sales_order"],
     }),
     postSalesOrder: builder.mutation({
       query: (data) => ({
@@ -50,7 +44,6 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Sales_order"],
     }),
   }),
 });

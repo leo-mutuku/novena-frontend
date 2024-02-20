@@ -12,7 +12,7 @@ function PageActionComponent({ pagemenus }) {
       <div style={{ marginBottom: "2px", paddingTop: "10px" }}>
         <span style={{ padding: "3px" }}>
           {pagemenus.map((page, index, arr) => (
-            <Link key={index} to={page.to} style={{ textDecoration: "none" }}>
+            <Link to={page.to} style={{ textDecoration: "none" }}>
               <Button variant="secondary">{page.pagename}</Button> {}
             </Link>
           ))}

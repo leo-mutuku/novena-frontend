@@ -3,14 +3,12 @@ const STOREPURCHASELINES_URL = "/api/v1/purchase/storepurchaseheaders";
 
 export const storeRequisitionHeadersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    tagTypes: ["Store_Purchase_lines"],
     getAllStorePurchaseHeaders: builder.query({
       query: (data) => ({
         url: `${STOREPURCHASELINES_URL}/getallstorepurchaseheaders`,
         method: "GET",
         body: data,
       }),
-      providesTags: ["Store_Purchase_lines"],
     }),
     createAccount: builder.mutation({
       query: (data) => ({
@@ -18,7 +16,6 @@ export const storeRequisitionHeadersApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Store_Purchase_lines"],
     }),
   }),
 });

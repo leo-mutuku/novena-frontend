@@ -2,7 +2,6 @@ import { apiSlice } from "../apiSlice";
 const STOREITEMENTRIES_URL = "/api/v1/store/storeitemsentries";
 
 export const storeItemsApiSlice = apiSlice.injectEndpoints({
-  tagTypes: ["STOREITEMENTRIES"],
   endpoints: (builder) => ({
     getAllStoreItemEntries: builder.query({
       query: (data) => ({
@@ -10,7 +9,6 @@ export const storeItemsApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["STOREITEMENTRIES"],
     }),
     createStoreItem: builder.mutation({
       query: (data) => ({
@@ -18,7 +16,6 @@ export const storeItemsApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["STOREITEMENTRIES"],
     }),
   }),
 });

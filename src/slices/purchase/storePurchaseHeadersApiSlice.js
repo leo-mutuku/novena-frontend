@@ -7,40 +7,45 @@ export const storePurchaseHeadersApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: `${STOREPURCHASEHEADERS_URL}/getallstorepurchaseheaders`,
         method: "GET",
+        providesTags: ["StorePurchaseHeader"],
       }),
-      providesTags: ["StorePurchaseHeader"],
     }),
     // All posted stored purchases
     getAllPostedStoredPurchases: builder.query({
       query: () => ({
         url: `${STOREPURCHASEHEADERS_URL}/allpostedstorepurchases`,
         method: "GET",
+        providesTags: ["StorePurchaseHeader"],
       }),
-      providesTags: ["StorePurchaseHeader"],
     }),
     getAllStorePurchasesInTransit: builder.query({
       query: () => ({
         url: `${STOREPURCHASEHEADERS_URL}/allstorepurchasesintransit`,
         method: "GET",
       }),
-      providesTags: ["StorePurchaseHeader"],
     }),
-
+    createAccount: builder.mutation({
+      query: (data) => ({
+        url: `${STOREPURCHASEHEADERS_URL}/createaccount`,
+        method: "POST",
+        body: data,
+      }),
+    }),
     createStorePurchaseHeader: builder.mutation({
       query: (data) => ({
         url: `${STOREPURCHASEHEADERS_URL}/createstorepurchaseheader`,
         method: "POST",
         body: data,
+        providesTags: ["StorePurchaseHeader"],
       }),
-      invalidatesTags: ["StorePurchaseHeader"],
     }),
     postStorePurchaseHeader: builder.mutation({
       query: (data) => ({
         url: `${STOREPURCHASEHEADERS_URL}/poststorepurchaseheader`,
         method: "POST",
         body: data,
+        providesTags: ["StorePurchaseHeader"],
       }),
-      providesTags: ["StorePurchaseHeader"],
     }),
   }),
 });

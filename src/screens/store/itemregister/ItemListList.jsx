@@ -31,14 +31,10 @@ const ItemListList = () => {
         </thead>
         <tbody>
           {isLoading ? (
-            <tr>
-              <td>
-                <Loader />
-              </td>
-            </tr>
+            <Loader />
           ) : (
             data?.data.map((item, index) => (
-              <tr key={index}>
+              <tr>
                 <td>{index + 1}</td>
                 <td>{item.item_name}</td>
                 <td>{item.item_code}</td>

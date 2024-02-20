@@ -3,8 +3,13 @@ import Loader from "../../../components/Loader";
 import { useGetAllPostedSalesOrdersQuery } from "../../../slices/sales/salesOrderHeadersApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { IoMdEye } from "react-icons/io";
+import { FaRegFileExcel } from "react-icons/fa6";
+import { CiEdit } from "react-icons/ci";
+import { BsFileEarmarkPdf } from "react-icons/bs";
+import { IoMdAdd } from "react-icons/io";
+import { MdDelete } from "react-icons/md";
 import AddOrderLines from "./lines/AddOrderLines";
+// import DeletePurchaseModal from "./lines/DeletePurchaseModal";
 import TimeDate from "../../../components/TimeDate";
 
 const AllPostedOrderHeaders = () => {
@@ -21,10 +26,10 @@ const AllPostedOrderHeaders = () => {
     set_mode_delete(style);
   };
   const { data, isLoading } = useGetAllPostedSalesOrdersQuery();
-
+  console.log(data?.data);
   const navigate = useNavigate();
   useEffect(() => {}, [data]);
-
+  console.log(data);
   return (
     <>
       <>
@@ -34,6 +39,12 @@ const AllPostedOrderHeaders = () => {
             set_mode={set_mode}
           />
         </div>
+        {/* <div style={{ display: `${mode_delete}` }}>
+          <DeletePurchaseModal
+            store_purchase_id={store_purchase_id}
+            set_mode_delete={set_mode_delete}
+          />
+        </div> */}
       </>
       <p>*** All Posted Sales Orders ***</p>
 
@@ -49,21 +60,18 @@ const AllPostedOrderHeaders = () => {
             <th>Cust Name</th>
             <th>Sales .P</th>
             <th>Status</th>
-            <th>View</th>
+            <th>Edit</th>
+            <th>Edit</th>
           </tr>
         </thead>
         <tbody>
           {isLoading ? (
-            <tr>
-              <td>
-                <Loader />
-              </td>
-            </tr>
+            <Loader />
           ) : data?.data[0] === null ? (
             <>No data</>
           ) : (
             data?.data?.map((item, index) => (
-              <tr key={index}>
+              <tr>
                 <td>{index + 1}</td>
                 <td>{`${timeDate.date(item.sales_order_date)}`}</td>
                 <td>{item.sale_order_type}</td>
@@ -89,13 +97,27 @@ const AllPostedOrderHeaders = () => {
                     item.status
                   )}
                 </td>
-
+                <td
+                  onClick={(e) =>
+                    handleEdit(e, item.store_purchase_number, "block")
+                  }
+                >
+                  {item.status === "In Transit" ? (
+                    <Link to={`#`}>
+                      <CiEdit />
+                    </Link>
+                  ) : (
+                    "--"
+                  )}
+                </td>
                 <td>
-                  {item.status === "Posted" ? (
-                    <Link
-                      to={`/sales/orders/postedorderpreview/${item.sales_order_number}`}
-                    >
-                      <IoMdEye />
+                  {item.status === "New" ? (
+                    <Link to={`#`}>
+                      <MdDelete
+                        onClick={(e) =>
+                          handleDelete(e, item.store_purchase_number, "block")
+                        }
+                      />
                     </Link>
                   ) : (
                     "--"

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import { useGetAllPackHousePeopleQuery } from "../../../../slices/production/packHousePeopleApiSlice";
 import { IoMdHeartEmpty } from "react-icons/io";
+import { MDBCheckbox } from "mdb-react-ui-kit";
 
 const PackHouse = ({ staff_list, set_staff_list }) => {
   const { data: pack_housepeople } = useGetAllPackHousePeopleQuery();

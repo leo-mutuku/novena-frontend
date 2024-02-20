@@ -1,13 +1,13 @@
 import React from "react";
+//import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
 import { useGetAllAccountsQuery } from "../../../slices/finance/accountsApiSlice";
-import { Table, Button, Row, Col } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+import { FaRegFileExcel } from "react-icons/fa6";
 import { CiEdit } from "react-icons/ci";
 import TimeDate from "../../../components/TimeDate";
 import { IoMdEye } from "react-icons/io";
-import PrintA4A5ExcelButton from "../../../components/PrintA4A5ExcelButton";
 
 const AccountsList = () => {
   const timeDate = new TimeDate();
@@ -15,14 +15,7 @@ const AccountsList = () => {
 
   return (
     <>
-      <Row>
-        <Col>
-          <p>*** All Accounts ***</p>
-        </Col>
-        <Col className="pull-right">
-          <PrintA4A5ExcelButton />
-        </Col>
-      </Row>
+      <p>*** All Accounts ***</p>
       <Table striped style={{ border: "1px solid #ccc" }}>
         <thead>
           <tr>
@@ -38,16 +31,10 @@ const AccountsList = () => {
         </thead>
         <tbody>
           {isLoading ? (
-            <tr>
-              <>
-                <td>
-                  <Loader />
-                </td>
-              </>
-            </tr>
+            <Loader />
           ) : (
             data?.data.map((item, index) => (
-              <tr key={index}>
+              <tr>
                 <td>{index + 1}</td>
                 <td>{item.account_name}</td>
                 <td>{item.account_number}</td>
