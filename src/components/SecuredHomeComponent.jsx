@@ -19,7 +19,7 @@ const SecuredHomeComponent = () => {
     { module_name: "Store", to: "/store", Icon: LiaWarehouseSolid },
     { module_name: "Purchase", to: "/purchase", Icon: BiPurchaseTag },
     { module_name: "Admin", to: "/administration", Icon: FiUsers },
-    { module_name: "Fleet", to: "/fleet", Icon: FaTrailer },
+    { module_name: "Fleet", to: "#", Icon: FaTrailer },
     { module_name: "Payroll", to: "/payroll", Icon: GiWallet },
     {
       module_name: "Payment",

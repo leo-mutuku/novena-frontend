@@ -29,10 +29,14 @@ const StoreRegisterList = () => {
         </thead>
         <tbody>
           {isLoading ? (
-            <Loader />
+            <tr>
+              <td>
+                <Loader />
+              </td>
+            </tr>
           ) : (
             data?.data.map((item, index) => (
-              <tr>
+              <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{item.store_name}</td>
                 <td>{item.store_code}</td>

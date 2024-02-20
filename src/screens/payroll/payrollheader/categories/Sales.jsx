@@ -3,7 +3,6 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { useGetAllSalesPeopleQuery } from "../../../../slices/sales/salesPeopleApiSlice";
 import { IoMdHeartEmpty } from "react-icons/io";
-import { MDBCheckbox } from "mdb-react-ui-kit";
 
 const Sales = ({ staff_list, set_staff_list }) => {
   const { data: sales_people } = useGetAllSalesPeopleQuery();
