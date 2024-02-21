@@ -27,9 +27,12 @@ function CreateInstition() {
         institution_phone_number,
         institution_location,
       }).unwrap();
-      console.log(res);
-      navigate("../allinstitution");
-      toast.success("Instituition created successfully");
+      if (res.status === "failed") {
+        toast.error(err?.data?.message || err.error);
+      } else {
+        navigate("../allinstitution");
+        toast.success("Instituition created successfully");
+      }
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }

@@ -198,6 +198,7 @@ import BulkSMSScreen from "./screens/administration/BulkSMSScreen.jsx";
 import SendBulkSMS from "./screens/administration/bulksms/SendBulkSMS.jsx";
 import SendToCustom from "./screens/administration/bulksms/SendToCustom.jsx";
 import DeleteStaff from "./screens/administration/staff/DeleteStaff.jsx";
+import ViewPostedProductiobHeader from "./screens/production/productionheaders/ViewPostedProductiobHeader.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -325,6 +326,10 @@ const router = createHashRouter(
             <Route
               path="allpostedtransiactionheaderlist"
               element={<AllPostedProductionHeaderList />}
+            />
+            <Route
+              path="viewpostedproductionheade/:id"
+              element={<ViewPostedProductiobHeader />}
             />
           </Route>
           {/* daily packhouse routes */}
