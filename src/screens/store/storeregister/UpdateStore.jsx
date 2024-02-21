@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 import { Stack, Button } from "@mui/material";
 
-const Updateuser = () => {
+const UpdateStore = () => {
   const [] = useState("");
   return (
     <>
@@ -65,4 +65,4 @@ const Updateuser = () => {
   );
 };
 
-export default Updateuser;
+export default UpdateStore;
