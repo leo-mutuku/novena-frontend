@@ -42,7 +42,9 @@ const PackhosePeopleList = () => {
                 <td>{item.phone}</td>
 
                 <td>
-                  <Link to="#">
+                  <Link
+                    to={`/production/packhousepeople/deletepackhouseperson/${item.staff_id}`}
+                  >
                     <CiEdit />
                   </Link>
                 </td>

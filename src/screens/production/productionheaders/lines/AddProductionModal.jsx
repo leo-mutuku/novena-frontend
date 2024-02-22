@@ -165,6 +165,14 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
         first_pack_count: "",
       });
     }
+    if (e.target.value === "by_products") {
+      set_products({
+        ...products,
+        first_pack: "",
+        first_pack_name: "",
+        first_pack_count: "",
+      });
+    }
     set_products({ ...products, production_buffer: e.target.value });
   };
   const handleStore = (e) => {
@@ -191,7 +199,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
       product_store_name: x[0].store_name,
     });
   };
-  console.log(products);
+
   return (
     <>
       <div
@@ -277,13 +285,21 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                           value="store"
                           checked={products.production_buffer === "store"}
                           onChange={handleProductionBuffer}
-                        ></Form.Check>
+                        />
                         <Form.Check
                           type="radio"
                           label="Pack house"
                           value="pack_house"
                           id="pack_house"
                           checked={products.production_buffer === "pack_house"}
+                          onChange={handleProductionBuffer}
+                        />
+                        <Form.Check
+                          type="radio"
+                          label="By Products"
+                          value="by_products"
+                          id="by_products"
+                          checked={products.production_buffer === "by_products"}
                           onChange={handleProductionBuffer}
                         />
                       </Form.Group>
@@ -416,12 +432,18 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                             <td>
                               {p_items.production_buffer === "store" ? (
                                 <>{p_items.product_store_name}</>
+                              ) : p_items.production_buffer ===
+                                "by_products" ? (
+                                <>By product</>
                               ) : (
                                 <>Pack House</>
                               )}
                             </td>
                             <td>
                               {p_items.production_buffer === "pack_house" ? (
+                                <>N/A</>
+                              ) : p_items.production_buffer ===
+                                "by_products" ? (
                                 <>N/A</>
                               ) : (
                                 <>{p_items.first_pack_name}</>
@@ -430,12 +452,18 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                             <td>
                               {p_items.production_buffer === "pack_house" ? (
                                 <>N/A</>
+                              ) : p_items.production_buffer ===
+                                "by_products" ? (
+                                <>N/A</>
                               ) : (
                                 <>{p_items.first_pack_count}</>
                               )}
                             </td>
                             <td>
                               {p_items.production_buffer === "pack_house" ? (
+                                <>N/A</>
+                              ) : p_items.production_buffer ===
+                                "by_products" ? (
                                 <>N/A</>
                               ) : (
                                 <>{p_items.store_name}</>

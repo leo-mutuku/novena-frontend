@@ -42,7 +42,9 @@ const SalesPeoplelist = () => {
                 <td>{item.phone}</td>
 
                 <td>
-                  <Link to="#">
+                  <Link
+                    to={`/sales/salespeople/deletesalesperson/${item.staff_id}`}
+                  >
                     <CiEdit />
                   </Link>
                 </td>

@@ -199,6 +199,8 @@ import SendBulkSMS from "./screens/administration/bulksms/SendBulkSMS.jsx";
 import SendToCustom from "./screens/administration/bulksms/SendToCustom.jsx";
 import DeleteStaff from "./screens/administration/staff/DeleteStaff.jsx";
 import ViewPostedProductiobHeader from "./screens/production/productionheaders/ViewPostedProductiobHeader.jsx";
+import DeleteSalesPerson from "./screens/sales/salespeople/DeleteSalesPerson.jsx";
+import DeletePackHousePerson from "./screens/production/packhousepeople/DeletePackHousePerson.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -369,6 +371,10 @@ const router = createHashRouter(
             <Route index element={<PackhosePeopleList />} />
             <Route path="createpackhouse" element={<CreatePackhousePerson />} />
             <Route path="allpackhouse" element={<PackhosePeopleList />} />
+            <Route
+              path="deletepackhouseperson/:id"
+              element={<DeletePackHousePerson />}
+            />
           </Route>
         </Route>
         {/* store routes */}
@@ -517,6 +523,10 @@ const router = createHashRouter(
             <Route index element={<OrderPostingList />} />
             <Route path="createsalesperson" element={<CreateSalesPeople />} />
             <Route path="allsalespeople" element={<SalesPeoplelist />} />
+            <Route
+              path="deletesalesperson/:id"
+              element={<DeleteSalesPerson />}
+            />
           </Route>
         </Route>
 
