@@ -113,7 +113,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
         parseInt(x[0].item_units_value) * parseInt(products.product_output),
       weight_in_bags: parseFloat(
         (parseInt(x[0].item_units_value) * parseInt(products.product_output)) /
-          90
+          parseInt(x[0].item_units_value)
       ).toFixed(2),
     });
   };

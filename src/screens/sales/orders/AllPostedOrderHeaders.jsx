@@ -72,7 +72,7 @@ const AllPostedOrderHeaders = () => {
                 <td>{item.total}</td>
                 <td>{item.pay_per_bale}</td>
                 <td>{item.customer_name}</td>
-                <td>{item.sales_person_number}</td>
+                <td>{item.first_name}</td>
                 <td>
                   {item.status === "New" ? (
                     <span
