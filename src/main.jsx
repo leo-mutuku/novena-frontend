@@ -201,6 +201,7 @@ import DeleteStaff from "./screens/administration/staff/DeleteStaff.jsx";
 import ViewPostedProductiobHeader from "./screens/production/productionheaders/ViewPostedProductiobHeader.jsx";
 import DeleteSalesPerson from "./screens/sales/salespeople/DeleteSalesPerson.jsx";
 import DeletePackHousePerson from "./screens/production/packhousepeople/DeletePackHousePerson.jsx";
+import UpdateCustomer from "./screens/administration/customers/UpdateCustomer.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -245,6 +246,7 @@ const router = createHashRouter(
           <Route path="customers" element={<CustomersScreen />}>
             <Route path="createcustomer" element={<CreateCustomer />} />
             <Route path="allcustomers" element={<CustomerList />} />
+            <Route path="update/:id" element={<UpdateCustomer />} />
           </Route>
         </Route>
 

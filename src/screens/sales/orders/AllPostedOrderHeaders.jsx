@@ -27,14 +27,6 @@ const AllPostedOrderHeaders = () => {
 
   return (
     <>
-      <>
-        <div style={{ display: `${mode}` }}>
-          <AddOrderLines
-            store_purchase_id={store_purchase_id}
-            set_mode={set_mode}
-          />
-        </div>
-      </>
       <p>*** All Posted Sales Orders ***</p>
 
       <Table striped style={{ border: "1px solid #ccc" }}>

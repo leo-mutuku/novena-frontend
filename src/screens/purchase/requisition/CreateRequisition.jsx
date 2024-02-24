@@ -6,13 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function CreateRequisition() {
-  const [account_name, set_account_name] = useState("");
   const [account_number, set_account_number] = useState("");
   const [item_name, set_item_name] = useState("");
   const [item_qauntity, set_item_quantity] = useState("");
   const [unit_price, set_unit_price] = useState("");
   const [created_by, set_created_by] = useState("");
-  const [purchase_list, set_purchase_list] = useState([]);
+  const [requisition_list, set_requisition_list] = useState([]);
 
   const { data: accounts } = useGetAllAccountsQuery();
   const { userInfo } = useSelector((state) => state.auth);
@@ -24,23 +23,7 @@ function CreateRequisition() {
     }
     navigate();
   }, [navigate, userInfo]);
-  const handleSubmit = async (e) => {
-    // e.preventDefault();
-    // try {
-    //   // const res = await CreateAccount({
-    //   //   account_name,
-    //   //   account_number,
-    //   //   gl_number,
-    //   //   account_balance,
-    //   //   created_by,
-    //   // }).unwrap();
-    //   // console.log(res);
-    //   navigate("../allaccounts");
-    //   toast.success("Account created successfully");
-    // } catch (err) {
-    //   toast.error(err?.data?.message || err.error);
-    // }
-  };
+  const handleSubmit = async (e) => {};
   const handleAccount = (e) => {};
   return (
     <>
@@ -116,6 +99,15 @@ function CreateRequisition() {
         </Row>
         <div>
           <Button>Add</Button>
+        </div>
+        <div>
+          {requisition_list?.length === "" ? (
+            <>Add items to purcharse</>
+          ) : (
+            <>
+              <p>Add items to purcharse</p>
+            </>
+          )}
         </div>
         <div className="d-flex flex-row-reverse bd-highlight">
           <Button

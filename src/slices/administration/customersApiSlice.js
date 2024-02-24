@@ -3,12 +3,21 @@ const CUSTOMERS_URL = "/api/v1/administrator/customers";
 
 export const customersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    tagTypes: ["Customer"],
     getAllCustomers: builder.query({
       query: (data) => ({
         url: `${CUSTOMERS_URL}/getallcustomers`,
         method: "GET",
         body: data,
       }),
+      providesTags: ["Customer"],
+    }),
+    getCustomerById: builder.query({
+      query: (id) => ({
+        url: `${CUSTOMERS_URL}/getcustomerbyid/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Customer"],
     }),
     createCustomer: builder.mutation({
       query: (data) => ({
@@ -16,9 +25,13 @@ export const customersApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Customer"],
     }),
   }),
 });
 
-export const { useCreateCustomerMutation, useGetAllCustomersQuery } =
-  customersApiSlice;
+export const {
+  useCreateCustomerMutation,
+  useGetAllCustomersQuery,
+  useGetCustomerByIdQuery,
+} = customersApiSlice;

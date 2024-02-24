@@ -73,7 +73,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
 
   const handleSave = async () => {
     try {
-      if (production_list.length === 0) {
+      if (production_list?.length === 0) {
         alert("Add items to purchase first!");
       } else {
         const res = await production_line({
@@ -149,8 +149,9 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
       weight_in_kgs:
         parseInt(e.target.value) * parseInt(products.product_units_value),
       weight_in_bags:
-        (parseInt(e.target.value) * parseInt(products.product_units_value)) /
-        90,
+        (parseFloat(e.target.value) *
+          parseFloat(products.product_units_value)) /
+        parseFloat(products.product_units_value),
     });
   };
   const handleSecondaryPackCount = (e) => {
