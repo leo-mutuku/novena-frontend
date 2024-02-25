@@ -63,7 +63,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
     }
 
     navigate();
-  }, [userInfo, navigate, purchase_id]);
+  }, [userInfo, navigate, purchase_id, products.production_buffer]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
