@@ -515,7 +515,7 @@ const router = createHashRouter(
           </Route>
         </Route>
 
-        {/* fleet routes 
+        {/* {* fleet routes *} */}
         <Route path="fleet" element={<FleetScreen />}>
           <Route path="drivers" element={<DriverScreen />}>
             <Route path="alldrivers" element={<DriversList />} />
@@ -557,7 +557,7 @@ const router = createHashRouter(
             <Route path="update/:id" element={<EditRuns />} />
             <Route path="createrun" element={<CreateRun />} />
           </Route>
-        </Route>*/}
+        </Route>
 
         {/* finance routes */}
         <Route path="finance" element={<FinanceScreen />}>
