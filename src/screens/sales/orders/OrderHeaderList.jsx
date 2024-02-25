@@ -74,8 +74,7 @@ const OrderHeaderList = () => {
             <th>Sales .P</th>
             <th>Status</th>
             <th>Add</th>
-            <th>Edit</th>
-            <th>Print</th>
+            <th>Del</th>
           </tr>
         </thead>
         <tbody>
@@ -131,19 +130,6 @@ const OrderHeaderList = () => {
                     </Link>
                   ) : (
                     "--"
-                  )}
-                </td>
-                <td>
-                  {item.status === "New" ? (
-                    <>--</>
-                  ) : (
-                    <Link to={`#`}>
-                      <TiPrinter
-                        onClick={(e) =>
-                          handlePrint(e, item.store_purchase_number, "block")
-                        }
-                      />
-                    </Link>
                   )}
                 </td>
               </tr>

@@ -29,7 +29,11 @@ const BankAccountsList = () => {
         </thead>
         <tbody>
           {isLoading ? (
-            <Loader />
+            <tr>
+              <td>
+                <Loader />
+              </td>
+            </tr>
           ) : (
             data.data.map((item, index) => (
               <tr>

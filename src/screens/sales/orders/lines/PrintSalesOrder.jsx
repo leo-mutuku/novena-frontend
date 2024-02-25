@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Prev } from "react-bootstrap/esm/PageItem";
 import { useGetAllItemRegisterQuery } from "../../../../slices/store/itemregisterApiSlice";
 import { useGetAllAccountsQuery } from "../../../../slices/finance/accountsApiSlice";
-import { useGetAllSalesOrdersIntransitBySalesOrderNumberQuery } from "../../../../slices/sales/salesOrderLinesApiSlice";
+import { useGetSalesLinesByHeaderIdQuery } from "../../../../slices/sales/salesOrderLinesApiSlice";
 import { usePostSalesOrderMutation } from "../../../../slices/sales/salesOrderHeadersApiSlice";
 import ItemEdit from "./ItemEdit";
 import Loader from "../../../../components/Loader";
@@ -15,7 +15,7 @@ function PrintSalesOrder({ purchase_header_id, set_print_mode }) {
   const [checked, setChecked] = useState(false);
   const id = purchase_header_id.toString();
   const { data: purchase_order_lines, error } =
-    useGetAllSalesOrdersIntransitBySalesOrderNumberQuery(id);
+    useGetSalesLinesByHeaderIdQuery(id);
   console.log(purchase_order_lines?.data);
   const [post_purchase, { isLoading }] = usePostSalesOrderMutation();
 

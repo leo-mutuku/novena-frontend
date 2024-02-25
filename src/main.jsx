@@ -195,6 +195,10 @@ import SalesCategory from "./screens/payroll/payrollheader/SalesCategory.jsx";
 import PackHouseCategory from "./screens/payroll/payrollheader/PackHouseCategory.jsx";
 import EditRuns from "./screens/fleet/runs/EditRuns.jsx";
 import EditMaintenance from "./screens/fleet/maintenance/EditMaintenance.jsx";
+import PostedOrderPreview from "./screens/sales/orders/PostedOrderPreview.jsx";
+import BulkSMSScreen from "./screens/administration/BulkSMSScreen.jsx";
+import SendBulkSMS from "./screens/administration/bulksms/SendBulkSMS.jsx";
+import SendToCustom from "./screens/administration/bulksms/SendToCustom.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -231,11 +235,16 @@ const router = createHashRouter(
             <Route path="update/:id" element={<UpdateStaff />} />
             <Route path="allstaff" element={<StaffList />} />
           </Route>
+          <Route path="bulksms" element={<BulkSMSScreen />}>
+            <Route path="bulkmessages" element={<SendBulkSMS />} />
+            <Route path="bulkcustom" element={<SendToCustom />} />
+          </Route>
           <Route path="customers" element={<CustomersScreen />}>
             <Route path="createcustomer" element={<CreateCustomer />} />
             <Route path="allcustomers" element={<CustomerList />} />
           </Route>
         </Route>
+
         {/* payroll */}
         <Route path="payroll" element={<PayrollScreen />}>
           <Route path="category" element={<CategoryScreen />}>
@@ -458,6 +467,10 @@ const router = createHashRouter(
               element={<AllOrderHeadersInTransit />}
             />
             <Route path="postedallorders" element={<AllPostedOrderHeaders />} />
+            <Route
+              path="postedorderpreview/:id"
+              element={<PostedOrderPreview />}
+            />
           </Route>
           <Route path="returnorder" element={<ReturnOrdersScreen />}>
             <Route index element={<Orderlist />} />
@@ -502,7 +515,7 @@ const router = createHashRouter(
           </Route>
         </Route>
 
-        {/* fleet routes */}
+        {/* fleet routes 
         <Route path="fleet" element={<FleetScreen />}>
           <Route path="drivers" element={<DriverScreen />}>
             <Route path="alldrivers" element={<DriversList />} />
@@ -544,7 +557,7 @@ const router = createHashRouter(
             <Route path="update/:id" element={<EditRuns />} />
             <Route path="createrun" element={<CreateRun />} />
           </Route>
-        </Route>
+        </Route>*/}
 
         {/* finance routes */}
         <Route path="finance" element={<FinanceScreen />}>

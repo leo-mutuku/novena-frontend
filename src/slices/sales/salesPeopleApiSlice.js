@@ -1,14 +1,16 @@
 import { apiSlice } from "../apiSlice";
 const SALESPEOPLE_URL = "/api/v1/sales/salespeople";
 
-export const packHousePeopleApiSlice = apiSlice.injectEndpoints({
+export const salesPeopleApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    tagTypes: ["Sales_people"],
     getAllSalesPeople: builder.query({
       query: (data) => ({
         url: `${SALESPEOPLE_URL}/getallsalespeople`,
         method: "GET",
         body: data,
       }),
+      providesTags: ["Sales_people"],
     }),
     createSalesPerson: builder.mutation({
       query: (data) => ({
@@ -16,9 +18,10 @@ export const packHousePeopleApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Sales_people"],
     }),
   }),
 });
 
 export const { useCreateSalesPersonMutation, useGetAllSalesPeopleQuery } =
-  packHousePeopleApiSlice;
+  salesPeopleApiSlice;

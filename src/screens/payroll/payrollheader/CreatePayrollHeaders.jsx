@@ -10,7 +10,6 @@ import Monthly from "./categories/Monthly";
 import Sales from "./categories/Sales";
 import Production from "./categories/Production";
 import PackHouse from "./categories/PackHouse";
-import { MDBCheckbox } from "mdb-react-ui-kit";
 
 function CreatePayrollHeaders() {
   const { data: payroll_category } = useGetAllPayrollcategoriesQuery();
