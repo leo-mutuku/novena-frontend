@@ -35,6 +35,27 @@ export const sidelinks = [
       { subMenuTitle: "Cash Account entries", to: "allcashaccountentries" },
     ],
   },
+  {
+    menuTitle: "Payables",
+    subMenus: [
+      { subMenuTitle: "Cash Accounts", to: "cashaccounts" },
+      { subMenuTitle: "Cash Account entries", to: "allcashaccountentries" },
+    ],
+  },
+  {
+    menuTitle: "Receivable",
+    subMenus: [
+      { subMenuTitle: "Cash Accounts", to: "cashaccounts" },
+      { subMenuTitle: "Cash Account entries", to: "allcashaccountentries" },
+    ],
+  },
+  {
+    menuTitle: "Fixed Asset",
+    subMenus: [
+      { subMenuTitle: "Cash Accounts", to: "cashaccounts" },
+      { subMenuTitle: "Cash Account entries", to: "allcashaccountentries" },
+    ],
+  },
 
   {
     menuTitle: "Financial Reports",
