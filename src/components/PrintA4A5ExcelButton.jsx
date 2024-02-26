@@ -106,9 +106,8 @@ const PrintA4A5ExcelButton = () => {
     doc.text(130, 43, `Generate By: Leonard Mutuku`);
 
     autoTable(doc, {
-      theme: "grid",
       body: data,
-      theme: "plain",
+
       columns: [
         { header: "Name", dataKey: "account" },
         { header: "Account No#", dataKey: "account_number" },
@@ -116,9 +115,8 @@ const PrintA4A5ExcelButton = () => {
       ],
     });
     autoTable(doc, {
-      theme: "grid",
       body: [{ total: "", ksh: "Ksh.", amount: 50000.0 }],
-      theme: "plain",
+
       columns: [
         { header: "Total", dataKey: "total" },
         { header: "", dataKey: "ksh" },
