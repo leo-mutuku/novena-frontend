@@ -1,10 +1,27 @@
 import React from "react";
-import DriverVehicleAssignDataTable from "./DriverVehicleAssignDataTable";
+import DriverVehicleAssignDT from "./DriverVehicleAssignDT";
+import { FaFilePdf, FaFileExcel } from "react-icons/fa";
 
 const DriverVehicleAssignmentsList = () => {
+  const handleDownloadExcel = async () => {};
+
+  const handleDownloadPDF = async () => {};
+
   return (
     <>
-      <DriverVehicleAssignDataTable />
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <div style={{ marginLeft: "10px" }}>
+          <button onClick={handleDownloadPDF}>
+            <FaFilePdf />
+          </button>
+        </div>
+        <div style={{ marginLeft: "10px" }}>
+          <button onClick={handleDownloadExcel}>
+            <FaFileExcel />
+          </button>
+        </div>
+      </div>
+      <DriverVehicleAssignDT />
     </>
   );
 };

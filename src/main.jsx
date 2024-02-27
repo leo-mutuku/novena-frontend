@@ -193,6 +193,8 @@ import GeneralCategory from "./screens/payroll/payrollheader/GeneralCategory.jsx
 import ProductionCategory from "./screens/payroll/payrollheader/ProductionCategory.jsx";
 import SalesCategory from "./screens/payroll/payrollheader/SalesCategory.jsx";
 import PackHouseCategory from "./screens/payroll/payrollheader/PackHouseCategory.jsx";
+import EditRuns from "./screens/fleet/runs/EditRuns.jsx";
+import EditMaintenance from "./screens/fleet/maintenance/EditMaintenance.jsx";
 import PostedOrderPreview from "./screens/sales/orders/PostedOrderPreview.jsx";
 import BulkSMSScreen from "./screens/administration/BulkSMSScreen.jsx";
 import SendBulkSMS from "./screens/administration/bulksms/SendBulkSMS.jsx";
@@ -532,7 +534,7 @@ const router = createHashRouter(
           </Route>
         </Route>
 
-        {/* fleet routes */}
+
         <Route path="fleet" element={<FleetScreen />}>
           <Route path="drivers" element={<DriverScreen />}>
             <Route path="alldrivers" element={<DriversList />} />
@@ -565,11 +567,13 @@ const router = createHashRouter(
               path="CreateMaintenance"
               element={<CreateMaintenanceList />}
             />
+            <Route path="update/:id" element={<EditMaintenance />} />
           </Route>
           <Route path="runs" element={<RunHeadersScreen />}>
             <Route path="allruns" element={<RunsList />} />
             <Route path="allrunsintransit" element={<AllRunsInTransit />} />
             <Route path="allpsotedruns" element={<AllPostedRuns />} />
+            <Route path="update/:id" element={<EditRuns />} />
             <Route path="createrun" element={<CreateRun />} />
           </Route>
         </Route>

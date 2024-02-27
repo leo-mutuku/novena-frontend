@@ -15,6 +15,8 @@ function CreateDrivers() {
   const [addDriver, { isLoading }] = useAddDriverMutation();
   const navigate = useNavigate();
 
+  alert(JSON.stringify(staff));
+
   const handleStaff = (e) => {
     let x = staff?.data?.filter((a) => {
       if (a.staff_id == e.target.value) {

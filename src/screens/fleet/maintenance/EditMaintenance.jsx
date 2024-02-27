@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import Loader from "../../../components/Loader";
-import { useNavigate } from "react-router-dom";
+
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useGetAllVehiclesQuery } from "../../../slices/fleet/vehicleApiSlice";
-import { useAddMaintenanceMutation } from "../../../slices/fleet/maintenanceApiSlice";
+import Loader from "../../../components/Loader";
+import {
+  useGetAllVehiclesQuery,
+  useUpdateVehicleMutation,
+} from "../../../slices/fleet/vehicleApiSlice";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {
+  useGetMaintenanceQuery,
+  useUpdateMaintenanceMutation,
+} from "../../../slices/fleet/maintenanceApiSlice";
 
-function CreateMaintenanceList() {
+function EditMaintenance() {
   const [maintenance_date, setMaintenanceDate] = useState("");
   const [maintenance_type, setMaintenanceType] = useState("");
   const [description, setDescription] = useState("");
@@ -17,8 +24,14 @@ function CreateMaintenanceList() {
   const [vehicle_id, setVehicleId] = useState();
   const { data: vehicles } = useGetAllVehiclesQuery();
 
-  const [addMaintenance, { isLoading }] = useAddMaintenanceMutation();
+  const [updateMaintenance, { isError, isSuccess, error: errorUpdate }] =
+    useUpdateMaintenanceMutation();
+
+  const { id } = useParams();
   const navigate = useNavigate();
+
+  //call Vehicle get query
+  const { data: maintenance, error, isLoading } = useGetMaintenanceQuery(id);
 
   //date picker
   const handleChange = (value) => {
@@ -34,25 +47,56 @@ function CreateMaintenanceList() {
     setVehicleId(x[0].vehicle_id);
   };
 
+  useEffect(() => {
+    if (errorUpdate && id) {
+      toast.error("Something went wrong: " + errorUpdate.message);
+      console.log(JSON.stringify(errorUpdate.message));
+    }
+  }, [id, errorUpdate]);
+
+  useEffect(() => {
+    if (id) {
+      if (maintenance) {
+        setMaintenanceDate(maintenance.data.maintenance_date);
+        setMaintenanceType(maintenance.data.maintenance_type);
+        setDescription(maintenance.data.description);
+        setCost(maintenance.data.cost);
+        setVehicleId(maintenance.data.vehicle_id);
+      }
+    }
+  }, [id, maintenance]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const res = await addMaintenance({
+    if (
+      !maintenance_date &&
+      !maintenance_type &&
+      !description &&
+      !cost &&
+      !vehicle_id
+    ) {
+      toast.error("Please provide value into each input field");
+    } else {
+      const dataMaintenance = {
         vehicle_id,
         maintenance_type,
         description,
         cost,
         maintenance_date,
-      }).unwrap();
-      if (res.status === "failed") {
-        toast.error(res.message);
-      } else {
-        toast.success(res.message);
+      };
+      try {
+        const result = await updateMaintenance({
+          id,
+          data: dataMaintenance,
+        }).unwrap();
+
+        toast.success(result.message);
+
+        navigate("../allmaintenance");
+      } catch (error) {
+        toast.error(error.message);
+        console.error("Failed to update vehicle maintenance:", error);
       }
-      navigate("../allmaintenance");
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
     }
   };
   return (
@@ -155,4 +199,4 @@ function CreateMaintenanceList() {
   );
 }
 
-export default CreateMaintenanceList;
+export default EditMaintenance;
