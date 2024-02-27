@@ -106,7 +106,9 @@ const CustomerList = () => {
                 <td>{customer.customer_contact}</td>
                 <td>{customer.customer_location}</td>
                 <td>
-                  <Link to="#">
+                  <Link
+                    to={`/administration/customers/update/${customer.customer_id}`}
+                  >
                     <CiEdit />
                   </Link>
                 </td>

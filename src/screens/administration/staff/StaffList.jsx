@@ -6,7 +6,7 @@ import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa6";
 import { CiEdit } from "react-icons/ci";
-import { BsFileEarmarkPdf } from "react-icons/bs";
+import { MdDelete } from "react-icons/md";
 import { IoMdEye } from "react-icons/io";
 
 const StaffList = () => {
@@ -23,9 +23,10 @@ const StaffList = () => {
             <th>Phone Number</th>
             <th>EMAIL</th>
             <th>Bank</th>
-            <th>Payroll_code</th>
+            <th>Payroll Category</th>
             <th>Edit</th>
             <th>View</th>
+            <th>Del</th>
           </tr>
         </thead>
         <tbody>
@@ -40,7 +41,7 @@ const StaffList = () => {
                 <td>{user.phone_number}</td>
                 <td>{user.staff_email}</td>
                 <td>{user.bank_account_number}</td>
-                <td>{user.payroll_category_code}</td>
+                <td>{user.category_name}</td>
                 <td>
                   <Link to={`/administration/staff/update/${user.staff_id}`}>
                     <CiEdit />
@@ -49,6 +50,11 @@ const StaffList = () => {
                 <td>
                   <Link to="#">
                     <IoMdEye />
+                  </Link>
+                </td>
+                <td>
+                  <Link to={`/administration/staff/delete/${user.staff_id}`}>
+                    <MdDelete />
                   </Link>
                 </td>
               </tr>

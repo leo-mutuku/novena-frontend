@@ -4,14 +4,12 @@ export const sidelinks = [
     subMenus: [
       { subMenuTitle: "Accounts", to: "accounts" },
       { subMenuTitle: "Account Entries", to: "allaccountentries" },
+      { subMenuTitle: "Leger Entry", to: "ledgerentry" },
     ],
   },
   {
     menuTitle: "General Ledger (gl)",
-    subMenus: [
-      { subMenuTitle: "General ledger(gl)", to: "gl" },
-      { subMenuTitle: "Leger Entry", to: "ledgerentry" },
-    ],
+    subMenus: [{ subMenuTitle: "General ledger(gl)", to: "gl" }],
   },
   {
     menuTitle: "Mpesa Accounts",

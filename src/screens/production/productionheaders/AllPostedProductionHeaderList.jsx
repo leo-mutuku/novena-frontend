@@ -29,7 +29,7 @@ const AllPostedProductionHeaderList = () => {
   console.log(posted_production_headers?.data);
   return (
     <>
-      <p>*** All Production In Transit ***</p>
+      <p>*** All Posted Production ***</p>
       {/* <div style={{ display: `${edit_mode}` }}>
         <EditPurchaseModal
           set_edit_mode={set_edit_mode}
@@ -50,8 +50,7 @@ const AllPostedProductionHeaderList = () => {
             <th>Output</th>
             <th>Variance</th>
             <th>Status</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>View</th>
           </tr>
         </thead>
         <tbody>
@@ -66,12 +65,10 @@ const AllPostedProductionHeaderList = () => {
 
                 <td style={{ fontSize: "14px" }}>{`${timeDate.date(
                   item.production_date
-                )} : ${timeDate.time(item.production_date)}`}</td>
+                )}`}</td>
                 <td>{item.production_officer}</td>
 
-                <td style={{ fontSize: "14px" }}>{`${
-                  item.production_batch_no
-                }-${timeDate.date(item.production_date)}`}</td>
+                <td style={{ fontSize: "14px" }}>{`${item.batch_number}`}</td>
                 <td>{item.production_input}</td>
                 <td>{item.expected_output}</td>
                 <td>{item.actual_output}</td>
@@ -90,24 +87,13 @@ const AllPostedProductionHeaderList = () => {
                 </td>
 
                 <td>
-                  {item.status === "New" ? (
-                    <Link to={`#`}>
-                      <IoMdAdd
+                  {item.status === "Posted" ? (
+                    <Link
+                      to={`/production/productionheaders/viewpostedproductionheade/${item.production_header_id}`}
+                    >
+                      <IoMdEye
                         onClick={(e) =>
                           handleAdd(e, item.store_purchase_number, "block")
-                        }
-                      />
-                    </Link>
-                  ) : (
-                    "--"
-                  )}
-                </td>
-                <td>
-                  {item.status === "New" ? (
-                    <Link to={`#`}>
-                      <MdDelete
-                        onClick={(e) =>
-                          handleDelete(e, item.store_purchase_number, "block")
                         }
                       />
                     </Link>

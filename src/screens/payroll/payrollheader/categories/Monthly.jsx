@@ -28,14 +28,6 @@ const Monthly = () => {
                 <td>{item.first_name}</td>
                 <td>{item.last_name}</td>
                 <td>{item.staff_ID}</td>
-                <td>
-                  <MDBCheckbox
-                    id="controlledCheckbox"
-                    label=""
-                    checked={staff}
-                    onChange={() => set_staff(!staff)}
-                  />
-                </td>
               </tr>
             ))}
           </tbody>

@@ -16,7 +16,8 @@ const PostedOrderPreview = () => {
   const id = parseInt(_new_id);
   const { data: posted_sales_order_line_id } =
     useGetSalesLinesByHeaderIdQuery(id);
-  const [printToPOS, { isLoading }] = useCreatePrintToPosMutation();
+  const [printToPOS, { isLoading, error }] = useCreatePrintToPosMutation();
+  console.log(error);
 
   useEffect(() => {}, [id, posted_sales_order_line_id]);
 
@@ -25,8 +26,11 @@ const PostedOrderPreview = () => {
   };
   const handleA4PDF = () => {};
   const handleA5PDF = () => {};
-  const handlePOS = (e) => {
-    handlePrintA4();
+  const handlePOS = async (e) => {
+    const res = await printToPOS({
+      sales_order_number: id,
+    }).unwrap();
+    console.log(res);
   };
 
   return (
