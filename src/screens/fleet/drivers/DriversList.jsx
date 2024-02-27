@@ -2,9 +2,7 @@ import React from "react";
 import DriverDataTable from "./DriverDataTable";
 import axios from "axios";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilePdf, faFileExcel } from "@fortawesome/free-solid-svg-icons";
-import TestDT from "./DriverDataTable";
+import { FaFilePdf, FaFileExcel } from "react-icons/fa";
 
 const DriversList = () => {
   const handleDownloadPDF = async () => {
@@ -60,12 +58,12 @@ const DriversList = () => {
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <div style={{ marginLeft: "10px" }}>
           <button onClick={handleDownloadPDF}>
-            <FontAwesomeIcon icon={faFilePdf} />
+            <FaFilePdf />
           </button>
         </div>
         <div style={{ marginLeft: "10px" }}>
           <button onClick={handleDownloadExcel}>
-            <FontAwesomeIcon icon={faFileExcel} />
+            <FaFileExcel />
           </button>
         </div>
       </div>
