@@ -154,36 +154,36 @@ import CReateCashAccount from "./screens/finance/cashaccounts/CReateCashAccount.
 import AllCashAccountEntries from "./screens/finance/cashaccountentries/AllCashAccountEntries.jsx";
 import AllPaymentRequisitionInTransit from "./screens/payment/payments/requisitions/AllPaymentRequisitionInTransit.jsx";
 import AllPostedPaymentRequisitions from "./screens/payment/payments/requisitions/AllPostedPaymentRequisitions.jsx";
-// import DriverScreen from "./screens/fleet/DriverScreen.jsx";
-// import RoutesScreen from "./screens/fleet/RoutesScreen.jsx";
-// import VehicleScreen from "./screens/fleet/VehicleScreen.jsx";
-// import RunHeadersScreen from "./screens/fleet/RunHeadersScreen.jsx";
-// import ManagementScreen from "./screens/fleet/ManagementScreen.jsx";
-// import DriversList from "./screens/fleet/drivers/DriversList.jsx";
-// import CreateDrivers from "./screens/fleet/drivers/CreateDrivers.jsx";
-// import RoutesList from "./screens/fleet/routes/RoutesList.jsx";
-// import CreateRoutes from "./screens/fleet/routes/CreateRoutes.jsx";
-// import CreateVehicle from "./screens/fleet/vehicles/CreateVehicle.jsx";
-// import VehicleList from "./screens/fleet/vehicles/VehicleList.jsx";
-// import RunsList from "./screens/fleet/runs/RunsList.jsx";
-// import AllPostedRuns from "./screens/fleet/runs/AllPostedRuns.jsx";
-// import CreateRun from "./screens/fleet/runs/CreateRun.jsx";
-// import MaintenanceList from "./screens/fleet/maintenance/MaintenanceList.jsx";
-// import CreateMaintenanceList from "./screens/fleet/maintenance/CreateMaintenanceList.jsx";
-// import AllRunsInTransit from "./screens/fleet/runs/AllRunsInTransit.jsx";
+import DriverScreen from "./screens/fleet/DriverScreen.jsx";
+import RoutesScreen from "./screens/fleet/RoutesScreen.jsx";
+import VehicleScreen from "./screens/fleet/VehicleScreen.jsx";
+import RunHeadersScreen from "./screens/fleet/RunHeadersScreen.jsx";
+import ManagementScreen from "./screens/fleet/ManagementScreen.jsx";
+import DriversList from "./screens/fleet/drivers/DriversList.jsx";
+import CreateDrivers from "./screens/fleet/drivers/CreateDrivers.jsx";
+import RoutesList from "./screens/fleet/routes/RoutesList.jsx";
+import CreateRoutes from "./screens/fleet/routes/CreateRoutes.jsx";
+import CreateVehicle from "./screens/fleet/vehicles/CreateVehicle.jsx";
+import VehicleList from "./screens/fleet/vehicles/VehicleList.jsx";
+import RunsList from "./screens/fleet/runs/RunsList.jsx";
+import AllPostedRuns from "./screens/fleet/runs/AllPostedRuns.jsx";
+import CreateRun from "./screens/fleet/runs/CreateRun.jsx";
+import MaintenanceList from "./screens/fleet/maintenance/MaintenanceList.jsx";
+import CreateMaintenanceList from "./screens/fleet/maintenance/CreateMaintenanceList.jsx";
+import AllRunsInTransit from "./screens/fleet/runs/AllRunsInTransit.jsx";
 import AllPostedOrderHeaders from "./screens/sales/orders/AllPostedOrderHeaders.jsx";
 import AllOrderHeadersInTransit from "./screens/sales/orders/AllOrderHeadersInTransit.jsx";
 import AllReurnOrdersInTransit from "./screens/sales/returnorders/AllReurnOrdersInTransit.jsx";
 import AllPostedReturnOrders from "./screens/sales/returnorders/AllPostedReturnOrders.jsx";
 import PaymentRequisitionList from "./screens/payment/payments/requisitions/PaymentRequisitionList.jsx";
-// import EditDriver from "./screens/fleet/drivers/EditDriver.jsx";
-// import EditRoute from "./screens/fleet/routes/EditRoute.jsx";
-// import EditVehicle from "./screens/fleet/vehicles/EditVehicle.jsx";
-// import AssignDriverVehicle from "./screens/fleet/drivers/AssignDriverVehicle.jsx";
-// import EditDriverVehicleAssign from "./screens/fleet/drivers/EditDriverVehicleAssign.jsx";
+import EditDriver from "./screens/fleet/drivers/EditDriver.jsx";
+import EditRoute from "./screens/fleet/routes/EditRoute.jsx";
+import EditVehicle from "./screens/fleet/vehicles/EditVehicle.jsx";
+import AssignDriverVehicle from "./screens/fleet/drivers/AssignDriverVehicle.jsx";
+import EditDriverVehicleAssign from "./screens/fleet/drivers/EditDriverVehicleAssign.jsx";
 import UpdateGL from "./screens/finance/gl/UpdateGL.jsx";
-// import AssignDriverRoute from "./screens/fleet/routes/AssignDriverRoute.jsx";
-// import EditDriverRouteAssign from "./screens/fleet/routes/EditDriverRouteAssign.jsx";
+import AssignDriverRoute from "./screens/fleet/routes/AssignDriverRoute.jsx";
+import EditDriverRouteAssign from "./screens/fleet/routes/EditDriverRouteAssign.jsx";
 import UpdateAccounts from "./screens/finance/accounts/UpdateAccounts.jsx";
 import UpdateStaff from "./screens/administration/staff/UpdateStaff.jsx";
 import UpdateSupplier from "./screens/administration/suppliers/UpdateSupplier.jsx";
@@ -193,6 +193,8 @@ import GeneralCategory from "./screens/payroll/payrollheader/GeneralCategory.jsx
 import ProductionCategory from "./screens/payroll/payrollheader/ProductionCategory.jsx";
 import SalesCategory from "./screens/payroll/payrollheader/SalesCategory.jsx";
 import PackHouseCategory from "./screens/payroll/payrollheader/PackHouseCategory.jsx";
+import EditRuns from "./screens/fleet/runs/EditRuns.jsx";
+import EditMaintenance from "./screens/fleet/maintenance/EditMaintenance.jsx";
 import PostedOrderPreview from "./screens/sales/orders/PostedOrderPreview.jsx";
 import BulkSMSScreen from "./screens/administration/BulkSMSScreen.jsx";
 import SendBulkSMS from "./screens/administration/bulksms/SendBulkSMS.jsx";
@@ -532,7 +534,7 @@ const router = createHashRouter(
           </Route>
         </Route>
 
-        {/* fleet routes 
+        {/* {* fleet routes *} */}
         <Route path="fleet" element={<FleetScreen />}>
           <Route path="drivers" element={<DriverScreen />}>
             <Route path="alldrivers" element={<DriversList />} />
@@ -565,14 +567,16 @@ const router = createHashRouter(
               path="CreateMaintenance"
               element={<CreateMaintenanceList />}
             />
+            <Route path="update/:id" element={<EditMaintenance />} />
           </Route>
           <Route path="runs" element={<RunHeadersScreen />}>
             <Route path="allruns" element={<RunsList />} />
             <Route path="allrunsintransit" element={<AllRunsInTransit />} />
             <Route path="allpsotedruns" element={<AllPostedRuns />} />
+            <Route path="update/:id" element={<EditRuns />} />
             <Route path="createrun" element={<CreateRun />} />
           </Route>
-        </Route>*/}
+        </Route>
 
         {/* finance routes */}
         <Route path="finance" element={<FinanceScreen />}>
