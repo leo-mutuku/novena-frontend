@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { MDBDataTable } from "mdbreact";
+import React, { useEffect, useMemo, useState } from "react";
+import DataTable from "../../../components/general/DataTable";
 import {
   useDeleteDriverMutation,
   useGetAllDriversQuery,
 } from "../../../slices/fleet/driverApislice";
+import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../../components/Loader";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
 
 const DriverDataTable = () => {
   const { data: drivers, isLoading } = useGetAllDriversQuery();
   const [tableData, setTableData] = useState([]);
   const navigate = useNavigate();
-
   const [deleteDriver, { isLoading: isDeleting }] = useDeleteDriverMutation();
 
   useEffect(() => {
@@ -20,19 +19,6 @@ const DriverDataTable = () => {
       setTableData(drivers.data);
     }
   }, [drivers]);
-
-  // Check if data is still loading
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  // const navigate = useNavigate();
-
-  const handleEdit = (driver) => {
-    // Implement your edit logic here using the driver data
-    console.log("Editing driver:", driver);
-    alert(JSON.stringify(driver));
-  };
 
   const handleDelete = async (driverId) => {
     const confirmDelete = window.confirm(
@@ -57,53 +43,63 @@ const DriverDataTable = () => {
     }
   };
 
-  // Map the drivers data to rows
-  const rows = tableData.map((driver) => ({
-    driver_id: driver.driver_id,
-    driver_name: driver.driver_name,
-    license_number: driver.license_number,
-    phone_number: driver.phone_number,
-    staff_email: driver.staff_email,
-    edit: (
-      <Link to={`/fleet/drivers/update/${driver.driver_id}`}>
-        <button className="btn btn-edit">Edit</button>
-      </Link>
-    ),
-    delete: (
-      <button
-        className="btn btn-edit"
-        onClick={() => handleDelete(driver.driver_id)}
-      >
-        Delete
-      </button>
-    ),
-  }));
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Driver ID",
+        accessor: "driver_id",
+      },
+      {
+        Header: "Driver Name",
+        accessor: "driver_name",
+      },
+      {
+        Header: "Email",
+        accessor: "staff_email",
+      },
+      {
+        Header: "National ID",
+        accessor: "national_id",
+      },
+      {
+        Header: "Phone Number",
+        accessor: "phone_number",
+      },
+      {
+        Header: "License Number",
+        accessor: "license_number",
+      },
+      {
+        Header: "Edit",
+        accessor: "edit",
+        Cell: ({ row }) => (
+          <Link to={`/fleet/drivers/update/${row.original.driver_id}`}>
+            <button className="btn btn-edit">Edit</button>
+          </Link>
+        ),
+      },
+      {
+        Header: "Delete",
+        accessor: "delete",
+        Cell: ({ row }) => (
+          <button onClick={() => handleDelete(row.original.driver_id)}>
+            Delete
+          </button>
+        ),
+      },
+    ],
+    [handleDelete]
+  );
 
-  // Define the columns
-  const columns = [
-    { label: "ID", field: "driver_id", sort: "asc", width: 50 },
-    { label: "Name", field: "driver_name", sort: "asc", width: 150 },
-    {
-      label: "License Number",
-      field: "license_number",
-      sort: "asc",
-      width: 100,
-    },
-    {
-      label: "Contact Number",
-      field: "phone_number",
-      sort: "asc",
-      width: 120,
-    },
-    { label: "Email", field: "staff_email", sort: "asc", width: 200 },
-    { label: "Edit", field: "edit", width: 50 },
-    { label: "Delete", field: "delete", width: 50 },
-  ];
+  if (isLoading || isDeleting) {
+    return <Loader />;
+  }
 
-  // Create the data object
-  const data = { columns, rows };
-
-  return <MDBDataTable striped bordered small data={data} />;
+  return (
+    <div>
+      <DataTable columns={columns} data={tableData} />
+    </div>
+  );
 };
 
 export default DriverDataTable;
