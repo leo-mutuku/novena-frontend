@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import DataTable from "./DataTable";
+import DataTable from "../../../components/general/DataTable";
 import {
   useDeleteDriverMutation,
   useGetAllDriversQuery,
@@ -10,11 +10,8 @@ import { toast } from "react-toastify";
 
 const DriverDataTable = () => {
   const { data: drivers, isLoading } = useGetAllDriversQuery();
-
   const [tableData, setTableData] = useState([]);
-
   const navigate = useNavigate();
-
   const [deleteDriver, { isLoading: isDeleting }] = useDeleteDriverMutation();
 
   useEffect(() => {
@@ -22,10 +19,6 @@ const DriverDataTable = () => {
       setTableData(drivers.data);
     }
   }, [drivers]);
-
-  const handleEdit = (id) => {
-    alert(`Edit row with ID: ${id}`);
-  };
 
   const handleDelete = async (driverId) => {
     const confirmDelete = window.confirm(
@@ -49,7 +42,8 @@ const DriverDataTable = () => {
         });
     }
   };
-  const columns = React.useMemo(
+
+  const columns = useMemo(
     () => [
       {
         Header: "Driver ID",
@@ -94,22 +88,13 @@ const DriverDataTable = () => {
         ),
       },
     ],
-    []
+    [handleDelete]
   );
 
-  const data = React.useMemo(
-    () => [
-      { id: 1, name: "John Doe", edit: "Edit", delete: "Delete" },
-      { id: 2, name: "Jane Smith", edit: "Edit", delete: "Delete" },
-      { id: 3, name: "Bob Johnson", edit: "Edit", delete: "Delete" },
-    ],
-    []
-  );
-
-  // Check if data is still loading
-  if (isLoading) {
+  if (isLoading || isDeleting) {
     return <Loader />;
   }
+
   return (
     <div>
       <DataTable columns={columns} data={tableData} />
