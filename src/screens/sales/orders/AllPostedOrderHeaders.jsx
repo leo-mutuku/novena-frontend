@@ -32,16 +32,16 @@ const AllPostedOrderHeaders = () => {
       <Table striped style={{ border: "1px solid #ccc" }}>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Sale Date</th>
-            <th>Sales Type</th>
-            <th>Order No.</th>
-            <th>Total</th>
-            <th>No. of Items</th>
-            <th>Cust Name</th>
-            <th>Sales .P</th>
-            <th>Status</th>
-            <th>View</th>
+            <th style={{ position: "initial" }}>#</th>
+            <th style={{ position: "initial" }}>Sale Date</th>
+            <th style={{ position: "initial" }}>Sales Type</th>
+            <th style={{ position: "initial" }}>Order No.</th>
+            <th style={{ position: "initial" }}>Total</th>
+            <th style={{ position: "initial" }}>No. of Items</th>
+            <th style={{ position: "initial" }}>Cust Name</th>
+            <th style={{ position: "initial" }}>Sales .P</th>
+            <th style={{ position: "initial" }}>Status</th>
+            <th style={{ position: "initial" }}>View</th>
           </tr>
         </thead>
         <tbody>

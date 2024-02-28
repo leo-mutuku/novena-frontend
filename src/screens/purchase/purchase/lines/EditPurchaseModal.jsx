@@ -8,7 +8,7 @@ import { useGetAllItemRegisterQuery } from "../../../../slices/store/itemregiste
 import { useGetAllAccountsQuery } from "../../../../slices/finance/accountsApiSlice";
 import { useGetAllPurchaseLinesByHeaderIdQuery } from "../../../../slices/purchase/storePurchaseLinesApiSlice";
 import { usePostStorePurchaseHeaderMutation } from "../../../../slices/purchase/storePurchaseHeadersApiSlice";
-import ItemEdit from "./ItemEdit";
+import MaizeAdd from "./MaizeAdd";
 import Loader from "../../../../components/Loader";
 import { toast } from "react-toastify";
 
@@ -17,6 +17,7 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
   const id = purchase_header_id.toString();
   const { data: purchase_order_lines } =
     useGetAllPurchaseLinesByHeaderIdQuery(id);
+
   const [post_purchase, { isLoading }] = usePostStorePurchaseHeaderMutation();
 
   const [update_list, set_update_list] = useState([]);
@@ -38,34 +39,17 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
 
     set_purchase_list([...purchase_list, order_items]);
   };
-  // const handleQuantity = (e, store_purchase_line_id) => {
-  //   const newItem = purchase_order_lines?.data?.map((item) => {
-  //     if (item.store_purchase_line_id == store_purchase_line_id) {
-  //       return {
-  //         ...item,
 
-  //         item_cost: e.target.value * item.item_cost,
-  //       };
-  //     }
-
-  //     return item;
-  //   });
-
-  //   set_update_list(newItem);
-  // };
   const [item_edit_state, set_item_edit_state] = useState("none");
   const [items_to_edit, set_items_to_edit] = useState(null);
   const handleItemEdit = (e) => {
     if (items_to_edit) {
-      console.log(item_edit_state);
       set_item_edit_state("block");
       return;
     }
     alert("ohh!! You need to select an item first!");
-    console.log(items_to_edit);
   };
   const handleToggleCheck = (e) => {
-    console.log(e.target.value);
     purchase_order_lines?.data.map((item) => {
       if (item.store_purchase_line_id == e.target.value) {
         set_items_to_edit(null);
@@ -78,8 +62,12 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
     let store_purchase_header_id = purchase_header_id;
     try {
       const res = await post_purchase({ store_purchase_header_id }).unwrap();
-      console.log(res);
-      navigate("../allstorepurchase");
+      if (res.status == "failed") {
+        toast.error(err?.data?.message || err.error);
+      } else {
+        toast.success("Purchased posted and sms send!");
+        navigate("../allstorepurchase");
+      }
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -99,7 +87,7 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
         }}
       >
         <div style={{ display: `${item_edit_state}` }}>
-          <ItemEdit
+          <MaizeAdd
             set_item_edit_state={set_item_edit_state}
             items_to_edit={items_to_edit}
           />
@@ -112,7 +100,7 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
           }}
         >
           <Modal.Dialog>
-            <Modal.Header closeButton onClick={(e) => set_edit_mode("none")}>
+            <Modal.Header>
               <Modal.Title style={{ fontSize: "14px" }}>
                 <span style={{ fontSize: "14px" }}>
                   Purchase order no.{purchase_header_id}
@@ -130,7 +118,8 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
                           Item order no: {item.store_purchase_line_id}{" "}
                           &nbsp;&nbsp;&nbsp; Item name: {item.item_name}{" "}
                           &nbsp;&nbsp;&nbsp; Supplied by: {item.supplier_name}{" "}
-                          &nbsp;&nbsp;&nbsp; Total Cost
+                          &nbsp;&nbsp;&nbsp; Total Cost :{" "}
+                          {item.total_cost_per_item}
                         </p>
                         <hr style={{ width: "50%" }} />
                         <Row>
@@ -148,7 +137,7 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
                               <Form.Check
                                 type="switch"
                                 id="custom-switch"
-                                label="Check this switch"
+                                label="Update Maize Purchase details"
                                 onChange={handleToggleCheck}
                                 value={item.store_purchase_line_id}
                               />
@@ -160,7 +149,7 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
                                   handleItemEdit(e, item.store_purchase_line_id)
                                 }
                               >
-                                Edit
+                                Add details
                               </Button>
                             </div>
                           </Col>
@@ -174,6 +163,7 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
             </Modal.Body>
 
             <Modal.Footer className="gap-2">
+              <Button variant="danger">Rerverse</Button>
               <Button variant="success" onClick={(e) => handlePost()}>
                 Post purchase order
               </Button>
