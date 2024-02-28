@@ -534,7 +534,7 @@ const router = createHashRouter(
           </Route>
         </Route>
 
-        {/* {* fleet routes *} */}
+
         <Route path="fleet" element={<FleetScreen />}>
           <Route path="drivers" element={<DriverScreen />}>
             <Route path="alldrivers" element={<DriversList />} />
