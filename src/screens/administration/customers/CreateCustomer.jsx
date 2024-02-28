@@ -7,8 +7,9 @@ import { toast } from "react-toastify";
 
 function CreateCustomer() {
   const [customer_email, set_customer_email] = useState("");
-  const [customer_name, set_customer_name] = useState("");
-  const [phone_number, set_phone_number] = useState("");
+  const [customer_contact_person, set_customer_contact_person] = useState("");
+  const [customer_outlet_name, set_customer_outlet_name] = useState("");
+  const [customer_contact, set_customer_contact] = useState("");
   const [customer_location, set_customer_location] = useState("");
   const [created_by, set_created_by] = useState("");
 
@@ -27,8 +28,9 @@ function CreateCustomer() {
     try {
       const res = await createCustomer({
         customer_email,
-        customer_name,
-        phone_number,
+        customer_contact_person,
+        customer_outlet_name,
+        customer_contact,
         customer_location,
         created_by,
       }).unwrap();
@@ -69,14 +71,15 @@ function CreateCustomer() {
           </Col>
           <Col>
             {/* */}
+
             <Form.Group className="my-2" controlId="customer_name">
-              <Form.Label>Customer name</Form.Label>
+              <Form.Label>Customer Contact Person</Form.Label>
               <Form.Control
                 type="text"
                 required
-                placeholder="Customer name"
-                value={customer_name}
-                onChange={(e) => set_customer_name(e.target.value)}
+                placeholder="customer_contact_person"
+                value={customer_contact_person}
+                onChange={(e) => set_customer_contact_person(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -85,17 +88,31 @@ function CreateCustomer() {
         <Row>
           <Col>
             {/* staff_number field */}
-            <Form.Group className="my-2" controlId="institution_phone_number">
+            <Form.Group className="my-2" controlId="customer contact">
               <Form.Label>Customer Phone number</Form.Label>
               <Form.Control
                 required
                 type="number"
                 placeholder="customer Phone Number"
-                value={phone_number}
-                onChange={(e) => set_phone_number(e.target.value)}
+                value={customer_contact}
+                onChange={(e) => set_customer_contact(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
+          <Col>
+            {/* staff_number field */}
+            <Form.Group className="my-2" controlId="Customer Outlet Name">
+              <Form.Label>Customer Outlet Name</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Customer Outlet Name"
+                value={customer_outlet_name}
+                onChange={(e) => set_customer_outlet_name(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+
           <Col>
             <Form.Group className="my-2" controlId="customer_location">
               <Form.Label>Customer location</Form.Label>

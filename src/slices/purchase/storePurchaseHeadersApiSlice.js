@@ -1,14 +1,14 @@
 import { apiSlice } from "../apiSlice";
 const STOREPURCHASEHEADERS_URL = "/api/v1/purchase/storepurchaseheaders";
 export const storePurchaseHeadersApiSlice = apiSlice.injectEndpoints({
-  tagTypes: ["StorePurchaseHeader"],
+  tagTypes: ["StorePurchaseHeader", "StorePurchaseLine"],
   endpoints: (builder) => ({
     getAllStorePurchaseHeaders: builder.query({
       query: () => ({
         url: `${STOREPURCHASEHEADERS_URL}/getallstorepurchaseheaders`,
         method: "GET",
       }),
-      providesTags: ["StorePurchaseHeader"],
+      providesTags: ["StorePurchaseHeader", "StorePurchaseLine"],
     }),
     // All posted stored purchases
     getAllPostedStoredPurchases: builder.query({
@@ -16,14 +16,14 @@ export const storePurchaseHeadersApiSlice = apiSlice.injectEndpoints({
         url: `${STOREPURCHASEHEADERS_URL}/allpostedstorepurchases`,
         method: "GET",
       }),
-      providesTags: ["StorePurchaseHeader"],
+      providesTags: ["StorePurchaseHeader", "StorePurchaseLine"],
     }),
     getAllStorePurchasesInTransit: builder.query({
       query: () => ({
         url: `${STOREPURCHASEHEADERS_URL}/allstorepurchasesintransit`,
         method: "GET",
       }),
-      providesTags: ["StorePurchaseHeader"],
+      providesTags: ["StorePurchaseHeader", "StorePurchaseLine"],
     }),
 
     createStorePurchaseHeader: builder.mutation({
@@ -32,7 +32,7 @@ export const storePurchaseHeadersApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["StorePurchaseHeader"],
+      invalidatesTags: ["StorePurchaseHeader", "StorePurchaseLine"],
     }),
     postStorePurchaseHeader: builder.mutation({
       query: (data) => ({
@@ -40,7 +40,7 @@ export const storePurchaseHeadersApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      providesTags: ["StorePurchaseHeader"],
+      providesTags: ["StorePurchaseHeader", "StorePurchaseLine"],
     }),
   }),
 });

@@ -3,13 +3,14 @@ const PRODUCTIONHEADER_URL = "/api/v1/production/productionheaders";
 
 export const productionHeaderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    tagTypes: ["ProductionLines", "productionHeaders"],
     createProductionHeader: builder.mutation({
       query: (data) => ({
         url: `${PRODUCTIONHEADER_URL}/createproductionheader`,
         method: "POST",
         body: data,
       }),
-      invalidatesTags: "production_headers",
+      invalidatesTags: ["ProductionLines", "productionHeaders"],
     }),
 
     getAllPostedProductionHeaders: builder.query({
@@ -18,7 +19,7 @@ export const productionHeaderApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: "production_headers",
+      providesTags: ["ProductionLines", "productionHeaders"],
     }),
 
     getAllProductionHeaders: builder.query({
@@ -27,7 +28,7 @@ export const productionHeaderApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: "production_headers",
+      providesTags: ["ProductionLines", "productionHeaders"],
     }),
     getAllProductionHeadersInTransit: builder.query({
       query: (data) => ({
@@ -35,7 +36,7 @@ export const productionHeaderApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: "production_headers",
+      providesTags: ["ProductionLines", "productionHeaders"],
     }),
     getAllProductionHeadersInTransit: builder.query({
       query: (data) => ({
@@ -43,7 +44,7 @@ export const productionHeaderApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: "production_headers",
+      providesTags: ["ProductionLines", "productionHeaders"],
     }),
   }),
 });

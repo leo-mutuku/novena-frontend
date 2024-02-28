@@ -199,6 +199,11 @@ import PostedOrderPreview from "./screens/sales/orders/PostedOrderPreview.jsx";
 import BulkSMSScreen from "./screens/administration/BulkSMSScreen.jsx";
 import SendBulkSMS from "./screens/administration/bulksms/SendBulkSMS.jsx";
 import SendToCustom from "./screens/administration/bulksms/SendToCustom.jsx";
+import DeleteStaff from "./screens/administration/staff/DeleteStaff.jsx";
+import ViewPostedProductiobHeader from "./screens/production/productionheaders/ViewPostedProductiobHeader.jsx";
+import DeleteSalesPerson from "./screens/sales/salespeople/DeleteSalesPerson.jsx";
+import DeletePackHousePerson from "./screens/production/packhousepeople/DeletePackHousePerson.jsx";
+import UpdateCustomer from "./screens/administration/customers/UpdateCustomer.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -234,6 +239,7 @@ const router = createHashRouter(
             <Route path="createstaff" element={<CreateStaff />} />
             <Route path="update/:id" element={<UpdateStaff />} />
             <Route path="allstaff" element={<StaffList />} />
+            <Route path="delete/:id" element={<DeleteStaff />} />
           </Route>
           <Route path="bulksms" element={<BulkSMSScreen />}>
             <Route path="bulkmessages" element={<SendBulkSMS />} />
@@ -242,6 +248,7 @@ const router = createHashRouter(
           <Route path="customers" element={<CustomersScreen />}>
             <Route path="createcustomer" element={<CreateCustomer />} />
             <Route path="allcustomers" element={<CustomerList />} />
+            <Route path="update/:id" element={<UpdateCustomer />} />
           </Route>
         </Route>
 
@@ -326,6 +333,10 @@ const router = createHashRouter(
               path="allpostedtransiactionheaderlist"
               element={<AllPostedProductionHeaderList />}
             />
+            <Route
+              path="viewpostedproductionheade/:id"
+              element={<ViewPostedProductiobHeader />}
+            />
           </Route>
           {/* daily packhouse routes */}
           <Route path="dailypackhouse" element={<DailyPackhouseScreen />}>
@@ -364,6 +375,10 @@ const router = createHashRouter(
             <Route index element={<PackhosePeopleList />} />
             <Route path="createpackhouse" element={<CreatePackhousePerson />} />
             <Route path="allpackhouse" element={<PackhosePeopleList />} />
+            <Route
+              path="deletepackhouseperson/:id"
+              element={<DeletePackHousePerson />}
+            />
           </Route>
         </Route>
         {/* store routes */}
@@ -512,10 +527,14 @@ const router = createHashRouter(
             <Route index element={<OrderPostingList />} />
             <Route path="createsalesperson" element={<CreateSalesPeople />} />
             <Route path="allsalespeople" element={<SalesPeoplelist />} />
+            <Route
+              path="deletesalesperson/:id"
+              element={<DeleteSalesPerson />}
+            />
           </Route>
         </Route>
 
-        {/* {* fleet routes *} */}
+
         <Route path="fleet" element={<FleetScreen />}>
           <Route path="drivers" element={<DriverScreen />}>
             <Route path="alldrivers" element={<DriversList />} />
