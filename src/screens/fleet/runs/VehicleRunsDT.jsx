@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { MDBDataTable } from "mdbreact";
-
+import React, { useEffect, useMemo, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../../components/Loader";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
 import {
   useDeleteVehicleRunMutation,
   useGetAllVehicleRunsQuery,
 } from "../../../slices/fleet/runsApiSlice";
+import DataTable from "../../../components/general/DataTable";
 
 const VehicleRunsDT = () => {
   const { data: runs, isLoading } = useGetAllVehicleRunsQuery();
@@ -22,11 +21,6 @@ const VehicleRunsDT = () => {
       setTableData(runs.data);
     }
   }, [runs]);
-
-  // Check if data is still loading
-  if (isLoading) {
-    return <Loader />;
-  }
 
   // const navigate = useNavigate()
 
@@ -53,77 +47,65 @@ const VehicleRunsDT = () => {
     }
   };
 
-  // Map the drivers data to rows
-  const rows = tableData.map((run) => ({
-    journey_id: run.journey_id,
-    registration_number: run.registration_number,
-    name: run.name,
-    start_mileage: run.start_mileage,
-    start_fuel_capacity: run.start_fuel_capacity,
-    end_mileage: run.end_mileage,
-    end_fuel_capacity: run.end_fuel_capacity,
-    edit: (
-      <Link to={`/fleet/runs/update/${run.journey_id}`}>
-        <button className="btn btn-edit">End Journey</button>
-      </Link>
-    ),
-    delete: (
-      <button
-        className="btn btn-edit"
-        onClick={() => handleDelete(run.journey_id)}
-      >
-        Delete
-      </button>
-    ),
-  }));
+  const columns = React.useMemo(
+    () => [
+      { Header: "ID", accessor: "journey_id" },
+      {
+        Header: "Vehicle Reg #",
+        accessor: "registration_number",
+      },
+      {
+        Header: "Route Name",
+        accessor: "name",
+      },
+      {
+        Header: "start Mileage",
+        accessor: "start_mileage",
+      },
+      {
+        Header: "Start Fuel Capacity",
+        accessor: "start_fuel_capacity",
+      },
+      {
+        Header: "End Mileage",
+        accessor: "end_mileage",
+      },
+      {
+        Header: "End Fuel Capacity",
+        accessor: "end_fuel_capacity",
+      },
+      {
+        Header: "Edit",
+        accessor: "edit",
+        Cell: ({ row }) => (
+          <Link to={`/fleet/runs/update/${row.original.journey_id}`}>
+            <button className="btn btn-edit">Edit</button>
+          </Link>
+        ),
+      },
+      {
+        Header: "Delete",
+        accessor: "delete",
+        Cell: ({ row }) => (
+          <button onClick={() => handleDelete(row.original.journey_id)}>
+            Delete
+          </button>
+        ),
+      },
+    ],
+    [handleDelete]
+  );
 
-  // Define the columns
-  const columns = [
-    { label: "ID", field: "journey_id", sort: "asc", width: 50 },
-    {
-      label: "Vehicle Reg #",
-      field: "registration_number",
-      sort: "asc",
-      width: 150,
-    },
-    {
-      label: "Route Name",
-      field: "name",
-      sort: "asc",
-      width: 100,
-    },
-    {
-      label: "start Mileage",
-      field: "start_mileage",
-      sort: "asc",
-      width: 120,
-    },
-    {
-      label: "Start Fuel Capacity",
-      field: "start_fuel_capacity",
-      sort: "asc",
-      width: 200,
-    },
-    {
-      label: "End Mileage",
-      field: "end_mileage",
-      sort: "asc",
-      width: 120,
-    },
-    {
-      label: "End Fuel Capacity",
-      field: "end_fuel_capacity",
-      sort: "asc",
-      width: 200,
-    },
-    { label: "Edit", field: "edit", width: 50 },
-    { label: "Delete", field: "delete", width: 50 },
-  ];
+  // Check if data is still loading
+  if (isLoading) {
+    return <Loader />;
+  }
 
-  // Create the data object
-  const data = { columns, rows };
-
-  return <MDBDataTable striped bordered small data={data} />;
+  return (
+    <div>
+      <DataTable columns={columns} data={tableData} />
+    </div>
+  );
 };
 
 export default VehicleRunsDT;
