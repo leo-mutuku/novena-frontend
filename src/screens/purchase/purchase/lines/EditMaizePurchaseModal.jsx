@@ -17,6 +17,7 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
   const id = purchase_header_id.toString();
   const { data: purchase_order_lines } =
     useGetAllPurchaseLinesByHeaderIdQuery(id);
+
   const [post_purchase, { isLoading }] = usePostStorePurchaseHeaderMutation();
 
   const [update_list, set_update_list] = useState([]);
@@ -29,9 +30,7 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
     }
   }, [purchase_order_lines?.data]);
   const inputRef = useRef(null);
-  const handleQuantity = (e) => {
-    console.log(inputRef.focus());
-  };
+  const handleQuantity = (e) => {};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,21 +39,7 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
 
     set_purchase_list([...purchase_list, order_items]);
   };
-  // const handleQuantity = (e, store_purchase_line_id) => {
-  //   const newItem = purchase_order_lines?.data?.map((item) => {
-  //     if (item.store_purchase_line_id == store_purchase_line_id) {
-  //       return {
-  //         ...item,
 
-  //         item_cost: e.target.value * item.item_cost,
-  //       };
-  //     }
-
-  //     return item;
-  //   });
-
-  //   set_update_list(newItem);
-  // };
   const [item_edit_state, set_item_edit_state] = useState("none");
   const [items_to_edit, set_items_to_edit] = useState(null);
   console.log(items_to_edit);
@@ -65,7 +50,6 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
       return;
     }
     alert("ohh!! You need to select an item first!");
-    console.log(items_to_edit);
   };
   const handleToggleCheck = (e) => {
     console.log(e.target.value);
@@ -77,16 +61,6 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
     });
   };
 
-  //   const handlePost = async (e) => {
-  //     let store_purchase_header_id = purchase_header_id;
-  //     try {
-  //       const res = await post_purchase({ store_purchase_header_id }).unwrap();
-  //       console.log(res);
-  //       navigate("../allstorepurchase");
-  //     } catch (err) {
-  //       toast.error(err?.data?.message || err.error);
-  //     }
-  //   };
   return (
     <>
       <div
@@ -133,7 +107,6 @@ function EditPurchaseModal({ purchase_header_id, set_edit_mode }) {
                           Item order no: {item.store_purchase_line_id}{" "}
                           &nbsp;&nbsp;&nbsp; Item name: {item.item_name}{" "}
                           &nbsp;&nbsp;&nbsp; Supplied by: {item.supplier_name}{" "}
-                          &nbsp;&nbsp;&nbsp; Total Cost
                         </p>
                         <hr style={{ width: "50%" }} />
                         <Row>

@@ -38,14 +38,14 @@ const AllMaizePurchase = () => {
       <Table striped style={{ border: "1px solid #ccc" }}>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Purchase no </th>
-            <th>Purchase date</th>
-            <th>Prepared by</th>
-            <th>Aproved by</th>
-            <th>Total cost</th>
-            <th>Status</th>
-            <th>Edit</th>
+            <th style={{ position: "initial" }}>#</th>
+            <th style={{ position: "initial" }}>Purchase no </th>
+            <th style={{ position: "initial" }}>Purchase date</th>
+            <th style={{ position: "initial" }}>Prepared by</th>
+            <th style={{ position: "initial" }}>Aproved by</th>
+            <th style={{ position: "initial" }}>Total cost</th>
+            <th style={{ position: "initial" }}>Status</th>
+            <th style={{ position: "initial" }}>Edit</th>
           </tr>
         </thead>
         <tbody>

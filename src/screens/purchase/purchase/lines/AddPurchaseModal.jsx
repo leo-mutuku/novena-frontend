@@ -15,8 +15,6 @@ import { useGetAllStoreRegisterQuery } from "../../../../slices/store/storeRegis
 
 function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
   let purchase_id = parseInt(store_purchase_id);
-  console.log(typeof purchase_id);
-  console.log();
 
   const { data: item_register } = useGetAllItemRegisterQuery();
   const { data: accounts } = useGetAllAccountsQuery();
@@ -45,7 +43,6 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
   });
 
   const [purchase_list, set_purchase_list] = useState([]);
-  console.log(purchase_list);
 
   useEffect(() => {
     if (userInfo) {
@@ -181,7 +178,7 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
           }}
         >
           <Modal.Dialog>
-            <Modal.Header closeButton onClick={() => set_mode("none")}>
+            <Modal.Header>
               <Modal.Title style={{ fontSize: "14px" }}>
                 <span style={{ fontSize: "14px" }}>
                   Purchase order no. {store_purchase_id}

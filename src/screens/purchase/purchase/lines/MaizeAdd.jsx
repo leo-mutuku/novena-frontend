@@ -131,14 +131,14 @@ const MaizeAdd = ({ set_item_edit_state, items_to_edit }) => {
             <Col>
               <Form.Group className="my-2" controlId="account_number">
                 <Form.Label style={{ color: "white" }}>
-                  Aflotoxin level
+                  Aflatoxin level
                 </Form.Label>
                 <Form.Control
                   type="number"
                   required
                   value={aflotoxin}
                   onChange={(e) => set_aflotoxin(e.target.value)}
-                  placeholder="Aflotoxin level"
+                  placeholder="Aflatoxin level"
                 ></Form.Control>
               </Form.Group>
             </Col>
