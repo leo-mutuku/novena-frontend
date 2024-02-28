@@ -88,10 +88,12 @@ function EditRuns() {
         end_fuel_capacity,
       };
       try {
+        console.log(dataRun);
         const res = await updateVehicleRun({
           id,
           data: dataRun,
         }).unwrap();
+
         if (res.status === "failed") {
           toast.error(res.message);
         } else {

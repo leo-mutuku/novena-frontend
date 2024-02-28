@@ -6,9 +6,8 @@ import { toast } from "react-toastify";
 import Loader from "../../../components/Loader";
 import {
   useGetAllVehiclesQuery,
-  useUpdateVehicleMutation,
 } from "../../../slices/fleet/vehicleApiSlice";
-
+import moment from 'moment';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -68,6 +67,16 @@ function EditMaintenance() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+     // Assuming your date is received as a string from react-datepicker
+     const dateStringFromPicker = maintenance_date;
+
+     // Parse the ISO string to moment object
+     const parsedDate = moment(dateStringFromPicker);
+ 
+     // Get the date part in YYYY-MM-DD format
+     const formattedDate = parsedDate.format('YYYY-MM-DD');
+ 
     if (
       !maintenance_date &&
       !maintenance_type &&
@@ -82,7 +91,7 @@ function EditMaintenance() {
         maintenance_type,
         description,
         cost,
-        maintenance_date,
+        maintenance_date:formattedDate ,
       };
       try {
         const result = await updateMaintenance({
