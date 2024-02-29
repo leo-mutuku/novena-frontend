@@ -4,15 +4,16 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetSalesLinesByHeaderIdQuery } from "../../../../slices/sales/salesOrderLinesApiSlice";
 import { usePostSalesOrderMutation } from "../../../../slices/sales/salesOrderHeadersApiSlice";
+import { useArchiveuPostedSalesOrderMutation } from "../../../../slices/sales/salesOrderHeadersApiSlice";
 import { toast } from "react-toastify";
 
 function EditOrderLines({ purchase_header_id, set_edit_mode }) {
   const id = purchase_header_id.toString();
   const { data: sales_order_lines, error } =
     useGetSalesLinesByHeaderIdQuery(id);
-  console.log(sales_order_lines);
 
   const [post_purchase, { isLoading }] = usePostSalesOrderMutation();
+  const [archiveOrder] = useArchiveuPostedSalesOrderMutation();
   const [update_list, set_update_list] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -58,7 +59,7 @@ function EditOrderLines({ purchase_header_id, set_edit_mode }) {
       const res = await post_purchase({
         sales_order_number: sales_order_number,
       }).unwrap();
-      console.log(res);
+
       if (res.status === "failed") {
         toast.error(err?.data?.message || err.error);
       } else {
@@ -67,6 +68,17 @@ function EditOrderLines({ purchase_header_id, set_edit_mode }) {
       navigate("../allorders");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
+    }
+  };
+  const handleArchive = async (e) => {
+    const res = await archiveOrder({
+      sales_order_number: e.target.id,
+    }).unwrap();
+    if (res.status == "failed") {
+      toast.error(err?.data?.message || err.error);
+    } else {
+      toast.success("Arched successfully");
+      navigate("../allorders");
     }
   };
   return (
@@ -148,28 +160,6 @@ function EditOrderLines({ purchase_header_id, set_edit_mode }) {
                               </span>
                             </p>
                           </Col>
-
-                          {/* <Col>
-                            <div>
-                              <Form.Check
-                                type="switch"
-                                id="custom-switch"
-                                label="Check this switch"
-                                onChange={handleToggleCheck}
-                                value={item.store_purchase_line_id}
-                              />
-                            </div>
-
-                            <div>
-                              <Button
-                                onClick={(e) =>
-                                  handleItemEdit(e, item.store_purchase_line_id)
-                                }
-                              >
-                                Edit
-                              </Button>
-                            </div>
-                          </Col> */}
                         </Row>
                       </div>
                       <hr />
@@ -180,7 +170,9 @@ function EditOrderLines({ purchase_header_id, set_edit_mode }) {
             </Modal.Body>
 
             <Modal.Footer className="gap-2">
-              <Button variant="danger">Reverse</Button>
+              <Button variant="danger" onClick={handleArchive} id={id}>
+                Archive
+              </Button>
               <Button variant="success" onClick={(e) => handlePost()}>
                 Post Sales Order
               </Button>
