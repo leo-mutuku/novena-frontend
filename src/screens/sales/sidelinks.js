@@ -7,19 +7,24 @@ export const sidelinks = [
       { subMenuTitle: "Order Dispatch", to: "orderdispatch" },
       { subMenuTitle: "Order Invoice", to: "orderinvoice" },
       { subMenuTitle: "Order Posting", to: "orderposting" },
-      { subMenuTitle: "Order Receipt", to: "orderreceipt" },
+      // { subMenuTitle: "Order Receipt", to: "orderreceipt" },
+      { subMenuTitle: "GRN", to: "#" },
+      { subMenuTitle: "Reports", to: "#" },
     ],
   },
   {
     menuTitle: "Sales People",
-    subMenus: [{ subMenuTitle: "SalesPeople", to: "salespeople" }],
+    subMenus: [
+      { subMenuTitle: "SalesPeople", to: "salespeople" },
+      { subMenuTitle: "Reports", to: "#" },
+    ],
   },
   {
     menuTitle: "Customers",
-    subMenus: [{ subMenuTitle: "Customers", to: "#" }],
+    subMenus: [{ subMenuTitle: "Customer's statement", to: "#" }],
   },
   {
-    menuTitle: "Institutions",
-    subMenus: [{ subMenuTitle: "Institutions", to: "#" }],
+    menuTitle: "Institutions ",
+    subMenus: [{ subMenuTitle: "Institution's Statement", to: "#" }],
   },
 ];

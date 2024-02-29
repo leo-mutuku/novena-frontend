@@ -50,18 +50,18 @@ const ProductionHeaderList = () => {
       <Table striped style={{ border: "1px solid #ccc" }}>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Date </th>
-            <th>Officer</th>
-            <th>Batch No.</th>
-            <th>Input</th>
-            <th>Expected</th>
-            <th>Output</th>
-            <th>Variance</th>
-            <th>Created By</th>
-            <th>Status</th>
-            <th>Add</th>
-            <th>Revert</th>
+            <th style={{ position: "initial" }}>#</th>
+            <th style={{ position: "initial" }}>Date </th>
+            <th style={{ position: "initial" }}>Officer</th>
+            <th style={{ position: "initial" }}>Batch No.</th>
+            <th style={{ position: "initial" }}>Input</th>
+            <th style={{ position: "initial" }}>Expected</th>
+            <th style={{ position: "initial" }}>Output</th>
+            <th style={{ position: "initial" }}>Variance</th>
+            <th style={{ position: "initial" }}>Created By</th>
+            <th style={{ position: "initial" }}>Status</th>
+            <th style={{ position: "initial" }}>Add</th>
+            <th style={{ position: "initial" }}>Revert</th>
           </tr>
         </thead>
         <tbody>
