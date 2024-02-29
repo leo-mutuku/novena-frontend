@@ -27,4 +27,11 @@ export const sidelinks = [
     menuTitle: "Institutions ",
     subMenus: [{ subMenuTitle: "Institution's Statement", to: "#" }],
   },
+  {
+    menuTitle: "Sales Reports",
+    subMenus: [
+      // { subMenuTitle: "Packhouse people", to: "packhousepeople" },
+      // { subMenuTitle: "Reports", to: "#" },
+    ],
+  },
 ];

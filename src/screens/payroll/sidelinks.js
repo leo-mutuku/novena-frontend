@@ -7,4 +7,8 @@ export const sidelinks = [
     menuTitle: "Payroll",
     subMenus: [{ subMenuTitle: "Payroll", to: "payrollheader" }],
   },
+  {
+    menuTitle: "Payroll Reports",
+    subMenus: [],
+  },
 ];
