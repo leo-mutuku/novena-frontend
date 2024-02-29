@@ -204,6 +204,7 @@ import ViewPostedProductiobHeader from "./screens/production/productionheaders/V
 import DeleteSalesPerson from "./screens/sales/salespeople/DeleteSalesPerson.jsx";
 import DeletePackHousePerson from "./screens/production/packhousepeople/DeletePackHousePerson.jsx";
 import UpdateCustomer from "./screens/administration/customers/UpdateCustomer.jsx";
+import ProductionSetupScreen from "./screens/production/ProductionSetupScreen.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -344,6 +345,7 @@ const router = createHashRouter(
               path="alldailypackhouse"
               element={<DailyPackHouseHeadersList />}
             />
+
             <Route
               path="alldailypackhouseintransit"
               element={<AllDailyPackhouseHeaderInTransit />}
@@ -357,6 +359,11 @@ const router = createHashRouter(
               element={<CreateDailyPackhouseHeader />}
             />
           </Route>
+          {/* production set up */}
+          <Route
+            path="productionsetup"
+            element={<ProductionSetupScreen />}
+          ></Route>
           {/* packhouse routes */}
           <Route path="packhouse" element={<PackHouseScreen />}>
             <Route path="allpackhouse" element={<PackhouseList />} />
@@ -533,7 +540,6 @@ const router = createHashRouter(
             />
           </Route>
         </Route>
-
 
         <Route path="fleet" element={<FleetScreen />}>
           <Route path="drivers" element={<DriverScreen />}>

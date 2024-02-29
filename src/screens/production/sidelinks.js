@@ -3,7 +3,7 @@ export const sidelinks = [
     menuTitle: "Production",
     subMenus: [
       { subMenuTitle: "Production", to: "productionheaders" },
-      { subMenuTitle: "Set up", to: "#" },
+      { subMenuTitle: "Set up", to: "productionsetup" },
       { subMenuTitle: "Reports", to: "#" },
     ],
   },
@@ -34,6 +34,13 @@ export const sidelinks = [
     subMenus: [
       { subMenuTitle: "Packhouse people", to: "packhousepeople" },
       { subMenuTitle: "Reports", to: "#" },
+    ],
+  },
+  {
+    menuTitle: "Prouction Reports",
+    subMenus: [
+      // { subMenuTitle: "Packhouse people", to: "packhousepeople" },
+      // { subMenuTitle: "Reports", to: "#" },
     ],
   },
 ];
