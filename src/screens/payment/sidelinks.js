@@ -7,4 +7,11 @@ export const sidelinks = [
       { subMenuTitle: "Payment Voucher", to: "paymentvoucher" },
     ],
   },
+  {
+    menuTitle: "Payment Reports",
+    subMenus: [
+      // { subMenuTitle: "Packhouse people", to: "packhousepeople" },
+      // { subMenuTitle: "Reports", to: "#" },
+    ],
+  },
 ];

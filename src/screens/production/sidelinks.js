@@ -1,7 +1,11 @@
 export const sidelinks = [
   {
     menuTitle: "Production",
-    subMenus: [{ subMenuTitle: "Production", to: "productionheaders" }],
+    subMenus: [
+      { subMenuTitle: "Production", to: "productionheaders" },
+      { subMenuTitle: "Set up", to: "productionsetup" },
+      { subMenuTitle: "Reports", to: "#" },
+    ],
   },
   // {
   //   menuTitle: "Actual",
@@ -12,7 +16,11 @@ export const sidelinks = [
   // },
   {
     menuTitle: "Daily Pack house",
-    subMenus: [{ subMenuTitle: "Daily Pack House", to: "dailypackhouse" }],
+    subMenus: [
+      { subMenuTitle: "Daily Pack House", to: "dailypackhouse" },
+      { subMenuTitle: "Set up", to: "#" },
+      { subMenuTitle: "Reports", to: "#" },
+    ],
   },
   {
     menuTitle: "Pack house",
@@ -23,6 +31,16 @@ export const sidelinks = [
   },
   {
     menuTitle: "Pack house People",
-    subMenus: [{ subMenuTitle: "Packhouse people", to: "packhousepeople" }],
+    subMenus: [
+      { subMenuTitle: "Packhouse people", to: "packhousepeople" },
+      { subMenuTitle: "Reports", to: "#" },
+    ],
+  },
+  {
+    menuTitle: "Prouction Reports",
+    subMenus: [
+      // { subMenuTitle: "Packhouse people", to: "packhousepeople" },
+      // { subMenuTitle: "Reports", to: "#" },
+    ],
   },
 ];

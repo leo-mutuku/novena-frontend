@@ -59,84 +59,90 @@ const OrderHeaderList = () => {
           />
         </div>
       </>
-      <p>*** All Sales Orders ***</p>
+      <div>
+        <p>*** All Sales Orders ***</p>
 
-      <Table striped style={{ border: "1px solid #ccc" }}>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Sale Date</th>
-            <th>Sales Type</th>
-            <th>Order No.</th>
-            <th>Total</th>
-            <th>No. of Items</th>
-            <th>Cust Name</th>
-            <th>Sales .P</th>
-            <th>Status</th>
-            <th>Add</th>
-            <th>Del</th>
-          </tr>
-        </thead>
-        <tbody>
-          {isLoading ? (
-            <Loader />
-          ) : data?.data[0] === null ? (
-            <>No data</>
-          ) : (
-            data?.data?.map((item, index) => (
+        <Table striped style={{ border: "1px solid #ccc", position: "static" }}>
+          <thead>
+            <tr style={{ position: "static" }}>
+              <th style={{ position: "initial" }}>#</th>
+              <th style={{ position: "initial" }}>Sale Date</th>
+              <th style={{ position: "initial" }}>Sales Type</th>
+              <th style={{ position: "initial" }}>Order No.</th>
+              <th style={{ position: "initial" }}>Total</th>
+              <th style={{ position: "initial" }}>No. of Items</th>
+              <th style={{ position: "initial" }}>Cust Name</th>
+              <th style={{ position: "initial" }}>Sales .P</th>
+              <th style={{ position: "initial" }}>Status</th>
+              <th style={{ position: "initial" }}>Add</th>
+              <th style={{ position: "initial" }}>Del</th>
+            </tr>
+          </thead>
+          <tbody>
+            {isLoading ? (
               <tr>
-                <td>{index + 1}</td>
-                <td>{`${timeDate.date(item.sales_order_date)}`}</td>
-                <td>{item.sale_order_type}</td>
-
-                <td>{item.sales_order_number}</td>
-                <td>{item.total}</td>
-                <td>{item.pay_per_bale}</td>
-                <td>{item.customer_name}</td>
-                <td>{item.sales_person_number}</td>
                 <td>
-                  {item.status === "New" ? (
-                    <span style={{ color: "orange" }}>{item.status}</span>
-                  ) : item.status === "In Transit" ? (
-                    <span style={{ color: "blue" }}>{item.status}</span>
-                  ) : item.status === "Posted" ? (
-                    <span style={{ color: "green" }}>{item.status}</span>
-                  ) : (
-                    item.status
-                  )}
-                </td>
-
-                <td>
-                  {item.status === "New" ? (
-                    <Link to={`#`}>
-                      <IoMdAdd
-                        onClick={(e) =>
-                          handleAdd(e, item.sales_order_number, "block")
-                        }
-                      />
-                    </Link>
-                  ) : (
-                    "--"
-                  )}
-                </td>
-                <td>
-                  {item.status === "New" ? (
-                    <Link to={`#`}>
-                      <MdDelete
-                        onClick={(e) =>
-                          handleDelete(e, item.store_purchase_number, "block")
-                        }
-                      />
-                    </Link>
-                  ) : (
-                    "--"
-                  )}
+                  <Loader />
                 </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </Table>
+            ) : data?.data[0] === null ? (
+              <>No data</>
+            ) : (
+              data?.data?.map((item, index) => (
+                <tr>
+                  <td>{index + 1}</td>
+                  <td>{`${timeDate.date(item.sales_order_date)}`}</td>
+                  <td>{item.sale_order_type}</td>
+
+                  <td>{item.sales_order_number}</td>
+                  <td>{item.total}</td>
+                  <td>{item.pay_per_bale}</td>
+                  <td>{item.customer_name}</td>
+                  <td>{item.sales_person_number}</td>
+                  <td>
+                    {item.status === "New" ? (
+                      <span style={{ color: "orange" }}>{item.status}</span>
+                    ) : item.status === "In Transit" ? (
+                      <span style={{ color: "blue" }}>{item.status}</span>
+                    ) : item.status === "Posted" ? (
+                      <span style={{ color: "green" }}>{item.status}</span>
+                    ) : (
+                      item.status
+                    )}
+                  </td>
+
+                  <td>
+                    {item.status === "New" ? (
+                      <Link to={`#`}>
+                        <IoMdAdd
+                          onClick={(e) =>
+                            handleAdd(e, item.sales_order_number, "block")
+                          }
+                        />
+                      </Link>
+                    ) : (
+                      "--"
+                    )}
+                  </td>
+                  <td>
+                    {item.status === "New" ? (
+                      <Link to={`#`}>
+                        <MdDelete
+                          onClick={(e) =>
+                            handleDelete(e, item.store_purchase_number, "block")
+                          }
+                        />
+                      </Link>
+                    ) : (
+                      "--"
+                    )}
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </Table>
+      </div>
     </>
   );
 };
