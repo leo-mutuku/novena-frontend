@@ -13,7 +13,6 @@ const RoutesDT = () => {
   const [tableData, setTableData] = useState([]);
   const navigate = useNavigate();
 
-  console.log(JSON.stringify(routes));
   const [deleteRoute, { isLoading: isDeleting }] = useDeleteRouteMutation();
 
   useEffect(() => {
