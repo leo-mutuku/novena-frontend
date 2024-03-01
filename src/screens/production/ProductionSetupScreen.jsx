@@ -1,7 +1,15 @@
-import React from "react";
+import PageActionComponent from "../../components/PageActionComponent";
+const pagemenus = [
+  { pagename: "Products setup", to: "allpackhouse" },
+  { pagename: "Packaging setup", to: "createpackhouse" },
+];
 
 const ProductionSetupScreen = () => {
-  return <div>ProductionSetupScreen</div>;
+  return (
+    <>
+      <PageActionComponent pagemenus={pagemenus} />
+    </>
+  );
 };
 
 export default ProductionSetupScreen;
