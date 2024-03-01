@@ -58,6 +58,8 @@ function EditDriver() {
         staff_id,
         license_number,
       };
+
+      console.log(dataDriver);
       try {
         const res = await updateDriver({
           id,
@@ -71,8 +73,8 @@ function EditDriver() {
         }
         navigate("../alldrivers");
       } catch (error) {
-        toast.error(error.message);
-        console.error("Failed to update driver:", error);
+        console.log(error.data.data.message);
+        toast.error(error.data.data.message);
       }
     }
   };
