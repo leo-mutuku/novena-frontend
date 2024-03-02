@@ -1,10 +1,56 @@
 import React from "react";
 import VehicleRunsDT from "./VehicleRunsDT";
 import { FaFilePdf, FaFileExcel } from "react-icons/fa";
+import axios from "axios";
 const RunsList = () => {
-  const handleDownloadExcel = async () => {};
+  const handleDownloadPDF = async () => {
+    await axios({
+      url: "http://localhost:3000/api/v1/reports/all/runs/pdf", // Endpoint on your Node.js server
+      method: "GET",
+      responseType: "blob", // Important: responseType 'blob' for binary data
+    }).then((response) => {
+      // Create a blob object from the binary data
+      const blob = new Blob([response.data], { type: "application/pdf" });
 
-  const handleDownloadPDF = async () => {};
+      // Create a link element to trigger the download
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "all-runs-report.pdf");
+      document.body.appendChild(link);
+
+      // Trigger the download
+      link.click();
+
+      // Clean up
+      window.URL.revokeObjectURL(url);
+    });
+  };
+  const handleDownloadExcel = async () => {
+    await axios({
+      url: "http://localhost:3000/api/v1/reports/all/runs/excel", // Endpoint on your Node.js server
+      method: "GET",
+      responseType: "blob", // Important: responseType 'blob' for binary data
+    }).then((response) => {
+      // Create a blob object from the binary data
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+
+      // Create a link element to trigger the download
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "all-runs-report.xlsx");
+      document.body.appendChild(link);
+
+      // Trigger the download
+      link.click();
+
+      // Clean up
+      window.URL.revokeObjectURL(url);
+    });
+  };
   return (
     <>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
