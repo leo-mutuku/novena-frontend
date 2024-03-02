@@ -46,16 +46,16 @@ export const itemregisterApiSlice = apiSlice.injectEndpoints({
     }),
     registerItem: builder.mutation({
       query: (data) => ({
-        url: `${USERS_URL}/registeritem`,
+        url: `${ITEMREG_URL}/registeritem`,
         method: "POST",
         body: data,
       }),
       invalidatesTags: ["Registered_items"],
     }),
     updateRegisteredItem: builder.mutation({
-      query: (data) => ({
-        url: `${USERS_URL}/updateregistereditem`,
-        method: "POST",
+      query: ({ id, data }) => ({
+        url: `${ITEMREG_URL}/updateregistereditem/${id}`,
+        method: "PATCH",
         body: data,
       }),
       invalidatesTags: ["Registered_items"],

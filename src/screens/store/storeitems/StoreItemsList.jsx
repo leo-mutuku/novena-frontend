@@ -20,9 +20,9 @@ const StoreItemsList = () => {
           <tr>
             <th>#</th>
             <th>Item Name</th>
-            <th>Item Code</th>
+            {/* <th>Item Code</th> */}
             <th>Store Name</th>
-            <th>Store code</th>
+            {/* <th>Store code</th> */}
             <th>Item quantity</th>
             <th>Edit</th>
             <th>View</th>
@@ -36,9 +36,9 @@ const StoreItemsList = () => {
               <tr>
                 <td>{index + 1}</td>
                 <td>{item.item_name}</td>
-                <td>{item.item_code}</td>
+                {/* <td>{item.item_code}</td> */}
                 <td>{item.store_name}</td>
-                <td>{item.store_code}</td>
+                {/* <td>{item.store_code}</td> */}
                 <td>{item.item_quantity}</td>
                 <td>
                   <Link to={`/store/storeitems/update/${item.store_item_id}`}>
