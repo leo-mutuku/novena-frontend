@@ -4,9 +4,10 @@ import { FaEdit } from "react-icons/fa";
 import { IoAdd } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useGetAllPackagingSetupQuery } from "../../../slices/productionsetup/packageSettingApiSlice";
 
 const PackagingSetupList = () => {
-  const navigate = useNavigate();
+  const { data: packagingSetup } = useGetAllPackagingSetupQuery();
 
   return (
     <>
@@ -29,25 +30,31 @@ const PackagingSetupList = () => {
               <th style={{ width: "40%" }}>Product name</th>
               <th>Package 1 Name</th>
               <th>Package 1 Store</th>
+              <th>Package 1 Restock</th>
               <th>Package 2 Name</th>
               <th>Package 2 Store</th>
+              <th>Package 2 Restock</th>
               <th>Edit</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Frozen yoghurt</td>
-              <td>159</td>
-              <td>6</td>
-              <td>24</td>
-              <td>4</td>
+            {packagingSetup?.data.map((item, index) => (
+              <tr key={index}>
+                <td>{item.product_code}</td>
+                <td>{item.package_code_one}</td>
+                <td>{item.store_id_one}</td>
+                <td>{item.store_id_one}</td>
+                <td>{item.package_code_two}</td>
+                <td>{item.store_id_two}</td>
+                <td>{item.store_id_two}</td>
 
-              <td>
-                <Link to={"#"}>
-                  <FaEdit />
-                </Link>
-              </td>
-            </tr>
+                <td>
+                  <Link to={"#"}>
+                    <FaEdit />
+                  </Link>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       </Row>
