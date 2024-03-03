@@ -44,6 +44,14 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Sales_order"],
     }),
+    archiveuPostedSalesOrder: builder.mutation({
+      query: (data) => ({
+        url: `${SALESORDERHEADER_URL}/archiveupostedsalesorder`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Sales_order"],
+    }),
     postSalesOrder: builder.mutation({
       query: (data) => ({
         url: `${SALESORDERHEADER_URL}/postsalesorder`,
@@ -62,4 +70,5 @@ export const {
   useGetAllSalesOrdersInTransitQuery,
   useGetAllPostedSalesOrdersQuery,
   usePostSalesOrderMutation,
+  useArchiveuPostedSalesOrderMutation,
 } = orderApiSlice;

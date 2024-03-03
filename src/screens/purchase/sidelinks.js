@@ -7,4 +7,11 @@ export const sidelinks = [
     menuTitle: "Store Requsition",
     subMenus: [{ subMenuTitle: "Store Requsition", to: "storerequisition" }],
   },
+  {
+    menuTitle: "Puechase Reports",
+    subMenus: [
+      // { subMenuTitle: "Packhouse people", to: "packhousepeople" },
+      // { subMenuTitle: "Reports", to: "#" },
+    ],
+  },
 ];

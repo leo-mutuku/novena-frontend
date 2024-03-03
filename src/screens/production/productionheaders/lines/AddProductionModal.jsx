@@ -223,7 +223,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
           }}
         >
           <Modal.Dialog>
-            <Modal.Header closeButton onClick={() => set_mode("none")}>
+            <Modal.Header>
               <Modal.Title style={{ fontSize: "14px" }}>
                 <span style={{ fontSize: "14px" }}>
                   Production no. {store_purchase_id}

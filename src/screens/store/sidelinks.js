@@ -25,4 +25,11 @@ export const sidelinks = [
     menuTitle: "Store Register",
     subMenus: [{ subMenuTitle: "Store Register", to: "storeregister" }],
   },
+  {
+    menuTitle: "Inventory Reports",
+    subMenus: [
+      // { subMenuTitle: "Packhouse people", to: "packhousepeople" },
+      // { subMenuTitle: "Reports", to: "#" },
+    ],
+  },
 ];

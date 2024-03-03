@@ -204,6 +204,11 @@ import ViewPostedProductiobHeader from "./screens/production/productionheaders/V
 import DeleteSalesPerson from "./screens/sales/salespeople/DeleteSalesPerson.jsx";
 import DeletePackHousePerson from "./screens/production/packhousepeople/DeletePackHousePerson.jsx";
 import UpdateCustomer from "./screens/administration/customers/UpdateCustomer.jsx";
+import ProductionSetupScreen from "./screens/production/ProductionSetupScreen.jsx";
+import ProductionSetupList from "./screens/production/productionsetup/ProductionSetupList.jsx";
+import PackagingSetupList from "./screens/production/productionsetup/PackagingSetupList.jsx";
+import CreatePackageSetup from "./screens/production/productionsetup/CreatePackageSetup.jsx";
+import CreateProductSetup from "./screens/production/productionsetup/CreateProductSetup.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -344,6 +349,7 @@ const router = createHashRouter(
               path="alldailypackhouse"
               element={<DailyPackHouseHeadersList />}
             />
+
             <Route
               path="alldailypackhouseintransit"
               element={<AllDailyPackhouseHeaderInTransit />}
@@ -356,6 +362,13 @@ const router = createHashRouter(
               path="createdailypackhouse"
               element={<CreateDailyPackhouseHeader />}
             />
+          </Route>
+          {/* production set up */}
+          <Route path="productionsetup" element={<ProductionSetupScreen />}>
+            <Route path="productssetuplist" element={<ProductionSetupList />} />
+            <Route path="packagesetuplist" element={<PackagingSetupList />} />
+            <Route path="createpackagesetup" element={<CreatePackageSetup />} />
+            <Route path="createproductsetup" element={<CreateProductSetup />} />
           </Route>
           {/* packhouse routes */}
           <Route path="packhouse" element={<PackHouseScreen />}>
@@ -533,7 +546,6 @@ const router = createHashRouter(
             />
           </Route>
         </Route>
-
 
         <Route path="fleet" element={<FleetScreen />}>
           <Route path="drivers" element={<DriverScreen />}>

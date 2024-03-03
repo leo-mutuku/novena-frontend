@@ -25,7 +25,7 @@ export const driversApiSlice = apiSlice.injectEndpoints({
     }),
     updateDriver: builder.mutation({
       query: ({ id, data }) => {
-        // console.log("Updating Driver Data:", data); // Log the data here
+        console.log("Updating Driver Data:", data); // Log the data here
         return {
           url: `${DRIVERS_URL}/${id}`,
           method: "PUT",

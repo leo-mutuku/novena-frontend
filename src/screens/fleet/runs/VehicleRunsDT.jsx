@@ -79,7 +79,7 @@ const VehicleRunsDT = () => {
         accessor: "edit",
         Cell: ({ row }) => (
           <Link to={`/fleet/runs/update/${row.original.journey_id}`}>
-            <button className="btn btn-edit">Edit</button>
+            <button className="btn btn-edit">End Journey</button>
           </Link>
         ),
       },
