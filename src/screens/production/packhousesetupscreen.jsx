@@ -1,7 +1,12 @@
-import React from "react";
+import PageActionComponent from "../../components/PageActionComponent";
+const pagemenus = [{ pagename: "Pack type settings", to: "packtypesettings" }];
 
-const packhousesetupscreen = () => {
-  return <div>packhousesetupscreen</div>;
+const PackhouseSetupScreen = () => {
+  return (
+    <>
+      <PageActionComponent pagemenus={pagemenus} />
+    </>
+  );
 };
 
-export default packhousesetupscreen;
+export default PackhouseSetupScreen;

@@ -4,14 +4,14 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 
-const CreatePackageSetup = () => {
+const CreatePacktypeSetting = () => {
   return (
     <>
       <Row>
         <Col>** Create Packaging setup **</Col>
 
         <Col sm={1}>
-          <Link to={"../packagesetuplist"}>
+          <Link to={"../packtypesettings"}>
             <IoIosArrowRoundBack size={45} style={{ color: "red" }} />
           </Link>
         </Col>
@@ -94,4 +94,4 @@ const CreatePackageSetup = () => {
   );
 };
 
-export default CreatePackageSetup;
+export default CreatePacktypeSetting;
