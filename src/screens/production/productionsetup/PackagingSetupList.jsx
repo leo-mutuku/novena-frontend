@@ -40,13 +40,13 @@ const PackagingSetupList = () => {
           <tbody>
             {packagingSetup?.data.map((item, index) => (
               <tr key={index}>
-                <td>{item.product_code}</td>
-                <td>{item.package_code_one}</td>
-                <td>{item.store_id_one}</td>
-                <td>{item.store_id_one}</td>
-                <td>{item.package_code_two}</td>
-                <td>{item.store_id_two}</td>
-                <td>{item.store_id_two}</td>
+                <td>{item.product_name}</td>
+                <td>{item.package_name_one}</td>
+                <td>{item.store_name_one}</td>
+                <td>{item.package_one_restock}</td>
+                <td>{item.package_name_two}</td>
+                <td>{item.store_name_two}</td>
+                <td>{item.package_two_restock}</td>
 
                 <td>
                   <Link to={"#"}>
