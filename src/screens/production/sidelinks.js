@@ -18,7 +18,7 @@ export const sidelinks = [
     menuTitle: "Daily Pack house",
     subMenus: [
       { subMenuTitle: "Daily Pack House", to: "dailypackhouse" },
-      { subMenuTitle: "Set up", to: "#" },
+      { subMenuTitle: "Set up", to: "packhousesetupscreen" },
       { subMenuTitle: "Reports", to: "#" },
     ],
   },

@@ -1,17 +1,17 @@
 import React from "react";
 import { Row, Col, Form } from "react-bootstrap";
-import { Button } from "@mui/material";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { Button } from "@mui/material";
 
-const CreateProductSetup = () => {
+const UpdatePacktypeSetting = () => {
   return (
     <>
       <Row>
         <Col>** Create Product setup **</Col>
 
         <Col sm={1}>
-          <Link to={"../productssetuplist"}>
+          <Link to={"../packagesetuplist"}>
             <IoIosArrowRoundBack size={45} style={{ color: "red" }} />
           </Link>
         </Col>
@@ -54,4 +54,4 @@ const CreateProductSetup = () => {
   );
 };
 
-export default CreateProductSetup;
+export default UpdatePacktypeSetting;

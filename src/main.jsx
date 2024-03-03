@@ -209,6 +209,9 @@ import ProductionSetupList from "./screens/production/productionsetup/Production
 import PackagingSetupList from "./screens/production/productionsetup/PackagingSetupList.jsx";
 import CreatePackageSetup from "./screens/production/productionsetup/CreatePackageSetup.jsx";
 import CreateProductSetup from "./screens/production/productionsetup/CreateProductSetup.jsx";
+import PackhouseSetupScreen from "./screens/production/packhousesetupscreen.jsx";
+import PacktypeSettingList from "./screens/production/packhousesetup/PacktypeSettingList.jsx";
+import CreatePacktypeSetting from "./screens/production/packhousesetup/CreatePacktypeSetting.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -380,6 +383,15 @@ const router = createHashRouter(
             <Route
               path="allpackhouseentries"
               element={<PackhouseEntriesList />}
+            />
+          </Route>
+
+          {/* packhousesetupsecreen */}
+          <Route path="packhousesetupscreen" element={<PackhouseSetupScreen />}>
+            <Route path="packtypesettings" element={<PacktypeSettingList />} />
+            <Route
+              path="createpacktypesettings"
+              element={<CreatePacktypeSetting />}
             />
           </Route>
 
