@@ -1,7 +1,8 @@
 import PageActionComponent from "../../components/PageActionComponent";
 const pagemenus = [
-  { pagename: "Products setup", to: "allpackhouse" },
-  { pagename: "Packaging setup", to: "createpackhouse" },
+  { pagename: "Products setup List", to: "productssetuplist" },
+
+  { pagename: "Packaging setup List", to: "packagesetuplist" },
 ];
 
 const ProductionSetupScreen = () => {

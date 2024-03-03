@@ -205,6 +205,10 @@ import DeleteSalesPerson from "./screens/sales/salespeople/DeleteSalesPerson.jsx
 import DeletePackHousePerson from "./screens/production/packhousepeople/DeletePackHousePerson.jsx";
 import UpdateCustomer from "./screens/administration/customers/UpdateCustomer.jsx";
 import ProductionSetupScreen from "./screens/production/ProductionSetupScreen.jsx";
+import ProductionSetupList from "./screens/production/productionsetup/ProductionSetupList.jsx";
+import PackagingSetupList from "./screens/production/productionsetup/PackagingSetupList.jsx";
+import CreatePackageSetup from "./screens/production/productionsetup/CreatePackageSetup.jsx";
+import CreateProductSetup from "./screens/production/productionsetup/CreateProductSetup.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -360,10 +364,12 @@ const router = createHashRouter(
             />
           </Route>
           {/* production set up */}
-          <Route
-            path="productionsetup"
-            element={<ProductionSetupScreen />}
-          ></Route>
+          <Route path="productionsetup" element={<ProductionSetupScreen />}>
+            <Route path="productssetuplist" element={<ProductionSetupList />} />
+            <Route path="packagesetuplist" element={<PackagingSetupList />} />
+            <Route path="createpackagesetup" element={<CreatePackageSetup />} />
+            <Route path="createproductsetup" element={<CreateProductSetup />} />
+          </Route>
           {/* packhouse routes */}
           <Route path="packhouse" element={<PackHouseScreen />}>
             <Route path="allpackhouse" element={<PackhouseList />} />
