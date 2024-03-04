@@ -3,8 +3,18 @@ import { Row, Col, Form } from "react-bootstrap";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
+import { useCreatePackagingSetupMutation } from "../../../slices/productionsetup/packageSettingApiSlice";
+import {
+  useGetAllFinalProductsQuery,
+  useGetAllPackagingMaterialQuery,
+} from "../../../slices/store/itemregisterApiSlice";
+import { useGetAllStoreItemsQuery } from "../../../slices/store/storeItemsApiSlice";
 
 const CreatePackageSetup = () => {
+  const [createPackageSetup, { isLoading }] = useCreatePackagingSetupMutation();
+  const { data: itemRegister } = useGetAllFinalProductsQuery();
+  const { data: packagingMaterial } = useGetAllPackagingMaterialQuery();
+  const { data: storeItem } = useGetAllStoreItemsQuery();
   return (
     <>
       <Row>
@@ -27,7 +37,14 @@ const CreatePackageSetup = () => {
               placeholder="Product Store"
               value={""}
               onChange={""}
-            ></Form.Select>
+            >
+              <option value={""}>Select product</option>
+              {itemRegister?.data.map((item, index) => (
+                <option key={index} value={item.item_code}>
+                  {item.item_name}
+                </option>
+              ))}
+            </Form.Select>
           </Form.Group>
         </Col>
       </Row>
@@ -41,45 +58,59 @@ const CreatePackageSetup = () => {
               placeholder="Product Store"
               value={""}
               onChange={""}
-            ></Form.Select>
+            >
+              <option value={0}> Select packaging</option>
+              {storeItem?.data.map((item, index) => (
+                <option key={index} value={item.item_code}>
+                  {`${item.item_code}  -- ${item.item_name}`}
+                </option>
+              ))}
+            </Form.Select>
           </Form.Group>
         </Col>
         <Col>
           <Form.Group className="my-2" controlId="product_name">
-            <Form.Label>Package 1 Store</Form.Label>
-            <Form.Select
+            <Form.Label>Re-Order level</Form.Label>
+            <Form.Control
               required
-              type="text"
-              placeholder="Product Store"
+              type="number"
+              placeholder="Re-Order level"
               value={""}
               onChange={""}
-            ></Form.Select>
+            ></Form.Control>
           </Form.Group>
         </Col>
       </Row>
       <Row>
         <Col>
           <Form.Group className="my-2" controlId="product_name">
-            <Form.Label>Package 2 Name</Form.Label>
+            <Form.Label>Package 1 Name</Form.Label>
             <Form.Select
               required
               type="text"
               placeholder="Product Store"
               value={""}
               onChange={""}
-            ></Form.Select>
+            >
+              <option value={0}> Select packaging</option>
+              {storeItem?.data.map((item, index) => (
+                <option key={index} value={item.item_code}>
+                  {`${item.item_code}  -- ${item.item_name}`}
+                </option>
+              ))}
+            </Form.Select>
           </Form.Group>
         </Col>
         <Col>
           <Form.Group className="my-2" controlId="product_name">
-            <Form.Label>Package 2 Store</Form.Label>
-            <Form.Select
+            <Form.Label>Re-Order level</Form.Label>
+            <Form.Control
               required
-              type="text"
-              placeholder="Product Store"
+              type="number"
+              placeholder="Re-Order level"
               value={""}
               onChange={""}
-            ></Form.Select>
+            ></Form.Control>
           </Form.Group>
         </Col>
       </Row>
