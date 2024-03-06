@@ -1,69 +1,168 @@
-import React from "react";
-//import { useGetTodosQuery } from './apiSlice';
+import React, { useEffect, useMemo, useState } from "react";
+import DataTable from "../../../components/general/DataTable";
+import {
+  useDeleteDriverMutation,
+  useGetAllDriversQuery,
+} from "../../../slices/fleet/driverApislice";
+import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../../components/Loader";
+import { toast } from "react-toastify";
 import { useGetAllItemRegisterQuery } from "../../../slices/store/itemregisterApiSlice";
-import { Table, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { FaRegFileExcel } from "react-icons/fa6";
-import { CiEdit } from "react-icons/ci";
-import { BsFileEarmarkPdf } from "react-icons/bs";
-import { IoMdEye } from "react-icons/io";
-
+import { FaFilePdf, FaFileExcel } from "react-icons/fa";
 const ItemListList = () => {
-  const { data, isLoading } = useGetAllItemRegisterQuery();
+  const { data: items, isLoading } = useGetAllItemRegisterQuery();
+  const [tableData, setTableData] = useState([]);
+  const navigate = useNavigate();
+  const [deleteDriver, { isLoading: isDeleting }] = useDeleteDriverMutation();
+
+  useEffect(() => {
+    if (items?.data) {
+      setTableData(items.data);
+    }
+  }, [items]);
+
+  const handleDelete = async (itemId) => {
+    // const confirmDelete = window.confirm(
+    //   "Are you sure you want to delete this driver?"
+    // );
+    // if (confirmDelete) {
+    //   deleteDriver(itemId)
+    //     .unwrap()
+    //     .then((response) => {
+    //       if (response.status === "failed") {
+    //         toast.error(response.message);
+    //       } else {
+    //         toast.success(response.message);
+    //         navigate("../allitems");
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       // Handle error during deletion
+    //       toast.error("Error deleting driver" + error.message);
+    //       console.error("Error deleting driver", error);
+    //     });
+    // }
+  };
+  const handleDownloadPDF = async () => {
+    await axios({
+      url: "http://localhost:3000/api/v1/reports/all/drivers/pdf", // Endpoint on your Node.js server
+      method: "GET",
+      responseType: "blob", // Important: responseType 'blob' for binary data
+    }).then((response) => {
+      // Create a blob object from the binary data
+      const blob = new Blob([response.data], { type: "application/pdf" });
+
+      // Create a link element to trigger the download
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "all-drivers-report.pdf");
+      document.body.appendChild(link);
+
+      // Trigger the download
+      link.click();
+
+      // Clean up
+      window.URL.revokeObjectURL(url);
+    });
+  };
+  const handleDownloadExcel = async () => {
+    await axios({
+      url: "http://localhost:3000/api/v1/reports/all/drivers/excel", // Endpoint on your Node.js server
+      method: "GET",
+      responseType: "blob", // Important: responseType 'blob' for binary data
+    }).then((response) => {
+      // Create a blob object from the binary data
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+
+      // Create a link element to trigger the download
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "all-drivers-report.xlsx");
+      document.body.appendChild(link);
+
+      // Trigger the download
+      link.click();
+
+      // Clean up
+      window.URL.revokeObjectURL(url);
+    });
+  };
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Item Name",
+        accessor: "item_name",
+      },
+      {
+        Header: "Item Code",
+        accessor: "item_code",
+      },
+      {
+        Header: "Account Number",
+        accessor: "account_number",
+      },
+      {
+        Header: "Current Price",
+        accessor: "current_price",
+      },
+      {
+        Header: "Item Units",
+        accessor: "item_units",
+      },
+      {
+        Header: "Item Units Value",
+        accessor: "item_units_value",
+      },
+      {
+        Header: "Edit",
+        accessor: "edit",
+        Cell: ({ row }) => (
+          <Link
+            to={`/store/storeitemregister/update/${row.original.item_register_id}`}
+          >
+            <button className="btn btn-edit">Edit</button>
+          </Link>
+        ),
+      },
+      {
+        Header: "Delete",
+        accessor: "delete",
+        Cell: ({ row }) => (
+          <button onClick={() => handleDelete(row.original.item_register_id)}>
+            Delete
+          </button>
+        ),
+      },
+    ],
+    [handleDelete]
+  );
+
+  if (isLoading || isDeleting) {
+    return <Loader />;
+  }
 
   return (
-    <>
-      <p>*** Item Register List ***</p>
-      <Table striped style={{ border: "1px solid #ccc" }}>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Item name</th>
-            <th>Item code</th>
-            <th>Account_number</th>
-            <th>Current Price</th>
-            <th>Item Units </th>
-            <th>item_unit_value</th>
-            <th>Edit</th>
-            <th>View</th>
-          </tr>
-        </thead>
-        <tbody>
-          {isLoading ? (
-            <tr>
-              <td>
-                <Loader />
-              </td>
-            </tr>
-          ) : (
-            data?.data.map((item, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{item.item_name}</td>
-                <td>{item.item_code}</td>
-                <td>{item.account_number}</td>
-                <td>{item.current_price}</td>
-                <td>{item.item_units}</td>
-                <td>{item.item_units_value}</td>
-                <td>
-                  <Link
-                    to={`/store/storeitemregister/update/${item.item_register_id}`}
-                  >
-                    <CiEdit />
-                  </Link>
-                </td>
-                <td>
-                  <Link to="#">
-                    <IoMdEye />
-                  </Link>
-                </td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </Table>
-    </>
+    <div>
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <div style={{ marginLeft: "10px" }}>
+          <button onClick={handleDownloadPDF}>
+            <FaFilePdf />
+          </button>
+        </div>
+        <div style={{ marginLeft: "10px" }}>
+          <button onClick={handleDownloadExcel}>
+            <FaFileExcel />
+          </button>
+        </div>
+      </div>
+      <DataTable columns={columns} data={tableData} />
+    </div>
   );
 };
+
 export default ItemListList;
