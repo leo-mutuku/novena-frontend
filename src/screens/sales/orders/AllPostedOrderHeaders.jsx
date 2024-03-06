@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Loader from "../../../components/Loader";
 import { useGetAllPostedSalesOrdersQuery } from "../../../slices/sales/salesOrderHeadersApiSlice";
 import { Table, Button } from "react-bootstrap";
@@ -6,8 +6,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoMdEye } from "react-icons/io";
 import AddOrderLines from "./lines/AddOrderLines";
 import TimeDate from "../../../components/TimeDate";
+import DataTable from "../../../components/general/DataTable";
+import moment from "moment";
 
 const AllPostedOrderHeaders = () => {
+  const { data: orders, isLoading } = useGetAllPostedSalesOrdersQuery();
+  const [tableData, setTableData] = useState([]);
   let timeDate = new TimeDate();
   const [mode, set_mode] = useState("none");
   const [mode_delete, set_mode_delete] = useState("none");
@@ -20,84 +24,106 @@ const AllPostedOrderHeaders = () => {
     set_store_purchase_id(parseInt(id));
     set_mode_delete(style);
   };
-  const { data, isLoading } = useGetAllPostedSalesOrdersQuery();
 
   const navigate = useNavigate();
-  useEffect(() => {}, [data]);
+  useEffect(() => {}, [orders]);
+
+  useEffect(() => {
+    if (orders?.data) {
+      setTableData(orders.data);
+    }
+  }, [orders]);
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "#",
+        accessor: (row, index) => index + 1,
+        Cell: ({ value }) => <span>{value}</span>,
+      },
+      {
+        Header: "Sale Date",
+        accessor: "sales_order_date",
+        Cell: ({ value }) => <span>{moment(value).format("YYYY-MM-DD")}</span>,
+      },
+      {
+        Header: "Sales Type",
+        accessor: "sale_order_type",
+      },
+      {
+        Header: "Order No.",
+        accessor: "sales_order_number",
+      },
+      {
+        Header: "Total",
+        accessor: "total",
+      },
+      {
+        Header: "No. of Items",
+        accessor: "pay_per_bale",
+      },
+      {
+        Header: "Cust Name",
+        accessor: "customer_name",
+      },
+      {
+        Header: "Sales .P",
+        accessor: "sales_person_number",
+      },
+      {
+        Header: "Status",
+        accessor: "status",
+        Cell: ({ value }) => (
+          <span style={{ color: getStatusColor(value) }}>{value}</span>
+        ),
+      },
+      {
+        Header: "View",
+        accessor: "view",
+        Cell: ({ row }) => (
+          <>
+            {row.original.status === "Posted" ? (
+              <Link
+                to={`/sales/orders/postedorderpreview/${row.original.sales_order_number}`}
+              >
+                <IoMdEye />
+              </Link>
+            ) : (
+              "--"
+            )}
+          </>
+        ),
+      },
+    ],
+    []
+  );
+
+  // Function to determine status color...
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "New":
+        return "orange";
+      case "In Transit":
+        return "blue";
+      case "Posted":
+        return "green";
+      default:
+        return "inherit";
+    }
+  };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
       <p>*** All Posted Sales Orders ***</p>
 
-      <Table striped style={{ border: "1px solid #ccc" }}>
-        <thead>
-          <tr>
-            <th style={{ position: "initial" }}>#</th>
-            <th style={{ position: "initial" }}>Sale Date</th>
-            <th style={{ position: "initial" }}>Sales Type</th>
-            <th style={{ position: "initial" }}>Order No.</th>
-            <th style={{ position: "initial" }}>Total</th>
-            <th style={{ position: "initial" }}>No. of Items</th>
-            <th style={{ position: "initial" }}>Cust Name</th>
-            <th style={{ position: "initial" }}>Sales .P</th>
-            <th style={{ position: "initial" }}>Status</th>
-            <th style={{ position: "initial" }}>View</th>
-          </tr>
-        </thead>
-        <tbody>
-          {isLoading ? (
-            <tr>
-              <td>
-                <Loader />
-              </td>
-            </tr>
-          ) : data?.data[0] === null ? (
-            <>No data</>
-          ) : (
-            data?.data?.map((item, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{`${timeDate.date(item.sales_order_date)}`}</td>
-                <td>{item.sale_order_type}</td>
-
-                <td>{item.sales_order_number}</td>
-                <td>{item.total}</td>
-                <td>{item.pay_per_bale}</td>
-                <td>{item.customer_name}</td>
-                <td>{item.first_name}</td>
-                <td>
-                  {item.status === "New" ? (
-                    <span
-                      onClick={(e) => handleAdd()}
-                      style={{ color: "orange" }}
-                    >
-                      {item.status}
-                    </span>
-                  ) : item.status === "In Transit" ? (
-                    <span style={{ color: "blue" }}>{item.status}</span>
-                  ) : item.status === "Posted" ? (
-                    <span style={{ color: "green" }}>{item.status}</span>
-                  ) : (
-                    item.status
-                  )}
-                </td>
-
-                <td>
-                  {item.status === "Posted" ? (
-                    <Link
-                      to={`/sales/orders/postedorderpreview/${item.sales_order_number}`}
-                    >
-                      <IoMdEye />
-                    </Link>
-                  ) : (
-                    "--"
-                  )}
-                </td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </Table>
+      <div>
+        <p>*** All Sales Orders ***</p>
+        <DataTable columns={columns} data={tableData} />
+      </div>
     </>
   );
 };
