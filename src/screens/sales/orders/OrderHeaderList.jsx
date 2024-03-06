@@ -20,10 +20,12 @@ const OrderHeaderList = () => {
   const [mode, set_mode] = useState("none");
   const [mode_delete, set_mode_delete] = useState("none");
   const [store_purchase_id, set_store_purchase_id] = useState("");
+
   const handleAdd = (e, id, style) => {
     set_store_purchase_id(parseInt(id));
     set_mode(style);
   };
+
   const handleDelete = (e, id, style) => {
     set_store_purchase_id(parseInt(id));
     set_mode_delete(style);
