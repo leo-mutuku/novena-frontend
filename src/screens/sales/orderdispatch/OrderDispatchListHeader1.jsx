@@ -4,15 +4,14 @@ import { useGetAllPostedSalesOrdersQuery } from "../../../slices/sales/salesOrde
 import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { IoMdEye } from "react-icons/io";
-import AddOrderLines from "./lines/AddOrderLines";
+
 import TimeDate from "../../../components/TimeDate";
 import DataTable from "../../../components/general/DataTable";
-import moment from "moment";
 
-const AllPostedOrderHeaders = () => {
+const OrderDispatchListHeader = () => {
   const { data: orders, isLoading } = useGetAllPostedSalesOrdersQuery();
-  const [tableData, setTableData] = useState([]);
   let timeDate = new TimeDate();
+  const [tableData, setTableData] = useState([]);
   const [mode, set_mode] = useState("none");
   const [mode_delete, set_mode_delete] = useState("none");
   const [store_purchase_id, set_store_purchase_id] = useState("");
@@ -20,6 +19,12 @@ const AllPostedOrderHeaders = () => {
     set_store_purchase_id(parseInt(id));
     set_mode(style);
   };
+
+  useEffect(() => {
+    if (orders?.data) {
+      setTableData(orders.data);
+    }
+  }, [orders]);
   const handleDelete = (e, id, style) => {
     set_store_purchase_id(parseInt(id));
     set_mode_delete(style);
@@ -28,30 +33,19 @@ const AllPostedOrderHeaders = () => {
   const navigate = useNavigate();
   useEffect(() => {}, [orders]);
 
-  useEffect(() => {
-    if (orders?.data) {
-      setTableData(orders.data);
-    }
-  }, [orders]);
-
   const columns = useMemo(
     () => [
-      {
-        Header: "#",
-        accessor: (row, index) => index + 1,
-        Cell: ({ value }) => <span>{value}</span>,
-      },
       {
         Header: "Sale Date",
         accessor: "sales_order_date",
         Cell: ({ value }) => <span>{moment(value).format("YYYY-MM-DD")}</span>,
       },
       {
-        Header: "Sales Type",
+        Header: "Sale Type",
         accessor: "sale_order_type",
       },
       {
-        Header: "Order No.",
+        Header: "Order #",
         accessor: "sales_order_number",
       },
       {
@@ -59,15 +53,15 @@ const AllPostedOrderHeaders = () => {
         accessor: "total",
       },
       {
-        Header: "No. of Items",
+        Header: "No Of Items",
         accessor: "pay_per_bale",
       },
       {
-        Header: "Cust Name",
+        Header: "Customer Name",
         accessor: "customer_name",
       },
       {
-        Header: "Sales .P",
+        Header: "Sale Person",
         accessor: "sales_person_number",
       },
       {
@@ -78,24 +72,35 @@ const AllPostedOrderHeaders = () => {
         ),
       },
       {
-        Header: "View",
-        accessor: "view",
+        Header: "Add",
+        accessor: "add",
         Cell: ({ row }) => (
-          <>
-            {row.original.status === "Posted" ? (
-              <Link
-                to={`/sales/orders/postedorderpreview/${row.original.sales_order_number}`}
-              >
-                <IoMdEye />
-              </Link>
-            ) : (
-              "--"
-            )}
-          </>
+          <button
+            onClick={(e) =>
+              handleAdd(e, row.original.sales_order_number, "block")
+            }
+            disabled={row.original.status !== "New"}
+          >
+            <IoMdAdd />
+          </button>
+        ),
+      },
+      {
+        Header: "Delete",
+        accessor: "delete",
+        Cell: ({ row }) => (
+          <button
+            onClick={(e) =>
+              handleDelete(e, row.original.store_purchase_number, "block")
+            }
+            disabled={row.original.status !== "New"}
+          >
+            <MdDelete />
+          </button>
         ),
       },
     ],
-    []
+    [handleDelete, handleAdd]
   );
 
   // Function to determine status color...
@@ -115,7 +120,6 @@ const AllPostedOrderHeaders = () => {
   if (isLoading) {
     return <Loader />;
   }
-
   return (
     <>
       <p>*** All Posted Sales Orders ***</p>
@@ -127,4 +131,4 @@ const AllPostedOrderHeaders = () => {
     </>
   );
 };
-export default AllPostedOrderHeaders;
+export default OrderDispatchListHeader;
