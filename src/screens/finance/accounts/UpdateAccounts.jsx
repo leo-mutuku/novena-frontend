@@ -44,7 +44,7 @@ function UpdateAccounts() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(errorUpdate);
+
     try {
       const result = await updateAccount({
         id: id,
