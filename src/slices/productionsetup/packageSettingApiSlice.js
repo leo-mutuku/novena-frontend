@@ -35,6 +35,13 @@ export const packageSettingApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["packagingsetup"],
     }),
+    deletePackingSetup: builder.mutation({
+      query: (id) => ({
+        url: `${PACKAGINGSETUP_URL}/deletepackagingsetup/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["packagingsetup"],
+    }),
   }),
 });
 
@@ -43,4 +50,5 @@ export const {
   useCreatePackagingSetupMutation,
   useGetPackagingSetupByIdQuery,
   useGetAllPackagingSetupQuery,
+  useDeletePackingSetupMutation,
 } = packageSettingApiSlice;
