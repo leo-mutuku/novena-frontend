@@ -4,6 +4,7 @@ import { FaEdit } from "react-icons/fa";
 import { IoAdd } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { MdDelete } from "react-icons/md";
 import { useGetAllPackagingSetupQuery } from "../../../slices/productionsetup/packageSettingApiSlice";
 
 const PackagingSetupList = () => {
@@ -27,7 +28,7 @@ const PackagingSetupList = () => {
         <Table aria-label="basic table">
           <thead>
             <tr>
-              <th style={{ width: "40%" }}>Product name</th>
+              <th style={{ width: "15%" }}>Product name</th>
               <th>Package 1 Name</th>
               <th>Package 1 Store</th>
               <th>Package 1 Restock</th>
@@ -35,6 +36,7 @@ const PackagingSetupList = () => {
               <th>Package 2 Store</th>
               <th>Package 2 Restock</th>
               <th>Edit</th>
+              <th>Del</th>
             </tr>
           </thead>
           <tbody>
@@ -49,8 +51,16 @@ const PackagingSetupList = () => {
                 <td>{item.package_two_restock}</td>
 
                 <td>
-                  <Link to={"#"}>
+                  <Link
+                    to={`/production/productionsetup/updatepackagingsetup/${item.packaging_setup_id}`}
+                  >
                     <FaEdit />
+                  </Link>
+                </td>
+
+                <td>
+                  <Link to={"#"}>
+                    <MdDelete />
                   </Link>
                 </td>
               </tr>
