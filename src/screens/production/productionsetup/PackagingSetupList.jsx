@@ -4,9 +4,11 @@ import { FaEdit } from "react-icons/fa";
 import { IoAdd } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { MdDelete } from "react-icons/md";
+import { useGetAllPackagingSetupQuery } from "../../../slices/productionsetup/packageSettingApiSlice";
 
 const PackagingSetupList = () => {
-  const navigate = useNavigate();
+  const { data: packagingSetup } = useGetAllPackagingSetupQuery();
 
   return (
     <>
@@ -26,28 +28,43 @@ const PackagingSetupList = () => {
         <Table aria-label="basic table">
           <thead>
             <tr>
-              <th style={{ width: "40%" }}>Product name</th>
+              <th style={{ width: "15%" }}>Product name</th>
               <th>Package 1 Name</th>
               <th>Package 1 Store</th>
+              <th>Package 1 Restock</th>
               <th>Package 2 Name</th>
               <th>Package 2 Store</th>
+              <th>Package 2 Restock</th>
               <th>Edit</th>
+              <th>Del</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Frozen yoghurt</td>
-              <td>159</td>
-              <td>6</td>
-              <td>24</td>
-              <td>4</td>
+            {packagingSetup?.data.map((item, index) => (
+              <tr key={index}>
+                <td>{item.product_name}</td>
+                <td>{item.package_name_one}</td>
+                <td>{item.store_name_one}</td>
+                <td>{item.package_one_restock}</td>
+                <td>{item.package_name_two}</td>
+                <td>{item.store_name_two}</td>
+                <td>{item.package_two_restock}</td>
 
-              <td>
-                <Link to={"#"}>
-                  <FaEdit />
-                </Link>
-              </td>
-            </tr>
+                <td>
+                  <Link
+                    to={`/production/productionsetup/updatepackagingsetup/${item.packaging_setup_id}`}
+                  >
+                    <FaEdit />
+                  </Link>
+                </td>
+
+                <td>
+                  <Link to={"#"}>
+                    <MdDelete />
+                  </Link>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       </Row>

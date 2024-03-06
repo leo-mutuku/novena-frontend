@@ -3,10 +3,12 @@ import { Row, Col, Table } from "react-bootstrap";
 import { Button } from "@mui/material";
 import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { MdDelete } from "react-icons/md";
 import { IoAdd } from "react-icons/io5";
+import { useGetAllproductSetupQuery } from "../../../slices/productionsetup/productSettingApliSlice";
 
 const ProductionSetupList = () => {
-  const handleAddSetting = (e) => {};
+  const { data: productSetup } = useGetAllproductSetupQuery();
   return (
     <>
       <Row>
@@ -28,18 +30,26 @@ const ProductionSetupList = () => {
               <th style={{ width: "40%" }}>Product name</th>
               <th>Product store</th>
               <th>Edit</th>
+              <th>Del</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Product name</td>
-              <td>Store name</td>
-              <td>
-                <Link to={"#"}>
-                  <FaEdit />
-                </Link>
-              </td>
-            </tr>
+            {productSetup?.data.map((item, index) => (
+              <tr key={index}>
+                <td>{item.item_name}</td>
+                <td>{item.store_name}</td>
+                <td>
+                  <Link to={"#"}>
+                    <FaEdit />
+                  </Link>
+                </td>
+                <td>
+                  <Link to={"#"}>
+                    <MdDelete />
+                  </Link>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       </Row>

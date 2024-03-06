@@ -58,7 +58,7 @@ import ViewAccounts from "./screens/finance/accounts/ViewAccounts.jsx";
 import PurchaseScreen from "./screens/purchase/PurchaseScreen.jsx";
 import StorePurchaseScreen from "./screens/purchase/StorePurchaseScreen.jsx";
 import StoreRequisitionScreen from "./screens/purchase/StoreRequisitionScreen.jsx";
-import AccountsList from "./screens/finance/accounts/ACcountslist.jsx";
+import AccountsList from "./screens/finance/accounts/AccountsList.jsx";
 import GLList from "./screens/finance/gl/GLList.jsx";
 import CreateGL from "./screens/finance/gl/CreateGL.jsx";
 import StockTakeScreen from "./screens/store/StockTakeScreen.jsx";
@@ -212,6 +212,7 @@ import CreateProductSetup from "./screens/production/productionsetup/CreateProdu
 import PackhouseSetupScreen from "./screens/production/packhousesetupscreen.jsx";
 import PacktypeSettingList from "./screens/production/packhousesetup/PacktypeSettingList.jsx";
 import CreatePacktypeSetting from "./screens/production/packhousesetup/CreatePacktypeSetting.jsx";
+import UpdatePackagingSetup from "./screens/production/productionsetup/UpdatePackagingSetup.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -372,6 +373,10 @@ const router = createHashRouter(
             <Route path="packagesetuplist" element={<PackagingSetupList />} />
             <Route path="createpackagesetup" element={<CreatePackageSetup />} />
             <Route path="createproductsetup" element={<CreateProductSetup />} />
+            <Route
+              path="updatepackagingsetup/:id"
+              element={<UpdatePackagingSetup />}
+            />
           </Route>
           {/* packhouse routes */}
           <Route path="packhouse" element={<PackHouseScreen />}>
