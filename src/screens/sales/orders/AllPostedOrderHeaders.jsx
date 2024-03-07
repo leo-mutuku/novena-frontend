@@ -11,15 +11,18 @@ import moment from "moment";
 
 const AllPostedOrderHeaders = () => {
   const { data: orders, isLoading } = useGetAllPostedSalesOrdersQuery();
+
   const [tableData, setTableData] = useState([]);
   let timeDate = new TimeDate();
   const [mode, set_mode] = useState("none");
   const [mode_delete, set_mode_delete] = useState("none");
   const [store_purchase_id, set_store_purchase_id] = useState("");
+
   const handleAdd = (e, id, style) => {
     set_store_purchase_id(parseInt(id));
     set_mode(style);
   };
+
   const handleDelete = (e, id, style) => {
     set_store_purchase_id(parseInt(id));
     set_mode_delete(style);
@@ -33,7 +36,7 @@ const AllPostedOrderHeaders = () => {
       setTableData(orders.data);
     }
   }, [orders]);
-
+  console.log(JSON.stringify(tableData));
   const columns = useMemo(
     () => [
       {
@@ -68,7 +71,7 @@ const AllPostedOrderHeaders = () => {
       },
       {
         Header: "Sales .P",
-        accessor: "sales_person_number",
+        accessor: "first_name",
       },
       {
         Header: "Status",
