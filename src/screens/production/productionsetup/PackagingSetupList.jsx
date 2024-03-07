@@ -5,10 +5,14 @@ import { IoAdd } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
-import { useGetAllPackagingSetupQuery } from "../../../slices/productionsetup/packageSettingApiSlice";
+import {
+  useGetAllPackagingSetupQuery,
+  useDeletePackingSetupMutation,
+} from "../../../slices/productionsetup/packageSettingApiSlice";
 
 const PackagingSetupList = () => {
   const { data: packagingSetup } = useGetAllPackagingSetupQuery();
+  const [deletePackagingSetup, { response }] = useDeletePackingSetupMutation();
 
   return (
     <>
@@ -58,7 +62,9 @@ const PackagingSetupList = () => {
                   </Link>
                 </td>
 
-                <td>
+                <td
+                  onClick={() => deletePackagingSetup(item.packaging_setup_id)}
+                >
                   <Link to={"#"}>
                     <MdDelete />
                   </Link>
