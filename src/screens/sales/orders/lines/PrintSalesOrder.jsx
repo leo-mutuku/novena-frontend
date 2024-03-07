@@ -93,7 +93,7 @@ function PrintSalesOrder({ purchase_header_id, set_print_mode }) {
   };
   return (
     <>
-      <div
+      {/* <div
         style={{
           position: "absolute",
           background: "rgb(204 204 204 / 70%)",
@@ -193,7 +193,7 @@ function PrintSalesOrder({ purchase_header_id, set_print_mode }) {
             </Modal.Footer>
           </Modal.Dialog>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
