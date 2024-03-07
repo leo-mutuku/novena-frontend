@@ -27,15 +27,6 @@ const ReturnOrderpreview = () => {
   const [order_lines, set_order_lines] = useState([{}]);
   const [order_header, set_order_header] = useState({});
 
-  const handleA4PDF = () => {};
-  const handleA5PDF = () => {};
-  //   const handlePOS = async (e) => {
-  //     const res = await printToPOS({
-  //       sales_order_number: id,
-  //     }).unwrap();
-  //     console.log(res);
-  //   };
-
   return (
     <>
       <Row>
