@@ -315,7 +315,7 @@ const OrderHeaderList = () => {
           />
         </div>
       </>
-      <div className="datatable-container">
+      <div>
         <p>*** All Sales Orders ***</p>
         <DataTable columns={columns} data={tableData} />
       </div>

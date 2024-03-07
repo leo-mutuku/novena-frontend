@@ -9,6 +9,7 @@ import TimeDate from "../../../components/TimeDate";
 
 const OrderDispatchListHeader = () => {
   let timeDate = new TimeDate();
+  const [tableData, setTableData] = useState([]);
   const [mode, set_mode] = useState("none");
   const [mode_delete, set_mode_delete] = useState("none");
   const [store_purchase_id, set_store_purchase_id] = useState("");
