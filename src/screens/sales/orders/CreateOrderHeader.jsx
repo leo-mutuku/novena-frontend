@@ -71,6 +71,13 @@ function CreateOrderHeader() {
         return a.customer_id;
       }
     });
+
+    if (x[0].customer_outlet_name != "") {
+      set_customer_name(x[0].customer_outlet_name);
+    } else {
+      set_customer_name(x[0].customer_contact_person);
+    }
+
     set_customer_id(x[0].customer_id);
     set_phone_number(x[0].customer_contact);
   };
