@@ -9,7 +9,7 @@ import { useGetSalesLinesByHeaderIdQuery } from "../../../slices/sales/salesOrde
 import TimeDate from "../../../components/TimeDate";
 import { toast } from "react-toastify";
 
-const ReturnOrderpreview = () => {
+const ReverseOrderPreview = () => {
   const timeDate = new TimeDate();
   const { id: _new_id } = useParams();
   const id = parseInt(_new_id);
@@ -49,7 +49,6 @@ const ReturnOrderpreview = () => {
       }
     });
   };
-  console.log(order_item);
 
   return (
     <>
@@ -134,4 +133,4 @@ const ReturnOrderpreview = () => {
   );
 };
 
-export default ReturnOrderpreview;
+export default ReverseOrderPreview;

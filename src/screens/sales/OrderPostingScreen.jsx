@@ -1,17 +1,15 @@
-import PageActionComponent from '../../components/PageActionComponent'
-const pagemenus =
-[
-  {pagename:'Posted orders', to:"allpostedorders"},
-  {pagename:'Unposted orders', to:"allunpostedorders"},
-  
-]
+import PageActionComponent from "../../components/PageActionComponent";
+const pagemenus = [
+  { pagename: "Order Clearing", to: "allpostedorders" },
+  { pagename: "Cleared Orders", to: "allunpostedorders" },
+];
 
 function OrderPostingScreen() {
   return (
     <>
-    <PageActionComponent pagemenus={pagemenus}/>
-     </>
-  )
+      <PageActionComponent pagemenus={pagemenus} />
+    </>
+  );
 }
 
-export default OrderPostingScreen
+export default OrderPostingScreen;

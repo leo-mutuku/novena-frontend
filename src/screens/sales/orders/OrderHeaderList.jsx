@@ -31,7 +31,7 @@ const OrderHeaderList = () => {
     set_mode_delete(style);
   };
   const { data, isLoading } = useGetAllSalesOrderHeadersQuery();
-  console.log(data?.data);
+
   const navigate = useNavigate();
   useEffect(() => {}, [data]);
 
