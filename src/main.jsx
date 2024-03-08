@@ -214,6 +214,9 @@ import PacktypeSettingList from "./screens/production/packhousesetup/PacktypeSet
 import CreatePacktypeSetting from "./screens/production/packhousesetup/CreatePacktypeSetting.jsx";
 import UpdatePackagingSetup from "./screens/production/productionsetup/UpdatePackagingSetup.jsx";
 import ReturnOrderpreview from "./screens/sales/returnorders/ReturnOrderpreview.jsx";
+import ReverseorderList from "./screens/sales/returnorders/ReverseorderList.jsx";
+import ReverseOrderPreview from "./screens/sales/returnorders/ReverseOrderPreview.jsx";
+import ClearedOrders from "./screens/sales/orderposting/ClearedOrders.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -520,8 +523,10 @@ const router = createHashRouter(
           </Route>
           <Route path="returnorder" element={<ReturnOrdersScreen />}>
             <Route path="allreturnorders" element={<ReturnOrderlist />} />
-            <Route path="createreturnorder" element={<CreateReturnOrder />} />
+            <Route path="reverseorderlist" element={<ReverseorderList />} />
             <Route path="returnorder/:id" element={<ReturnOrderpreview />} />
+            <Route path="rerveseorder/:id" element={<ReverseOrderPreview />} />
+
             <Route
               path="allreturnordersintransit"
               element={<AllReurnOrdersInTransit />}
@@ -546,7 +551,7 @@ const router = createHashRouter(
           </Route>
           <Route path="orderposting" element={<OrderPostingScreen />}>
             <Route index element={<OrderPostingList />} />
-            <Route path="allunpostedorders" element={<CreateOrderPosting />} />
+            <Route path="allunpostedorders" element={<ClearedOrders />} />
             <Route path="allpostedorders" element={<OrderPostingList />} />
           </Route>
           <Route path="orderreceipt" element={<OrderReceiptScreen />}>

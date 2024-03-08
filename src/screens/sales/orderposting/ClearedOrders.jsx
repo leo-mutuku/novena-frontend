@@ -9,7 +9,7 @@ import TimeDate from "../../../components/TimeDate";
 import DataTable from "../../../components/general/DataTable";
 import moment from "moment";
 
-const ReturnOrderlist = () => {
+const ClearedOrders = () => {
   const { data: orders, isLoading } = useGetAllPostedSalesOrdersQuery();
 
   const [tableData, setTableData] = useState([]);
@@ -36,7 +36,7 @@ const ReturnOrderlist = () => {
       setTableData(orders.data);
     }
   }, [orders]);
-  console.log(JSON.stringify(tableData));
+
   const columns = useMemo(
     () => [
       {
@@ -82,7 +82,7 @@ const ReturnOrderlist = () => {
       },
       {
         Header: "View",
-        accessor: "view",
+        accessor: "View",
         Cell: ({ row }) => (
           <>
             {row.original.status === "Posted" ? (
@@ -122,10 +122,10 @@ const ReturnOrderlist = () => {
   return (
     <>
       <div>
-        <p>*** Return order list ***</p>
+        <p>*** Cleared Order List ***</p>
         <DataTable columns={columns} data={tableData} />
       </div>
     </>
   );
 };
-export default ReturnOrderlist;
+export default ClearedOrders;
