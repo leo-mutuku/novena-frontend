@@ -43,7 +43,7 @@ const ProductionSetupList = () => {
                     <FaEdit />
                   </Link>
                 </td>
-                <td>
+                <td onClick={() => deletePackagingSetup()}>
                   <Link to={"#"}>
                     <MdDelete />
                   </Link>

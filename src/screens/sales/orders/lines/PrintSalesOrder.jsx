@@ -80,7 +80,7 @@ function PrintSalesOrder({ purchase_header_id, set_print_mode }) {
       const res = await post_purchase({
         sales_order_number: sales_order_number,
       }).unwrap();
-      console.log(res);
+
       if (res.status === "failed") {
         toast.error(err?.data?.message || err.error);
       } else {
@@ -91,111 +91,7 @@ function PrintSalesOrder({ purchase_header_id, set_print_mode }) {
       toast.error(err?.data?.message || err.error);
     }
   };
-  return (
-    <>
-      <div
-        style={{
-          position: "absolute",
-          background: "rgb(204 204 204 / 70%)",
-          width: "100%",
-          height: "100%",
-          top: "0p%",
-          left: "0%",
-          right: "0%",
-          bottom: "0%",
-        }}
-      >
-        <div style={{ display: `${item_edit_state}` }}>
-          <ItemEdit
-            set_item_edit_state={set_item_edit_state}
-            items_to_edit={items_to_edit}
-          />
-        </div>
-        <div
-          style={{
-            background: "#fff",
-            padding: "2%",
-            margin: "4%",
-          }}
-        >
-          <Modal.Dialog>
-            <Modal.Header closeButton onClick={(e) => set_edit_mode("none")}>
-              <Modal.Title style={{ fontSize: "14px" }}>
-                <span style={{ fontSize: "14px" }}>
-                  Sales order no.{purchase_header_id}
-                </span>
-              </Modal.Title>
-            </Modal.Header>
-            <hr />
-            <Modal.Body>
-              <>
-                <div>
-                  {purchase_order_lines?.data?.map((item, index) => (
-                    <>
-                      <div key={index} style={{ display: "block" }}>
-                        <p>
-                          Item order no: {item.store_purchase_line_id}{" "}
-                          &nbsp;&nbsp;&nbsp; Item name: {item.item_name}{" "}
-                          &nbsp;&nbsp;&nbsp; Supplied by: {item.supplier_name}{" "}
-                          &nbsp;&nbsp;&nbsp; Total Cost
-                        </p>
-                        <hr style={{ width: "50%" }} />
-                        <Row>
-                          <Col>
-                            <p>Cost per unit</p>
-                            <p>Ksh. {item.item_cost}</p>
-                          </Col>
-                          <Col>
-                            <p>Quantity Purchased</p>
-                            <p>{item.quantity}</p>
-                          </Col>
-
-                          <Col>
-                            <div>
-                              <Form.Check
-                                type="switch"
-                                id="custom-switch"
-                                label="Check this switch"
-                                onChange={handleToggleCheck}
-                                value={item.store_purchase_line_id}
-                              />
-                            </div>
-
-                            <div>
-                              <Button
-                                onClick={(e) =>
-                                  handleItemEdit(e, item.store_purchase_line_id)
-                                }
-                              >
-                                Edit
-                              </Button>
-                            </div>
-                          </Col>
-                        </Row>
-                      </div>
-                      <hr />
-                    </>
-                  ))}
-                </div>
-              </>
-            </Modal.Body>
-
-            <Modal.Footer className="gap-2">
-              <Button variant="success" onClick={(e) => handlePost()}>
-                Post purchase order
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={(e) => set_edit_mode("none")}
-              >
-                Close
-              </Button>
-            </Modal.Footer>
-          </Modal.Dialog>
-        </div>
-      </div>
-    </>
-  );
+  return <></>;
 }
 
 export default PrintSalesOrder;

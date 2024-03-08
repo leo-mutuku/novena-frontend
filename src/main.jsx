@@ -518,7 +518,6 @@ const router = createHashRouter(
             />
           </Route>
           <Route path="returnorder" element={<ReturnOrdersScreen />}>
-            <Route index element={<Orderlist />} />
             <Route path="allreturnorders" element={<ReturnOrderlist />} />
             <Route path="createreturnorder" element={<CreateReturnOrder />} />
             <Route
@@ -529,7 +528,7 @@ const router = createHashRouter(
               path="allpostedreturnorders"
               element={<AllPostedReturnOrders />}
             />
-            <Route path="allreturnorders" element={<ReturnOrderlist />} />
+            
           </Route>
           <Route path="orderdispatch" element={<OrdersDispatchScreen />}>
             <Route index element={<OrderDispatchList />} />
