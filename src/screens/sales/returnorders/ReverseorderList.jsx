@@ -9,7 +9,7 @@ import TimeDate from "../../../components/TimeDate";
 import DataTable from "../../../components/general/DataTable";
 import moment from "moment";
 
-const ReturnOrderlist = () => {
+const ReverseorderList = () => {
   const { data: orders, isLoading } = useGetAllPostedSalesOrdersQuery();
 
   const [tableData, setTableData] = useState([]);
@@ -87,7 +87,7 @@ const ReturnOrderlist = () => {
           <>
             {row.original.status === "Posted" ? (
               <Link
-                to={`/sales/returnorder/returnorder/${row.original.sales_order_number}`}
+                to={`/sales/returnorder/rerveseorder/${row.original.sales_order_number}`}
               >
                 <IoMdEye />
               </Link>
@@ -122,10 +122,10 @@ const ReturnOrderlist = () => {
   return (
     <>
       <div>
-        <p>*** Return order list ***</p>
+        <p>*** Reverse order list ***</p>
         <DataTable columns={columns} data={tableData} />
       </div>
     </>
   );
 };
-export default ReturnOrderlist;
+export default ReverseorderList;
