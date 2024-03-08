@@ -6,7 +6,7 @@ export const sidelinks = [
       { subMenuTitle: "Return Order", to: "returnorder" },
       { subMenuTitle: "Order Dispatch", to: "orderdispatch" },
       { subMenuTitle: "Order Invoice", to: "orderinvoice" },
-      { subMenuTitle: "Order Posting", to: "orderposting" },
+      { subMenuTitle: "Order Clearing", to: "orderposting" },
       // { subMenuTitle: "Order Receipt", to: "orderreceipt" },
       { subMenuTitle: "GRN", to: "#" },
       { subMenuTitle: "Reports", to: "#" },
