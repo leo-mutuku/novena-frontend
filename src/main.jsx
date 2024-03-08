@@ -63,11 +63,11 @@ import GLList from "./screens/finance/gl/GLList.jsx";
 import CreateGL from "./screens/finance/gl/CreateGL.jsx";
 import StockTakeScreen from "./screens/store/StockTakeScreen.jsx";
 import CreateInstition from "./screens/administration/insititutions/CreateInstition.jsx";
-import Institutionlist from "./screens/administration/insititutions/Institutionlist.jsx";
+import Institutionlist from "./screens/administration/insititutions/Institutionlist1.jsx";
 import SupplierList from "./screens/administration/suppliers/SupplierList1.jsx";
 import CreateSupplier from "./screens/administration/suppliers/CreateSupplier.jsx";
 import CreateStaff from "./screens/administration/staff/CreateStaff.jsx";
-import StaffList from "./screens/administration/staff/StaffList.jsx";
+import StaffList from "./screens/administration/staff/StaffList1.jsx";
 import MpesaPaybillList from "./screens/finance/mpesapaybill/MpesaPaybillList.jsx";
 import CreateMpesaPaybill from "./screens/finance/mpesapaybill/CreateMpesaPaybill.jsx";
 import MpesatillList from "./screens/finance/mpesatill/MpesatillList.jsx";
@@ -518,7 +518,6 @@ const router = createHashRouter(
             />
           </Route>
           <Route path="returnorder" element={<ReturnOrdersScreen />}>
-            <Route index element={<Orderlist />} />
             <Route path="allreturnorders" element={<ReturnOrderlist />} />
             <Route path="createreturnorder" element={<CreateReturnOrder />} />
             <Route
@@ -529,7 +528,7 @@ const router = createHashRouter(
               path="allpostedreturnorders"
               element={<AllPostedReturnOrders />}
             />
-            <Route path="allreturnorders" element={<ReturnOrderlist />} />
+            
           </Route>
           <Route path="orderdispatch" element={<OrdersDispatchScreen />}>
             <Route index element={<OrderDispatchList />} />
