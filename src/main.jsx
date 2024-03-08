@@ -213,6 +213,7 @@ import PackhouseSetupScreen from "./screens/production/packhousesetupscreen.jsx"
 import PacktypeSettingList from "./screens/production/packhousesetup/PacktypeSettingList.jsx";
 import CreatePacktypeSetting from "./screens/production/packhousesetup/CreatePacktypeSetting.jsx";
 import UpdatePackagingSetup from "./screens/production/productionsetup/UpdatePackagingSetup.jsx";
+import ReturnOrderpreview from "./screens/sales/returnorders/ReturnOrderpreview.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -520,6 +521,7 @@ const router = createHashRouter(
           <Route path="returnorder" element={<ReturnOrdersScreen />}>
             <Route path="allreturnorders" element={<ReturnOrderlist />} />
             <Route path="createreturnorder" element={<CreateReturnOrder />} />
+            <Route path="returnorder/:id" element={<ReturnOrderpreview />} />
             <Route
               path="allreturnordersintransit"
               element={<AllReurnOrdersInTransit />}
@@ -528,7 +530,6 @@ const router = createHashRouter(
               path="allpostedreturnorders"
               element={<AllPostedReturnOrders />}
             />
-            
           </Route>
           <Route path="orderdispatch" element={<OrdersDispatchScreen />}>
             <Route index element={<OrderDispatchList />} />

@@ -17,36 +17,69 @@ const ReturnOrderpreview = () => {
   const { data: posted_sales_order_line_id } =
     useGetSalesLinesByHeaderIdQuery(id);
 
-  useEffect(() => {
-    set_order_lines(posted_sales_order_line_id?.data.order);
-  }, [id, posted_sales_order_line_id]);
-
   const handleExcel = (e) => {
     alert("Work in Progress! Check again later");
   };
-  const [order_lines, set_order_lines] = useState([{}]);
-  const [order_header, set_order_header] = useState({});
+  const [reverse_order, set_reverse_order] = useState([]);
+  const [return_order, set_return_order] = useState([]);
+  const [order_item, set_order_item] = useState({
+    order_item_id: null,
+    item_code: null,
+    item_name: null,
+    quanitiy: null,
+    unit_price: null,
+    vat: null,
+    sub_total: null,
+    total: null,
+  });
+  useEffect(() => {
+    set_reverse_order(posted_sales_order_line_id?.data.order);
+    set_return_order(posted_sales_order_line_id?.data.order);
+  }, [id, posted_sales_order_line_id]);
+
+  const handleQty = (value, order_line_id) => {
+    let orginal_quantity = 0;
+    let y = reverse_order.map((item) => {
+      if (item.order_line_id == order_line_id) {
+        orginal_quantity = item.quantity;
+      }
+    });
+
+    if (orginal_quantity < value) {
+    }
+
+    let x = return_order.map((item) => {
+      if (item.order_line_id == order_line_id) {
+        return { ...item, quantity: parseInt(value) };
+      }
+    });
+  };
 
   return (
     <>
       <Row>
-        <p>***Return Order***</p>
-        <span>
-          Sales Person:&nbsp;
-          {posted_sales_order_line_id?.data?.order_header?.first_name}
-          {"  "}
-          {posted_sales_order_line_id?.data?.order_header?.last_name}
-          &nbsp;&nbsp;&nbsp;Order Number:
-          {
-            posted_sales_order_line_id?.data?.order_header?.sales_order_number
-          }{" "}
-          &nbsp;&nbsp;&nbsp;Order Date:{" "}
-          {timeDate.date(
-            posted_sales_order_line_id?.data?.order_header?.sales_order_date
-          )}
-          &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;Previous
-          Total:
-        </span>
+        <Col> ***Return Order***</Col>
+        <Col sm={8}>
+          <span>
+            Sales Person:&nbsp;
+            {posted_sales_order_line_id?.data?.order_header?.first_name}
+            {"  "}
+            {posted_sales_order_line_id?.data?.order_header?.last_name}
+            &nbsp;&nbsp;&nbsp;Order Number:
+            {
+              posted_sales_order_line_id?.data?.order_header?.sales_order_number
+            }{" "}
+            &nbsp;&nbsp;&nbsp;Order Date:{" "}
+            {timeDate.date(
+              posted_sales_order_line_id?.data?.order_header?.sales_order_date
+            )}
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+          </span>
+        </Col>
+        <Col sm={2}>
+          Previous Total:
+          {posted_sales_order_line_id?.data?.order_header?.grand_total}
+        </Col>
       </Row>
       <hr></hr>
       <Row>
@@ -54,48 +87,49 @@ const ReturnOrderpreview = () => {
         <Col>Item Name</Col>
         <Col>Qty</Col>
         <Col>@</Col>
-        <Col>Qty to R.</Col>
-        <Col>New .Qty</Col>
-        <Col>New .Ttl</Col>
+        <Col>Sub Ttl</Col>
+        <Col>New Qty</Col>
+        <Col>Add</Col>
       </Row>
-      <hr></hr>
-      {order_lines?.map((item, index) => (
-        <Row key={index} style={{ fontSize: "14px" }}>
+
+      {return_order?.map((item, index) => (
+        <Row>
           <Col>{item.order_line_id}</Col>
           <Col>{item.item_name}</Col>
           <Col>{item.quantity}</Col>
+          <Col>{item.cost_per_item}</Col>
+          <Col>{item.total}</Col>
           <Col>
-            <Col>{item.quantity}</Col>
-          </Col>
-          <Col className="my-1">
             {" "}
-            <input style={{ padding: "1px" }} type="number" />
+            <input
+              required
+              style={{ padding: "1px" }}
+              type="number"
+              defaultValue={item.quantity}
+              onChange={(e) => handleQty(e.target.value, item.order_line_id)}
+            />
           </Col>
-
           <Col>
-            <Col>{item.quantity}</Col>
-          </Col>
-          <Col>
-            <Col>{item.quantity}</Col>
+            {" "}
+            <Stack spacing={2} direction="row">
+              <Button variant="outlined" onClick={""}>
+                add
+              </Button>
+            </Stack>
           </Col>
         </Row>
       ))}
       <hr></hr>
       <Row>
         <Col></Col>
-        <Col className="text-center text-md-right">{" New Total Kshs."}</Col>
-      </Row>
-      <hr></hr>
-      <Row>
-        <Col></Col>
 
-        <Col>
+        <Col sm={5}>
           <Stack spacing={2} direction="row">
             <Button variant="outlined" color="error" onClick={""}>
-              REVERSER ORDER
+              REVERSE ORDER
             </Button>
             <Button variant="outlined" color="error" onClick={""}>
-              SUBMIT RETURN ORDER
+              RETURN ORDER
             </Button>
           </Stack>
         </Col>

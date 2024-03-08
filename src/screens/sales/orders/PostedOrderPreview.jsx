@@ -17,7 +17,6 @@ const PostedOrderPreview = () => {
   const { data: posted_sales_order_line_id } =
     useGetSalesLinesByHeaderIdQuery(id);
   const [printToPOS, { isLoading, error }] = useCreatePrintToPosMutation();
-  console.log(error);
 
   useEffect(() => {}, [id, posted_sales_order_line_id]);
 
@@ -30,7 +29,6 @@ const PostedOrderPreview = () => {
     const res = await printToPOS({
       sales_order_number: id,
     }).unwrap();
-    console.log(res);
   };
 
   return (
