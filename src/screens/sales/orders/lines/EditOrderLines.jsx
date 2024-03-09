@@ -36,7 +36,6 @@ function EditOrderLines({ purchase_header_id, set_edit_mode }) {
   const [items_to_edit, set_items_to_edit] = useState(null);
   const handleItemEdit = (e) => {
     if (items_to_edit) {
-      console.log(item_edit_state);
       set_item_edit_state("block");
       return;
     }
@@ -44,7 +43,6 @@ function EditOrderLines({ purchase_header_id, set_edit_mode }) {
     console.log(items_to_edit);
   };
   const handleToggleCheck = (e) => {
-    console.log(e.target.value);
     sales_order_lines?.data.map((item) => {
       if (item.store_purchase_line_id == e.target.value) {
         set_items_to_edit(null);

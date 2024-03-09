@@ -11,6 +11,14 @@ export const salesOrderReturnApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    createSalesReturnOrder: builder.mutation({
+      query: (data) => ({
+        url: `${SALESRETURNORDER}/createsalesreturnorder`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["sales_return"],
+    }),
     createSalesOrderReverse: builder.mutation({
       query: (data) => ({
         url: `${SALESRETURNORDER}/createsalesorderreverse`,
@@ -22,4 +30,7 @@ export const salesOrderReturnApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useCreateSalesOrderReverseMutation } = salesOrderReturnApiSlice;
+export const {
+  useCreateSalesOrderReverseMutation,
+  useCreateSalesReturnOrderMutation,
+} = salesOrderReturnApiSlice;

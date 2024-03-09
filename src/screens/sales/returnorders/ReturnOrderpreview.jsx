@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import {} from "../../../slices/sales/salesOrderLinesApiSlice";
 import { useGetSalesLinesByHeaderIdQuery } from "../../../slices/sales/salesOrderLinesApiSlice";
-
+import { useCreateSalesReturnOrderMutation } from "../../../slices/sales/salesOrderReturnApiSlice";
 import TimeDate from "../../../components/TimeDate";
 import { toast } from "react-toastify";
 
@@ -15,17 +15,22 @@ const ReturnOrderpreview = () => {
   const id = parseInt(_new_id);
   const { data: posted_sales_order_line_id } =
     useGetSalesLinesByHeaderIdQuery(id);
+  const [createReturnOrder, { isLoading, error }] =
+    useCreateSalesReturnOrderMutation();
 
   const [reverse_order, set_reverse_order] = useState([]);
   const [return_order, set_return_order] = useState([]);
   const [order_item, set_order_item] = useState({
     order_item_id: null,
-    quanitiy: null,
-    ne_quantity: null,
+    quantity: null,
+    new_quantity: null,
+    item_name: null,
+    cost_per_item: null,
+    sub_total: null,
+    total: null,
   });
   useEffect(() => {
     set_reverse_order(posted_sales_order_line_id?.data.order);
-    set_return_order(posted_sales_order_line_id?.data.order);
   }, [id, posted_sales_order_line_id]);
 
   const handleQty = (value, order_line_id) => {
@@ -36,20 +41,72 @@ const ReturnOrderpreview = () => {
       }
     });
 
-    if (orginal_quantity < value) {
-    }
-
-    return_order.map((item) => {
+    reverse_order.map((item) => {
       if (item.order_line_id == order_line_id) {
         set_order_item({
           ...order_item,
-          quantity: item.quanitiy,
-          ne_quantity: parseInt(value),
+          order_item_id: parseInt(order_line_id),
+          quantity: parseInt(item.quantity),
+          new_quantity: parseInt(value),
+          item_name: item.item_name,
+          cost_per_item: parseFloat(item.cost_per_item),
+          sub_total: parseFloat(item.cost_per_item) * parseInt(value),
+          total: parseFloat(item.cost_per_item) * parseInt(value),
         });
       }
     });
   };
-  console.log(order_item);
+
+  const handleAdd = (e) => {
+    if (order_item.order_item_id == null || order_item.order_item_id == "") {
+      toast.error(
+        "One of the input field must be active and not empty before you click add!"
+      );
+      return;
+    } else if (
+      parseInt(order_item.quantity) < parseInt(order_item.new_quantity)
+    ) {
+      toast.error("New quantity cannot exceed initital quantity or be empty!");
+      return;
+    } else {
+      set_return_order([...return_order, order_item]);
+    }
+  };
+
+  const handleRetrunOrderBtn = async (e) => {
+    //check if return order is not empty
+    if (return_order.length == 0) {
+      toast.error("No items found on the return order list!");
+      return;
+    }
+    // check duplicate
+    let duplicateArr = return_order?.map((item) => {
+      return item.order_item_id;
+    });
+    let isDuplicate = duplicateArr.some((item, order_item_id) => {
+      return duplicateArr.indexOf(item) != order_item_id;
+    });
+    if (isDuplicate) {
+      toast.error(
+        "Duplicates are not allowed in return order, Please check adjust and try again!"
+      );
+      return;
+    }
+
+    // NaN entries check taken to backend - please help fix this
+
+    // send request to backend
+    try {
+      const res = await createReturnOrder({
+        return_order_list: return_order,
+      }).unwrap();
+      if (res.status == "failed") {
+      } else {
+      }
+    } catch (error) {
+      toast.error(error);
+    }
+  };
 
   return (
     <>
@@ -88,7 +145,7 @@ const ReturnOrderpreview = () => {
         <Col>Add</Col>
       </Row>
 
-      {return_order?.map((item, index) => (
+      {reverse_order?.map((item, index) => (
         <Row>
           <Col>{item.order_line_id}</Col>
           <Col>{item.item_name}</Col>
@@ -108,7 +165,7 @@ const ReturnOrderpreview = () => {
           <Col>
             {" "}
             <Stack spacing={2} direction="row">
-              <Button variant="outlined" onClick={""}>
+              <Button variant="outlined" onClick={handleAdd}>
                 add
               </Button>
             </Stack>
@@ -116,15 +173,49 @@ const ReturnOrderpreview = () => {
         </Row>
       ))}
       <hr></hr>
+      <span>Return order entries</span>
+
+      {return_order?.map((item, index) => (
+        <Row key={index}>
+          <Col>{item.order_item_id}</Col>
+          <Col>{item.item_name}</Col>
+          <Col>{item.new_quantity}</Col>
+          <Col>{item.cost_per_item}</Col>
+          <Col>{item.total}</Col>
+          <Col>
+            {" "}
+            <Stack spacing={2} direction="row">
+              <Button
+                variant="outlined"
+                color="error"
+                className="my-1"
+                onClick={() =>
+                  set_return_order(
+                    return_order.filter(
+                      (a) => a.order_item_id !== item.order_item_id
+                    )
+                  )
+                }
+              >
+                Del
+              </Button>
+            </Stack>
+          </Col>
+        </Row>
+      ))}
+
+      <hr></hr>
+
       <Row>
         <Col></Col>
 
-        <Col sm={5}>
+        <Col sm={3}>
           <Stack spacing={2} direction="row">
-            <Button variant="outlined" color="error" onClick={""}>
-              REVERSE ORDER
-            </Button>
-            <Button variant="outlined" color="error" onClick={""}>
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={handleRetrunOrderBtn}
+            >
               RETURN ORDER
             </Button>
           </Stack>
