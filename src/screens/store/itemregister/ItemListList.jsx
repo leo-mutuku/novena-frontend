@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-import DataTable from "../../../components/general/DataTable";
 import {
   useDeleteDriverMutation,
   useGetAllDriversQuery,
@@ -8,12 +7,19 @@ import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../../components/Loader";
 import { toast } from "react-toastify";
 import { useGetAllItemRegisterQuery } from "../../../slices/store/itemregisterApiSlice";
-import { FaFilePdf, FaFileExcel } from "react-icons/fa";
+import DataTable from "../../../components/general/DataTable";
+import moment from "moment";
+import axios from "axios";
+import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
+import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
+
 const ItemListList = () => {
   const { data: items, isLoading } = useGetAllItemRegisterQuery();
   const [tableData, setTableData] = useState([]);
   const navigate = useNavigate();
   const [deleteDriver, { isLoading: isDeleting }] = useDeleteDriverMutation();
+  const [loadingPdf, setLoadingPdf] = useState(false);
+  const [loadingExcel, setLoadingExcel] = useState(false);
 
   useEffect(() => {
     if (items?.data) {
@@ -43,53 +49,57 @@ const ItemListList = () => {
     //     });
     // }
   };
-  const handleDownloadPDF = async () => {
-    await axios({
-      url: "http://localhost:3000/api/v1/reports/all/drivers/pdf", // Endpoint on your Node.js server
-      method: "GET",
-      responseType: "blob", // Important: responseType 'blob' for binary data
-    }).then((response) => {
-      // Create a blob object from the binary data
+  const handleDownloadPDF = async (next) => {
+    setLoadingPdf(true);
+    try {
+      const response = await axios({
+        url: `${baseUrlJasper}/all/store/items/register/pdf`, // Endpoint on your Node.js server
+        method: "GET",
+        responseType: "blob", // Important: responseType 'blob' for binary data
+      });
       const blob = new Blob([response.data], { type: "application/pdf" });
-
-      // Create a link element to trigger the download
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "all-drivers-report.pdf");
+      link.setAttribute("download", "all-store-items-register-report.pdf");
       document.body.appendChild(link);
-
-      // Trigger the download
       link.click();
-
-      // Clean up
       window.URL.revokeObjectURL(url);
-    });
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
+
+      toast.error(error.message);
+      next(error);
+    } finally {
+      setLoadingPdf(false);
+    }
   };
+
   const handleDownloadExcel = async () => {
-    await axios({
-      url: "http://localhost:3000/api/v1/reports/all/drivers/excel", // Endpoint on your Node.js server
-      method: "GET",
-      responseType: "blob", // Important: responseType 'blob' for binary data
-    }).then((response) => {
-      // Create a blob object from the binary data
+    setLoadingExcel(true);
+    try {
+      const response = await axios({
+        url: `${baseUrlJasper}/all/store/items/register/excel`, // Endpoint on your Node.js server
+        method: "GET",
+        responseType: "blob", // Important: responseType 'blob' for binary data
+      });
       const blob = new Blob([response.data], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       });
-
-      // Create a link element to trigger the download
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "all-drivers-report.xlsx");
+      link.setAttribute("download", "all-store-items-register-report.xlsx");
       document.body.appendChild(link);
-
-      // Trigger the download
       link.click();
-
-      // Clean up
       window.URL.revokeObjectURL(url);
-    });
+    } catch (error) {
+      console.error("Error downloading Excel:", error);
+      toast.error(error.message);
+      next(error);
+    } finally {
+      setLoadingExcel(false);
+    }
   };
 
   const columns = useMemo(
@@ -147,21 +157,22 @@ const ItemListList = () => {
   }
 
   return (
-    <div>
+    <>
+      <p>*** All Store Items ***</p>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <div style={{ marginLeft: "10px" }}>
-          <button onClick={handleDownloadPDF}>
-            <FaFilePdf />
+          <button onClick={handleDownloadPDF} disabled={loadingPdf}>
+            {loadingPdf ? <Loader /> : <FaFilePdf />}
           </button>
         </div>
         <div style={{ marginLeft: "10px" }}>
-          <button onClick={handleDownloadExcel}>
-            <FaFileExcel />
+          <button onClick={handleDownloadExcel} disabled={loadingExcel}>
+            {loadingExcel ? <Loader /> : <FaFileExcel />}
           </button>
         </div>
       </div>
       <DataTable columns={columns} data={tableData} />
-    </div>
+    </>
   );
 };
 
