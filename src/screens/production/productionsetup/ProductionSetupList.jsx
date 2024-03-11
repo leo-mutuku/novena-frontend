@@ -36,8 +36,12 @@ const ProductionSetupList = () => {
           <tbody>
             {productSetup?.data.map((item, index) => (
               <tr key={index}>
-                <td>{item.item_name}</td>
-                <td>{item.store_name}</td>
+                <td>
+                  {item.item_name} - {item.item_code}
+                </td>
+                <td>
+                  {item.store_name} - {item.product_code}
+                </td>
                 <td>
                   <Link to={"#"}>
                     <FaEdit />

@@ -306,85 +306,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                       </Form.Group>
                     </Col>
                   </Row>
-                  {products.production_buffer === "store" ? (
-                    <Row>
-                      <Col>
-                        <Form.Group className="my-2" controlId="naraturation">
-                          <Form.Label>Final Product Store </Form.Label>
-                          <Form.Select
-                            type="text"
-                            required
-                            placeholder="Total"
-                            value={products.product_store_code}
-                            onChange={handFinalProductStore}
-                          >
-                            <option value={""}>
-                              Select Final Product Store{" "}
-                            </option>
-                            {stores?.data.map((item, index) => (
-                              <option value={item.store_code}>
-                                {item.store_name}
-                              </option>
-                            ))}
-                          </Form.Select>
-                        </Form.Group>
-                      </Col>
-                      <Col>
-                        <Form.Group className="my-2" controlId="naraturation">
-                          <Form.Label>Product Packaging </Form.Label>
-                          <Form.Select
-                            type="text"
-                            required
-                            placeholder="Total"
-                            value={products.first_pack}
-                            onChange={handFirstPack}
-                          >
-                            <option value={""}>Select Packaging </option>
-                            {all_packaging_material?.data.map((item, index) => (
-                              <option value={item.item_code}>
-                                {item.item_name}
-                              </option>
-                            ))}
-                          </Form.Select>
-                        </Form.Group>
-                      </Col>
-                      <Col>
-                        <Form.Group className="my-2" controlId="naraturation">
-                          <Form.Label>Number of Packets </Form.Label>
-                          <Form.Control
-                            type="number"
-                            required
-                            placeholder="Number of packets"
-                            value={products.first_pack_count}
-                            disabled
-                          ></Form.Control>
-                        </Form.Group>
-                      </Col>
-                      <Col>
-                        <Form.Group className="my-2" controlId="naraturation">
-                          <Form.Label>Packaging Store</Form.Label>
-                          <Form.Select
-                            type="number"
-                            required
-                            placeholder="Primary Package No. of Packets"
-                            value={products.store_code}
-                            onChange={handleStore}
-                          >
-                            <option value={""}>Select Store</option>
-                            {stores?.data.map((item, index) => (
-                              <>
-                                <option value={item.store_code}>
-                                  {item.store_name}
-                                </option>
-                              </>
-                            ))}
-                          </Form.Select>
-                        </Form.Group>
-                      </Col>
-                    </Row>
-                  ) : (
-                    <></>
-                  )}
+
                   <br />
                   <div>
                     <Button type="submit">Add item</Button>
@@ -406,11 +328,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                         <th>Product Name</th>
                         <th>Product Output</th>
                         <th>Product Buffer</th>
-                        <th>Packaging Name</th>
-                        <th>Packaging Count</th>
-                        <th>Packaging Store</th>
-                        <th>T.Weight (KG)</th>
-                        <th>T.Weight (90 KG)</th>
+
                         <th>
                           <Button
                             variant="outline-danger"
@@ -425,14 +343,14 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                     {production_list.map((p_items, index) => (
                       <>
                         <tbody>
-                          <tr key={p_items.item_code}>
+                          <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{p_items.product_name}</td>
 
                             <td>{p_items.product_output}</td>
                             <td>
                               {p_items.production_buffer === "store" ? (
-                                <>{p_items.product_store_name}</>
+                                <>store</>
                               ) : p_items.production_buffer ===
                                 "by_products" ? (
                                 <>By product</>
@@ -440,39 +358,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                                 <>Pack House</>
                               )}
                             </td>
-                            <td>
-                              {p_items.production_buffer === "pack_house" ? (
-                                <>N/A</>
-                              ) : p_items.production_buffer ===
-                                "by_products" ? (
-                                <>N/A</>
-                              ) : (
-                                <>{p_items.first_pack_name}</>
-                              )}
-                            </td>
-                            <td>
-                              {p_items.production_buffer === "pack_house" ? (
-                                <>N/A</>
-                              ) : p_items.production_buffer ===
-                                "by_products" ? (
-                                <>N/A</>
-                              ) : (
-                                <>{p_items.first_pack_count}</>
-                              )}
-                            </td>
-                            <td>
-                              {p_items.production_buffer === "pack_house" ? (
-                                <>N/A</>
-                              ) : p_items.production_buffer ===
-                                "by_products" ? (
-                                <>N/A</>
-                              ) : (
-                                <>{p_items.store_name}</>
-                              )}
-                            </td>
-                            <td>{p_items.weight_in_kgs}</td>
 
-                            <td>{p_items.weight_in_bags}</td>
                             <td>
                               <Button
                                 variant="outline-danger"
