@@ -14,6 +14,7 @@ import DataTable from "../../../components/general/DataTable";
 import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
 import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
 import moment from "moment";
+import axios from "axios";
 
 const AllPostedDailyPackhouse = () => {
   const timeDate = new TimeDate();
@@ -35,7 +36,7 @@ const AllPostedDailyPackhouse = () => {
     setLoadingPdf(true);
     try {
       const response = await axios({
-        url: `${baseUrlJasper}/all/suppliers/pdf`, // Endpoint on your Node.js server
+        url: `${baseUrlJasper}/all/storepurchases/posted/pdf`, // Endpoint on your Node.js server
         method: "GET",
         responseType: "blob", // Important: responseType 'blob' for binary data
       });
@@ -43,7 +44,7 @@ const AllPostedDailyPackhouse = () => {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "all-suppliers-report.pdf");
+      link.setAttribute("download", "all-storepurchases-posted-report.pdf");
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);
@@ -58,7 +59,7 @@ const AllPostedDailyPackhouse = () => {
     setLoadingExcel(true);
     try {
       const response = await axios({
-        url: `${baseUrlJasper}/all/suppliers/excel`, // Endpoint on your Node.js server
+        url: `${baseUrlJasper}/all/storepurchases/posted/excel`, // Endpoint on your Node.js server
         method: "GET",
         responseType: "blob", // Important: responseType 'blob' for binary data
       });
@@ -68,7 +69,7 @@ const AllPostedDailyPackhouse = () => {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "all-suppliers-report.xlsx");
+      link.setAttribute("download", "all-storepurchases-posted-report.xlsx");
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);

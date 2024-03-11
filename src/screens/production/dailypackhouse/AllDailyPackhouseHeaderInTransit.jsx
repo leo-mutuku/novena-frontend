@@ -42,7 +42,7 @@ const AllDailyPackhouseHeaderInTransit = () => {
     setLoadingPdf(true);
     try {
       const response = await axios({
-        url: `${baseUrlJasper}/all/suppliers/pdf`, // Endpoint on your Node.js server
+        url: `${baseUrlJasper}/all/storepurchases/intransit/pdf`, // Endpoint on your Node.js server
         method: "GET",
         responseType: "blob", // Important: responseType 'blob' for binary data
       });
@@ -50,7 +50,7 @@ const AllDailyPackhouseHeaderInTransit = () => {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "all-suppliers-report.pdf");
+      link.setAttribute("download", "all-storepurchases-in-transit-report.pdf");
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);
@@ -65,7 +65,7 @@ const AllDailyPackhouseHeaderInTransit = () => {
     setLoadingExcel(true);
     try {
       const response = await axios({
-        url: `${baseUrlJasper}/all/suppliers/excel`, // Endpoint on your Node.js server
+        url: `${baseUrlJasper}/all/storepurchases/intransit/excel`, // Endpoint on your Node.js server
         method: "GET",
         responseType: "blob", // Important: responseType 'blob' for binary data
       });
@@ -75,7 +75,10 @@ const AllDailyPackhouseHeaderInTransit = () => {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "all-suppliers-report.xlsx");
+      link.setAttribute(
+        "download",
+        "all-storepurchases-in-transit-report.xlsx"
+      );
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);
@@ -157,7 +160,7 @@ const AllDailyPackhouseHeaderInTransit = () => {
   return (
     <>
       <div>
-        <p>*** All Production In Transit***</p>
+        <p>*** All Pack House In Transit***</p>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <div style={{ marginLeft: "10px" }}>
             <button onClick={handleDownloadPDF} disabled={loadingPdf}>
