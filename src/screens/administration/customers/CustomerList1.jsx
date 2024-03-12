@@ -15,10 +15,12 @@ import { handlePrintA4 } from "../../../components/printFunction";
 import { handlePrintA4Color } from "../../../components/printFunctionColor";
 import DataTable from "../../../components/general/DataTable";
 import axios from "axios";
-
 import { FaFilePdf, FaFileExcel } from "react-icons/fa";
+import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
 
 const CustomerList = () => {
+  const [loadingPdf, setLoadingPdf] = useState(false);
+  const [loadingExcel, setLoadingExcel] = useState(false);
   const { data: customerData, isLoading } = useGetAllCustomersQuery();
   const [tableData, setTableData] = useState([]);
   const [customer, set_customer] = useState({
@@ -47,52 +49,66 @@ const CustomerList = () => {
   }, [customerData, userInfo]);
 
   const handleDownloadPDF = async () => {
-    await axios({
-      url: "http://localhost:3000/api/v1/reports/all/customers/pdf", // Endpoint on your Node.js server
-      method: "GET",
-      responseType: "blob", // Important: responseType 'blob' for binary data
-    }).then((response) => {
-      // Create a blob object from the binary data
-      const blob = new Blob([response.data], { type: "application/pdf" });
+    setLoadingPdf(true);
+    try {
+      await axios({
+        url: `${baseUrlJasper}/all/customers/pdf`, // Endpoint on your Node.js server
+        method: "GET",
+        responseType: "blob", // Important: responseType 'blob' for binary data
+      }).then((response) => {
+        // Create a blob object from the binary data
+        const blob = new Blob([response.data], { type: "application/pdf" });
 
-      // Create a link element to trigger the download
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "all-customers-report.pdf");
-      document.body.appendChild(link);
+        // Create a link element to trigger the download
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "all-customers-report.pdf");
+        document.body.appendChild(link);
 
-      // Trigger the download
-      link.click();
+        // Trigger the download
+        link.click();
 
-      // Clean up
-      window.URL.revokeObjectURL(url);
-    });
+        // Clean up
+        window.URL.revokeObjectURL(url);
+      });
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoadingPdf(false);
+    }
   };
   const handleDownloadExcel = async () => {
-    await axios({
-      url: "http://localhost:3000/api/v1/reports/all/customers/excel", // Endpoint on your Node.js server
-      method: "GET",
-      responseType: "blob", // Important: responseType 'blob' for binary data
-    }).then((response) => {
-      // Create a blob object from the binary data
-      const blob = new Blob([response.data], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    setLoadingExcel(true);
+    try {
+      await axios({
+        url: `${baseUrlJasper}/all/customers/excel`, // Endpoint on your Node.js server
+        method: "GET",
+        responseType: "blob", // Important: responseType 'blob' for binary data
+      }).then((response) => {
+        // Create a blob object from the binary data
+        const blob = new Blob([response.data], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
+
+        // Create a link element to trigger the download
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "all-customers-report.xlsx");
+        document.body.appendChild(link);
+
+        // Trigger the download
+        link.click();
+
+        // Clean up
+        window.URL.revokeObjectURL(url);
       });
-
-      // Create a link element to trigger the download
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "all-customers-report.xlsx");
-      document.body.appendChild(link);
-
-      // Trigger the download
-      link.click();
-
-      // Clean up
-      window.URL.revokeObjectURL(url);
-    });
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoadingExcel(false);
+    }
   };
 
   const columns = useMemo(
@@ -160,13 +176,13 @@ const CustomerList = () => {
         <p>*** All Customers ***</p>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <div style={{ marginLeft: "10px" }}>
-            <button onClick={handleDownloadPDF}>
-              <FaFilePdf />
+            <button onClick={handleDownloadPDF} disabled={loadingPdf}>
+              {loadingPdf ? <Loader /> : <FaFilePdf />}
             </button>
           </div>
           <div style={{ marginLeft: "10px" }}>
-            <button onClick={handleDownloadExcel}>
-              <FaFileExcel />
+            <button onClick={handleDownloadExcel} disabled={loadingExcel}>
+              {loadingExcel ? <Loader /> : <FaFileExcel />}
             </button>
           </div>
         </div>

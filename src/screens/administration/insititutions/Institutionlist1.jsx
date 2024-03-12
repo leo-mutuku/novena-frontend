@@ -13,10 +13,14 @@ import { FaFilePdf, FaFileExcel } from "react-icons/fa";
 import DataTable from "../../../components/general/DataTable";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
 
 const InstitutionList = () => {
   const { data: institutions, isLoading } = useGetAllInstitutionsQuery();
   const [tableData, setTableData] = useState([]);
+
+  const [loadingPdf, setLoadingPdf] = useState(false);
+  const [loadingExcel, setLoadingExcel] = useState(false);
 
   useEffect(() => {
     if (institutions?.data) {
@@ -25,9 +29,10 @@ const InstitutionList = () => {
   }, [institutions]);
 
   const handleDownloadPDF = async () => {
+    setLoadingPdf(true);
     try {
       await axios({
-        url: "http://localhost:3000/api/v1/reports/all/institutions/pdf", // Endpoint on your Node.js server
+        url: `${baseUrlJasper}/all/institutions/pdf`, // Endpoint on your Node.js server
         method: "GET",
         responseType: "blob", // Important: responseType 'blob' for binary data
       }).then((response) => {
@@ -50,12 +55,15 @@ const InstitutionList = () => {
     } catch (error) {
       console.log(error.message);
       // toast.error(error.message);
+    } finally {
+      setLoadingPdf(false);
     }
   };
   const handleDownloadExcel = async () => {
+    setLoadingExcel(true);
     try {
       await axios({
-        url: "http://localhost:3000/api/v1/reports/all/institutions/excel", // Endpoint on your Node.js server
+        url: `${baseUrlJasper}/all/institutions/excel`, // Endpoint on your Node.js server
         method: "GET",
         responseType: "blob", // Important: responseType 'blob' for binary data
       }).then((response) => {
@@ -80,6 +88,8 @@ const InstitutionList = () => {
     } catch (error) {
       console.log(error.message);
       // toast.error(error.message);
+    } finally {
+      setLoadingExcel(false);
     }
   };
 
@@ -147,13 +157,13 @@ const InstitutionList = () => {
         <p>*** All Institutions ***</p>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <div style={{ marginLeft: "10px" }}>
-            <button onClick={handleDownloadPDF}>
-              <FaFilePdf />
+            <button onClick={handleDownloadPDF} disabled={loadingPdf}>
+              {loadingPdf ? <Loader /> : <FaFilePdf />}
             </button>
           </div>
           <div style={{ marginLeft: "10px" }}>
-            <button onClick={handleDownloadExcel}>
-              <FaFileExcel />
+            <button onClick={handleDownloadExcel} disabled={loadingExcel}>
+              {loadingExcel ? <Loader /> : <FaFileExcel />}
             </button>
           </div>
         </div>
