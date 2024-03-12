@@ -8,6 +8,7 @@ import { useGetSalesLinesByHeaderIdQuery } from "../../../slices/sales/salesOrde
 import { useCreateSalesReturnOrderMutation } from "../../../slices/sales/salesOrderReturnApiSlice";
 import TimeDate from "../../../components/TimeDate";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const ReturnOrderpreview = () => {
   const timeDate = new TimeDate();
@@ -17,9 +18,12 @@ const ReturnOrderpreview = () => {
     useGetSalesLinesByHeaderIdQuery(id);
   const [createReturnOrder, { isLoading, error }] =
     useCreateSalesReturnOrderMutation();
+  const { userInfo } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const [reverse_order, set_reverse_order] = useState([]);
   const [return_order, set_return_order] = useState([]);
+  const [created_by, set_created_by] = useState("");
   const [order_item, set_order_item] = useState({
     order_item_id: null,
     quantity: null,
@@ -29,9 +33,14 @@ const ReturnOrderpreview = () => {
     sub_total: null,
     total: null,
   });
+
   useEffect(() => {
     set_reverse_order(posted_sales_order_line_id?.data.order);
-  }, [id, posted_sales_order_line_id]);
+    if (userInfo) {
+      set_created_by(userInfo.first_name);
+    }
+    navigate();
+  }, [id, posted_sales_order_line_id, navigate, userInfo]);
 
   const handleQty = (value, order_line_id) => {
     let orginal_quantity = 0;
@@ -99,6 +108,7 @@ const ReturnOrderpreview = () => {
     try {
       const res = await createReturnOrder({
         return_order_list: return_order,
+        created_by: created_by,
       }).unwrap();
       if (res.status == "failed") {
       } else {

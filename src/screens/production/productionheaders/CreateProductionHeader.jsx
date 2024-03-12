@@ -21,7 +21,6 @@ function CreateProductionHeader() {
     useState("");
   const [production_officer_last_name, set_production_officer_last_name] =
     useState("");
-  console.log(store_code);
 
   const [ProductionHeader, { isLoading }] = useCreateProductionHeaderMutation();
   const { data: staff } = useGetAllStaffQuery();
@@ -50,7 +49,7 @@ function CreateProductionHeader() {
         production_officer_first_name,
         production_officer_last_name,
       }).unwrap();
-      console.log(res);
+
       if (res.status == "failed") {
         toast.error(res.message);
       } else {
@@ -84,7 +83,7 @@ function CreateProductionHeader() {
         return a.first_name;
       }
     });
-    alert(x[0].first_name);
+
     set_production_officer(e.target.value);
     set_production_officer_first_name(x[0].first_name);
     set_production_officer_last_name(x[0].last_name);
