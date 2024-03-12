@@ -125,6 +125,10 @@ const StoreRegisterList = () => {
     []
   );
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <>
       <p>*** All Stores ***</p>
