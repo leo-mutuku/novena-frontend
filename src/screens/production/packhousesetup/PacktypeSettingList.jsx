@@ -11,7 +11,7 @@ const PacktypeSettingList = () => {
   return (
     <>
       <Row>
-        <Col>** Products setup table **</Col>
+        <Col>** Pack type setup table **</Col>
         <Col></Col>
         <Col></Col>
         <Col sm={1}>
@@ -20,14 +20,13 @@ const PacktypeSettingList = () => {
           </Link>
         </Col>
       </Row>
-      <br></br>
 
       <Row>
         <Table aria-label="basic table">
           <thead>
             <tr>
-              <th style={{ width: "40%" }}>Product name</th>
-              <th>Product store</th>
+              <th style={{ width: "40%" }}>Pack type</th>
+              <th>Pay per Bale</th>
               <th>Edit</th>
             </tr>
           </thead>
