@@ -49,6 +49,7 @@ const AllPostedProductionHeaderList = () => {
             <th>Expected</th>
             <th>Output</th>
             <th>Variance</th>
+            <th style={{ fontSize: 12 }}>Cost of Packaging</th>
             <th>Status</th>
             <th>View</th>
           </tr>
@@ -73,6 +74,7 @@ const AllPostedProductionHeaderList = () => {
                 <td>{item.expected_output}</td>
                 <td>{item.actual_output}</td>
                 <td>{item.production_variance}</td>
+                <td>{item.packaging_cost}</td>
 
                 <td>
                   {item.status === "New" ? (
