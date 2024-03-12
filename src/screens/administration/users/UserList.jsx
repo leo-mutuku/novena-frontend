@@ -17,6 +17,9 @@ const UserList = () => {
   const { data: users, isLoading } = useGetUsersQuery();
   const [tableData, setTableData] = useState([]);
 
+  const [loadingPdf, setLoadingPdf] = useState(false);
+  const [loadingExcel, setLoadingExcel] = useState(false);
+
   useEffect(() => {
     if (users?.data) {
       setTableData(users.data);
@@ -24,6 +27,7 @@ const UserList = () => {
   }, [users]);
 
   const handleDownloadPDF = async () => {
+    setLoadingPdf(true);
     try {
       await axios({
         url: "http://localhost:3000/api/v1/reports/all/users/pdf", // Endpoint on your Node.js server
@@ -49,9 +53,12 @@ const UserList = () => {
     } catch (error) {
       console.log(error.message);
       // toast.error(error.message);
+    } finally {
+      setLoadingPdf(false);
     }
   };
   const handleDownloadExcel = async () => {
+    setLoadingExcel(true);
     try {
       await axios({
         url: "http://localhost:3000/api/v1/reports/all/users/excel", // Endpoint on your Node.js server
@@ -78,7 +85,9 @@ const UserList = () => {
       });
     } catch (error) {
       console.log(error.message);
-      // toast.error(error.message);
+      toast.error(error.message);
+    } finally {
+      setLoadingExcel(false);
     }
   };
 
@@ -129,16 +138,16 @@ const UserList = () => {
   return (
     <>
       <div>
-        <p>*** All Staffs ***</p>
+        <p>*** All Users ***</p>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <div style={{ marginLeft: "10px" }}>
-            <button onClick={handleDownloadPDF}>
-              <FaFilePdf />
+            <button onClick={handleDownloadPDF} disabled={loadingPdf}>
+              {loadingPdf ? <Loader /> : <FaFilePdf />}
             </button>
           </div>
           <div style={{ marginLeft: "10px" }}>
-            <button onClick={handleDownloadExcel}>
-              <FaFileExcel />
+            <button onClick={handleDownloadExcel} disabled={loadingExcel}>
+              {loadingExcel ? <Loader /> : <FaFileExcel />}
             </button>
           </div>
         </div>

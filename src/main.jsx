@@ -100,7 +100,7 @@ import PurchaseList from "./screens/purchase/purchase/PurchaseList.jsx";
 import StoreRegisterScreen from "./screens/store/storeRegisterScreen.jsx";
 import StoreRegisterList from "./screens/store/storeregister/StoreRegisterList.jsx";
 import CreateStoreRegister from "./screens/store/storeregister/CreateStoreRegister.jsx";
-import AllPostedStorePurchases from "./screens/purchase/purchase/AllPostedStorePurchases.jsx";
+import AllPostedStorePurchases from "./screens/purchase/purchase/AllPostedStorePurchases1.jsx";
 import AllStorePurchasesInTransit from "./screens/purchase/purchase/AllStorePurchasesInTransit.jsx";
 import CreateBankAccount from "./screens/finance/bankaccounts/CreateBankAccount.jsx";
 import CreatePackhousePerson from "./screens/production/packhousepeople/CreatePackhousePerson.jsx";
