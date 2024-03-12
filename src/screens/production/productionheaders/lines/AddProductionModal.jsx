@@ -34,7 +34,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
     product_store_code: 0,
     product_store_name: "",
     product_units_value: 1,
-    product_output: 0,
+    product_output: null,
     first_pack: "",
     first_pack_name: "",
     first_pack_count: 0,
@@ -144,8 +144,8 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
   const handProductOutput = (e) => {
     set_products({
       ...products,
-      product_output: parseInt(e.target.value),
-      first_pack_count: parseInt(e.target.value),
+      product_output: parseFloat(e.target.value),
+      first_pack_count: parseFloat(e.target.value),
       weight_in_kgs:
         parseInt(e.target.value) * parseInt(products.product_units_value),
       weight_in_bags:
@@ -266,8 +266,9 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                         <Form.Control
                           type="number"
                           required
+                          step={"any"}
                           placeholder="Output"
-                          defaultValue={products.product_output}
+                          defaultValue={parseFloat(products.product_output)}
                           onChange={handProductOutput}
                         ></Form.Control>
                       </Form.Group>
