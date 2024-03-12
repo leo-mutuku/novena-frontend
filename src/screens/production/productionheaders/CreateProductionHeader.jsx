@@ -105,10 +105,13 @@ function CreateProductionHeader() {
               <Form.Label>Input</Form.Label>
               <Form.Control
                 type="number"
+                step="any"
                 required
                 placeholder="production_input"
-                value={production_input}
-                onChange={(e) => set_production_input(parseInt(e.target.value))}
+                defaultValue={production_input}
+                onChange={(e) =>
+                  set_production_input(parseFloat(e.target.value))
+                }
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -117,10 +120,13 @@ function CreateProductionHeader() {
               <Form.Label>Expected Output</Form.Label>
               <Form.Control
                 type="number"
+                step="any"
                 required
                 placeholder="Expected Output"
-                value={expected_output}
-                onChange={(e) => set_expected_output(parseInt(e.target.value))}
+                defaultValue={expected_output}
+                onChange={(e) =>
+                  set_expected_output(parseFloat(e.target.value))
+                }
               ></Form.Control>
             </Form.Group>
           </Col>
