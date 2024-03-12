@@ -267,7 +267,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                           type="number"
                           required
                           placeholder="Output"
-                          value={products.product_output}
+                          defaultValue={products.product_output}
                           onChange={handProductOutput}
                         ></Form.Control>
                       </Form.Group>
