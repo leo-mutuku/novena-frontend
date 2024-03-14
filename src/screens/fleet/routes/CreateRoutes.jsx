@@ -31,8 +31,8 @@ function CreateRoutes() {
         toast.error(res.message);
       } else {
         toast.success(res.message);
+        navigate("../allroutes");
       }
-      navigate("../allroutes");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }

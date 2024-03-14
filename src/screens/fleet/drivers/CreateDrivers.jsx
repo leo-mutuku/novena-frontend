@@ -37,8 +37,8 @@ function CreateDrivers() {
         toast.error(res.message);
       } else {
         toast.success(res.message);
+        navigate("../alldrivers");
       }
-      navigate("../alldrivers");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }

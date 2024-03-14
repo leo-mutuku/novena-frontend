@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useGetAllVehiclesQuery } from "../../../slices/fleet/vehicleApiSlice";
 import { useAddMaintenanceMutation } from "../../../slices/fleet/maintenanceApiSlice";
-import moment from 'moment';
+import moment from "moment";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -17,7 +17,6 @@ function CreateMaintenanceList() {
   const [vehicle_id, setVehicleId] = useState();
   const { data: vehicles } = useGetAllVehiclesQuery();
 
- 
   const [addMaintenance, { isLoading }] = useAddMaintenanceMutation();
   const navigate = useNavigate();
 
@@ -37,16 +36,14 @@ function CreateMaintenanceList() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-        // Assuming your date is received as a string from react-datepicker
+    // Assuming your date is received as a string from react-datepicker
     const dateStringFromPicker = maintenance_date;
 
     // Parse the ISO string to moment object
     const parsedDate = moment(dateStringFromPicker);
 
     // Get the date part in YYYY-MM-DD format
-    const formattedDate = parsedDate.format('YYYY-MM-DD');
-
-    console.log(formattedDate); // Output: "2024-02-28"
+    const formattedDate = parsedDate.format("YYYY-MM-DD");
 
     try {
       const res = await addMaintenance({
@@ -60,8 +57,8 @@ function CreateMaintenanceList() {
         toast.error(res.message);
       } else {
         toast.success(res.message);
+        navigate("../allmaintenance");
       }
-      navigate("../allmaintenance");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }

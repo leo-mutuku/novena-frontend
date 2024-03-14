@@ -31,12 +31,12 @@ function CreateVehicle() {
         model,
         year,
       }).unwrap(); //extract the actual payload from the action
-      if (res.status === "failed") {
+      if (res.status == "failed") {
         toast.error(res.message);
       } else {
         toast.success(res.message);
+        navigate("../allvehicles");
       }
-      navigate("../allvehicles");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }

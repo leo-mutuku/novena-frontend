@@ -49,8 +49,8 @@ function CreateRun() {
         toast.error(res.message);
       } else {
         toast.success(res.message);
+        navigate("../allruns");
       }
-      navigate("../allruns");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
