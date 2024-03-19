@@ -53,7 +53,7 @@ import ItemAdjustmentScreen from "./screens/store/ItemAdjustmentScreen.jsx";
 import CreateUser from "./screens/administration/users/CreateUser.jsx";
 import UserList from "./screens/administration/users/UserList.jsx";
 import CreateAccount from "./screens/finance/accounts/CreateAccount.jsx";
-import UpdateAccount from "./screens/finance/accounts/UpdateAccount.jsx";
+
 import ViewAccounts from "./screens/finance/accounts/ViewAccounts.jsx";
 import PurchaseScreen from "./screens/purchase/PurchaseScreen.jsx";
 import StorePurchaseScreen from "./screens/purchase/StorePurchaseScreen.jsx";
@@ -217,6 +217,9 @@ import ReturnOrderpreview from "./screens/sales/returnorders/ReturnOrderpreview.
 import ReverseorderList from "./screens/sales/returnorders/ReverseorderList.jsx";
 import ReverseOrderPreview from "./screens/sales/returnorders/ReverseOrderPreview.jsx";
 import ClearedOrders from "./screens/sales/orderposting/ClearedOrders.jsx";
+import AllbankAccountEntries from "./screens/finance/bankaccountentries/AllbankAccountEntries.jsx";
+import BankAccountEntiresScreen from "./screens/finance/BankAccountEntiresScreen.jsx";
+import PayablesScreen from "./screens/finance/PayablesScreen.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -618,7 +621,6 @@ const router = createHashRouter(
             <Route index element={<AccountsList />} />
             <Route path="allaccounts" element={<AccountsList />} />
             <Route path="createaccount" element={<CreateAccount />} />
-            <Route path="updateaccount" element={<UpdateAccount />} />
             <Route path="update/:id" element={<UpdateAccounts />} />
             <Route path="viewaccount" element={<ViewAccounts />} />
           </Route>
@@ -659,6 +661,17 @@ const router = createHashRouter(
             <Route path="createbankaccount" element={<CreateBankAccount />} />
             <Route path="bankaccounts" element={<BankAccountsList />} />
           </Route>
+          <Route
+            path="bankaccountentries"
+            element={<BankAccountEntiresScreen />}
+          >
+            <Route
+              path="allbankaccountsentries"
+              element={<AllbankAccountEntries />}
+            />
+          </Route>
+          // account Payable
+          <Route path="payables" element={<PayablesScreen />}></Route>
           <Route path="trialbalance" element={<TrialBalanceScreen />}></Route>
           <Route
             path="profitandlossstatement"

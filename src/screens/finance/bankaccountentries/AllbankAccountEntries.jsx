@@ -1,28 +1,33 @@
 import React, { useEffect, useMemo, useState } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
-import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
+import { useGetAllAccountsQuery } from "../../../slices/finance/accountsApiSlice";
+import { useGetAllAccountEntriesQuery } from "../../../slices/finance/accountEntriesApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdEye } from "react-icons/io";
+import TimeDate from "../../../components/TimeDate";
 import axios from "axios";
 import DataTable from "../../../components/general/DataTable";
 import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
 import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
 import moment from "moment";
-const AllCashAccount = () => {
-  const { data: banks, isLoading } = useGetAllBankAccountsQuery();
+
+const AllbankAccountEntries = () => {
+  const timeDate = new TimeDate();
+  const { data: accounts, isLoading } = useGetAllAccountEntriesQuery();
+  const [account_entries, set_account_entries] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
 
   useEffect(() => {
-    if (banks?.data) {
-      setTableData(banks.data);
+    if (accounts?.data) {
+      setTableData(accounts.data);
     }
-  }, [banks]);
+  }, [accounts]);
 
   const handleDownloadPDF = async () => {
     setLoadingPdf(true);
@@ -79,38 +84,41 @@ const AllCashAccount = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "Bank Name",
-        accessor: "bank_name",
+        Header: "Entry ID",
+        accessor: "account_entry_id",
       },
       {
-        Header: "Account Number",
-        accessor: "bank_number",
+        Header: "AC No.",
+        accessor: "account_number",
       },
       {
-        Header: "Gl Number",
-        accessor: "gl_number",
+        Header: "SRC. Doc. Id",
+        accessor: "source_document_id",
       },
       {
-        Header: "Bank Balance",
-        accessor: "bank_balance",
+        Header: "SRC. Doc. Name",
+        accessor: "source_document_name",
       },
       {
-        Header: "Edit",
-        accessor: "edit",
-        Cell: ({ row }) => (
-          <Link to="#">
-            <CiEdit />
-          </Link>
+        Header: "Adj Type",
+        accessor: "adjustment_type",
+      },
+      {
+        Header: "Value",
+        accessor: "adjustment_value",
+      },
+      {
+        Header: "Date-Time",
+        accessor: "created_at",
+        Cell: ({ value }) => (
+          <span>{`${moment(value).format("YYYY-MM-DD")} : ${moment(
+            value
+          ).format("HH:mm")}`}</span>
         ),
       },
       {
-        Header: "View",
-        accessor: "view",
-        Cell: ({ row }) => (
-          <Link to="#">
-            <IoMdEye />
-          </Link>
-        ),
+        Header: "Created By",
+        accessor: "created_by",
       },
     ],
     []
@@ -119,11 +127,10 @@ const AllCashAccount = () => {
   if (isLoading) {
     return <Loader />;
   }
-
   return (
     <>
       <div>
-        <p>*** All Cash Accounts ***</p>
+        <p>*** All Bank Accounts Entries ***</p>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <div style={{ marginLeft: "10px" }}>
             <button onClick={handleDownloadPDF} disabled={loadingPdf}>
@@ -141,4 +148,4 @@ const AllCashAccount = () => {
     </>
   );
 };
-export default AllCashAccount;
+export default AllbankAccountEntries;

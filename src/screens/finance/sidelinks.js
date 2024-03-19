@@ -23,7 +23,7 @@ export const sidelinks = [
     menuTitle: "Bank Accounts",
     subMenus: [
       { subMenuTitle: "Bank Accounts", to: "bankaccounts" },
-      { subMenuTitle: "Bank Entries", to: "allbankentries" },
+      { subMenuTitle: "Bank Entries", to: "bankaccountentries" },
     ],
   },
   {
@@ -35,10 +35,7 @@ export const sidelinks = [
   },
   {
     menuTitle: "Payables",
-    subMenus: [
-      { subMenuTitle: "Cash Accounts", to: "cashaccounts" },
-      { subMenuTitle: "Cash Account entries", to: "allcashaccountentries" },
-    ],
+    subMenus: [{ subMenuTitle: "Account Payables", to: "payables" }],
   },
   {
     menuTitle: "Receivable",
