@@ -1,17 +1,10 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemButton from "@mui/material/ListItemButton";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
-import Slide from "@mui/material/Slide";
-import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Grid from "@mui/material/Grid";
@@ -21,11 +14,15 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Paper from "@mui/material/Paper";
 import { useGetAllSoldItemsQuery } from "../../../../slices/store/itemregisterApiSlice";
 import { useGetAllStoreItemsQuery } from "../../../../slices/store/storeItemsApiSlice";
+import { useCreateSalesOrderLineMutation } from "../../../../slices/sales/salesOrderLinesApiSlice";
 
 import Item from "@mui/material/Grid";
+import { toast } from "react-toastify";
 
 const AddOrders = ({
   open,
@@ -33,6 +30,7 @@ const AddOrders = ({
   sales_order_number,
   sales_person_name,
 }) => {
+  const [created_by, set_created_by] = React.useState("");
   const [sales_item_list, set_sales_item_list] = React.useState({
     item_code: "",
     product: "",
@@ -45,13 +43,17 @@ const AddOrders = ({
   const [sales_list, set_sales_list] = React.useState([]);
   const { data: sold_items } = useGetAllSoldItemsQuery();
   const { data: store_items } = useGetAllStoreItemsQuery();
-
-  React.useEffect(() => {}, [
-    sold_items,
-    store_items,
-    sales_item_list,
-    sales_list,
-  ]);
+  const [createSalesOrderLine, { isLoading }] =
+    useCreateSalesOrderLineMutation();
+  const navigate = useNavigate();
+  const { userInfo } = useSelector((state) => state.auth);
+  React.useEffect(() => {
+    if (!userInfo) {
+      navigate("/login");
+    }
+    set_created_by(userInfo?.first_name);
+    navigate();
+  }, [userInfo, navigate]);
 
   const handleSetProduct = (_, newInputValue) => {
     // filter and get price
@@ -69,6 +71,33 @@ const AddOrders = ({
       total: parseFloat(x[0]?.current_price) * sales_item_list.quantity,
     });
   };
+  const handSubmit = async () => {
+    try {
+      if (sales_list.length == 0) {
+        return toast.error("Please add items to the order");
+      }
+      // api call to save sales order
+      const res = await createSalesOrderLine({
+        sales_order_number: sales_order_number,
+        created_by: created_by,
+        sales_list: sales_list,
+      }).unwrap();
+      if (res.status == "success") {
+        toast.success("Order items added successfully");
+      } else {
+        toast.error("Error adding order items");
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+  const handCancel = () => {
+    try {
+      set_sales_list([]);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
   const handleAdd = (e) => {
     try {
       e.preventDefault();
@@ -78,12 +107,12 @@ const AddOrders = ({
         sales_item_list.quantity == "" ||
         sales_item_list.store_name == ""
       ) {
-        return alert("Fill all fields");
+        return toast.error("Please fill all fields");
       }
 
       set_sales_list([...sales_list, sales_item_list]);
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
   };
 
@@ -114,8 +143,8 @@ const AddOrders = ({
         <AppBar sx={{ position: "relative" }}>
           <Toolbar>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Sales order Number {sales_order_number} , Sales Person{" "}
-              {sales_person_name}
+              *** Add Order Items:- *** Sales order Number {sales_order_number}{" "}
+              , Sales Person {sales_person_name}
             </Typography>
             <Button autoFocus color="inherit" onClick={handleClose}>
               <CloseIcon />
@@ -123,6 +152,7 @@ const AddOrders = ({
           </Toolbar>
         </AppBar>
         <br></br>
+
         <Grid
           container
           direction="row"
@@ -289,6 +319,35 @@ const AddOrders = ({
             <div style={{ color: "red" }}> Add order items </div>
           )}
         </Grid>
+        <br></br>
+        {sales_list.length > 0 ? (
+          <Grid
+            container
+            direction="row"
+            justifyContent="right"
+            alignItems="center"
+            columns={{ xs: 3, sm: 6, md: 12 }}
+          >
+            <Grid item xs={1}>
+              <Item>
+                <Button color={"error"} variant="outlined" onClick={handCancel}>
+                  Cancel
+                </Button>
+              </Item>
+            </Grid>
+            <Grid item xs={1}>
+              <Item>
+                <Button
+                  color={"success"}
+                  variant="outlined"
+                  onClick={handSubmit}
+                >
+                  Submit
+                </Button>
+              </Item>
+            </Grid>
+          </Grid>
+        ) : null}
       </Dialog>
     </>
   );

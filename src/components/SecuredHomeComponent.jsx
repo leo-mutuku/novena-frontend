@@ -1,4 +1,4 @@
-import { Container, Card, Button, Row, Col } from "react-bootstrap";
+import { Container, Card, Row, Col } from "react-bootstrap";
 import { TbBuildingFactory } from "react-icons/tb";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
@@ -10,6 +10,14 @@ import { Link, Outlet } from "react-router-dom";
 import { GiWallet } from "react-icons/gi";
 import { RiSecurePaymentFill } from "react-icons/ri";
 import SalesProduction from "../components/graph/SalesProduction";
+import Grid from "@mui/material/Grid";
+
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import Item from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
 const SecuredHomeComponent = () => {
   const moduleMenu = [

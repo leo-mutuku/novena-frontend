@@ -8,29 +8,33 @@ import { Link } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
 
 import TimeDate from "../../../components/TimeDate";
-import EditOrderLines from "./lines/EditOrderLines";
+import EditOrder from "./lines/EditOrder";
 const AllOrderHeadersInTransit = () => {
-  const [edit_mode, set_edit_mode] = useState("none");
-  const [purchase_header_id, set_purchase_header_id] = useState("");
+  const [sales_order_number, set_sales_order_number] = useState("");
   const timeDate = new TimeDate();
   const { data: purchase_order_intransit, isLoading } =
     useGetAllSalesOrdersInTransitQuery();
 
-  const handleAdd = (e) => {};
+  const [open, setOpen] = useState(false);
 
-  const handleEdit = (e, id, mode) => {
-    set_edit_mode(mode);
-    set_purchase_header_id(parseInt(id));
+  const handleClickOpen = (e, id, name) => {
+    setOpen(true);
+    set_sales_order_number(parseInt(id));
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
     <>
       <p>*** All Store Purchases In Transit ***</p>
-      <div style={{ display: `${edit_mode}` }}>
-        <EditOrderLines
-          set_edit_mode={set_edit_mode}
-          edit_mode={edit_mode}
-          purchase_header_id={purchase_header_id}
+      <div>
+        <EditOrder
+          sales_order_number={sales_order_number}
+          open={open}
+          handleClickOpen={handleClickOpen}
+          handleClose={handleClose}
         />
       </div>
 
@@ -85,9 +89,7 @@ const AllOrderHeadersInTransit = () => {
                   )}
                 </td>
                 <td
-                  onClick={(e) =>
-                    handleEdit(e, item.sales_order_number, "block")
-                  }
+                  onClick={(e) => handleClickOpen(e, item.sales_order_number)}
                 >
                   {item.status === "In Transit" ? (
                     <Link to={`#`}>
