@@ -18,7 +18,7 @@ export const sidelinks = [
   },
   {
     menuTitle: "Transfer Order (TO)",
-    subMenus: [{ subMenuTitle: "Transfer Order (TO)", to: "#" }],
+    subMenus: [{ subMenuTitle: "Transfer Order (TO)", to: "storetransfer" }],
   },
 
   {

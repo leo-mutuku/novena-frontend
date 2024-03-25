@@ -13,51 +13,44 @@ import AddOrderLines from "./lines/AddOrderLines";
 import TimeDate from "../../../components/TimeDate";
 import PrintSalesOrder from "./lines/PrintSalesOrder";
 import { TiPrinter } from "react-icons/ti";
+import AddOrders from "./lines/AddOrders";
 
 const OrderHeaderList = () => {
   let timeDate = new TimeDate();
-  const [mode_print, set_mode_print] = useState("none");
-  const [mode, set_mode] = useState("none");
-  const [mode_delete, set_mode_delete] = useState("none");
-  const [store_purchase_id, set_store_purchase_id] = useState("");
 
-  const handleAdd = (e, id, style) => {
-    set_store_purchase_id(parseInt(id));
-    set_mode(style);
-  };
+  const [sales_order_number, set_sales_order_number] = useState("");
+  const [sales_person_name, set_sales_person_name] = useState("");
 
   const handleDelete = (e, id, style) => {
-    set_store_purchase_id(parseInt(id));
     set_mode_delete(style);
   };
   const { data, isLoading } = useGetAllSalesOrderHeadersQuery();
+  console.log(data?.data);
 
   const navigate = useNavigate();
   useEffect(() => {}, [data]);
 
-  const handlePrint = (e, id, style) => {
-    set_store_purchase_id(parseInt(id));
-    set_print_mode(style);
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = (e, id, name) => {
+    setOpen(true);
+    set_sales_order_number(parseInt(id));
+    set_sales_person_name(name);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
   return (
     <>
       <>
-        <div style={{ display: `${mode}` }}>
-          <AddOrderLines
-            store_purchase_id={store_purchase_id}
-            set_mode={set_mode}
-          />
-        </div>
-        {/* <div style={{ display: `${mode_delete}` }}>
-          <DeletePurchaseModal
-            store_purchase_id={store_purchase_id}
-            set_mode_delete={set_mode_delete}
-          />
-        </div> */}
-        <div style={{ display: `${mode_print}` }}>
-          <PrintSalesOrder
-            purchase_header_id={store_purchase_id}
-            set_mode_print={set_mode_print}
+        <div>
+          <AddOrders
+            sales_person_name={sales_person_name}
+            sales_order_number={sales_order_number}
+            open={open}
+            handleClickOpen={handleClickOpen}
+            handleClose={handleClose}
           />
         </div>
       </>
@@ -66,18 +59,18 @@ const OrderHeaderList = () => {
 
         <Table striped style={{ border: "1px solid #ccc", position: "static" }}>
           <thead>
-            <tr style={{ position: "static" }}>
-              <th style={{ position: "initial" }}>#</th>
-              <th style={{ position: "initial" }}>Sale Date</th>
-              <th style={{ position: "initial" }}>Sales Type</th>
-              <th style={{ position: "initial" }}>Order No.</th>
-              <th style={{ position: "initial" }}>Total</th>
-              <th style={{ position: "initial" }}>No. of Items</th>
-              <th style={{ position: "initial" }}>Cust Name</th>
-              <th style={{ position: "initial" }}>Sales .P</th>
-              <th style={{ position: "initial" }}>Status</th>
-              <th style={{ position: "initial" }}>Add</th>
-              <th style={{ position: "initial" }}>Del</th>
+            <tr>
+              <th>#</th>
+              <th>Sale Date</th>
+              <th>Sales Type</th>
+              <th>Order No.</th>
+              <th>Total</th>
+              <th>No. of Items</th>
+              <th>Cust Name</th>
+              <th>Sales .P</th>
+              <th>Status</th>
+              <th>Add</th>
+              <th>Del</th>
             </tr>
           </thead>
           <tbody>
@@ -118,7 +111,11 @@ const OrderHeaderList = () => {
                       <Link to={`#`}>
                         <IoMdAdd
                           onClick={(e) =>
-                            handleAdd(e, item.sales_order_number, "block")
+                            handleClickOpen(
+                              e,
+                              item.sales_order_number,
+                              item.first_name
+                            )
                           }
                         />
                       </Link>

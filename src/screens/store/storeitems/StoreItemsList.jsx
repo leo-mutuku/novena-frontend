@@ -86,24 +86,30 @@ const StoreItemsList = () => {
         Header: "#",
         accessor: (row, index) => index + 1,
       },
-      {
-        Header: "Item Name",
-        accessor: "item_name",
-      },
+      // Uncomment these lines if you want to include "Store Item ID" column
+      // {
+      //   Header: "Item Name",
+      //   accessor: "item_name",
+      // },
       // Uncomment these lines if you want to include "Item Code" column
       // {
       //   Header: "Item Code",
       //   accessor: "item_code",
       // },
-      {
-        Header: "Store Name",
-        accessor: "store_name",
-      },
+      //  Uncomment these lines if you want to include "Store Name" column
+      // {
+      //   Header: "Store Name",
+      //   accessor: "store_name",
+      // },
       // Uncomment these lines if you want to include "Store Code" column
       // {
       //   Header: "Store Code",
       //   accessor: "store_code",
       // },
+      {
+        Header: "Store Item Name",
+        accessor: "store_item_name",
+      },
       {
         Header: "Item Quantity",
         accessor: "item_quantity",
@@ -112,9 +118,13 @@ const StoreItemsList = () => {
         Header: "Edit",
         accessor: "edit",
         Cell: ({ row }) => (
-          <Link to={`/store/storeitems/update/${row.original.store_item_id}`}>
-            <CiEdit />
-          </Link>
+          <>
+            {/* Uncomment this line if you want to include "Edit" button */}
+            {/* add persmission check here */}
+            <Link to={`/store/storeitems/update/${row.original.store_item_id}`}>
+              <CiEdit />
+            </Link>
+          </>
         ),
       },
       {

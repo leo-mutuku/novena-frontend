@@ -1,7 +1,14 @@
-import React from "react";
+import PageActionComponent from "../../components/PageActionComponent";
+const pagemenus = [
+  { pagename: "All Account Receivable", to: "allaccountreceivable" },
+];
 
-const ReceivableScreen = () => {
-  return <div>ReceivableScreen</div>;
-};
+function ReceivableScreen() {
+  return (
+    <>
+      <PageActionComponent pagemenus={pagemenus} />
+    </>
+  );
+}
 
 export default ReceivableScreen;

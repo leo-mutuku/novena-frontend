@@ -39,10 +39,7 @@ export const sidelinks = [
   },
   {
     menuTitle: "Receivable",
-    subMenus: [
-      { subMenuTitle: "Cash Accounts", to: "cashaccounts" },
-      { subMenuTitle: "Cash Account entries", to: "allcashaccountentries" },
-    ],
+    subMenus: [{ subMenuTitle: "Account Receibabes", to: "receivabe" }],
   },
   {
     menuTitle: "Fixed Asset",

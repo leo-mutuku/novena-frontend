@@ -22,6 +22,7 @@ const AllOrderHeadersInTransit = () => {
     set_edit_mode(mode);
     set_purchase_header_id(parseInt(id));
   };
+
   return (
     <>
       <p>*** All Store Purchases In Transit ***</p>

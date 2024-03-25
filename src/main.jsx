@@ -220,6 +220,10 @@ import ClearedOrders from "./screens/sales/orderposting/ClearedOrders.jsx";
 import AllbankAccountEntries from "./screens/finance/bankaccountentries/AllbankAccountEntries.jsx";
 import BankAccountEntiresScreen from "./screens/finance/BankAccountEntiresScreen.jsx";
 import PayablesScreen from "./screens/finance/PayablesScreen.jsx";
+import AllAccountPayables from "./screens/finance/payables/AllAccountPayables.jsx";
+import ReceivableScreen from "./screens/finance/ReceivableScreen.jsx";
+import AllAccountReceivable from "./screens/finance/receivables/AllAccountReceivable.jsx";
+import TransferScreen from "./screens/store/TransferScreen.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -427,6 +431,8 @@ const router = createHashRouter(
             <Route path="update/:id" element={<UpdateItemsRegister />} />
             <Route path="allregistereditems" element={<ItemListList />} />
           </Route>
+          // transfer screen
+          <Route path="storetransfer" element={<TransferScreen />}></Route>
           <Route path="stocktake" element={<StockTakeScreen />}>
             <Route imdex element={<StocktakeList />} />
             <Route path="allstocktakes" element={<StocktakeList />} />
@@ -671,7 +677,16 @@ const router = createHashRouter(
             />
           </Route>
           // account Payable
-          <Route path="payables" element={<PayablesScreen />}></Route>
+          <Route path="payables" element={<PayablesScreen />}>
+            <Route path="allaccountpayables" element={<AllAccountPayables />} />
+          </Route>
+          // account receivable
+          <Route path="receivabe" element={<ReceivableScreen />}>
+            <Route
+              path="allaccountreceivable"
+              element={<AllAccountReceivable />}
+            />
+          </Route>
           <Route path="trialbalance" element={<TrialBalanceScreen />}></Route>
           <Route
             path="profitandlossstatement"
