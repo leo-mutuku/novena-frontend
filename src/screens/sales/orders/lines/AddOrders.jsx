@@ -35,9 +35,7 @@ const AddOrders = ({
     item_code: "",
     product: "",
     price: 0,
-    quantity: "",
-    store_name: "",
-    store_item_id: "",
+    quantity: 0,
     total: 0,
   });
   const [sales_list, set_sales_list] = React.useState([]);
@@ -51,7 +49,7 @@ const AddOrders = ({
     if (!userInfo) {
       navigate("/login");
     }
-    set_created_by(userInfo?.first_name);
+    set_created_by(userInfo?.staff_number);
     navigate();
   }, [userInfo, navigate]);
 
@@ -105,6 +103,7 @@ const AddOrders = ({
         sales_item_list.product == "" ||
         sales_item_list.price == "" ||
         sales_item_list.quantity == "" ||
+        sales_item_list.quantity == 0 ||
         sales_item_list.store_name == ""
       ) {
         return toast.error("Please fill all fields");
@@ -159,9 +158,9 @@ const AddOrders = ({
           justifyContent="center"
           alignItems="center"
           gap={2}
-          columns={{ xs: 3, sm: 6, md: 12 }}
+          columns={{ xs: 4, sm: 6, md: 12 }}
         >
-          <Grid item xs={2}>
+          <Grid item xs={3}>
             <Item>
               <Autocomplete
                 fullWidth
@@ -182,7 +181,7 @@ const AddOrders = ({
               />
             </Item>
           </Grid>
-          <Grid xs={2} item>
+          <Grid xs={3} item>
             <Item>
               <TextField
                 label="Price"
@@ -200,7 +199,7 @@ const AddOrders = ({
               />
             </Item>
           </Grid>
-          <Grid xs={2} item>
+          <Grid xs={3} item>
             <Item>
               <TextField
                 id="outlined-basic"
@@ -219,7 +218,7 @@ const AddOrders = ({
               />
             </Item>
           </Grid>
-          <Grid item xs={2}>
+          {/* <Grid item xs={2}>
             <Item>
               <Autocomplete
                 disablePortal
@@ -238,7 +237,7 @@ const AddOrders = ({
                 )}
               />
             </Item>
-          </Grid>
+          </Grid> */}
         </Grid>
         <br></br>
         <Grid
@@ -275,7 +274,6 @@ const AddOrders = ({
                         <TableCell>Product</TableCell>
                         <TableCell align="right">Price</TableCell>
                         <TableCell align="right">Quantity</TableCell>
-                        <TableCell align="right">Store</TableCell>
                         <TableCell align="right">Total</TableCell>
                         <TableCell align="right">Remove</TableCell>
                       </TableRow>
@@ -293,7 +291,6 @@ const AddOrders = ({
                           </TableCell>
                           <TableCell align="right">{row.price}</TableCell>
                           <TableCell align="right">{row.quantity}</TableCell>
-                          <TableCell align="right">{row.store_name}</TableCell>
                           <TableCell align="right">{row.total}</TableCell>
                           <TableCell align="right">
                             <Button

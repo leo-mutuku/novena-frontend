@@ -7,6 +7,7 @@ import { useLoginMutation } from "../slices/administration/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
+import { jwtDecode } from "jwt-decode";
 
 const LoginScreen = () => {
   const [user_email, setUser_Email] = useState("");
@@ -29,8 +30,9 @@ const LoginScreen = () => {
     e.preventDefault();
     try {
       const res = await login({ user_email, password }).unwrap();
+
       dispatch(setCredentials({ ...res.data }));
-      console.log(res.data);
+
       navigate("/securedhome");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
