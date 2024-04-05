@@ -1,8 +1,7 @@
 import React from "react";
 import PageActionComponent from "../../components/PageActionComponent";
 const pagemenus = [
-  { pagename: "Add Deduction", to: "addstaffsetup" },
-  { pagename: "Remove Deduction", to: "staffsetlist" },
+  { pagename: "Deduction Salary List", to: "deductionsalarylist" },
 ];
 
 const OtherDuctionScreen = () => {

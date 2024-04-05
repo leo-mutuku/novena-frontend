@@ -231,6 +231,10 @@ import UpdateStaffSetup from "./screens/payroll/payrollsetup/UpdateStaffSetup.js
 import ViewStaffSetup from "./screens/payroll/payrollsetup/ViewStaffSetup.jsx";
 import StaffSetupList from "./screens/payroll/payrollsetup/StaffSetupList.jsx";
 import OtherDuctionScreen from "./screens/payroll/OtherDuctionScreen.jsx";
+import RemoveDeduction from "./screens/payroll/otherdeductions/RemoveDeduction.jsx";
+import AddDeduction from "./screens/payroll/otherdeductions/addDeduction.jsx";
+import UpdateDeduction from "./screens/payroll/otherdeductions/UpdateDeduction.jsx";
+import DeductionSalaryList from "./screens/payroll/otherdeductions/DeductionSalaryList.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -292,10 +296,15 @@ const router = createHashRouter(
             <Route path="updatestaffsetup/:id" element={<UpdateStaffSetup />} />
             <Route path="viewstaffsetup" element={<ViewStaffSetup />} />
           </Route>
-          <Route
-            path="otherdeductions"
-            element={<OtherDuctionScreen />}
-          ></Route>
+          <Route path="otherdeductions" element={<OtherDuctionScreen />}>
+            <Route
+              path="deductionsalarylist"
+              element={<DeductionSalaryList />}
+            />
+            <Route path="adddeduction" element={<AddDeduction />} />
+            <Route path="removededuction" element={<RemoveDeduction />} />
+            <Route path="updatededuction/;id" element={<UpdateDeduction />} />
+          </Route>
           <Route path="payrollheader" element={<PayrollHeaderScreen />}>
             <Route path="allpayroll" element={<PayrollHeadersList />} />
             <Route path="packHousecategory" element={<PackHouseCategory />} />

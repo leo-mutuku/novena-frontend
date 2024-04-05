@@ -4,7 +4,7 @@ import Table from "react-bootstrap/Table";
 import { useProductionQuery } from "../../../../slices/administration/staffApiSlice";
 import { IoMdHeartEmpty } from "react-icons/io";
 
-const Production = ({ staff_list, set_staff_list }) => {
+const Production = ({ staff_list, set_staff_list, removeStaff }) => {
   const { data: production_people } = useProductionQuery();
   const [staff, set_staff] = useState(false);
   const [checked, set_checked] = useState([]);
@@ -30,16 +30,17 @@ const Production = ({ staff_list, set_staff_list }) => {
               <th>First Name</th>
               <th>Last Name</th>
               <th>Staff No</th>
+              <th>Remove</th>
             </tr>
           </thead>
           <tbody>
-            {production_people?.data.map((item, index) => (
+            {staff_list?.map((item, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{item.first_name}</td>
                 <td>{item.last_name}</td>
                 <td>{item.staff_id}</td>
-                <td></td>
+                <td onClick={() => removeStaff(item.staff_id)}>Remove</td>
               </tr>
             ))}
           </tbody>

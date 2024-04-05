@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import { useGetAllPackHousePeopleQuery } from "../../../../slices/production/packHousePeopleApiSlice";
 import { IoMdHeartEmpty } from "react-icons/io";
+import { useGeneralQuery } from "../../../../slices/administration/staffApiSlice";
 
-const PackHouse = ({ staff_list, set_staff_list }) => {
+const PackHouse = ({ staff_list, set_staff_list, removeStaff }) => {
   const { data: pack_housepeople } = useGetAllPackHousePeopleQuery();
 
   useEffect(() => {
@@ -11,7 +12,7 @@ const PackHouse = ({ staff_list, set_staff_list }) => {
       set_staff_list(pack_housepeople.data);
     }
   }, [pack_housepeople]);
-  console.log(staff_list);
+
   return (
     <>
       <div>
@@ -24,7 +25,7 @@ const PackHouse = ({ staff_list, set_staff_list }) => {
               <th>First Name</th>
               <th>Last Name</th>
               <th>Staff No</th>
-              <th>Add Staff</th>
+              <th>Remove Staff</th>
             </tr>
           </thead>
           <tbody>
@@ -33,8 +34,8 @@ const PackHouse = ({ staff_list, set_staff_list }) => {
                 <td>{index + 1}</td>
                 <td>{item.first_name}</td>
                 <td>{item.last_name}</td>
-                <td>{item.staff_ID}</td>
-                <td></td>
+                <td>{item.staff_id}</td>
+                <td onClick={() => removeStaff(item.staff_id)}>Remove</td>
               </tr>
             ))}
           </tbody>

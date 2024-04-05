@@ -29,8 +29,8 @@ function CreatePayrollHeaders() {
     }
     navigate();
   }, [navigate, userInfo]);
-  const removeStaff = (index) => {
-    const newStaff = staff_list.filter((item, i) => i !== index);
+  const removeStaff = (staff_id) => {
+    const newStaff = staff_list.filter((item) => item.staff_id !== staff_id);
     set_staff_list(newStaff);
   };
   const handleSubmit = async (e) => {
@@ -127,6 +127,7 @@ function CreatePayrollHeaders() {
           <>
             <div>
               <Monthly
+                staff_list={staff_list}
                 set_staff_list={set_staff_list}
                 removeStaff={removeStaff}
               />

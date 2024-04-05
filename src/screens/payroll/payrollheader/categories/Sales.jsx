@@ -4,7 +4,7 @@ import Table from "react-bootstrap/Table";
 import { useGetAllSalesPeopleQuery } from "../../../../slices/sales/salesPeopleApiSlice";
 import { IoMdHeartEmpty } from "react-icons/io";
 
-const Sales = ({ staff_list, set_staff_list }) => {
+const Sales = ({ staff_list, set_staff_list, removeStaff }) => {
   const { data: sales_people } = useGetAllSalesPeopleQuery();
   const [staff, set_staff] = useState(false);
   const [checked, set_checked] = useState([]);
@@ -30,6 +30,7 @@ const Sales = ({ staff_list, set_staff_list }) => {
               <th>First Name</th>
               <th>Last Name</th>
               <th>Staff No</th>
+              <th>Remove Staff</th>
             </tr>
           </thead>
           <tbody>
@@ -39,7 +40,7 @@ const Sales = ({ staff_list, set_staff_list }) => {
                 <td>{item.first_name}</td>
                 <td>{item.last_name}</td>
                 <td>{item.staff_id}</td>
-                <td></td>
+                <td onClick={() => removeStaff(item.staff_id)}>Remove</td>
               </tr>
             ))}
           </tbody>

@@ -1,7 +1,7 @@
 import React from "react";
 
-const addDeduction = () => {
+const AddDeduction = () => {
   return <div>addDeduction</div>;
 };
 
-export default addDeduction;
+export default AddDeduction;
