@@ -5,8 +5,13 @@ export const sidelinks = [
   },
   {
     menuTitle: "Payroll",
-    subMenus: [{ subMenuTitle: "Payroll", to: "payrollheader" }],
+    subMenus: [
+      { subMenuTitle: "Payroll", to: "payrollheader" },
+      { subMenuTitle: "Payroll Setup", to: "payrollsetup" },
+      { subMenuTitle: "Other Deductions", to: "otherdeductions" },
+    ],
   },
+
   {
     menuTitle: "Payroll Reports",
     subMenus: [],

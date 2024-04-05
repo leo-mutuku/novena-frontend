@@ -5,12 +5,13 @@ import { IoMdHeartEmpty } from "react-icons/io";
 
 const PackHouse = ({ staff_list, set_staff_list }) => {
   const { data: pack_housepeople } = useGetAllPackHousePeopleQuery();
-  const [staff, set_staff] = useState(false);
+
   useEffect(() => {
     if (pack_housepeople) {
       set_staff_list(pack_housepeople.data);
     }
   }, [pack_housepeople]);
+  console.log(staff_list);
   return (
     <>
       <div>
@@ -27,7 +28,7 @@ const PackHouse = ({ staff_list, set_staff_list }) => {
             </tr>
           </thead>
           <tbody>
-            {pack_housepeople?.data.map((item, index) => (
+            {staff_list?.map((item, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{item.first_name}</td>

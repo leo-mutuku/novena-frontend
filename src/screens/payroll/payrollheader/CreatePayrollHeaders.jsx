@@ -29,6 +29,10 @@ function CreatePayrollHeaders() {
     }
     navigate();
   }, [navigate, userInfo]);
+  const removeStaff = (index) => {
+    const newStaff = staff_list.filter((item, i) => i !== index);
+    set_staff_list(newStaff);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -122,13 +126,20 @@ function CreatePayrollHeaders() {
         {category_code == "1" ? (
           <>
             <div>
-              <Monthly set_staff_list={set_staff_list} />
+              <Monthly
+                set_staff_list={set_staff_list}
+                removeStaff={removeStaff}
+              />
             </div>
           </>
         ) : category_code == "2" ? (
           <>
             <div>
-              <Sales staff_list={staff_list} set_staff_list={set_staff_list} />
+              <Sales
+                staff_list={staff_list}
+                set_staff_list={set_staff_list}
+                removeStaff={removeStaff}
+              />
             </div>
           </>
         ) : category_code == "3" ? (
@@ -137,6 +148,7 @@ function CreatePayrollHeaders() {
               <Production
                 staff_list={staff_list}
                 set_staff_list={set_staff_list}
+                removeStaff={removeStaff}
               />
             </div>
           </>
@@ -146,6 +158,7 @@ function CreatePayrollHeaders() {
               <PackHouse
                 staff_list={staff_list}
                 set_staff_list={set_staff_list}
+                removeStaff={removeStaff}
               />
             </div>
           </>
@@ -154,22 +167,7 @@ function CreatePayrollHeaders() {
             <div style={{ color: "red" }}>Select category</div>
           </>
         )}
-        {/* <Row>
-          <Col>
-            {/* staff_number field */}
-        {/* <Form.Group className="my-2" controlId="pay_interval">
-              <Form.Label>Pay Interval</Form.Label>
-              <Form.Control
-                required
-                type="number"
-                placeholder="pay_interval"
-                value={pay_interval}
-                onChange={(e) => set_pay_interval(parseInt(e.target.value))}
-              ></Form.Control>
-            </Form.Group>
-          </Col> */}
-        {/* </Row>  */}
-
+        <hr></hr>
         <div className="d-flex flex-row-reverse bd-highlight">
           <Button
             type="submit"

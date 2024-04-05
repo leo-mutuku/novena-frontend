@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Table from "react-bootstrap/Table";
 import { useGeneralQuery } from "../../../../slices/administration/staffApiSlice";
 
-const Monthly = () => {
+const Monthly = ({}) => {
   const { data: general } = useGeneralQuery();
   const [staff, set_staff] = useState(false);
 

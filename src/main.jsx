@@ -224,6 +224,13 @@ import AllAccountPayables from "./screens/finance/payables/AllAccountPayables.js
 import ReceivableScreen from "./screens/finance/ReceivableScreen.jsx";
 import AllAccountReceivable from "./screens/finance/receivables/AllAccountReceivable.jsx";
 import TransferScreen from "./screens/store/TransferScreen.jsx";
+import PayrollSetupScreen from "./screens/payroll/PayrollSetupScreen.jsx";
+import AddStaffSetup from "./screens/payroll/payrollsetup/AddStaffSetup.jsx";
+import RemoveStaffSetup from "./screens/payroll/payrollsetup/RemoveStaffSetup.jsx";
+import UpdateStaffSetup from "./screens/payroll/payrollsetup/UpdateStaffSetup.jsx";
+import ViewStaffSetup from "./screens/payroll/payrollsetup/ViewStaffSetup.jsx";
+import StaffSetupList from "./screens/payroll/payrollsetup/StaffSetupList.jsx";
+import OtherDuctionScreen from "./screens/payroll/OtherDuctionScreen.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -278,6 +285,17 @@ const router = createHashRouter(
             <Route path="categories" element={<CategoryList />} />
             <Route path="createcategory" element={<CreateCategory />} />
           </Route>
+          <Route path="payrollsetup" element={<PayrollSetupScreen />}>
+            <Route path="addstaffsetup" element={<AddStaffSetup />} />
+            <Route path="staffsetlist" element={<StaffSetupList />} />
+            <Route path="removestaffsetup" element={<RemoveStaffSetup />} />
+            <Route path="updatestaffsetup/:id" element={<UpdateStaffSetup />} />
+            <Route path="viewstaffsetup" element={<ViewStaffSetup />} />
+          </Route>
+          <Route
+            path="otherdeductions"
+            element={<OtherDuctionScreen />}
+          ></Route>
           <Route path="payrollheader" element={<PayrollHeaderScreen />}>
             <Route path="allpayroll" element={<PayrollHeadersList />} />
             <Route path="packHousecategory" element={<PackHouseCategory />} />

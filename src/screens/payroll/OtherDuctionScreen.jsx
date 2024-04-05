@@ -1,15 +1,15 @@
 import React from "react";
 import PageActionComponent from "../../components/PageActionComponent";
 const pagemenus = [
-  { pagename: "Add Staff", to: "addstaffsetup" },
-  { pagename: "Stff List", to: "staffsetlist" },
+  { pagename: "Add Deduction", to: "addstaffsetup" },
+  { pagename: "Remove Deduction", to: "staffsetlist" },
 ];
 
-const PayrollSetupScreen = () => {
+const OtherDuctionScreen = () => {
   return (
     <>
       <PageActionComponent pagemenus={pagemenus} />
     </>
   );
 };
-export default PayrollSetupScreen;
+export default OtherDuctionScreen;
