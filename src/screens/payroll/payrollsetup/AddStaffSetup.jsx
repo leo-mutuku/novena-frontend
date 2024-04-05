@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useCreateAccountMutation } from "../../../slices/finance/accountsApiSlice";
+import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
+import { useGetAllPayrollcategoriesQuery } from "../../../slices/payroll/categoryApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -11,7 +13,7 @@ function AddStaffSetup() {
   const [gross_salary, set_gross_salary] = useState("");
   const [nssf, set_nssf] = useState("");
   const [nhif, set_nhif] = useState("");
-  const [isPaye, set_isPaye] = useState("");
+  const [isPaye, set_isPaye] = useState(true);
   const [paye, set_paye] = useState("");
   const [isSacco, set_isSacco] = useState("");
   const [sacco_contribution, set_sacco_contribution] = useState("");
@@ -19,6 +21,8 @@ function AddStaffSetup() {
   const [created_by, set_created_by] = useState("");
 
   const [CreateAccount, { isLoading }] = useCreateAccountMutation();
+  const { data: staff_list } = useGetAllStaffQuery();
+  const { data: payroll_category_list } = useGetAllPayrollcategoriesQuery();
   const { userInfo } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
@@ -32,6 +36,33 @@ function AddStaffSetup() {
     e.preventDefault();
 
     try {
+      console.log({
+        staff_id: staff_id,
+        payroll_category: payroll_category,
+        gross_salary: gross_salary,
+        nssf: nssf,
+        nhif: nhif,
+        isPaye: isPaye,
+        paye: paye,
+        isSacco: isSacco,
+        sacco_contribution: sacco_contribution,
+        other_deductions: other_deductions,
+        created_by: created_by,
+      });
+      if (
+        staff_id === "" ||
+        payroll_category === "" ||
+        gross_salary === "" ||
+        nssf === "" ||
+        nhif === "" ||
+        isPaye === "" ||
+        paye === "" ||
+        isSacco === "" ||
+        sacco_contribution === "" ||
+        other_deductions === ""
+      ) {
+        return toast.error("All fields are required");
+      }
       const res = await CreateAccount({
         staff_id,
         payroll_category,
@@ -67,25 +98,39 @@ function AddStaffSetup() {
           <Col>
             <Form.Group className="my-2" controlId="staff_id">
               <Form.Label>Staff </Form.Label>
-              <Form.Control
+              <Form.Select
                 type="text"
                 required
                 placeholder="Staff"
                 value={staff_id}
                 onChange={(e) => set_staff_id(e.target.value)}
-              ></Form.Control>
+              >
+                <option>Select Staff</option>
+                {staff_list?.data.map((item, index) => (
+                  <option key={index} value={item.staff_id}>
+                    {item.first_name} {item.last_name}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
           <Col>
             <Form.Group className="my-2" controlId="payroll_category">
               <Form.Label>Payroll category</Form.Label>
-              <Form.Control
+              <Form.Select
                 type="text"
                 required
                 placeholder="Payroll category"
                 value={payroll_category}
                 onChange={(e) => set_payroll_category(e.target.value)}
-              ></Form.Control>
+              >
+                <option>Select Payroll category</option>
+                {payroll_category_list?.data.map((item, index) => (
+                  <option key={index} value={item.category_code}>
+                    {item.category_name}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
         </Row>
@@ -132,13 +177,16 @@ function AddStaffSetup() {
           <Col>
             <Form.Group className="my-2" controlId="isPaye">
               <Form.Label>Is PAYE</Form.Label>
-              <Form.Control
+              <Form.Select
                 required
                 type="text"
                 placeholder="IS PAYE"
                 value={isPaye}
                 onChange={(e) => set_isPaye(e.target.value)}
-              ></Form.Control>
+              >
+                <option value={true}>True</option>
+                <option value={false}>False</option>
+              </Form.Select>
             </Form.Group>
           </Col>
         </Row>
@@ -158,13 +206,16 @@ function AddStaffSetup() {
           <Col>
             <Form.Group className="my-2" controlId="isSacco">
               <Form.Label>isSacco</Form.Label>
-              <Form.Control
+              <Form.Select
                 required
                 type="text"
                 placeholder="isSacco"
                 value={isSacco}
                 onChange={(e) => set_isSacco(e.target.value)}
-              ></Form.Control>
+              >
+                <option value={true}>True</option>
+                <option value={false}>False</option>
+              </Form.Select>
             </Form.Group>
           </Col>
         </Row>
@@ -195,7 +246,12 @@ function AddStaffSetup() {
           </Col>
         </Row>
 
-        <Button type="submit" variant="primary" className="mt-3">
+        <Button
+          type="submit"
+          variant="primary"
+          onClick={handleSubmit}
+          className="mt-3"
+        >
           submit
         </Button>
 
