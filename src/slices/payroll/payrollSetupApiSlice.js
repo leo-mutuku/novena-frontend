@@ -1,14 +1,16 @@
 import { apiSlice } from "../apiSlice";
-const PAYROLLSETUP_URL = "/api/v1/payroll/payrollcategories";
+const PAYROLLSETUP_URL = "/api/v1/payroll/payrollsetups";
 
 export const payrollSetupApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    createPayrollCategory: builder.mutation({
+    tagTypes: ["Payroll_setup"],
+    createStaffPayrollSetup: builder.mutation({
       query: (data) => ({
-        url: `${PAYROLLSETUP_URL}/createpayrollcategory`,
+        url: `${PAYROLLSETUP_URL}/createstaffpayrollsetup`,
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Payroll_setup"],
     }),
 
     getAllPayrollcategories: builder.query({
@@ -22,6 +24,6 @@ export const payrollSetupApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useCreatePayrollCategoryMutation,
+  useCreateStaffPayrollSetupMutation,
   useGetAllPayrollcategoriesQuery,
 } = payrollSetupApiSlice;

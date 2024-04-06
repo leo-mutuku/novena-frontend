@@ -235,6 +235,7 @@ import RemoveDeduction from "./screens/payroll/otherdeductions/RemoveDeduction.j
 import AddDeduction from "./screens/payroll/otherdeductions/addDeduction.jsx";
 import UpdateDeduction from "./screens/payroll/otherdeductions/UpdateDeduction.jsx";
 import DeductionSalaryList from "./screens/payroll/otherdeductions/DeductionSalaryList.jsx";
+import UpdatePayrollCategory from "./screens/payroll/category/UpdatePayrollCategory.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -288,6 +289,10 @@ const router = createHashRouter(
           <Route path="category" element={<CategoryScreen />}>
             <Route path="categories" element={<CategoryList />} />
             <Route path="createcategory" element={<CreateCategory />} />
+            <Route
+              path="updatepayrollcategory/:id"
+              element={<UpdatePayrollCategory />}
+            />
           </Route>
           <Route path="payrollsetup" element={<PayrollSetupScreen />}>
             <Route path="addstaffsetup" element={<AddStaffSetup />} />

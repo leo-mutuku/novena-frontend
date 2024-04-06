@@ -8,20 +8,22 @@ import { FaRegFileExcel } from "react-icons/fa6";
 import { CiEdit } from "react-icons/ci";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdEye } from "react-icons/io";
+import { AiFillDelete } from "react-icons/ai";
+import { useSelector } from "react-redux";
 
 const CategoryList = () => {
   const { data, isLoading, error } = useGetAllPayrollcategoriesQuery();
 
   return (
     <>
-      <p>*** All Customer ****</p>
+      <p>*** All Payroll Categories ****</p>
       <Table striped style={{ border: "1px solid #ccc" }}>
         <thead>
           <tr>
             <th>#</th>
             <th>Category Name</th>
             <th>Category code</th>
-            <th>Pay Interval</th>
+            <th>Pay Interval(days)</th>
             <th>Edit</th>
             <th>View</th>
           </tr>
@@ -38,12 +40,14 @@ const CategoryList = () => {
                 <td>{category.pay_interval}</td>
 
                 <td>
-                  <Link to="#">
+                  <Link
+                    to={`/payroll/category/updatepayrollcategory/${category.payroll_category_id}`}
+                  >
                     <CiEdit />
                   </Link>
                 </td>
                 <td>
-                  <Link to="#">
+                  <Link to={`#`}>
                     <IoMdEye />
                   </Link>
                 </td>
