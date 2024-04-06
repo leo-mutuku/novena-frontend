@@ -38,12 +38,13 @@ function CreatePayrollHeaders() {
 
     try {
       const res = await createPayrollHeader({
+        payroll_head: { start_date, end_date, category_code, created_by },
         staff_list,
       }).unwrap();
       if (res.status == "failed") {
         toast.error(err?.data?.message || err.error);
       } else {
-        navigate("../categories");
+        navigate("../allpayroll");
         toast.success("Payroll Category created successfully");
       }
     } catch (err) {

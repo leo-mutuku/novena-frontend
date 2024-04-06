@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Loader from "../../../components/Loader";
-import { useGetAllAccountsQuery } from "../../../slices/finance/accountsApiSlice";
+import { useGetAllStaffPayrollSetupQuery } from "../../../slices/payroll/payrollSetupApiSlice";
 import { Table, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
 import TimeDate from "../../../components/TimeDate";
 import { IoMdEye } from "react-icons/io";
+import { MdDelete } from "react-icons/md";
 import PrintA4A5ExcelButton from "../../../components/PrintA4A5ExcelButton";
 import axios from "axios";
 import DataTable from "../../../components/general/DataTable";
@@ -15,17 +16,19 @@ import moment from "moment";
 
 const StaffSetupList = () => {
   const timeDate = new TimeDate();
-  const { data: accounts, isLoading } = useGetAllAccountsQuery();
+  const { data: payrollStaffSetup, isLoading } =
+    useGetAllStaffPayrollSetupQuery();
 
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
 
   useEffect(() => {
-    if (accounts?.data) {
-      setTableData(accounts.data);
+    if (payrollStaffSetup) {
+      console.log(payrollStaffSetup);
+      setTableData(payrollStaffSetup);
     }
-  }, [accounts]);
+  }, [payrollStaffSetup]);
 
   const handleDownloadPDF = async () => {
     setLoadingPdf(true);
@@ -82,36 +85,45 @@ const StaffSetupList = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "Account Name",
-        accessor: "account_name",
+        Header: "First Name",
+        accessor: "first_name",
       },
       {
-        Header: "Account Number",
-        accessor: "account_number",
+        Header: "Last Name",
+        accessor: "last_name",
       },
       {
-        Header: "Created At",
-        accessor: "created_at",
-        Cell: ({ value }) => (
-          <span>{`${moment(value).format("YYYY-MM-DD")} : ${moment(
-            value
-          ).format("HH:mm A")}`}</span>
-        ),
+        Header: "Staff ID",
+        accessor: "staff_id",
       },
       {
-        Header: "Account Balance",
-        accessor: "account_balance",
+        Header: "Gross",
+        accessor: "gross_salary",
       },
       {
-        Header: "Gl Number",
-        accessor: "gl_number",
+        Header: "NSSF",
+        accessor: "nssf",
+      },
+      {
+        Header: "NHIF",
+        accessor: "nhif",
       },
 
+      {
+        Header: "SACCO",
+        accessor: "sacco_contribution",
+      },
+      {
+        Header: "Other Deductions",
+        accessor: "other_deductions",
+      },
       {
         Header: "Edit",
         accessor: "edit",
         Cell: ({ row }) => (
-          <Link to={`/finance/accounts/update/${row.original.account_id}`}>
+          <Link
+            to={`/payroll/payrollsetup/updatestaffsetup/${row.original.payroll_setup_id}`}
+          >
             <CiEdit />
           </Link>
         ),
@@ -119,8 +131,21 @@ const StaffSetupList = () => {
       {
         Header: "View",
         accessor: "view",
-        Cell: () => (
-          <Link to="#">
+        Cell: ({ row }) => (
+          <Link
+            to={`/payroll/payrollsetup/viewstaffsetup/${row.original.payroll_setup_id}`}
+          >
+            <IoMdEye />
+          </Link>
+        ),
+      },
+      {
+        Header: "Delete",
+        accessor: "delete",
+        Cell: ({ row }) => (
+          <Link
+            to={`/payroll/payrollsetup/viewstaffsetup/${row.original.payroll_setup_id}`}
+          >
             <IoMdEye />
           </Link>
         ),

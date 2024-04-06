@@ -3,48 +3,48 @@ const PRODUCTIONHEADER_URL = "/api/v1/payroll/payrollines";
 
 export const payrollLinesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    createPayrollLines: builder.mutation({
+    tagTypes: ["Payroll_lines"],
+    validatePayroll: builder.mutation({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/createpayrolllines`,
+        url: `${PRODUCTIONHEADER_URL}/validatepayroll`,
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Payroll_lines"],
     }),
 
-    getAllProductionHeaders: builder.query({
+    processPayroll: builder.mutation({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheaders`,
-        method: "GET",
+        url: `${PRODUCTIONHEADER_URL}/processpayroll`,
+        method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Payroll_lines"],
     }),
-    getAllProductionHeadersInTransit: builder.query({
+
+    generatePayroll: builder.mutation({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheaders`,
-        method: "GET",
+        url: `${PRODUCTIONHEADER_URL}/generatepayroll`,
+        method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Payroll_lines"],
     }),
-    getAllProductionHeadersInTransit: builder.query({
+
+    printSinglePayslip: builder.query({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheadersintransit`,
-        method: "GET",
+        url: `${PRODUCTIONHEADER_URL}/printsinglepayslip`,
+        method: "POST",
         body: data,
       }),
-    }),
-    getAllPostedProductionHeaders: builder.query({
-      query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallpostedproductionheaders`,
-        method: "GET",
-        body: data,
-      }),
+      invalidatesTags: ["Payroll_lines"],
     }),
   }),
 });
 
 export const {
-  useCreateProductionHeaderMutation,
-  useGetAllProductionHeadersQuery,
-  useGetAllProductionHeadersInTransitQuery,
-  useGetAllPostedProductionHeadersQuery,
+  useValidatePayrollMutation,
+  useProcessPayrollMutation,
+  useGeneratePayrollMutation,
+  usePrintSinglePayslipMutation,
 } = payrollLinesApiSlice;

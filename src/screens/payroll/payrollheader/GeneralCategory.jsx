@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Loader from "../../../components/Loader";
-import { useStartswith1Query } from "../../../slices/payroll/payrollHeadersApiSlice";
+import { useGetPayrollHeaderGeneralCategoryQuery } from "../../../slices/payroll/payrollHeadersApiSlice";
+
 import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa6";
@@ -8,8 +9,7 @@ import { CiEdit } from "react-icons/ci";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
-// import AddDailyPackModal from "./lines/AddDailyPackModal";
-// import DeletePurchaseModal from "./lines/DeletePurchaseModal";
+import { FcProcess } from "react-icons/fc";
 import TimeDate from "../../../components/TimeDate";
 
 const GeneralCategory = () => {
@@ -25,41 +25,27 @@ const GeneralCategory = () => {
     set_store_purchase_id(parseInt(id));
     set_mode_delete(style);
   };
-  const { data, isLoading } = useStartswith1Query();
+  const { data, isLoading } = useGetPayrollHeaderGeneralCategoryQuery();
+
   const navigate = useNavigate();
   useEffect(() => {}, [data]);
-  console.log(data);
+
   return (
     <>
-      <>
-        {/* <div style={{ display: `${mode}` }}>
-          <AddDailyPackModal
-            store_purchase_id={store_purchase_id}
-            set_mode={set_mode}
-          />
-        </div> */}
-        {/* <div style={{ display: `${mode_delete}` }}>
-          <DeletePurchaseModal
-            store_purchase_id={store_purchase_id}
-            set_mode_delete={set_mode_delete}
-          />
-        </div> */}
-      </>
+      <></>
       <p>*** General Payroll List ***</p>
 
       <Table striped style={{ border: "1px solid #ccc" }}>
         <thead>
           <tr>
             <th>#</th>
-            <th>Payroll Number</th>
-            <th>Period</th>
-            <th>Number.of Staff</th>
-            <th>Total Payroll</th>
-            <th>Prepared By</th>
-            <th>Approved By</th>
+            <th>Payroll no</th>
+            <th>Date</th>
+            <th>Staff Count</th>
+            <th>Gross Pay</th>
+            <th>Net Pay</th>
+            <th>Actions</th>
             <th>Status</th>
-            <th>Print</th>
-            <th>View</th>
           </tr>
         </thead>
         <tbody>
@@ -69,17 +55,23 @@ const GeneralCategory = () => {
             <>No data</>
           ) : (
             data?.data?.map((item, index) => (
-              <tr>
+              <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{`${timeDate.date(item.end_date)}`}</td>
+                <td>{item.payroll_header_id}</td>
                 <td style={{ fontSize: "10px" }}>{`${timeDate.date(
                   item.start_date
                 )} - ${timeDate.date(item.end_date)}`}</td>
 
-                <td>{item.total}</td>
+                <td>{item.number_of_staff}</td>
                 <td>{item.total_bales}</td>
                 <td>{item.pay_per_bale}</td>
-                <td>{item.total_packing_cost}</td>
+                <td>
+                  <Link
+                    to={`/payroll/payrollheader/actions/${item.payroll_header_id}`}
+                  >
+                    <FcProcess size={20} />
+                  </Link>
+                </td>
                 <td>
                   {item.status === "New" ? (
                     <span style={{ color: "orange" }}>{item.status}</span>
@@ -89,33 +81,6 @@ const GeneralCategory = () => {
                     <span style={{ color: "green" }}>{item.status}</span>
                   ) : (
                     item.status
-                  )}
-                </td>
-
-                <td>
-                  {item.status === "New" ? (
-                    <Link to={`#`}>
-                      <IoMdAdd
-                        onClick={(e) =>
-                          handleAdd(e, item.store_purchase_number, "block")
-                        }
-                      />
-                    </Link>
-                  ) : (
-                    "--"
-                  )}
-                </td>
-                <td>
-                  {item.status === "New" ? (
-                    <Link to={`#`}>
-                      <MdDelete
-                        onClick={(e) =>
-                          handleDelete(e, item.store_purchase_number, "block")
-                        }
-                      />
-                    </Link>
-                  ) : (
-                    "--"
                   )}
                 </td>
               </tr>

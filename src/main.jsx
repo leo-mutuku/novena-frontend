@@ -236,6 +236,7 @@ import AddDeduction from "./screens/payroll/otherdeductions/addDeduction.jsx";
 import UpdateDeduction from "./screens/payroll/otherdeductions/UpdateDeduction.jsx";
 import DeductionSalaryList from "./screens/payroll/otherdeductions/DeductionSalaryList.jsx";
 import UpdatePayrollCategory from "./screens/payroll/category/UpdatePayrollCategory.jsx";
+import PayrollActions from "./screens/payroll/payrollheader/PayrollActions.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -299,7 +300,7 @@ const router = createHashRouter(
             <Route path="staffsetlist" element={<StaffSetupList />} />
             <Route path="removestaffsetup" element={<RemoveStaffSetup />} />
             <Route path="updatestaffsetup/:id" element={<UpdateStaffSetup />} />
-            <Route path="viewstaffsetup" element={<ViewStaffSetup />} />
+            <Route path="viewstaffsetup/:id" element={<ViewStaffSetup />} />
           </Route>
           <Route path="otherdeductions" element={<OtherDuctionScreen />}>
             <Route
@@ -308,7 +309,7 @@ const router = createHashRouter(
             />
             <Route path="adddeduction" element={<AddDeduction />} />
             <Route path="removededuction" element={<RemoveDeduction />} />
-            <Route path="updatededuction/;id" element={<UpdateDeduction />} />
+            <Route path="updatededuction/:id" element={<UpdateDeduction />} />
           </Route>
           <Route path="payrollheader" element={<PayrollHeaderScreen />}>
             <Route path="allpayroll" element={<PayrollHeadersList />} />
@@ -316,7 +317,7 @@ const router = createHashRouter(
             <Route path="salescategory" element={<SalesCategory />} />
             <Route path="productioncategory" element={<ProductionCategory />} />
             <Route path="generalcategory" element={<GeneralCategory />} />
-            <Route path="" element="" />
+            <Route path="actions/:id" element={<PayrollActions />} />
 
             <Route path="createpayroll" element={<CreatePayrollHeaders />} />
           </Route>

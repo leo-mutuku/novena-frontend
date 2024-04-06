@@ -31,32 +31,19 @@ const PayrollHeadersList = () => {
 
   return (
     <>
-      <>
-        {/* <div style={{ display: `${mode}` }}>
-          <AddDailyPackModal
-            store_purchase_id={store_purchase_id}
-            set_mode={set_mode}
-          />
-        </div> */}
-        {/* <div style={{ display: `${mode_delete}` }}>
-          <DeletePurchaseModal
-            store_purchase_id={store_purchase_id}
-            set_mode_delete={set_mode_delete}
-          />
-        </div> */}
-      </>
+      <></>
       <p>*** All Payroll Lists ***</p>
 
       <Table striped style={{ border: "1px solid #ccc" }}>
         <thead>
           <tr>
             <th>#</th>
-            <th>Payroll Number</th>
-            <th>Period</th>
-            <th>Number.of Staff</th>
-            <th>Total Payroll</th>
-            <th>Prepared By</th>
-            <th>Approved By</th>
+            <th>Payroll no</th>
+            <th>Date</th>
+            <th>Staff Count</th>
+            <th>Gross Pay</th>
+            <th>Net Pay</th>
+            <th>Actions</th>
             <th>Status</th>
             <th>Print</th>
             <th>View</th>
@@ -69,14 +56,14 @@ const PayrollHeadersList = () => {
             <>No data</>
           ) : (
             data?.data?.map((item, index) => (
-              <tr>
+              <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{`${timeDate.date(item.end_date)}`}</td>
+                <td>{item.payroll_header_id}</td>
                 <td style={{ fontSize: "10px" }}>{`${timeDate.date(
                   item.start_date
                 )} - ${timeDate.date(item.end_date)}`}</td>
 
-                <td>{item.total}</td>
+                <td>{item.number_of_staff}</td>
                 <td>{item.total_bales}</td>
                 <td>{item.pay_per_bale}</td>
                 <td>{item.total_packing_cost}</td>
