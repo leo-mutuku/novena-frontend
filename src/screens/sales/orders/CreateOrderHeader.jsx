@@ -65,9 +65,9 @@ function CreateOrderHeader() {
     }
   };
 
-  const handleCustomer = (e) => {
+  const handleCustomer = (_, newInputValue) => {
     let x = customers?.data?.filter((a) => {
-      if (a.customer_id == e.target.value) {
+      if (a.full_name == newInputValue) {
         return a.customer_id;
       }
     });
@@ -138,28 +138,45 @@ function CreateOrderHeader() {
         <Row>
           <Col>
             {sale_order_type === "Cash" ? (
-              <Form.Group className="my-2" controlId="phone_number">
-                <Form.Label>
-                  Outlet --- contact person --- phone --- Route
-                </Form.Label>
-                <Form.Select
-                  type="text"
-                  required
-                  placeholder="Customer Name"
-                  value={customer_id}
-                  onChange={handleCustomer}
-                >
-                  <option value={``}> Select Customer</option>
-                  {customers?.data.map((item, index) => (
-                    <option value={item.customer_id}>
-                      {item.customer_outlet_name} {"    ---  "}
-                      {item.customer_contact_person} {"  ---  "}
-                      {item.customer_contact} {"  ---  "}
-                      {item.customer_location}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Form.Group>
+              // <Form.Group className="my-2" controlId="phone_number">
+              //   <Form.Label>
+              //     Outlet --- contact person --- phone --- Route
+              //   </Form.Label>
+              //   <Form.Select
+              //     type="text"
+              //     required
+              //     placeholder="Customer Name"
+              //     value={customer_id}
+              //     onChange={handleCustomer}
+              //   >
+              //     <option value={``}> Select Customer</option>
+              //     {customers?.data.map((item, index) => (
+              //       <option value={item.customer_id}>
+              //         {item.customer_outlet_name} {"    ---  "}
+              //         {item.customer_contact_person} {"  ---  "}
+              //         {item.customer_contact} {"  ---  "}
+              //         {item.customer_location}
+              //       </option>
+              //     ))}
+              //   </Form.Select>
+              // </Form.Group>
+              <Autocomplete
+                fullWidth
+                disablePortal
+                id="combo-box-demo"
+                options={customers?.data}
+                getOptionLabel={(option) => option.full_name}
+                renderInput={(full_name) => (
+                  <TextField {...full_name} label="Customers" />
+                )}
+                inputValue={customers.full_name}
+                onInputChange={(event, newInputValue) =>
+                  handleCustomer(event, newInputValue)
+                }
+                isOptionEqualToValue={(option, value) =>
+                  option.full_name === value.full_name
+                }
+              />
             ) : sale_order_type === "Institution" ? (
               <Form.Group className="my-2" controlId="institution">
                 <Form.Label>Institution</Form.Label>
