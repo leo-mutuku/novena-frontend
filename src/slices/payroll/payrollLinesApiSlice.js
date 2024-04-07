@@ -13,6 +13,15 @@ export const payrollLinesApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["Payroll_lines"],
     }),
 
+    bulkPrintPayslip: builder.mutation({
+      query: (data) => ({
+        url: `${PRODUCTIONHEADER_URL}/bulkprintpayslip`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Payroll_lines"],
+    }),
+
     processPayroll: builder.mutation({
       query: (data) => ({
         url: `${PRODUCTIONHEADER_URL}/processpayroll`,
@@ -30,15 +39,6 @@ export const payrollLinesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Payroll_lines"],
     }),
-
-    printSinglePayslip: builder.query({
-      query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/printsinglepayslip`,
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["Payroll_lines"],
-    }),
   }),
 });
 
@@ -46,5 +46,5 @@ export const {
   useValidatePayrollMutation,
   useProcessPayrollMutation,
   useGeneratePayrollMutation,
-  usePrintSinglePayslipMutation,
+  useBulkPrintPayslipMutation,
 } = payrollLinesApiSlice;

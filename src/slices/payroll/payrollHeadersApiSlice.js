@@ -30,6 +30,31 @@ export const payrollHeadersApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Payroll_headers"],
     }),
+    getPayrollHeaderProductionCategory: builder.query({
+      query: (data) => ({
+        url: `${PAYROLLHEADER_URL}/getpayrollheaderproductioncategory`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Payroll_headers"],
+    }),
+    getPayrollHeaderPackhouseCategory: builder.query({
+      query: (data) => ({
+        url: `${PAYROLLHEADER_URL}/getpayrollheaderpackhousecategory`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Payroll_headers"],
+    }),
+
+    getPayrollHeaderSalesCategory: builder.query({
+      query: (data) => ({
+        url: `${PAYROLLHEADER_URL}/getpayrollheadersalescategory`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Payroll_headers"],
+    }),
     getAllPayrollHeadersById: builder.query({
       query: (id) => ({
         url: `${PAYROLLHEADER_URL}/getallpayrollheadersbyid/${id}`,
@@ -78,6 +103,9 @@ export const {
   useGetAllPayRollHeadersQuery,
   useGetPayrollHeaderGeneralCategoryQuery,
   useGetAllPayrollHeadersByIdQuery,
+  useGetPayrollHeaderProductionCategoryQuery,
+  useGetPayrollHeaderPackhouseCategoryQuery,
+  useGetPayrollHeaderSalesCategoryQuery,
   useStartswith1Query,
   useStartswith2Query,
   useStartswith3Query,

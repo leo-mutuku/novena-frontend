@@ -44,6 +44,7 @@ const GeneralCategory = () => {
             <th>Staff Count</th>
             <th>Gross Pay</th>
             <th>Net Pay</th>
+            <th>Deductions</th>
             <th>Actions</th>
             <th>Status</th>
           </tr>
@@ -63,8 +64,9 @@ const GeneralCategory = () => {
                 )} - ${timeDate.date(item.end_date)}`}</td>
 
                 <td>{item.number_of_staff}</td>
-                <td>{item.total_bales}</td>
-                <td>{item.pay_per_bale}</td>
+                <td>{item.gross_pay}</td>
+                <td>{item.net_pay}</td>
+                <td>{item.total_deductions}</td>
                 <td>
                   <Link
                     to={`/payroll/payrollheader/actions/${item.payroll_header_id}`}

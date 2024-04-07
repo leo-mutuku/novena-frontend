@@ -5,6 +5,12 @@ import Button from "@mui/material/Button";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { useGetAllPayrollHeadersByIdQuery } from "../../../slices/payroll/payrollHeadersApiSlice";
+import {
+  useValidatePayrollMutation,
+  useProcessPayrollMutation,
+  useGeneratePayrollMutation,
+  useBulkPrintPayslipMutation,
+} from "../../../slices/payroll/payrollLinesApiSlice";
 
 import TimeDate from "../../../components/TimeDate";
 import { toast } from "react-toastify";
@@ -16,21 +22,81 @@ const PayrollActions = () => {
   const id = parseInt(_new_id);
 
   const { data: parollHeader } = useGetAllPayrollHeadersByIdQuery(id);
-  console.log("parollHeader", parollHeader?.data);
-  console.log("parollHeader", parollHeader?.data);
+  const [validatePayroll, { error: validatePayrollError }] =
+    useValidatePayrollMutation();
+  const [processPayroll, { error: processPayrollError }] =
+    useProcessPayrollMutation();
+  const [generatePayroll, { error: generatePayrollError }] =
+    useGeneratePayrollMutation();
+  const [bulkPrintPayslip, { error: bulkPrintPayslipError }] =
+    useBulkPrintPayslipMutation();
 
   useEffect(() => {
     if (parollHeader) {
     }
   }, [id, parollHeader]);
+  const handleBulkprint = async (e) => {
+    try {
+      const res = await bulkPrintPayslip({ payroll_header_id: id }).unwrap();
+      if (res.status === "success") {
+        console.log(res.data);
+        const payrollHeader = res.data.payrollHeader;
+        const getlistOfStaffId = res.data.getlistOfStaffId;
 
-  const handleExcel = (e) => {};
-  const handleA4PDF = () => {};
-  const handleA5PDF = () => {};
-  const handlePOS = async (e) => {
-    const res = await printToPOS({
-      sales_order_number: id,
-    }).unwrap();
+        handlePrintA4(payrollHeader, getlistOfStaffId);
+      } else {
+        toast.error("Bulk print failed");
+      }
+    } catch (err) {
+      toast.error(
+        err?.data?.message || "An error occurred while bulk printing payslip "
+      );
+    }
+  };
+
+  const handleGeneratePayrollBtn = async (e) => {
+    try {
+      const res = await generatePayroll({ payroll_header_id: id }).unwrap();
+      if (res.status === "success") {
+        toast.success("Payroll generated successfully");
+      } else {
+        toast.error("Payroll generation failed");
+      }
+    } catch (err) {
+      toast.error(
+        err?.data?.message || "An error occurred while generating payroll "
+      );
+    }
+  };
+
+  const handleProcessPayrollBtn = async (e) => {
+    try {
+      const res = await processPayroll({ payroll_header_id: id }).unwrap();
+      if (res.status === "success") {
+        toast.success("Payroll processed successfully");
+      } else {
+        toast.error("Payroll processing failed");
+      }
+    } catch (err) {
+      toast.error(
+        err?.data?.message || "An error occurred while processing payroll "
+      );
+    }
+  };
+
+  const handleValdatePayrollBtn = async (e) => {
+    try {
+      const res = await validatePayroll({ payroll_header_id: id }).unwrap();
+      if (res.status === "success") {
+        toast.success("Payroll Validated successfully");
+      } else {
+        toast.error("Payroll Validation failed");
+      }
+    } catch (err) {
+      toast.error(
+        err?.data?.message || "An error occurred while validating payroll "
+      );
+    }
   };
 
   return (
@@ -45,9 +111,8 @@ const PayrollActions = () => {
         <Col>Payroll ID</Col>
         <Col>Gross</Col>
         <Col>NET</Col>
-        <Col>STATUTORY</Col>
+        <Col>Deductions</Col>
         <Col>STAFF COUNT</Col>
-        <Col>SACCO</Col>
         <Col>STATUS </Col>
       </Row>
       <hr></hr>
@@ -55,11 +120,10 @@ const PayrollActions = () => {
         <Row key={index} style={{ fontSize: "14px" }}>
           <Col>{index + 1}</Col>
           <Col>{item.payroll_header_id}</Col>
-          <Col>{item.gross_salary}</Col>
-          <Col>{item.paye}</Col>
-          <Col>{item.nhif}</Col>
+          <Col>{item.gross_pay}</Col>
+          <Col>{item.net_pay}</Col>
+          <Col>{item.total_deductions}</Col>
           <Col>{item.number_of_staff}</Col>
-          <Col>{item.other_deductions}</Col>
           <Col>{item.status}</Col>
         </Row>
       ))}
@@ -74,22 +138,18 @@ const PayrollActions = () => {
 
         <Col>
           <Stack spacing={2} direction="row">
-            <Button variant="outlined" onClick={handleExcel}>
-              UNIT PRINT
-            </Button>
-            <Button variant="outlined" onClick={handleA4PDF}>
+            <Button variant="outlined">UNIT PRINT</Button>
+            <Button variant="outlined" onClick={handleBulkprint}>
               BULKY PRINT
             </Button>
-            <Button variant="outlined" onClick={handleExcel}>
-              POST
-            </Button>
-            <Button variant="outlined" onClick={handleExcel}>
+            <Button variant="outlined">POST</Button>
+            <Button variant="outlined" onClick={handleGeneratePayrollBtn}>
               GENERATE
             </Button>
-            <Button variant="outlined" onClick={handleA5PDF}>
+            <Button variant="outlined" onClick={handleProcessPayrollBtn}>
               PROCESS
             </Button>
-            <Button variant="outlined" onClick={handlePOS}>
+            <Button variant="outlined" onClick={handleValdatePayrollBtn}>
               VALIDATE
             </Button>
           </Stack>
