@@ -237,6 +237,9 @@ import UpdateDeduction from "./screens/payroll/otherdeductions/UpdateDeduction.j
 import DeductionSalaryList from "./screens/payroll/otherdeductions/DeductionSalaryList.jsx";
 import UpdatePayrollCategory from "./screens/payroll/category/UpdatePayrollCategory.jsx";
 import PayrollActions from "./screens/payroll/payrollheader/PayrollActions.jsx";
+import RolesScreen from "./screens/administration/RolesScreen.jsx";
+import CreateRole from "./screens/administration/roles/CreateRole.jsx";
+import RoleList from "./screens/administration/roles/RoleList.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -282,6 +285,10 @@ const router = createHashRouter(
             <Route path="createcustomer" element={<CreateCustomer />} />
             <Route path="allcustomers" element={<CustomerList />} />
             <Route path="update/:id" element={<UpdateCustomer />} />
+          </Route>
+          <Route path="roles" element={<RolesScreen />}>
+            <Route path="createrole" element={<CreateRole />} />
+            <Route path="allroles" element={<RoleList />} />
           </Route>
         </Route>
 

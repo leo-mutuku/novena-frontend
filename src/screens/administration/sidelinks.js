@@ -24,6 +24,10 @@ export const sidelinks = [
     menuTitle: "Bulk SMS",
     subMenus: [{ subMenuTitle: "Bulk SMS", to: "bulksms" }],
   },
+  {
+    menuTitle: "Roles",
+    subMenus: [{ subMenuTitle: "Roles", to: "roles" }],
+  },
   // {
   //   menuTitle: "Administrator",
   //   subMenus: [
