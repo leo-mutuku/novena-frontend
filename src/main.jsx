@@ -240,6 +240,11 @@ import PayrollActions from "./screens/payroll/payrollheader/PayrollActions.jsx";
 import RolesScreen from "./screens/administration/RolesScreen.jsx";
 import CreateRole from "./screens/administration/roles/CreateRole.jsx";
 import RoleList from "./screens/administration/roles/RoleList.jsx";
+import UpdateRole from "./screens/administration/roles/UpdateRole.jsx";
+import UpdateUserRoles from "./screens/administration/users/UpdateUserRoles.jsx";
+import UpdateUserDetails from "./screens/administration/users/UpdateUserDetails.jsx";
+import TransferOrderHeadersList from "./screens/store/transferorder.jsx/TransferOrderHeadersList.jsx";
+import CreateTransaferOrderHeader from "./screens/store/transferorder.jsx/CreateTransferOrderHeader.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -258,6 +263,8 @@ const router = createHashRouter(
             <Route index element={<UserList />} />
             <Route path="createuser" element={<CreateUser />} />
             <Route path="allusers" element={<UserList />} />
+            <Route path="update/:id" element={<UpdateUserDetails />} />
+            <Route path="roles/:id" element={<UpdateUserRoles />} />
           </Route>
           <Route path="institutions" element={<InstitutionsScreen />}>
             <Route index element={<Institutionlist />} />
@@ -289,6 +296,7 @@ const router = createHashRouter(
           <Route path="roles" element={<RolesScreen />}>
             <Route path="createrole" element={<CreateRole />} />
             <Route path="allroles" element={<RoleList />} />
+            <Route path="update/:id" element={<UpdateRole />} />
           </Route>
         </Route>
 
@@ -471,8 +479,17 @@ const router = createHashRouter(
             <Route path="update/:id" element={<UpdateItemsRegister />} />
             <Route path="allregistereditems" element={<ItemListList />} />
           </Route>
-          // transfer screen
-          <Route path="storetransfer" element={<TransferScreen />}></Route>
+          {/* // transfer screen */}
+          <Route path="storetransfer" element={<TransferScreen />}>
+            <Route
+              path="alltransferorders"
+              element={<TransferOrderHeadersList />}
+            />
+            <Route
+              path="createtransferorder"
+              element={<CreateTransaferOrderHeader />}
+            />
+          </Route>
           <Route path="stocktake" element={<StockTakeScreen />}>
             <Route imdex element={<StocktakeList />} />
             <Route path="allstocktakes" element={<StocktakeList />} />

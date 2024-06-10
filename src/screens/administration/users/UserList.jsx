@@ -110,10 +110,19 @@ const UserList = () => {
         accessor: "user_email",
       },
       {
-        Header: "Edit",
+        Header: "User Details",
         accessor: "edit",
         Cell: ({ row }) => (
-          <Link to="#">
+          <Link to={`/administration/users/update/${row.original.user_id}`}>
+            <CiEdit />
+          </Link>
+        ),
+      },
+      {
+        Header: "Roles",
+        accessor: "roles",
+        Cell: ({ row }) => (
+          <Link to={`/administration/users/roles/${row.original.user_id}`}>
             <CiEdit />
           </Link>
         ),

@@ -1,7 +1,10 @@
 import PageActionComponent from "../../components/PageActionComponent";
 const pagemenus = [
-  { pagename: "All Store Items", to: "allstoreregister" },
-  { pagename: "Create Store item", to: "createstoreregister" },
+  { pagename: "Tansfer Order list", to: "alltransferorders" },
+  {
+    pagename: "Create Transfer order",
+    to: "createtransferorder",
+  },
 ];
 function TransferScreen() {
   return (

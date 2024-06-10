@@ -13,7 +13,7 @@ export const staffApiSlice = apiSlice.injectEndpoints({
       providesTags: ["roles"],
     }),
 
-    getAllRoleById: builder.query({
+    getRoleById: builder.query({
       query: (id) => ({
         url: `${ROLES_URL}/getrolebyid/${id}`,
         method: "GET",
@@ -28,9 +28,9 @@ export const staffApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Staff"],
     }),
-    updateStaff: builder.mutation({
+    updateRoleById: builder.mutation({
       query: ({ id, data }) => ({
-        url: `${ROLES_URL}/updatestaffbyid/${id}`,
+        url: `${ROLES_URL}/updaterole/${id}`,
         method: "PUT",
         body: data,
       }),
@@ -49,9 +49,7 @@ export const staffApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetAllRolesQuery,
   useCreaterolesMutation,
-  useUpdaterolesMutation,
-  useGetAllrolesByIdQuery,
-  useGeneralQuery,
-  useProductionQuery,
+  useGetRoleByIdQuery,
+  useUpdateRoleByIdMutation,
   useDeactivaterolesMutation,
 } = staffApiSlice;
