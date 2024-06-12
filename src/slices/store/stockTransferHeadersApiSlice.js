@@ -1,11 +1,11 @@
 import { apiSlice } from "../apiSlice";
-const STOREITEMS_URL = "/api/v1/store/storeitems";
+const STOCKTRANSFERHEADERSURL = "/api/v1/store/storeitems";
 
-export const stockTakeApiSlice = apiSlice.injectEndpoints({
+export const stockTransferHeadersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllStoreItems: builder.query({
       query: (data) => ({
-        url: `${STOREITEMS_URL}/getallstoreitems`,
+        url: `${STOCKTRANSFERHEADERSURL}/getallstoreitems`,
         method: "GET",
         body: data,
       }),
@@ -13,7 +13,7 @@ export const stockTakeApiSlice = apiSlice.injectEndpoints({
     }),
     createStoreItem: builder.mutation({
       query: (data) => ({
-        url: `${STOREITEMS_URL}/createstoreitem`,
+        url: `${STOCKTRANSFERHEADERSURL}/createstoreitem`,
         method: "POST",
         body: data,
       }),
@@ -23,4 +23,4 @@ export const stockTakeApiSlice = apiSlice.injectEndpoints({
 });
 
 export const { useGetAllStoreItemsQuery, useCreateStoreItemMutation } =
-  stockTakeApiSlice;
+  stockTransferHeadersApiSlice;

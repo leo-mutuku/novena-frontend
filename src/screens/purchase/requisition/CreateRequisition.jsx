@@ -35,7 +35,7 @@ function CreateRequisition() {
 
   return (
     <>
-      <p>*** New Stock take ***</p>
+      <p>*** New Store Requisition ***</p>
       <Button onClick={submitHandler}> Initiate</Button>
     </>
   );

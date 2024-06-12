@@ -22,13 +22,13 @@ export const sidelinks = [
       { subMenuTitle: "Reports", to: "#" },
     ],
   },
-  {
-    menuTitle: "Pack house",
-    subMenus: [
-      { subMenuTitle: "Pack House", to: "packhouse" },
-      { subMenuTitle: "Pack House Entries", to: "packhouseentries" },
-    ],
-  },
+  // {
+  //   menuTitle: "Pack house",
+  //   subMenus: [
+  //     { subMenuTitle: "Pack House", to: "packhouse" },
+  //     { subMenuTitle: "Pack House Entries", to: "packhouseentries" },
+  //   ],
+  // },
   {
     menuTitle: "Pack house People",
     subMenus: [

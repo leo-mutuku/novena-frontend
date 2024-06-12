@@ -245,6 +245,12 @@ import UpdateUserRoles from "./screens/administration/users/UpdateUserRoles.jsx"
 import UpdateUserDetails from "./screens/administration/users/UpdateUserDetails.jsx";
 import TransferOrderHeadersList from "./screens/store/transferorder.jsx/TransferOrderHeadersList.jsx";
 import CreateTransaferOrderHeader from "./screens/store/transferorder.jsx/CreateTransferOrderHeader.jsx";
+import DeductionsScren from "./screens/payroll/DeductionsScren.jsx";
+import WagesScreen from "./screens/payroll/WagesScreen.jsx";
+import WagesList from "./screens/payroll/wages/WagesList.jsx";
+import DeductionsList from "./screens/payroll/deductions/DeductionsList.jsx";
+import CreateDeduction from "./screens/payroll/deductions/CreateDeduction.jsx";
+import CreateWages from "./screens/payroll/wages/CreateWages.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -317,12 +323,15 @@ const router = createHashRouter(
             <Route path="updatestaffsetup/:id" element={<UpdateStaffSetup />} />
             <Route path="viewstaffsetup/:id" element={<ViewStaffSetup />} />
           </Route>
-          <Route path="otherdeductions" element={<OtherDuctionScreen />}>
-            <Route
-              path="deductionsalarylist"
-              element={<DeductionSalaryList />}
-            />
-            <Route path="adddeduction" element={<AddDeduction />} />
+          <Route path="deductions" element={<DeductionsScren />}>
+            <Route path="deductionlist" element={<DeductionsList />} />
+            <Route path="createduduction" element={<CreateDeduction />} />
+            <Route path="removededuction" element={<RemoveDeduction />} />
+            <Route path="updatededuction/:id" element={<UpdateDeduction />} />
+          </Route>
+          <Route path="wages" element={<WagesScreen />}>
+            <Route path="wageslist" element={<WagesList />} />
+            <Route path="createwage" element={<CreateWages />} />
             <Route path="removededuction" element={<RemoveDeduction />} />
             <Route path="updatededuction/:id" element={<UpdateDeduction />} />
           </Route>
@@ -733,11 +742,11 @@ const router = createHashRouter(
               element={<AllbankAccountEntries />}
             />
           </Route>
-          // account Payable
+          {/* // account Payable */}
           <Route path="payables" element={<PayablesScreen />}>
             <Route path="allaccountpayables" element={<AllAccountPayables />} />
           </Route>
-          // account receivable
+          {/* // account receivable */}
           <Route path="receivabe" element={<ReceivableScreen />}>
             <Route
               path="allaccountreceivable"
