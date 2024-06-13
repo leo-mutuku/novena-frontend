@@ -252,6 +252,27 @@ import DeductionsList from "./screens/payroll/deductions/DeductionsList.jsx";
 import CreateDeduction from "./screens/payroll/deductions/CreateDeduction.jsx";
 import CreateWages from "./screens/payroll/wages/CreateWages.jsx";
 
+import Bank2CashScreen from "./screens/finance/Bank2CashScreen.jsx";
+import Bank2CashList from "./screens/finance/bank2cash/Bank2CashList.jsx";
+import CreateBank2Cash from "./screens/finance/bank2cash/CreateBank2Cash.jsx";
+import CreateCash2Bank from "./screens/finance/cash2bank/CreateCash2Bank.jsx";
+import Cash2BankList from "./screens/finance/cash2bank/Cash2BankList.jsx";
+import Cash2BankScreen from "./screens/finance/Cash2BankScreen.jsx";
+import CommissionScreen from "./screens/sales/CommissionScreen.jsx";
+import SalesPeopleCommission from "./screens/sales/commission/SalesPeopleCommission.jsx";
+import PaymentEntriesScreen from "./screens/payment/PaymentEntriesScreen.jsx";
+import PaymentEntries from "./screens/payment/payments/PaymentEntries.jsx";
+import TrialBalanceList from "./screens/finance/trialbalance/TrialBalanceList.jsx";
+import ProfitAndLossList from "./screens/finance/profitandloss/ProfitAndLossList.jsx";
+import BalanceSheetList from "./screens/finance/balancesheet/BalanceSheetList.jsx";
+import BalanceSheetScreen from "./screens/finance/BalanceSheetScreen.jsx";
+import CashFlowList from "./screens/finance/cashflowstatement/CashFlowList.jsx";
+import CashFlowScreen from "./screens/finance/CashFlowScreen.jsx";
+import CostOfProductionScreen from "./screens/finance/CostOfProductionScreen.jsx";
+import CostOfProductionList from "./screens/finance/costofproduction/CostOfProductionList.jsx";
+import IncomeStatementScreen from "./screens/finance/IncomeStatementScreen.jsx";
+import IncomeStatementList from "./screens/finance/incomestatement/IncomeStatementList.jsx";
+
 const router = createHashRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -377,6 +398,9 @@ const router = createHashRouter(
               path="allpostedpaymentrequisition"
               element={<AllPostedPaymentRequisitions />}
             />
+          </Route>
+          <Route path="PaymentEntries" element={<PaymentEntriesScreen />}>
+            <Route path="PaymentEntries" element={<PaymentEntries />} />
           </Route>
           <Route path="paymentvoucher" element={<PaymentVoucherScreen />}>
             <Route path="allpvs" element={<PaymentVoucherList />} />
@@ -596,6 +620,9 @@ const router = createHashRouter(
               element={<PostedOrderPreview />}
             />
           </Route>
+          <Route path="commission" element={<CommissionScreen />}>
+            <Route path="salescommission" element={<SalesPeopleCommission />} />
+          </Route>
           <Route path="returnorder" element={<ReturnOrdersScreen />}>
             <Route path="allreturnorders" element={<ReturnOrderlist />} />
             <Route path="reverseorderlist" element={<ReverseorderList />} />
@@ -696,6 +723,16 @@ const router = createHashRouter(
             <Route path="update/:id" element={<UpdateAccounts />} />
             <Route path="viewaccount" element={<ViewAccounts />} />
           </Route>
+
+          <Route path="cash2bank" element={<Cash2BankScreen />}>
+            <Route path="cash2bank" element={<Cash2BankList />} />
+            <Route path="createcash2bankk" element={<CreateCash2Bank />} />
+            {/* <Route path="update/:id" element={<UpdateCash2Bank />} /> */}
+          </Route>
+          <Route path="bank2cash" element={<Bank2CashScreen />}>
+            <Route path="bank2cash" element={<Bank2CashList />} />
+            <Route path="createbank2cash" element={<CreateBank2Cash />} />
+          </Route>
           <Route path="allaccountentries" element={<AccountEntriesScreen />}>
             <Route path="allaccountentries" element={<AllAccountEntries />} />
           </Route>
@@ -753,11 +790,27 @@ const router = createHashRouter(
               element={<AllAccountReceivable />}
             />
           </Route>
-          <Route path="trialbalance" element={<TrialBalanceScreen />}></Route>
+          <Route path="trialbalance" element={<TrialBalanceScreen />}>
+            <Route path="trialbalance" element={<TrialBalanceList />} />
+          </Route>
           <Route
             path="profitandlossstatement"
             element={<ProfitAndLossAccountScreen />}
-          ></Route>
+          >
+            <Route path="profitandloss" element={<ProfitAndLossList />} />
+          </Route>
+          <Route path="balancesheet" element={<BalanceSheetScreen />}>
+            <Route path="balanceSheet" element={<BalanceSheetList />}></Route>
+          </Route>
+          <Route path="cashflowanalysis" element={<CashFlowScreen />}>
+            <Route path="cashflow" element={<CashFlowList />} />
+          </Route>
+          <Route path="costofproduction" element={<CostOfProductionScreen />}>
+            <Route path="costofproduction" element={<CostOfProductionList />} />
+          </Route>
+          <Route path="incomestatement" element={<IncomeStatementScreen />}>
+            <Route path="incomestatement" element={<IncomeStatementList />} />
+          </Route>
         </Route>
       </Route>
     </Route>

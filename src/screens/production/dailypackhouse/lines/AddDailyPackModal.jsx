@@ -19,7 +19,7 @@ function AddProductionModal({
   let purchase_id = parseInt(store_purchase_id);
 
   const { data: pack_house_people, error } = useGetAllPackHousePeopleQuery();
-  console.log(pack_house_people?.data);
+
   const { userInfo } = useSelector((state) => state.auth);
   const [purchase_line, { isLoading }] = useCreateStorePurchaseLineMutation();
   const navigate = useNavigate();
@@ -38,12 +38,18 @@ function AddProductionModal({
     useState("");
   const [number_of_half_kg_bale_packed, set_number_of_half_kg_bale_packed] =
     useState("");
-  const [staff_id, set_staff_id] = useState("");
+
   const [staff_name, set_staff_name] = useState("");
   const [one_kg_bale_code, set_one_kg_bale_code] = useState("");
   const [half_kg_bale_code, set_half_kg_bale_code] = useState("");
   const [one_kg_packet_code, set_one_kg_packet_code] = useState("");
   const [half_kg_packet_code, set_half_kg_packet_code] = useState();
+
+  const [staff_id, set_staff_id] = useState("");
+  const [item_code, set_item_code] = useState("");
+  const [count, set_count] = useState("");
+  const [cost, set_cost] = useState("");
+  const [pack_date, set_pack_date] = useState("");
 
   const [packhouse_list, set_packhouse_list] = useState([]);
   console.log(error);
@@ -177,10 +183,8 @@ function AddProductionModal({
                           type="date"
                           required
                           placeholder=""
-                          value={number_of_half_kg_bale_packed}
-                          onChange={(e) =>
-                            set_number_of_half_kg_bale_packed(e.target.value)
-                          }
+                          value={pack_date}
+                          onChange={(e) => set_pack_date(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -191,9 +195,9 @@ function AddProductionModal({
                           type="number"
                           required
                           placeholder=""
-                          value={number_of_half_kg_bale_packed}
+                          value={number_of_one_kg_bale_packed}
                           onChange={(e) =>
-                            set_number_of_half_kg_bale_packed(e.target.value)
+                            set_number_of_one_kg_bale_packed(e.target.value)
                           }
                         ></Form.Control>
                       </Form.Group>

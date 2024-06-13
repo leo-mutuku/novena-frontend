@@ -5,6 +5,7 @@ export const sidelinks = [
       { subMenuTitle: "Purchases", to: "purchases" },
       { subMenuTitle: "Requisitions", to: "requsitions" },
       { subMenuTitle: "Payment Voucher", to: "paymentvoucher" },
+      { subMenuTitle: "Payment Entries", to: "PaymentEntries" },
     ],
   },
   {
