@@ -1,4 +1,5 @@
-import { Container, Card, Row, Col } from "react-bootstrap";
+import { Container, Card, Row, Col, Toast } from "react-bootstrap";
+import { useState, useEffect } from "react";
 import { TbBuildingFactory } from "react-icons/tb";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
@@ -19,16 +20,43 @@ import Typography from "@mui/material/Typography";
 import Item from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
+import { useSelector } from "react-redux";
+
 const SecuredHomeComponent = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+  const [accessDenied, setAccessDenied] = useState(false);
+  const [roles, setRoles] = useState([]);
+  console.log(roles);
+
   const moduleMenu = [
-    { module_name: "Production", to: "/production", Icon: TbBuildingFactory },
-    { module_name: "Sales", to: "/sales", Icon: HiOutlineShoppingCart },
-    { module_name: "Finance", to: "/finance", Icon: FaRegMoneyBillAlt },
-    { module_name: "Store", to: "/store", Icon: LiaWarehouseSolid },
-    { module_name: "Purchase", to: "/purchase", Icon: BiPurchaseTag },
-    { module_name: "Admin", to: "/administration", Icon: FiUsers },
-    { module_name: "Fleet", to: "/fleet", Icon: FaTrailer },
-    { module_name: "Payroll", to: "/payroll", Icon: GiWallet },
+    {
+      module_name: "Production",
+      to: "/production",
+      Icon: TbBuildingFactory,
+      role: 1000,
+    },
+    {
+      module_name: "Sales",
+      to: "/sales",
+      Icon: HiOutlineShoppingCart,
+      role: 2000,
+    },
+    {
+      module_name: "Finance",
+      to: "/finance",
+      Icon: FaRegMoneyBillAlt,
+      role: 3000,
+    },
+    { module_name: "Store", to: "/store", Icon: LiaWarehouseSolid, role: 4000 },
+    {
+      module_name: "Purchase",
+      to: "/purchase",
+      Icon: BiPurchaseTag,
+      role: 5000,
+    },
+    { module_name: "Admin", to: "/administration", Icon: FiUsers, role: 6000 },
+    { module_name: "Fleet", to: "/fleet", Icon: FaTrailer, role: 7000 },
+    { module_name: "Payroll", to: "/payroll", Icon: GiWallet, role: 8000 },
     {
       module_name: "Payment",
       to: "/payment",
@@ -46,7 +74,13 @@ const SecuredHomeComponent = () => {
           >
             {moduleMenu.map((module) => (
               <Card className="w-75 m-2 " key={module.module_name}>
-                <Link to={module.to}>
+                <Link
+                  to={
+                    userInfo.roles?.includes(module.role)
+                      ? module.to
+                      : module.to
+                  }
+                >
                   <Card.Body>
                     <Card.Title
                       style={{ fontSize: "12px", textAlign: "center" }}
@@ -56,7 +90,7 @@ const SecuredHomeComponent = () => {
                     <Card.Subtitle className="mb-2 text-muted">
                       {module.module_sub_title}
                     </Card.Subtitle>
-                    <Card.Text>{<module.Icon size={60} />}</Card.Text>
+                    <Card.Text>{<module.Icon size={50} />}</Card.Text>
                   </Card.Body>
                 </Link>
               </Card>

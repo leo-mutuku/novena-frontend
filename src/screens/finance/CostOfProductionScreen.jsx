@@ -1,7 +1,12 @@
-import React from "react";
+import PageActionComponent from "../../components/PageActionComponent";
+const pagemenus = [{ pagename: "Cost of Production", to: "costofproduction" }];
 
-const CostOfProductionScreen = () => {
-  return <div>CostOfProductionScreen</div>;
-};
+function CostOfProductionScreen() {
+  return (
+    <>
+      <PageActionComponent pagemenus={pagemenus} />
+    </>
+  );
+}
 
 export default CostOfProductionScreen;

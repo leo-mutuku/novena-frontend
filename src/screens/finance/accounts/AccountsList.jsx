@@ -88,6 +88,7 @@ const AccountsList = () => {
       {
         Header: "Account Number",
         accessor: "account_number",
+        Cell: ({ row }) => <Link to="#">{row.original.account_number}</Link>,
       },
       {
         Header: "Created At",
@@ -101,6 +102,7 @@ const AccountsList = () => {
       {
         Header: "Account Balance",
         accessor: "account_balance",
+        Cell: ({ row }) => <Link to="#">{row.original.account_balance}</Link>,
       },
       {
         Header: "Gl Number",

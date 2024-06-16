@@ -61,7 +61,6 @@ const ProductionHeaderList = () => {
             <th style={{ position: "initial" }}>Created By</th>
             <th style={{ position: "initial" }}>Status</th>
             <th style={{ position: "initial" }}>Add</th>
-            <th style={{ position: "initial" }}>Revert</th>
           </tr>
         </thead>
         <tbody>
@@ -117,7 +116,7 @@ const ProductionHeaderList = () => {
                     "--"
                   )}
                 </td>
-                <td>
+                {/* <td>
                   {item.status === "New" ? (
                     <Link to={`#`}>
                       <GiReturnArrow
@@ -129,7 +128,7 @@ const ProductionHeaderList = () => {
                   ) : (
                     "--"
                   )}
-                </td>
+                </td> */}
               </tr>
             ))
           )}

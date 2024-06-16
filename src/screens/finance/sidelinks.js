@@ -57,6 +57,7 @@ export const sidelinks = [
       { subMenuTitle: "Balance Sheet", to: "balancesheet" },
       { subMenuTitle: "Cash Flow Analysis", to: "cashflowanalysis" },
       { subMenuTitle: "Cost of Production", to: "costofproduction" },
+      { subMenuTitle: "Income Statement", to: "incomestatement" },
     ],
   },
 ];

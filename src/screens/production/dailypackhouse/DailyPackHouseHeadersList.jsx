@@ -5,6 +5,7 @@ import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { CiEdit } from "react-icons/ci";
+import { IoIosAdd } from "react-icons/io";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
@@ -42,6 +43,7 @@ const DailyPackHouseHeadersList = () => {
   }, [productionData]);
   const navigate = useNavigate();
 
+  console.log(productionData);
   const handleEdit = () => {};
 
   const getStatusColor = (status) => {
@@ -66,26 +68,42 @@ const DailyPackHouseHeadersList = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "Pack Date #",
-        accessor: "store_purchase_number",
+        Header: "Batch no#",
+        accessor: "batch_no",
       },
       {
-        Header: "Item Name",
-        accessor: "purchase_date",
+        Header: "Pack Date #",
+        accessor: "pack_date",
         Cell: ({ value }) => <span>{moment(value).format("YYYY-MM-DD")}</span>,
       },
+
       {
-        Header: "Unit",
-        accessor: "prepared_by",
+        Header: "Created By",
+        accessor: "created_by",
+      },
+
+      {
+        Header: "Weight In KG",
+        accessor: "total_in_nity_kg",
       },
       {
-        Header: "Approved By",
-        accessor: "approved_by",
+        Header: "Number Packed",
+        accessor: "number_packed",
+        Cell: ({ row }) => <Link to="#">{row.original.number_packed}</Link>,
       },
       {
         Header: "Total Cost",
         accessor: "total_cost",
       },
+      {
+        Header: "Item Name",
+        accessor: "item_name",
+      },
+      {
+        Header: "Pack Type",
+        accessor: "pack_type",
+      },
+
       {
         Header: "Status",
         accessor: "status",
@@ -94,17 +112,14 @@ const DailyPackHouseHeadersList = () => {
         ),
       },
       {
-        Header: "Edit",
-        accessor: "edit",
+        Header: "add",
+        accessor: "add",
         Cell: ({ row }) => (
-          <button
-            onClick={(e) =>
-              handleEdit(e, row.original.store_purchase_number, "block")
-            }
-            disabled={row.original.status !== "New"}
+          <Link
+            to={`/production/dailypackhouse/postdailypackhouse/${row.original.daily_packhouse_header_id}`}
           >
-            <CiEdit />
-          </button>
+            <IoIosAdd />
+          </Link>
         ),
       },
     ],

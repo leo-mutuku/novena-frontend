@@ -1,16 +1,12 @@
-import PageActionComponent from '../../components/PageActionComponent'
-const pagemenus =
-[
-  {pagename:'All TB', to:"alltb"},
-  {pagename:'Create TB', to:"createtb"},
-]
+import PageActionComponent from "../../components/PageActionComponent";
+const pagemenus = [{ pagename: "TB", to: "alltb" }];
 
 function TrialBalanceScreen() {
   return (
     <>
-    <PageActionComponent pagemenus={pagemenus}/>
-     </>
-  )
+      <PageActionComponent pagemenus={pagemenus} />
+    </>
+  );
 }
 
-export default TrialBalanceScreen
+export default TrialBalanceScreen;

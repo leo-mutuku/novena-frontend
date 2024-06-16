@@ -10,11 +10,12 @@ import { IoMdEye } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 // import PostedPurchaseModal from "./lines/PostedPurchaseModal";
 import TimeDate from "../../../components/TimeDate";
-import DataTable from "../../../components/general/DataTable";
+
 import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
 import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
 import moment from "moment";
 import axios from "axios";
+import DataTable from "../../../components/general/DataTable";
 
 const AllPostedDailyPackhouse = () => {
   const timeDate = new TimeDate();
@@ -153,7 +154,7 @@ const AllPostedDailyPackhouse = () => {
   return (
     <>
       <div>
-        <p>*** All Posted Store Purchases***</p>
+        <p>*** All Posted Daily Pack House ***</p>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <div style={{ marginLeft: "10px" }}>
             <button onClick={handleDownloadPDF} disabled={loadingPdf}>

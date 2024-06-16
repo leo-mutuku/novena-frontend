@@ -1,5 +1,7 @@
 import PageActionComponent from "../../components/PageActionComponent";
-const pagemenus = [{ pagename: "All Accounts", to: "allcashaccountentries" }];
+const pagemenus = [
+  { pagename: "All Cash Account Entries", to: "allcashaccountentries" },
+];
 function CashAccountEntriesScreen() {
   return (
     <>

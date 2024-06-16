@@ -1,7 +1,12 @@
-import React from "react";
+import PageActionComponent from "../../components/PageActionComponent";
+const pagemenus = [{ pagename: "Balance sheet", to: "balanceSheet" }];
 
-const BalanceSheetScreen = () => {
-  return <div>BalanceSheetScreen</div>;
-};
+function BalanceSheetScreen() {
+  return (
+    <>
+      <PageActionComponent pagemenus={pagemenus} />
+    </>
+  );
+}
 
 export default BalanceSheetScreen;

@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { useGeneralQuery } from "../../../../slices/administration/staffApiSlice";
 import { IoMdHeartEmpty } from "react-icons/io";
+import { IoMdEye } from "react-icons/io";
+import moment from "moment";
+import DataTable from "../../../../components/general/DataTable";
 
 const Monthly = ({ staff_list, set_staff_list, removeStaff }) => {
   const { data: production_people } = useGeneralQuery();
+  const [tableData, setTableData] = useState([]);
   const [staff, set_staff] = useState(false);
   const [checked, set_checked] = useState([]);
 

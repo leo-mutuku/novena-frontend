@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Table from "react-bootstrap/Table";
 import { useGetAllPackHousePeopleQuery } from "../../../../slices/production/packHousePeopleApiSlice";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { useGeneralQuery } from "../../../../slices/administration/staffApiSlice";
+import { IoMdEye } from "react-icons/io";
+import moment from "moment";
+import DataTable from "../../../../components/general/DataTable";
 
 const PackHouse = ({ staff_list, set_staff_list, removeStaff }) => {
   const { data: pack_housepeople } = useGetAllPackHousePeopleQuery();
+  const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
     if (pack_housepeople) {

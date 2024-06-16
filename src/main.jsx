@@ -272,6 +272,10 @@ import CostOfProductionScreen from "./screens/finance/CostOfProductionScreen.jsx
 import CostOfProductionList from "./screens/finance/costofproduction/CostOfProductionList.jsx";
 import IncomeStatementScreen from "./screens/finance/IncomeStatementScreen.jsx";
 import IncomeStatementList from "./screens/finance/incomestatement/IncomeStatementList.jsx";
+import UpdatePacktypeSetting from "./screens/production/packhousesetup/UpdatePacktypeSetting.jsx";
+import DeletePackHouseSettings from "./screens/production/packhousesetup/DeletePackHouseSettings.jsx";
+import PostDailyPackHouse from "./screens/production/dailypackhouse/lines/PostDailyPackHouse.jsx";
+import AllPostedPyamentVouchers from "./screens/payment/payments/paymentvouchers/AllPostedPaymentVouchers.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -378,7 +382,7 @@ const router = createHashRouter(
             />
             <Route
               path="allpostedpurchasepayment"
-              element={<AllPaymentVouchersInTransit />}
+              element={<AllPostedPyamentVouchers />}
             />
             <Route
               path="createpurchasepayment"
@@ -458,6 +462,10 @@ const router = createHashRouter(
               path="createdailypackhouse"
               element={<CreateDailyPackhouseHeader />}
             />
+            <Route
+              path="postdailypackhouse/:id"
+              element={<PostDailyPackHouse />}
+            />
           </Route>
           {/* production set up */}
           <Route path="productionsetup" element={<ProductionSetupScreen />}>
@@ -489,6 +497,14 @@ const router = createHashRouter(
             <Route
               path="createpacktypesettings"
               element={<CreatePacktypeSetting />}
+            />
+            <Route
+              path="updatepackhouse/:id"
+              element={<UpdatePacktypeSetting />}
+            />
+            <Route
+              path="deletepackhousesetting/:id"
+              element={<DeletePackHouseSettings />}
             />
           </Route>
 
@@ -791,7 +807,7 @@ const router = createHashRouter(
             />
           </Route>
           <Route path="trialbalance" element={<TrialBalanceScreen />}>
-            <Route path="trialbalance" element={<TrialBalanceList />} />
+            <Route path="alltb" element={<TrialBalanceList />} />
           </Route>
           <Route
             path="profitandlossstatement"
@@ -800,7 +816,7 @@ const router = createHashRouter(
             <Route path="profitandloss" element={<ProfitAndLossList />} />
           </Route>
           <Route path="balancesheet" element={<BalanceSheetScreen />}>
-            <Route path="balanceSheet" element={<BalanceSheetList />}></Route>
+            <Route path="balanceSheet" element={<BalanceSheetList />} />
           </Route>
           <Route path="cashflowanalysis" element={<CashFlowScreen />}>
             <Route path="cashflow" element={<CashFlowList />} />
