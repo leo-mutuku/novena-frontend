@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Loader from "../../../components/Loader";
-import { useGetAllAccountsQuery } from "../../../slices/finance/accountsApiSlice";
+import { useGetAllCashToBankQuery } from "../../../slices/finance/cashToBankApiSlice";
+
 import { Table, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
@@ -15,7 +16,7 @@ import moment from "moment";
 
 const Cash2BankList = () => {
   const timeDate = new TimeDate();
-  const { data: accounts, isLoading } = useGetAllAccountsQuery();
+  const { data: accounts, isLoading } = useGetAllCashToBankQuery();
 
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);

@@ -87,16 +87,6 @@ const SalesCategory = () => {
           </Link>
         ),
       },
-
-      {
-        Header: "View",
-        accessor: "view",
-        Cell: () => (
-          <Link to="#">
-            <IoMdEye />
-          </Link>
-        ),
-      },
     ],
     [data]
   );

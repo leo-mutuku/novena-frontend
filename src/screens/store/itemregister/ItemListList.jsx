@@ -139,15 +139,6 @@ const ItemListList = () => {
           </Link>
         ),
       },
-      {
-        Header: "Delete",
-        accessor: "delete",
-        Cell: ({ row }) => (
-          <button onClick={() => handleDelete(row.original.item_register_id)}>
-            Delete
-          </button>
-        ),
-      },
     ],
     [handleDelete]
   );

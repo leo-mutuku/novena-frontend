@@ -87,16 +87,6 @@ const GeneralCategory = () => {
           </Link>
         ),
       },
-
-      {
-        Header: "View",
-        accessor: "view",
-        Cell: () => (
-          <Link to="#">
-            <IoMdEye />
-          </Link>
-        ),
-      },
     ],
     []
   );
@@ -106,62 +96,6 @@ const GeneralCategory = () => {
       <></>
       <p>*** General Payroll List ***</p>
       <DataTable columns={columns} data={tableData} />
-
-      {/* <Table striped style={{ border: "1px solid #ccc" }}>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Payroll no</th>
-            <th>Date</th>
-            <th>Staff Count</th>
-            <th>Gross Pay</th>
-            <th>Net Pay</th>
-            <th>Deductions</th>
-            <th>Actions</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {isLoading ? (
-            <Loader />
-          ) : data?.data[0] === null ? (
-            <>No data</>
-          ) : (
-            data?.data?.map((item, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{item.payroll_header_id}</td>
-                <td style={{ fontSize: "10px" }}>{`${timeDate.date(
-                  item.start_date
-                )} - ${timeDate.date(item.end_date)}`}</td>
-
-                <td>{item.number_of_staff}</td>
-                <td>{item.gross_pay}</td>
-                <td>{item.net_pay}</td>
-                <td>{item.total_deductions}</td>
-                <td>
-                  <Link
-                    to={`/payroll/payrollheader/actions/${item.payroll_header_id}`}
-                  >
-                    <FcProcess size={20} />
-                  </Link>
-                </td>
-                <td>
-                  {item.status === "New" ? (
-                    <span style={{ color: "orange" }}>{item.status}</span>
-                  ) : item.status === "In Transit" ? (
-                    <span style={{ color: "blue" }}>{item.status}</span>
-                  ) : item.status === "Posted" ? (
-                    <span style={{ color: "green" }}>{item.status}</span>
-                  ) : (
-                    item.status
-                  )}
-                </td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </Table> */}
     </>
   );
 };

@@ -2,17 +2,23 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useCreateAccountMutation } from "../../../slices/finance/accountsApiSlice";
+import { useGetAllStoreItemsQuery } from "../../../slices/store/storeItemsApiSlice";
+import { useGetAllItemRegisterQuery } from "../../../slices/store/itemregisterApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function CreateTransaferOrderHeader() {
-  const [account_name, set_account_name] = useState("");
-  const [account_number, set_account_number] = useState("");
-  const [gl_number, set_gl_number] = useState("");
-  const [account_balance, set_account_balance] = useState("");
+  const [source_store_id, set_source_store_id] = useState("");
+  const [destination_store_id, set_destination_store_id] = useState("");
+  const [quantity, set_quantity] = useState("");
+  const [naration, set_naration] = useState("");
   const [created_by, set_created_by] = useState("");
 
   const [CreateAccount, { isLoading }] = useCreateAccountMutation();
+  const { data: storeItemsData, isLoading: storeItemsIsLoading } =
+    useGetAllStoreItemsQuery();
+  const { data: itemRegisterData, isLoading: itemRegisterIsLoading } =
+    useGetAllItemRegisterQuery();
   const { userInfo } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
@@ -27,10 +33,10 @@ function CreateTransaferOrderHeader() {
 
     try {
       const res = await CreateAccount({
-        account_name,
-        account_number,
-        gl_number,
-        account_balance,
+        source_store_id,
+        destination_store_id,
+        quantity,
+        naration,
         created_by,
       }).unwrap();
       console.log(res);
@@ -42,7 +48,7 @@ function CreateTransaferOrderHeader() {
   };
   return (
     <>
-      <span>*** Create Account *** </span>
+      <span>*** Transfer order *** </span>
 
       <Row>
         <div>
@@ -54,53 +60,68 @@ function CreateTransaferOrderHeader() {
         {/* */}
         <Row>
           <Col>
-            <Form.Group className="my-2" controlId="account_name">
-              <Form.Label>Account name</Form.Label>
-              <Form.Control
+            <Form.Group className="my-2" controlId="source_store_id">
+              <Form.Label>Source</Form.Label>
+              <Form.Select
                 type="text"
                 required
-                placeholder="account_name"
-                value={account_name}
-                onChange={(e) => set_account_name(e.target.value)}
-              ></Form.Control>
+                placeholder="Source"
+                value={source_store_id}
+                onChange={(e) => set_source_store_id(e.target.value)}
+              >
+                <option value={""}>Source</option>
+                {storeItemsData?.data.map((item, key) => (
+                  <option value={item.store_item_id}>
+                    {item.store_name} & {item.item_name}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group className="my-2" controlId="account_number">
-              <Form.Label>Account number</Form.Label>
-              <Form.Control
+            <Form.Group className="my-2" controlId="destination_store_id">
+              <Form.Label>Destination</Form.Label>
+              <Form.Select
                 type="number"
                 required
-                placeholder="account_number"
-                value={account_number}
-                onChange={(e) => set_account_number(e.target.value)}
-              ></Form.Control>
+                placeholder="Destnation"
+                value={destination_store_id}
+                onChange={(e) => set_destination_store_id(e.target.value)}
+              >
+                {" "}
+                <option value={""}>Source</option>
+                {storeItemsData?.data.map((item, key) => (
+                  <option value={item.store_item_id}>
+                    {item.store_name} & {item.item_name}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
         </Row>
 
         <Row>
           <Col>
-            <Form.Group className="my-2" controlId="gl_number">
-              <Form.Label>Gl number</Form.Label>
+            <Form.Group className="my-2" controlId="quantity">
+              <Form.Label>Quantity</Form.Label>
               <Form.Control
                 required
                 type="number"
-                placeholder="Gl number"
-                value={gl_number}
-                onChange={(e) => set_gl_number(e.target.value)}
+                placeholder="Quantity"
+                value={quantity}
+                onChange={(e) => set_quantity(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group className="my-2" controlId="account_balance">
-              <Form.Label>Account balance</Form.Label>
+            <Form.Group className="my-2" controlId="naration">
+              <Form.Label>Naration</Form.Label>
               <Form.Control
                 required
-                type="number"
-                placeholder="Account balance"
-                value={account_balance}
-                onChange={(e) => set_account_balance(e.target.value)}
+                type="text"
+                placeholder="Naration"
+                value={naration}
+                onChange={(e) => set_naration(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>

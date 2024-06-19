@@ -24,8 +24,6 @@ const CategoryList = () => {
             <th>Category Name</th>
             <th>Category code</th>
             <th>Pay Interval(days)</th>
-            <th>Edit</th>
-            <th>View</th>
           </tr>
         </thead>
         <tbody>
@@ -35,22 +33,15 @@ const CategoryList = () => {
             data?.data.map((category, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{category.category_name}</td>
-                <td>{category.category_code}</td>
-                <td>{category.pay_interval}</td>
-
                 <td>
                   <Link
                     to={`/payroll/category/updatepayrollcategory/${category.payroll_category_id}`}
                   >
-                    <CiEdit />
+                    {category.category_name}{" "}
                   </Link>
                 </td>
-                <td>
-                  <Link to={`#`}>
-                    <IoMdEye />
-                  </Link>
-                </td>
+                <td>{category.category_code}</td>
+                <td>{category.pay_interval}</td>
               </tr>
             ))
           )}

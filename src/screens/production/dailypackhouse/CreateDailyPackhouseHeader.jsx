@@ -42,7 +42,6 @@ function CreateDailyPackhouseHeader() {
         pack_type,
         batch_no,
         pack_date,
-
         pack_officer,
         product_code,
         created_by,

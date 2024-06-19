@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
-import { useGetAllAccountsQuery } from "../../../slices/finance/accountsApiSlice";
-import { useGetAllAccountEntriesQuery } from "../../../slices/finance/accountEntriesApiSlice";
+
+import { useGetAllBankAccountEntriesQuery } from "../../../slices/finance/bankAccountEntriesApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
@@ -17,7 +17,7 @@ import moment from "moment";
 
 const AllbankAccountEntries = () => {
   const timeDate = new TimeDate();
-  const { data: accounts, isLoading } = useGetAllAccountEntriesQuery();
+  const { data: accounts, isLoading } = useGetAllBankAccountEntriesQuery();
   const [account_entries, set_account_entries] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);

@@ -39,7 +39,6 @@ const PayrollActions = () => {
     try {
       const res = await bulkPrintPayslip({ payroll_header_id: id }).unwrap();
       if (res.status === "success") {
-        console.log(res.data);
         const payrollHeader = res.data.payrollHeader;
         const getlistOfStaffId = res.data.getlistOfStaffId;
 
@@ -138,11 +137,12 @@ const PayrollActions = () => {
 
         <Col>
           <Stack spacing={2} direction="row">
-            <Button variant="outlined">UNIT PRINT</Button>
-            <Button variant="outlined" onClick={handleBulkprint}>
-              BULKY PRINT
-            </Button>
+            <Button variant="outlined">PAY</Button>
             <Button variant="outlined">POST</Button>
+
+            <Button variant="outlined" onClick={handleBulkprint}>
+              PRINT
+            </Button>
             <Button variant="outlined" onClick={handleGeneratePayrollBtn}>
               GENERATE
             </Button>

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
-import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
+import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
@@ -13,7 +13,7 @@ import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
 import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
 import moment from "moment";
 const AllCashAccount = () => {
-  const { data: banks, isLoading } = useGetAllBankAccountsQuery();
+  const { data: banks, isLoading } = useGetAllCashAccountsQuery();
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
@@ -79,20 +79,20 @@ const AllCashAccount = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "Bank Name",
-        accessor: "bank_name",
+        Header: "Account Name",
+        accessor: "cash_account_name",
       },
       {
         Header: "Account Number",
-        accessor: "bank_number",
+        accessor: "cash_account_number",
       },
       {
-        Header: "Gl Number",
+        Header: "Gl No.",
         accessor: "gl_number",
       },
       {
-        Header: "Bank Balance",
-        accessor: "bank_balance",
+        Header: " Balance",
+        accessor: "cash_account_balance",
       },
       {
         Header: "Edit",

@@ -53,8 +53,20 @@ const StoreItemsList = () => {
       },
 
       {
-        Header: "Store Item Name",
-        accessor: "store_item_name",
+        Header: "Item Name",
+        accessor: "item_name",
+      },
+      {
+        Header: "Item Code",
+        accessor: "item_code",
+      },
+      {
+        Header: "Store Name",
+        accessor: "store_name",
+      },
+      {
+        Header: "Store Name",
+        accessor: "store_code",
       },
       {
         Header: "Item Quantity",

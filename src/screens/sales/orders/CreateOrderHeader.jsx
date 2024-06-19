@@ -116,8 +116,9 @@ function CreateOrderHeader() {
               >
                 <option>Sales Order Type</option>
                 <option value={"Cash"}>Cash Sale </option>
-                <option value={"Institution"}>Insititution</option>
                 <option value={"Cash_general"}>Cash Sale - General</option>
+                <option value={"Institution"}>Insititution</option>
+                <option value={"Credit"}>Credit Sale</option>
               </Form.Select>
             </Form.Group>
           </Col>

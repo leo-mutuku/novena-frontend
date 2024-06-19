@@ -72,16 +72,18 @@ const PayrollHeadersList = () => {
         accessor: "net_pay",
       },
       {
-        Header: "Deductions",
+        Header: "Total Deductions",
         accessor: "total_deductions",
       },
 
       {
-        Header: "View",
-        accessor: "view",
-        Cell: () => (
-          <Link to="#">
-            <IoMdEye />
+        Header: "Category",
+        accessor: "category_name",
+        Cell: ({ row }) => (
+          <Link
+            to={`/payroll/payrollheader/actions/${row.original.payroll_header_id}`}
+          >
+            {row.original.category_name}
           </Link>
         ),
       },

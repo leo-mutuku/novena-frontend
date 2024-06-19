@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { useCreateBankMutation } from "../../../slices/finance/bankAccountsApiSlice";
+import { useCreateCashAccountMutation } from "../../../slices/finance/cashAccountApiSlice";
+import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
+
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function CreateCashAccount() {
-  const [bank_number, set_bank_number] = useState("");
-  const [bank_name, set_bank_name] = useState("");
+  const [cash_account_number, set_cash_account_number] = useState("");
+  const [cash_account_name, set_cash_account_name] = useState("");
   const [gl_number, set_gl_number] = useState("");
-  const [bank_balance, set_bank_balance] = useState("");
+  const [cash_account_balance, set_cash_account_balance] = useState("");
+  const [cash_account_owner, set_cash_account_owner] = useState("");
+  const [staff_id, set_staff_id] = useState("");
+
   const [created_by, set_created_by] = useState("");
 
-  const [createBank, { isLoading }] = useCreateBankMutation();
+  const [createAccount, { isLoading }] = useCreateCashAccountMutation();
+  const { data: staffdata } = useGetAllStaffQuery();
   const { userInfo } = useSelector((state) => state.auth);
-  console.log(userInfo);
+
   const navigate = useNavigate();
   useEffect(() => {
     if (userInfo) {
@@ -25,15 +31,15 @@ function CreateCashAccount() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await createBank({
-        bank_number,
-        bank_name,
+      const res = await createAccount({
+        cash_account_number,
+        cash_account_name,
         gl_number,
-        bank_balance,
+        cash_account_balance,
+        staff_id,
         created_by,
       }).unwrap();
-      console.log(res);
-      navigate("../bankaccounts");
+      navigate("../allcashaccounts");
       toast.success("Bank Account created successfully");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
@@ -52,26 +58,26 @@ function CreateCashAccount() {
         {/* */}
         <Row>
           <Col>
-            <Form.Group className="my-2" controlId="bank_number">
-              <Form.Label>Bank number</Form.Label>
+            <Form.Group className="my-2" controlId="cash_account_number">
+              <Form.Label>Cash Account Number</Form.Label>
               <Form.Control
                 type="number"
                 required
-                placeholder="bank_number"
-                value={bank_number}
-                onChange={(e) => set_bank_number(e.target.value)}
+                placeholder="cash_account_number"
+                value={cash_account_number}
+                onChange={(e) => set_cash_account_number(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group className="my-2" controlId="bank_name">
-              <Form.Label>Bank name</Form.Label>
+            <Form.Group className="my-2" controlId="cash_account_name">
+              <Form.Label>Cash Account Name</Form.Label>
               <Form.Control
                 type="text"
                 required
-                placeholder="bank_name"
-                value={bank_name}
-                onChange={(e) => set_bank_name(e.target.value)}
+                placeholder="cash_account_name"
+                value={cash_account_name}
+                onChange={(e) => set_cash_account_name(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -91,15 +97,36 @@ function CreateCashAccount() {
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group className="my-2" controlId="bank_balance">
-              <Form.Label>Bank balance</Form.Label>
+            <Form.Group className="my-2" controlId="cash_account_balance">
+              <Form.Label>Cash Account balance</Form.Label>
               <Form.Control
                 required
                 type="number"
-                placeholder="bank_balance"
-                value={bank_balance}
-                onChange={(e) => set_bank_balance(e.target.value)}
+                placeholder="cash_account_balance"
+                value={cash_account_balance}
+                onChange={(e) => set_cash_account_balance(e.target.value)}
               ></Form.Control>
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Form.Group className="my-2" controlId="cash_account_owner">
+              <Form.Label>Cash Account Owner</Form.Label>
+              <Form.Select
+                required
+                type="number"
+                placeholder="cash_account_owner"
+                value={staff_id}
+                onChange={(e) => set_staff_id(e.target.value)}
+              >
+                <option value="">Select</option>
+                {staffdata?.data.map((staff, key) => (
+                  <option key={key} value={staff.staff_id}>
+                    {staff.first_name} {staff.last_name} | {staff.staff_id}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
         </Row>

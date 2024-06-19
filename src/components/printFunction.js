@@ -21,9 +21,9 @@ export const handlePrintA4 = (payrollHeader, getlistOfStaffId) => {
   //a4 Portrait
   doc.setFontSize(17);
   doc.setFont("times");
-  doc.text(55, 27, "NOVENA MAIZE MILLERS LTD");
+  doc.text(65, 27, "NOVENA MAIZE MILLERS LTD");
   doc.setFontSize(12);
-  doc.text(80, 32, "Po Box 238 Meru");
+  doc.text(85, 32, "Po Box 238 Meru");
   doc.setFontSize(12);
   doc.text(75, 37, `Date : ${date}`);
   autoTable(doc, { html: "#my-table" });

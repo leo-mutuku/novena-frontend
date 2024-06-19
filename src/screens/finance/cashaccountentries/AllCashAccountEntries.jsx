@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
-import { useGetAllGLAccountsQuery } from "../../../slices/finance/glApiSlice";
+import { useGetAllCashAccountEntriesQuery } from "../../../slices/finance/cashAccountEntriesApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
@@ -24,7 +24,7 @@ const AllCashAccountEntries = () => {
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
-  const { data, isLoading } = useGetAllGLAccountsQuery();
+  const { data, isLoading } = useGetAllCashAccountEntriesQuery();
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);

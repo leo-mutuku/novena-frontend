@@ -2,17 +2,23 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useCreateGlMutation } from "../../../slices/finance/glApiSlice";
+import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader";
 
 function CreateDeduction() {
-  const [gl_name, set_gl_name] = useState("");
-  const [gl_number, set_gl_number] = useState("");
+  const [staff_id, set_staff_id] = useState(null);
+  const [naration, set_naration] = useState("");
+  const [date, set_date] = useState(null);
+  const [amount, set_amount] = useState(null);
   const [created_by, set_created_by] = useState("");
 
   const [createGl, { isLoading }] = useCreateGlMutation();
+  const { data: staffData } = useGetAllStaffQuery();
   const { userInfo } = useSelector((state) => state.auth);
+
+  console.log(staffData);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -26,8 +32,10 @@ function CreateDeduction() {
 
     try {
       const res = await createGl({
-        gl_name,
-        gl_number,
+        staff_id,
+        naration,
+        amount,
+        date,
         created_by,
       }).unwrap();
 
@@ -39,7 +47,7 @@ function CreateDeduction() {
   };
   return (
     <>
-      <span>*** Create Gl Account ***</span>
+      <span>*** Create Deduction ***</span>
       <Row>
         <div>
           {" "}
@@ -50,14 +58,33 @@ function CreateDeduction() {
         {/* */}
         <Row>
           <Col>
-            <Form.Group className="my-2" controlId="gl_name">
-              <Form.Label>Gl name</Form.Label>
-              <Form.Control
+            <Form.Group className="my-2" controlId="staff_id">
+              <Form.Label>Staff Name</Form.Label>
+              <Form.Select
                 type="text"
                 required
-                placeholder="Gl name"
-                value={gl_name}
-                onChange={(e) => set_gl_name(e.target.value)}
+                placeholder="Staff Name"
+                value={staff_id}
+                onChange={(e) => set_staff_id(e.target.value)}
+              >
+                <option value="">Staff name</option>
+                {staffData?.data.map((item, key) => (
+                  <option value={item.staff_id} key={key}>
+                    {item.first_name} {item.last_name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="my-2" controlId="staff_id">
+              <Form.Label>Amount</Form.Label>
+              <Form.Control
+                type="number"
+                required
+                placeholder="Amount"
+                value={amount}
+                onChange={(e) => set_amount(parseInt(e.target.value))}
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -65,14 +92,26 @@ function CreateDeduction() {
 
         <Row>
           <Col>
-            <Form.Group className="my-2" controlId="gl_number">
-              <Form.Label>Gl number</Form.Label>
+            <Form.Group className="my-2" controlId="naration">
+              <Form.Label>Date</Form.Label>
               <Form.Control
                 required
-                type="number"
-                placeholder="Gl number"
-                value={gl_number}
-                onChange={(e) => set_gl_number(e.target.value)}
+                type="date"
+                placeholder="Date"
+                value={date}
+                onChange={(e) => set_date(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="my-2" controlId="naration">
+              <Form.Label>Naration</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Naration"
+                value={naration}
+                onChange={(e) => set_naration(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>

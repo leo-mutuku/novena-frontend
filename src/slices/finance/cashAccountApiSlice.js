@@ -1,16 +1,28 @@
 import { apiSlice } from "../apiSlice";
-const ACCOUNTENTRIES_URL = "/api/v1/finance/accountentries";
+const URL = "/api/v1/finance/cashaccounts";
 
-export const cashAccountApiSlice = apiSlice.injectEndpoints({
+export const cashAccountsApiSlice = apiSlice.injectEndpoints({
+  tags: ["cashaccounts"],
   endpoints: (builder) => ({
-    getAllAccountEntries: builder.query({
+    getAllCashAccounts: builder.query({
       query: (data) => ({
-        url: `${ACCOUNTENTRIES_URL}/getallaccountentries`,
+        url: `${URL}/getallcashaccounts`,
         method: "GET",
         body: data,
       }),
+      providesTags: ["cashaccounts"],
+      // refetchOnMountOrArgChange: true,
+    }),
+    createCashAccount: builder.mutation({
+      query: (data) => ({
+        url: `${URL}/createcashaccount`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["cashaccounts"],
     }),
   }),
 });
 
-export const { useGetAllAccountEntriesQuery } = cashAccountApiSlice;
+export const { useCreateCashAccountMutation, useGetAllCashAccountsQuery } =
+  cashAccountsApiSlice;

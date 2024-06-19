@@ -128,28 +128,6 @@ const StaffSetupList = () => {
           </Link>
         ),
       },
-      {
-        Header: "View",
-        accessor: "view",
-        Cell: ({ row }) => (
-          <Link
-            to={`/payroll/payrollsetup/viewstaffsetup/${row.original.payroll_setup_id}`}
-          >
-            <IoMdEye />
-          </Link>
-        ),
-      },
-      {
-        Header: "Delete",
-        accessor: "delete",
-        Cell: ({ row }) => (
-          <Link
-            to={`/payroll/payrollsetup/viewstaffsetup/${row.original.payroll_setup_id}`}
-          >
-            <IoMdEye />
-          </Link>
-        ),
-      },
     ],
     []
   );

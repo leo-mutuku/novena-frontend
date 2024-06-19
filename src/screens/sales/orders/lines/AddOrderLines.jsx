@@ -11,7 +11,7 @@ import { useGetAllItemRegisterQuery } from "../../../../slices/store/itemregiste
 import { useGetAllAccountsQuery } from "../../../../slices/finance/accountsApiSlice";
 import { useGetAllSuppliersQuery } from "../../../../slices/administration/suppliersApiSlice";
 import { useCreateSalesOrderLineMutation } from "../../../../slices/sales/salesOrderLinesApiSlice";
-import { useGetAllStoreRegisterQuery } from "../../../../slices/store/storeRegisterApiSlice";
+import { useGetAllStoreItemsQuery } from "../../../../slices/store/storeItemsApiSlice";
 
 function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
   let purchase_id = parseInt(store_purchase_id);
@@ -19,7 +19,7 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
   const { data: item_register } = useGetAllItemRegisterQuery();
   const { data: accounts } = useGetAllAccountsQuery();
   const { data: suppliers } = useGetAllSuppliersQuery();
-  const { data: store } = useGetAllStoreRegisterQuery();
+  const { data: store } = useGetAllStoreItemsQuery();
   const { userInfo } = useSelector((state) => state.auth);
   const [sales_order_line, { isSucces }] = useCreateSalesOrderLineMutation();
   const navigate = useNavigate();
@@ -27,14 +27,16 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
   const [order_items, set_order_items] = useState({
     sales_order_number: 0,
     item_code: 0,
-    item_name: "",
+    item_name: null,
     account_number: 0,
     account_name: "",
     item_cost: 0,
     quantity: 0,
-    total_cost_per_item: "",
-    store_name: "",
-    store_code: "",
+    total_cost_per_item: null,
+    store_name: null,
+    store_code: null,
+    store_item_id: 0,
+    store_item_code: 0,
     created_by: userInfo?.first_name,
   });
 
@@ -54,15 +56,22 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(order_items);
+
     set_order_items({ ...order_items, created_by: userInfo.first_name });
+    console.log(order_items);
+    if (order_items.item_code != order_items.store_item_code) {
+      toast.error("Item and Store Item code must be the same");
+      return;
+      return;
+    }
     set_sales_list([...sales_list, order_items]);
   };
 
   const handleSave = async () => {
     try {
       if (sales_list.length === 0) {
-        alert("Add items to purchase first!");
+        toast.error("Please add at least one item");
+        return;
       } else {
         const res = await sales_order_line({
           sales_list,
@@ -124,14 +133,17 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
   // handle supplier
   const handleStore = (e) => {
     let x = store?.data?.filter((a) => {
-      if (a.store_code == e.target.value) {
+      if (a.store_item_id == e.target.value) {
         return a.store_name;
       }
     });
+    console.log(x[0], "x");
     set_order_items({
       ...order_items,
-      store_code: e.target.value,
+      store_code: x[0].store_code,
       store_name: x[0].store_name,
+      store_item_code: x[0].item_code,
+      store_item_id: parseInt(e.target.value),
     });
   };
 
@@ -225,15 +237,21 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
                           type="number"
                           required
                           placeholder="Store"
-                          value={order_items.store_code}
+                          value={order_items.store_item_id}
                           onChange={handleStore}
                         >
                           <option>Store</option>
-                          {store?.data.map((item, index) => (
-                            <option key={index} value={item.store_code}>
-                              {item.store_code} | {item.store_name}
-                            </option>
-                          ))}
+                          {store?.data
+                            .filter(
+                              (item) =>
+                                item.store_name.includes("F") ||
+                                item.store_name.includes("Raw")
+                            )
+                            .map((item, index) => (
+                              <option key={index} value={item.store_item_id}>
+                                {item.store_name} & {item.item_name}
+                              </option>
+                            ))}
                         </Form.Select>
                       </Form.Group>
                     </Col>
