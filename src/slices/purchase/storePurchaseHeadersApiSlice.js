@@ -10,6 +10,22 @@ export const storePurchaseHeadersApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["StorePurchaseHeader", "StorePurchaseLine"],
     }),
+    getGeneralStorePurchaseReport: builder.mutation({
+      query: (data) => ({
+        url: `${STOREPURCHASEHEADERS_URL}/generalstorepurchase`,
+        method: "POST",
+        body: data,
+      }),
+      providesTags: ["StorePurchaseHeader", "StorePurchaseLine"],
+    }),
+    getSupplierStorePurchaseReport: builder.mutation({
+      query: (data) => ({
+        url: `${STOREPURCHASEHEADERS_URL}/supplierstorepurchase`,
+        method: "POST",
+        body: data,
+      }),
+      providesTags: ["StorePurchaseHeader", "StorePurchaseLine"],
+    }),
     // All posted stored purchases
     getAllPostedStoredPurchases: builder.query({
       query: () => ({
@@ -51,4 +67,6 @@ export const {
   useGetAllStorePurchasesInTransitQuery,
   useCreateStorePurchaseHeaderMutation,
   usePostStorePurchaseHeaderMutation,
+  useGetGeneralStorePurchaseReportMutation,
+  useGetSupplierStorePurchaseReportMutation,
 } = storePurchaseHeadersApiSlice;

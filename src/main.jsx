@@ -277,6 +277,13 @@ import DeletePackHouseSettings from "./screens/production/packhousesetup/DeleteP
 import PostDailyPackHouse from "./screens/production/dailypackhouse/lines/PostDailyPackHouse.jsx";
 import AllPostedPyamentVouchers from "./screens/payment/payments/paymentvouchers/AllPostedPaymentVouchers.jsx";
 
+import StorePurchaseReportScreen from "./screens/purchase/StorePurchaseReportScreen.jsx";
+import StoreRequisitionReportScreen from "./screens/purchase/StoreRequisitionReportScreen.jsx";
+import SupplierReportScreen from "./screens/administration/SupplierReportScreen.jsx";
+import InventoryEntryReportScreen from "./screens/store/InventoryEntryReportScreen.jsx";
+import InventoryRegisterReportScreen from "./screens/store/InventoryRegisterReportScreen.jsx";
+import StockBalancesReportScreen from "./screens/store/StockBalancesReportScreen.jsx";
+
 const router = createHashRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -308,6 +315,10 @@ const router = createHashRouter(
             <Route path="update/:id" element={<UpdateSupplier />} />
             <Route path="allsuppliers" element={<SupplierList />} />
           </Route>
+          <Route
+            path="supplierreports"
+            element={<SupplierReportScreen />}
+          ></Route>
           <Route path="staff" element={<StaffScreen />}>
             <Route index element={<StaffList />} />
             <Route path="createstaff" element={<CreateStaff />} />
@@ -521,7 +532,6 @@ const router = createHashRouter(
         </Route>
         {/* store routes */}
         <Route path="store" element={<StoreScreen />}>
-          {/* <Route index element={<StoreDashboard />}/> */}
           <Route path="storeitemregister" element={<StoreItemRegister />}>
             <Route index element={<ItemListList />} />
             <Route path="registeritem" element={<CreateItemList />} />
@@ -586,9 +596,39 @@ const router = createHashRouter(
             />
             <Route path="allstoreregister" element={<StoreRegisterList />} />
           </Route>
+          <Route
+            path="stockbalances"
+            element={<StockBalancesReportScreen />}
+          ></Route>
+          <Route
+            path="inventoryregister"
+            element={<InventoryRegisterReportScreen />}
+          ></Route>
+          <Route
+            path="inventoryentry"
+            element={<InventoryEntryReportScreen />}
+          ></Route>
         </Route>
         {/* purchase routes */}
         <Route path="purchase" element={<PurchaseScreen />}>
+          <Route path="suppliers" element={<SuppliersScreen />}>
+            <Route index element={<SupplierList />} />
+            <Route path="createsupplier" element={<CreateSupplier />} />
+            <Route path="allsuppliers" element={<SupplierList />} />
+            <Route path="update/:id" element={<UpdateSupplier />} />
+          </Route>
+          <Route
+            path="supplierreports"
+            element={<SupplierReportScreen />}
+          ></Route>
+          <Route
+            path="storepurcharsereports"
+            element={<StorePurchaseReportScreen />}
+          ></Route>
+          <Route
+            path="storerequisitionreport"
+            element={<StoreRequisitionReportScreen />}
+          ></Route>
           <Route path="storepurchase" element={<StorePurchaseScreen />}>
             {/* <Route index element={<PurchaseList />} /> */}
             <Route path="createstorepurchase" element={<CreatePurchase />} />

@@ -27,8 +27,9 @@ export const sidelinks = [
   {
     menuTitle: "Inventory Reports",
     subMenus: [
-      // { subMenuTitle: "Packhouse people", to: "packhousepeople" },
-      // { subMenuTitle: "Reports", to: "#" },
+      { subMenuTitle: "Stock Balances", to: "stockbalances" },
+      { subMenuTitle: "Inventory Register", to: "inventoryregister" },
+      { subMenuTitle: "Inventory Entry", to: "inventoryentry" },
     ],
   },
 ];

@@ -1,7 +1,10 @@
 export const sidelinks = [
   {
     menuTitle: "Suppliers",
-    subMenus: [{ subMenuTitle: "Suppliers", to: "suppliers" }],
+    subMenus: [
+      { subMenuTitle: "Suppliers", to: "suppliers" },
+      { subMenuTitle: "Reports", to: "supplierreports" },
+    ],
   },
   {
     menuTitle: "Institutions",

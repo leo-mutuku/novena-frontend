@@ -111,9 +111,7 @@ const SupplierList = () => {
         Header: "Edit",
         accessor: "edit",
         Cell: ({ row }) => (
-          <Link
-            to={`/administration/suppliers/update/${row.original.supplier_id}`}
-          >
+          <Link to={`/purchase/suppliers/update/${row.original.supplier_id}`}>
             <CiEdit />
           </Link>
         ),
