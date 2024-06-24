@@ -12,6 +12,14 @@ export const productionHeaderApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["ProductionLines", "productionHeaders"],
     }),
+    cancelProductionHeader: builder.mutation({
+      query: (data) => ({
+        url: `${PRODUCTIONHEADER_URL}/cancleproduction`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["ProductionLines", "productionHeaders"],
+    }),
 
     getAllPostedProductionHeaders: builder.query({
       query: (data) => ({
@@ -51,6 +59,7 @@ export const productionHeaderApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useCreateProductionHeaderMutation,
+  useCancelProductionHeaderMutation,
   useGetAllProductionHeadersQuery,
   useGetAllProductionHeadersInTransitQuery,
   useGetAllPostedProductionHeadersQuery,

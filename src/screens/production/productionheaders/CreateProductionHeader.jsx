@@ -199,14 +199,16 @@ function CreateProductionHeader() {
                 onChange={(e) => set_store_code(parseInt(e.target.value))}
               >
                 <option value={""}>Store</option>
-                {store?.data.map((item, index) => (
-                  <>
-                    <option
-                      key={index}
-                      value={item.store_code}
-                    >{`${item.store_code} | ${item.store_name}`}</option>
-                  </>
-                ))}
+                {store?.data
+                  .filter((item) => item.store_name == "Raw Material Store")
+                  .map((item, index) => (
+                    <>
+                      <option
+                        key={index}
+                        value={item.store_code}
+                      >{`${item.store_code} | ${item.store_name}`}</option>
+                    </>
+                  ))}
               </Form.Select>
             </Form.Group>
           </Col>

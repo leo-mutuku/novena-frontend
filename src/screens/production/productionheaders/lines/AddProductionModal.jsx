@@ -12,8 +12,8 @@ import {
   useGetAllFinalProductsQuery,
   useGetAllPackagingMaterialQuery,
 } from "../../../../slices/store/itemregisterApiSlice";
-import { useGetAllAccountsQuery } from "../../../../slices/finance/accountsApiSlice";
-import { useGetAllSuppliersQuery } from "../../../../slices/administration/suppliersApiSlice";
+import { useCancelProductionHeaderMutation } from "../../../../slices/production/productionHeaderApiSlice";
+
 import { useCreateProductionLineMutation } from "../../../../slices/production/ProductionLinesApiSlice";
 import { useGetAllStoreRegisterQuery } from "../../../../slices/store/storeRegisterApiSlice";
 
@@ -26,6 +26,8 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
 
   const { userInfo } = useSelector((state) => state.auth);
   const [production_line, { isLoading }] = useCreateProductionLineMutation();
+  const [cancel_production_header, { isLoading: is_loading }] =
+    useCancelProductionHeaderMutation();
   const { data: stores } = useGetAllStoreRegisterQuery();
   const navigate = useNavigate();
   const [products, set_products] = useState({
@@ -64,11 +66,51 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
 
     navigate();
   }, [userInfo, navigate, purchase_id, products.production_buffer]);
+  const store = [103, 104, 105, 106, 107];
+  const by_products = [108, 109, 110];
+  const pack_house = [114];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    set_products({ ...products, created_by: userInfo.first_name });
-    set_production_list([...production_list, products]);
+
+    if (products.production_buffer == "store") {
+      if (store.includes(products.product_code)) {
+        set_products({ ...products, created_by: userInfo.first_name });
+        set_production_list([...production_list, products]);
+      } else {
+        toast.error("Please select the correct destination store ");
+      }
+    }
+    if (products.production_buffer == "by_products") {
+      if (by_products.includes(products.product_code)) {
+        set_products({ ...products, created_by: userInfo.first_name });
+        set_production_list([...production_list, products]);
+      } else {
+        toast.error("Please select the correct destination store");
+      }
+    }
+    if (products.production_buffer == "pack_house") {
+      if (pack_house.includes(products.product_code)) {
+        set_products({ ...products, created_by: userInfo.first_name });
+        set_production_list([...production_list, products]);
+      } else {
+        toast.error("Please select the correct destination store");
+      }
+    }
+  };
+  const handleCancel = async () => {
+    try {
+      const res = await cancel_production_header({
+        production_number: store_purchase_id,
+      }).unwrap();
+      if (res.status == "failed") {
+        toast.error(res.message);
+      }
+      toast.success(res.message);
+      navigate("../allproductionheaders");
+    } catch (error) {
+      toast.error(error?.data?.message || error.error);
+    }
   };
 
   const handleSave = async () => {
@@ -200,6 +242,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
       product_store_name: x[0].store_name,
     });
   };
+  const final_products = [101, 102, 111, 112, 118, 113];
 
   return (
     <>
@@ -251,11 +294,15 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
                         >
                           {" "}
                           <option>Final Product</option>
-                          {all_final_products?.data?.map((item, index) => (
-                            <option value={item.item_code} key={index}>
-                              {item.item_code} | {item.item_name}
-                            </option>
-                          ))}
+                          {all_final_products?.data
+                            ?.filter(
+                              (item) => !final_products.includes(item.item_code)
+                            )
+                            .map((item, index) => (
+                              <option value={item.item_code} key={index}>
+                                {item.item_code} | {item.item_name}
+                              </option>
+                            ))}
                         </Form.Select>
                       </Form.Group>
                     </Col>
@@ -386,6 +433,9 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
             </Modal.Body>
 
             <Modal.Footer className="gap-2">
+              <Button onClick={handleCancel} variant="danger">
+                Cancel
+              </Button>
               <Button onClick={handleSave} variant="primary">
                 Post Production
               </Button>
