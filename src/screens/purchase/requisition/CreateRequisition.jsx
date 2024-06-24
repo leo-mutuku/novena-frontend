@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col, Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import {
   useCreateAccountMutation,
@@ -12,17 +12,20 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function CreateRequisition() {
-  const [item_name, set_item_name] = useState("");
-  const [account_number, set_account_number] = useState("");
-  const [quantity, set_quantity] = useState("");
-  const [account_balance, set_account_balance] = useState("");
   const [created_by, set_created_by] = useState("");
+
+  const [purchase_list, set_purchase_list] = useState([]);
+  const [purcharse_item, set_purchase_item] = useState({
+    item_name: "",
+    account_number: "",
+    quantity: "",
+    account_balance: "",
+    unit_cost: "",
+  });
 
   const [CreateAccount, { isLoading }] = useCreateAccountMutation();
   const { data: accountsData } = useGetAllAccountsQuery();
   const { userInfo } = useSelector((state) => state.auth);
-
-  console.log(accountsData?.data);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -31,6 +34,23 @@ function CreateRequisition() {
     }
     navigate();
   }, [navigate, userInfo]);
+  const handleAdd = () => {
+    if (
+      purcharse_item.item_name &&
+      purcharse_item.account_number &&
+      purcharse_item.quantity &&
+      purcharse_item.unit_cost
+    ) {
+      set_purchase_list([...purchase_list, purcharse_item]);
+      return;
+    }
+    toast.error("All fields are required!");
+    return;
+  };
+  const removeItem = (index) => {
+    const item = purchase_list.filter((item) => item !== purchase_list[index]);
+    set_purchase_list(item);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -51,7 +71,7 @@ function CreateRequisition() {
   };
   return (
     <>
-      <span>*** Create Requisition *** </span>
+      <span>*** Create Purchase order *** </span>
 
       <Row>
         <div>
@@ -64,13 +84,18 @@ function CreateRequisition() {
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="item_name">
-              <Form.Label>Item Name</Form.Label>
+              <Form.Label>Name</Form.Label>
               <Form.Control
                 type="text"
                 required
                 placeholder="item_name"
-                value={item_name}
-                onChange={(e) => set_item_name(e.target.value)}
+                value={purcharse_item.item_name}
+                onChange={(e) =>
+                  set_purchase_item({
+                    ...purcharse_item,
+                    item_name: e.target.value,
+                  })
+                }
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -81,13 +106,18 @@ function CreateRequisition() {
                 type="number"
                 required
                 placeholder="account_number"
-                value={account_number}
-                onChange={(e) => set_account_number(e.target.value)}
+                value={purcharse_item.account_number}
+                onChange={(e) =>
+                  set_purchase_item({
+                    ...purcharse_item,
+                    account_number: e.target.value,
+                  })
+                }
               >
                 <option value={""}> Account Name</option>
                 {accountsData?.data.map((item, key) => (
                   <option value={item.account_number}>
-                    {item.account_name}
+                    {item.account_number} | {item.account_name}
                   </option>
                 ))}
               </Form.Select>
@@ -100,14 +130,66 @@ function CreateRequisition() {
                 required
                 type="number"
                 placeholder="Quantity"
-                value={quantity}
-                onChange={(e) => set_quantity(e.target.value)}
+                value={purcharse_item.quantity}
+                onChange={(e) =>
+                  set_purchase_item({
+                    ...purcharse_item,
+                    quantity: e.target.value,
+                  })
+                }
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="my-2" controlId="unit_cost">
+              <Form.Label>@ cost</Form.Label>
+              <Form.Control
+                required
+                type="number"
+                placeholder="unit_cost"
+                value={purcharse_item.unit_cost}
+                onChange={(e) =>
+                  set_purchase_item({
+                    ...purcharse_item,
+                    unit_cost: e.target.value,
+                  })
+                }
               ></Form.Control>
             </Form.Group>
           </Col>
           <Col xs={1} style={{ marginTop: "40px" }}>
-            <Button>Add</Button>
+            <Button onClick={handleAdd}>Add</Button>
           </Col>
+        </Row>
+        <Row>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th> Name</th>
+                <th>Account</th>
+                <th>Quantity</th>
+                <th>@</th>
+                <th>Total</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+              {purchase_list?.map((item, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{item.item_name}</td>
+                  <td>{item.account_number}</td>
+                  <td>{item.quantity}</td>
+                  <td>{item.unit_cost}</td>
+                  <td>
+                    {parseFloat(item.quantity) * parseFloat(item.unit_cost)}
+                  </td>
+                  <td onClick={() => removeItem(index)}>Remove</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
         </Row>
 
         <Button type="submit" variant="primary" className="mt-3">

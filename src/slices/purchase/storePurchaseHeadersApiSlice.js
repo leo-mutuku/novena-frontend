@@ -18,6 +18,15 @@ export const storePurchaseHeadersApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["StorePurchaseHeader", "StorePurchaseLine"],
     }),
+
+    getDetailedSupplierMaizePurchaseReport: builder.mutation({
+      query: (data) => ({
+        url: `${STOREPURCHASEHEADERS_URL}/detailedsuppliermaizepurchasereport`,
+        method: "POST",
+        body: data,
+      }),
+      providesTags: ["StorePurchaseHeader", "StorePurchaseLine"],
+    }),
     getSupplierStorePurchaseReport: builder.mutation({
       query: (data) => ({
         url: `${STOREPURCHASEHEADERS_URL}/supplierstorepurchase`,
@@ -69,4 +78,5 @@ export const {
   usePostStorePurchaseHeaderMutation,
   useGetGeneralStorePurchaseReportMutation,
   useGetSupplierStorePurchaseReportMutation,
+  useGetDetailedSupplierMaizePurchaseReportMutation,
 } = storePurchaseHeadersApiSlice;

@@ -283,6 +283,7 @@ import SupplierReportScreen from "./screens/administration/SupplierReportScreen.
 import InventoryEntryReportScreen from "./screens/store/InventoryEntryReportScreen.jsx";
 import InventoryRegisterReportScreen from "./screens/store/InventoryRegisterReportScreen.jsx";
 import StockBalancesReportScreen from "./screens/store/StockBalancesReportScreen.jsx";
+import SupplierMaizeReports from "./screens/administration/SupplierMaizeReports.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -318,6 +319,10 @@ const router = createHashRouter(
           <Route
             path="supplierreports"
             element={<SupplierReportScreen />}
+          ></Route>
+          <Route
+            path="suppliermaizereports"
+            element={<SupplierMaizeReports />}
           ></Route>
           <Route path="staff" element={<StaffScreen />}>
             <Route index element={<StaffList />} />
@@ -620,6 +625,10 @@ const router = createHashRouter(
           <Route
             path="supplierreports"
             element={<SupplierReportScreen />}
+          ></Route>
+          <Route
+            path="suppliermaizereports"
+            element={<SupplierMaizeReports />}
           ></Route>
           <Route
             path="storepurcharsereports"

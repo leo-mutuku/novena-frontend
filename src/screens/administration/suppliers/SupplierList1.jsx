@@ -99,13 +99,11 @@ const SupplierList = () => {
         Header: "Location",
         accessor: "supplier_location",
       },
+
       {
-        Header: "Item code",
-        accessor: "item_supplied_code",
-      },
-      {
-        Header: "Bank Acc. Name",
-        accessor: "supplier_bank_account_name",
+        Header: "Balance",
+        accessor: "balance",
+        Cell: ({ row }) => <Link to={"#"}>{row.original.balance}</Link>,
       },
       {
         Header: "Edit",
@@ -113,24 +111,6 @@ const SupplierList = () => {
         Cell: ({ row }) => (
           <Link to={`/purchase/suppliers/update/${row.original.supplier_id}`}>
             <CiEdit />
-          </Link>
-        ),
-      },
-      {
-        Header: "View",
-        accessor: "view",
-        Cell: ({ row }) => (
-          <Link to="#">
-            <IoMdEye />
-          </Link>
-        ),
-      },
-      {
-        Header: "Del",
-        accessor: "del",
-        Cell: ({ row }) => (
-          <Link to="#">
-            <MdDelete />
           </Link>
         ),
       },

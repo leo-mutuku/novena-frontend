@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import { useGetGeneralStorePurchaseReportMutation } from "../../slices/purchase/storePurchaseHeadersApiSlice";
+import { useGetInventoryEntryMutation } from "../../slices/store/storeItemsApiSlice";
 import DataTable from "../../components/general/DataTable";
 import moment from "moment";
 import { Button, Form, Row, Col } from "react-bootstrap";
@@ -14,7 +14,7 @@ const InventoryRegisterReportScreen = () => {
   const [supplier_filter, set_supplier_filter] = React.useState("");
   const [product_filter, set_product_filter] = React.useState("");
   const [setData, { isLoading, isSuccess, isError }] =
-    useGetGeneralStorePurchaseReportMutation();
+    useGetInventoryEntryMutation();
 
   const loaddata = async () => {
     if (!report_name || !start_date || !end_date) {
@@ -74,12 +74,11 @@ const InventoryRegisterReportScreen = () => {
         Header: "#",
         accessor: (row, index) => index + 1,
       },
-      { Header: "Purchase date", accessor: "purchase_date" },
-      { Header: "Supplier", accessor: "supplier_name" },
+      { Header: "Date", accessor: "to_char" },
+      { Header: "Ref. No.", accessor: "source_document_id" },
+      { Header: "Item Code", accessor: "item_code" },
       { Header: "Item Name", accessor: "item_name" },
-      { Header: "@", accessor: "item_cost" },
-      { Header: "Quantity", accessor: "quantity" },
-      { Header: "Total ", accessor: "total_cost" },
+      { Header: "Quantity Adj", accessor: "adjustment_value" },
     ],
     []
   );
@@ -98,10 +97,9 @@ const InventoryRegisterReportScreen = () => {
                 onChange={(e) => set_report_name(e.target.value)}
               >
                 <option value="">Select Report</option>
-                <option value="StorePurchase">Daily Purchases</option>
-                <option value="DetailedStorePurchase">
-                  Detailed Daily Purchases
-                </option>
+                <option value="Purchase_order">Purchase</option>
+                <option value="Production">Production</option>
+                <option value="sales">Sales</option>
               </Form.Select>
             </Form.Group>
           </Col>

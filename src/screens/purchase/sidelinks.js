@@ -3,20 +3,21 @@ export const sidelinks = [
     menuTitle: "Suppliers",
     subMenus: [
       { subMenuTitle: "Suppliers", to: "suppliers" },
-      { subMenuTitle: "Reports", to: "supplierreports" },
+      { subMenuTitle: "Supplers Reports", to: "supplierreports" },
+      { subMenuTitle: "Suppliers Maize Reports", to: "suppliermaizereports" },
     ],
   },
   {
-    menuTitle: "Store Purchase",
+    menuTitle: "Purchase Requisition",
     subMenus: [
-      { subMenuTitle: "Store Purchase", to: "storepurchase" },
+      { subMenuTitle: "Purchase requsition", to: "storepurchase" },
       { subMenuTitle: "Reports", to: "storepurcharsereports" },
     ],
   },
   {
-    menuTitle: "Store Requsition",
+    menuTitle: "Purchase order",
     subMenus: [
-      { subMenuTitle: "Store Requsition", to: "storerequisition" },
+      { subMenuTitle: " Purchase order", to: "storerequisition" },
       { subMenuTitle: "Reports", to: "storerequisitionreport" },
     ],
   },

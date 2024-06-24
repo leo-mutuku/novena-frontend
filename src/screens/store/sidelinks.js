@@ -28,8 +28,8 @@ export const sidelinks = [
     menuTitle: "Inventory Reports",
     subMenus: [
       { subMenuTitle: "Stock Balances", to: "stockbalances" },
-      { subMenuTitle: "Inventory Register", to: "inventoryregister" },
-      { subMenuTitle: "Inventory Entry", to: "inventoryentry" },
+      { subMenuTitle: "Inventory Register", to: "inventoryentry" },
+      { subMenuTitle: "Inventory Entry ", to: "inventoryregister" },
     ],
   },
 ];

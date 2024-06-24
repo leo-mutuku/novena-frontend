@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import { useGetGeneralStorePurchaseReportMutation } from "../../slices/purchase/storePurchaseHeadersApiSlice";
+import { useGetInventoryRegisterMutation } from "../../slices/store/storeItemsApiSlice";
 import DataTable from "../../components/general/DataTable";
 import moment from "moment";
 import { Button, Form, Row, Col } from "react-bootstrap";
@@ -14,14 +14,10 @@ const InventoryEntryReportScreen = () => {
   const [supplier_filter, set_supplier_filter] = React.useState("");
   const [product_filter, set_product_filter] = React.useState("");
   const [setData, { isLoading, isSuccess, isError }] =
-    useGetGeneralStorePurchaseReportMutation();
+    useGetInventoryRegisterMutation();
 
   const loaddata = async () => {
-    if (!report_name || !start_date || !end_date) {
-      toast.error("Please select report name, start and end date");
-      return;
-    }
-    const data = await setData({ report_name, start_date, end_date }).unwrap();
+    const data = await setData({}).unwrap();
     if (data?.data?.length) {
       setGetData(data?.data);
     } else {
@@ -37,7 +33,7 @@ const InventoryEntryReportScreen = () => {
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", `${report_name}.csv`);
+      link.setAttribute("download", `ItemSRegisterReport.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -74,12 +70,12 @@ const InventoryEntryReportScreen = () => {
         Header: "#",
         accessor: (row, index) => index + 1,
       },
-      { Header: "Purchase date", accessor: "purchase_date" },
-      { Header: "Supplier", accessor: "supplier_name" },
       { Header: "Item Name", accessor: "item_name" },
-      { Header: "@", accessor: "item_cost" },
-      { Header: "Quantity", accessor: "quantity" },
-      { Header: "Total ", accessor: "total_cost" },
+      { Header: "Item Code", accessor: "item_code" },
+      { Header: "Item Units", accessor: "item_units" },
+      { Header: "Abbr", accessor: "item_units_abbreaviations" },
+      { Header: "Price", accessor: "current_price" },
+      { Header: "Acc . no. ", accessor: "account_number" },
     ],
     []
   );
@@ -89,7 +85,8 @@ const InventoryEntryReportScreen = () => {
       <div style={{ marginBottom: "2px", paddingTop: "10px" }}>
         <Row>
           <Col>
-            <Form.Group className="my-2" controlId="role_name">
+            <h6>Item Register</h6>
+            {/* <Form.Group className="my-2" controlId="role_name">
               <Form.Select
                 type="text"
                 required
@@ -98,14 +95,16 @@ const InventoryEntryReportScreen = () => {
                 onChange={(e) => set_report_name(e.target.value)}
               >
                 <option value="">Select Report</option>
-                <option value="StorePurchase">Daily Purchases</option>
-                <option value="DetailedStorePurchase">
-                  Detailed Daily Purchases
-                </option>
+                <option value="purchases">Purchases</option>
+                <option value="production">Productions</option>
+                <option value="packhouse">Pack House</option>
+                <option value="sales">Sales</option>
+                <option value="saf">SAF - Stock Adjustment Form</option>
+                <option value="to">TO - Transafer Order</option>
               </Form.Select>
-            </Form.Group>
+            </Form.Group> */}
           </Col>
-          <Col>
+          {/* <Col>
             <Form.Group className="my-2" controlId="role_name">
               <Form.Control
                 type="date"
@@ -115,8 +114,8 @@ const InventoryEntryReportScreen = () => {
                 onChange={(e) => set_start_date(e.target.value)}
               ></Form.Control>
             </Form.Group>
-          </Col>
-          <Col>
+          </Col> */}
+          {/* <Col>
             <Form.Group className="my-2" controlId="role_name">
               <Form.Control
                 type="date"
@@ -126,7 +125,7 @@ const InventoryEntryReportScreen = () => {
                 onChange={(e) => set_end_date(e.target.value)}
               ></Form.Control>
             </Form.Group>
-          </Col>
+          </Col> */}
 
           <Col xs={1} style={{ marginTop: "8px" }}>
             <Button variant="primary" type="button" onClick={loaddata}>

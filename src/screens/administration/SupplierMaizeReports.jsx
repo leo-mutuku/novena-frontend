@@ -1,22 +1,36 @@
 import React, { useEffect, useMemo } from "react";
-import { useGetCurrentStockBalanceMutation } from "../../slices/store/storeItemsApiSlice";
+import { useGetDetailedSupplierMaizePurchaseReportMutation } from "../../slices/purchase/storePurchaseHeadersApiSlice";
+import { useGetAllSuppliersQuery } from "../../slices/administration/suppliersApiSlice";
 import DataTable from "../../components/general/DataTable";
 import moment from "moment";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import Papa from "papaparse";
 import { toast } from "react-toastify";
 
-const StockBalancesReportScreen = () => {
-  const [all, set_all] = React.useState("");
+const SupplierMaizeReports = () => {
+  const [report_name, set_report_name] = React.useState("");
+  const [supplier_number, set_supplier_number] = React.useState(null);
+  const [supplier_name, set_supplier_name] = React.useState("");
+
   const [start_date, set_start_date] = React.useState("");
   const [end_date, set_end_date] = React.useState("");
   const [getData, setGetData] = React.useState([]);
-
+  const [supplier_filter, set_supplier_filter] = React.useState("");
+  const [product_filter, set_product_filter] = React.useState("");
   const [setData, { isLoading, isSuccess, isError }] =
-    useGetCurrentStockBalanceMutation();
+    useGetDetailedSupplierMaizePurchaseReportMutation();
+  const { data: suppliers } = useGetAllSuppliersQuery();
 
   const loaddata = async () => {
-    const data = await setData({}).unwrap();
+    if (!start_date || !end_date) {
+      toast.error("Please select  start and end date");
+      return;
+    }
+    const data = await setData({
+      start_date,
+      end_date,
+    }).unwrap();
+
     if (data?.data?.length) {
       setGetData(data?.data);
     } else {
@@ -32,7 +46,7 @@ const StockBalancesReportScreen = () => {
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", `CurentSockBalances.csv`);
+      link.setAttribute("download", `SupplierMaizePurchaseReport.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -41,7 +55,7 @@ const StockBalancesReportScreen = () => {
 
   const handleClearFilter = () => {
     setGetData([]);
-    set_all("");
+    set_report_name("");
     set_start_date("");
     set_end_date("");
     set_supplier_filter("");
@@ -56,7 +70,7 @@ const StockBalancesReportScreen = () => {
       },
       {
         Header: "Purchase Date",
-        accessor: "purchase_date",
+        accessor: "created_at",
       },
       { Header: "Total Cost", accessor: "total_cost" },
     ],
@@ -69,13 +83,15 @@ const StockBalancesReportScreen = () => {
         Header: "#",
         accessor: (row, index) => index + 1,
       },
-      { Header: "Store Item", accessor: "store_item_name" },
-
+      { Header: "Purchase date", accessor: "created_at" },
+      { Header: "Supplier Name", accessor: "supplier_name" },
       { Header: "Item Name", accessor: "item_name" },
-      { Header: "Quantity", accessor: "item_quantity" },
-      { Header: "@", accessor: "current_price" },
+      { Header: "Moisture ", accessor: "moisture_content" },
+      { Header: "Aflatoxin", accessor: "aflotoxin_level" },
+      { Header: "Quantity", accessor: "quantity" },
+      { Header: "@", accessor: "item_cost" },
 
-      { Header: "Total ", accessor: "total" },
+      { Header: "Total ", accessor: "total_cost" },
     ],
     []
   );
@@ -84,20 +100,6 @@ const StockBalancesReportScreen = () => {
     <>
       <div style={{ marginBottom: "2px", paddingTop: "10px" }}>
         <Row>
-          {/* <Col>
-            <Form.Group className="my-2" controlId="role_name">
-              <Form.Select
-                type="text"
-                required
-                placeholder="Select Report"
-                value={all}
-                onChange={(e) => set_all(e.target.value)}
-              >
-                <option value="">Select Report</option>
-                <option value="all">All Stores</option>
-              </Form.Select>
-            </Form.Group>
-          </Col>
           <Col>
             <Form.Group className="my-2" controlId="role_name">
               <Form.Control
@@ -108,9 +110,17 @@ const StockBalancesReportScreen = () => {
                 onChange={(e) => set_start_date(e.target.value)}
               ></Form.Control>
             </Form.Group>
-          </Col> */}
+          </Col>
           <Col>
-            <h6>Current stock balances</h6>
+            <Form.Group className="my-2" controlId="role_name">
+              <Form.Control
+                type="date"
+                required
+                placeholder="end_date"
+                value={end_date}
+                onChange={(e) => set_end_date(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
           </Col>
 
           <Col xs={1} style={{ marginTop: "8px" }}>
@@ -148,7 +158,7 @@ const StockBalancesReportScreen = () => {
           <Row>
             {" "}
             <DataTable
-              columns={all == "StorePurchase" ? columns : columns1}
+              columns={report_name == "StorePurchase" ? columns : columns1}
               data={getData}
             />
           </Row>
@@ -163,4 +173,4 @@ const StockBalancesReportScreen = () => {
   );
 };
 
-export default StockBalancesReportScreen;
+export default SupplierMaizeReports;
