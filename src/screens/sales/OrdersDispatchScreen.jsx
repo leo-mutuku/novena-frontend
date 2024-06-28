@@ -1,15 +1,11 @@
-import PageActionComponent from '../../components/PageActionComponent'
-const pagemenus =
-[
-  {pagename:'Dispatched orders', to:"dispatchedorders"},
-  {pagename:'Undispatched orders', to:"undispatchedorders"},
-]
+import PageActionComponent from "../../components/PageActionComponent";
+const pagemenus = [{ pagename: "Dispatched orders", to: "dispatchedorders" }];
 function OrdersDispatchScreen() {
   return (
     <>
-    <PageActionComponent pagemenus={pagemenus}/>
-     </>
-  )
+      <PageActionComponent pagemenus={pagemenus} />
+    </>
+  );
 }
 
-export default OrdersDispatchScreen
+export default OrdersDispatchScreen;

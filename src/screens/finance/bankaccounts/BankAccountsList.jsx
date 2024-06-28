@@ -1,7 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
-import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
+import {
+  useGetAllBankAccountsQuery,
+  useDeleteBankAccountMutation,
+} from "../../../slices/finance/bankAccountsApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
@@ -12,8 +15,10 @@ import DataTable from "../../../components/general/DataTable";
 import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
 import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
 import moment from "moment";
+import { toast } from "react-toastify";
 const BankAccountsList = () => {
   const { data: banks, isLoading } = useGetAllBankAccountsQuery();
+  const [deleteAccount] = useDeleteBankAccountMutation();
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
@@ -23,6 +28,21 @@ const BankAccountsList = () => {
       setTableData(banks.data);
     }
   }, [banks]);
+
+  const handleDeleteAccount = async (bank_id) => {
+    try {
+      const res = await deleteAccount({
+        bank_id,
+      }).unwrap();
+      if (res.status == "success") {
+        toast.success("Delete success");
+      } else {
+        toast.error("Sorry an error occurred while deleteing bank account");
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   const handleDownloadPDF = async () => {
     setLoadingPdf(true);
@@ -93,12 +113,15 @@ const BankAccountsList = () => {
       {
         Header: "Bank Balance",
         accessor: "bank_balance",
+        Cell: ({ row }) => <Link to={"#"}>{row.original.bank_balance}</Link>,
       },
       {
         Header: "Edit",
         accessor: "edit",
         Cell: ({ row }) => (
-          <Link to="#">
+          <Link
+            to={`/finance/bankaccounts/updateBankAccount/${row.original.bank_id}`}
+          >
             <CiEdit />
           </Link>
         ),
@@ -107,8 +130,11 @@ const BankAccountsList = () => {
         Header: "View",
         accessor: "view",
         Cell: ({ row }) => (
-          <Link to="#">
-            <IoMdEye />
+          <Link
+            to="#"
+            onClick={() => handleDeleteAccount(row.original.bank_id)}
+          >
+            Remove
           </Link>
         ),
       },

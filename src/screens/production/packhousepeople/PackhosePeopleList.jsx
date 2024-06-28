@@ -1,7 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
-import { useGetAllPackHousePeopleQuery } from "../../../slices/production/packHousePeopleApiSlice";
+import {
+  useGetAllPackHousePeopleQuery,
+  useDeletePackhousePersonMutation,
+} from "../../../slices/production/packHousePeopleApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
@@ -11,10 +14,14 @@ import DataTable from "../../../components/general/DataTable";
 import axios from "axios";
 import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
 import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const PackhosePeopleList = () => {
   const { data: persons, isLoading } = useGetAllPackHousePeopleQuery();
+  const [deletePackhousePerson] = useDeletePackhousePersonMutation();
   const [tableData, setTableData] = useState([]);
+
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
 
@@ -47,6 +54,18 @@ const PackhosePeopleList = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    try {
+      let result = await deletePackhousePerson(id).unwrap();
+      if (result) {
+        toast.success("Packhouse person deleted successfully");
+        const newData = tableData.filter((item) => item.id !== id);
+        setTableData(newData);
+      }
+    } catch (error) {
+      toast.error("Error deleting packhouse person");
+    }
+  };
   const handleDownloadExcel = async () => {
     setLoadingExcel(true);
     try {
@@ -71,6 +90,7 @@ const PackhosePeopleList = () => {
       setLoadingExcel(false);
     }
   };
+  console.log();
 
   const columns = useMemo(
     () => [
@@ -78,10 +98,7 @@ const PackhosePeopleList = () => {
         Header: "#",
         accessor: (row, index) => index + 1,
       },
-      {
-        Header: "Pack.h no",
-        accessor: "packhouse_person_number",
-      },
+
       {
         Header: "First name",
         accessor: "first_name",
@@ -90,31 +107,27 @@ const PackhosePeopleList = () => {
         Header: "Last name",
         accessor: "last_name",
       },
-      {
-        Header: "Email",
-        accessor: "email",
-      },
+
       {
         Header: "Phone",
         accessor: "phone",
       },
       {
-        Header: "Edit",
-        accessor: "edit",
+        Header: "Balance",
+        accessor: "balance",
+      },
+
+      {
+        Header: "Remove",
+        accessor: "remove",
         Cell: ({ row }) => (
           <Link
-            to={`/production/packhousepeople/deletepackhouseperson/${row.original.staff_id}`}
+            to={`#`}
+            onClick={() => {
+              handleDelete(`${row.original.packhouse_person_id}`);
+            }}
           >
-            <CiEdit />
-          </Link>
-        ),
-      },
-      {
-        Header: "View",
-        accessor: "view",
-        Cell: () => (
-          <Link to="#">
-            <IoMdEye />
+            {`${row.original.first_name}`}
           </Link>
         ),
       },

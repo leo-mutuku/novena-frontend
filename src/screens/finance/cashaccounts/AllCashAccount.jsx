@@ -1,7 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
-import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
+import {
+  useGetAllCashAccountsQuery,
+  useDeleteCashAccountMutation,
+} from "../../../slices/finance/cashAccountApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
@@ -12,8 +15,10 @@ import DataTable from "../../../components/general/DataTable";
 import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
 import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
 import moment from "moment";
+import { toast } from "react-toastify";
 const AllCashAccount = () => {
   const { data: banks, isLoading } = useGetAllCashAccountsQuery();
+  const [deleteAccount] = useDeleteCashAccountMutation();
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
@@ -23,6 +28,19 @@ const AllCashAccount = () => {
       setTableData(banks.data);
     }
   }, [banks]);
+
+  const handleDelete = async (cash_account_id) => {
+    try {
+      const res = await deleteAccount({ cash_account_id }).unwrap();
+      if (res.status == "success") {
+        toast.success("Success");
+      } else {
+        toast.error("Sorry an error occurred.");
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   const handleDownloadPDF = async () => {
     setLoadingPdf(true);
@@ -98,7 +116,9 @@ const AllCashAccount = () => {
         Header: "Edit",
         accessor: "edit",
         Cell: ({ row }) => (
-          <Link to="#">
+          <Link
+            to={`/finance/cashaccounts/updatecashaccounts/${row.original.cash_account_id}`}
+          >
             <CiEdit />
           </Link>
         ),
@@ -107,8 +127,11 @@ const AllCashAccount = () => {
         Header: "View",
         accessor: "view",
         Cell: ({ row }) => (
-          <Link to="#">
-            <IoMdEye />
+          <Link
+            to="#"
+            onClick={() => handleDelete(row.original.cash_account_id)}
+          >
+            {row.original.cash_account_name}
           </Link>
         ),
       },

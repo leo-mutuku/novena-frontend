@@ -78,11 +78,6 @@ const DailyPackHouseHeadersList = () => {
       },
 
       {
-        Header: "Created By",
-        accessor: "created_by",
-      },
-
-      {
         Header: "Weight In KG",
         accessor: "total_in_nity_kg",
       },

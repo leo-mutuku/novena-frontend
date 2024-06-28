@@ -20,6 +20,7 @@ const PostDailyPackHouse = () => {
 
   const [quantity, set_quantity] = useState(null);
   const [full_name, set_full_name] = useState(null);
+  const [balance, set_balance] = useState(0);
   const [daily_pack_list, set_daily_pack_list] = useState([]);
   const { data: pack_house_people } = useGetAllPackHousePeopleQuery();
 
@@ -33,11 +34,10 @@ const PostDailyPackHouse = () => {
           daily_packhouse_header_id: id,
           daily_pack_list,
         }).unwrap();
-        console.log(res);
+
         if (res.status == "success") {
           toast.success("success");
-        }
-        if (res.status == "failed") {
+        } else {
           toast.error(res.message);
         }
       } else {
@@ -51,7 +51,7 @@ const PostDailyPackHouse = () => {
     if (staff_id && quantity) {
       set_daily_pack_list([
         ...daily_pack_list,
-        { staff_id, quantity, full_name },
+        { staff_id, quantity, full_name, balance },
       ]);
     } else {
       alert("Please fill all the fields");
@@ -59,13 +59,17 @@ const PostDailyPackHouse = () => {
   };
 
   const handleStaff = (e) => {
-    pack_house_people?.data.map((staff, index) => {
+    let x = pack_house_people?.data.map((staff, index) => {
       staff.staff_id == e.target.value
         ? set_full_name(staff.first_name + " " + staff.last_name)
         : null;
+      staff.staff_id == e.target.value
+        ? set_balance(parseFloat(staff.balance))
+        : 0;
       return staff;
     });
-    set_staff_id(e.target.value);
+
+    set_staff_id(parseInt(e.target.value));
   };
 
   const handleDelete = (index) => {
@@ -106,7 +110,7 @@ const PostDailyPackHouse = () => {
                 type="number"
                 required
                 value={quantity}
-                onChange={(e) => set_quantity(e.target.value)}
+                onChange={(e) => set_quantity(parseFloat(e.target.value))}
               ></Form.Control>
             </Form.Group>
           </Col>

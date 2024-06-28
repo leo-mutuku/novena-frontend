@@ -12,6 +12,14 @@ export const salesPeopleApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Sales_people"],
     }),
+    deleteSalesPerson: builder.mutation({
+      query: (data) => ({
+        url: `${SALESPEOPLE_URL}/deletesalesperson`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Sales_people"],
+    }),
     createSalesPerson: builder.mutation({
       query: (data) => ({
         url: `${SALESPEOPLE_URL}/createsalesperson`,
@@ -23,5 +31,8 @@ export const salesPeopleApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useCreateSalesPersonMutation, useGetAllSalesPeopleQuery } =
-  salesPeopleApiSlice;
+export const {
+  useCreateSalesPersonMutation,
+  useGetAllSalesPeopleQuery,
+  useDeleteSalesPersonMutation,
+} = salesPeopleApiSlice;

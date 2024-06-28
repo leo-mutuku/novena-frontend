@@ -12,6 +12,14 @@ export const dailyPackhouseHeadersApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["dailypackhouseheader"],
     }),
+    generalDailyPackbypacktype: builder.mutation({
+      query: (data) => ({
+        url: `${DAILYPACKHOUSEHEADER_URL}/generaldailypackbypacktype`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["dailypackhouseheader"],
+    }),
 
     getAllDailyPackHouseHeaders: builder.query({
       query: (data) => ({
@@ -42,5 +50,6 @@ export const dailyPackhouseHeadersApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useCreateDailyProductionHeaderMutation,
+  useGeneralDailyPackbypacktypeMutation,
   useGetAllDailyPackHouseHeadersQuery,
 } = dailyPackhouseHeadersApiSlice;

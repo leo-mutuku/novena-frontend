@@ -24,6 +24,7 @@ function UpdateAccounts() {
   const navigate = useNavigate();
 
   const { data: account, error, isLoading } = useGetAccountByIdQuery(id);
+  console.log(id);
 
   useEffect(() => {
     if (id && errorUpdate) {
@@ -34,10 +35,10 @@ function UpdateAccounts() {
   useEffect(() => {
     if (id) {
       if (account) {
-        set_account_name(account.data.account_name);
-        set_account_number(account.data.account_number);
-        set_account_balance(account.data.account_balance);
-        set_gl_number(account.data.gl_number);
+        // set_account_name(account.data.account_name);
+        // set_account_number(account.data.account_number);
+        // set_account_balance(account.data.account_balance);
+        // set_gl_number(account.data.gl_number);
       }
     }
   }, [id, account]);

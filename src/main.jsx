@@ -35,7 +35,6 @@ import InstitutionsScreen from "./screens/administration/InstitutionsScreen.jsx"
 import PackHouseScreen from "./screens/production/PackHouseScreen.jsx";
 import ReturnOrdersScreen from "./screens/sales/ReturnOrdersScreen.jsx";
 import OrderInvoiceScreen from "./screens/sales/OrderInvoiceScreen.jsx";
-import OrderPostingScreen from "./screens/sales/OrderPostingScreen.jsx";
 import OrdersScreen from "./screens/sales/OrdersScreen.jsx";
 import OrderReceiptScreen from "./screens/sales/OrderReceiptScreen.jsx";
 import OrdersDispatchScreen from "./screens/sales/OrdersDispatchScreen.jsx";
@@ -84,13 +83,12 @@ import CreateStoreItemslist from "./screens/store/storeitems/CreateStoreItemslis
 import Orderlist from "./screens/sales/orders/OrderHeaderList.jsx";
 import CreateOrder from "./screens/sales/orders/CreateOrderHeader.jsx";
 import ReturnOrderlist from "./screens/sales/returnorders/ReturnOrderlist.jsx";
-import CreateReturnOrder from "./screens/sales/returnorders/CreateReturnOrder.jsx";
+
 import OrderDispatchList from "./screens/sales/orderdispatch/OrderDispatchListHeader1.jsx";
 import CreateOrderDispatch from "./screens/sales/orderdispatch/CreateOrderDispatchHeader.jsx";
 import OrderInvoiceList from "./screens/sales/orderinvoice/OrderInvoiceList.jsx";
 import CreateOrderInvoce from "./screens/sales/orderinvoice/CreateOrderInvoce.jsx";
-import CreateOrderPosting from "./screens/sales/orderposting/CreateOrderPosting.jsx";
-import OrderPostingList from "./screens/sales/orderposting/OrderPostingList.jsx";
+
 import OrderReceiptList from "./screens/sales/orderreceipt/OrderReceiptList.jsx";
 import SalesPeoplelist from "./screens/sales/salespeople/SalesPeoplelist.jsx";
 import CreateSalesPeople from "./screens/sales/salespeople/CreateSalesPeople.jsx";
@@ -216,7 +214,7 @@ import UpdatePackagingSetup from "./screens/production/productionsetup/UpdatePac
 import ReturnOrderpreview from "./screens/sales/returnorders/ReturnOrderpreview.jsx";
 import ReverseorderList from "./screens/sales/returnorders/ReverseorderList.jsx";
 import ReverseOrderPreview from "./screens/sales/returnorders/ReverseOrderPreview.jsx";
-import ClearedOrders from "./screens/sales/orderposting/ClearedOrders.jsx";
+
 import AllbankAccountEntries from "./screens/finance/bankaccountentries/AllbankAccountEntries.jsx";
 import BankAccountEntiresScreen from "./screens/finance/BankAccountEntiresScreen.jsx";
 import PayablesScreen from "./screens/finance/PayablesScreen.jsx";
@@ -284,6 +282,13 @@ import InventoryEntryReportScreen from "./screens/store/InventoryEntryReportScre
 import InventoryRegisterReportScreen from "./screens/store/InventoryRegisterReportScreen.jsx";
 import StockBalancesReportScreen from "./screens/store/StockBalancesReportScreen.jsx";
 import SupplierMaizeReports from "./screens/administration/SupplierMaizeReports.jsx";
+import ProductionReportScreen from "./screens/production/ProductionReportScreen.jsx";
+import PackhousePeopleReportScren from "./screens/production/PackhousePeopleReportScren.jsx";
+import DailyPackHouseReportScreen from "./screens/production/DailyPackHouseReportScreen.jsx";
+import UpdateBankAccounts from "./screens/finance/bankaccounts/UpdateBankAccounts.jsx";
+import UpdateCashAccounts from "./screens/finance/cashaccounts/UpdateCashAccounts.jsx";
+import CreateBankReceipt from "./screens/sales/orderreceipts/CreateBankReceipt.jsx";
+import CreateCashReceipts from "./screens/sales/orderreceipts/CreateCashReceipts.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -459,6 +464,10 @@ const router = createHashRouter(
               element={<ViewPostedProductiobHeader />}
             />
           </Route>
+          <Route
+            path="productionreport"
+            element={<ProductionReportScreen />}
+          ></Route>
           {/* daily packhouse routes */}
           <Route path="dailypackhouse" element={<DailyPackhouseScreen />}>
             <Route
@@ -483,6 +492,10 @@ const router = createHashRouter(
               element={<PostDailyPackHouse />}
             />
           </Route>
+          <Route
+            path="DailyPackHouseReportScreen"
+            element={<DailyPackHouseReportScreen />}
+          ></Route>
           {/* production set up */}
           <Route path="productionsetup" element={<ProductionSetupScreen />}>
             <Route path="productssetuplist" element={<ProductionSetupList />} />
@@ -534,6 +547,10 @@ const router = createHashRouter(
               element={<DeletePackHousePerson />}
             />
           </Route>
+          <Route
+            path="packhousepeoplereport"
+            element={<PackhousePeopleReportScren />}
+          ></Route>
         </Route>
         {/* store routes */}
         <Route path="store" element={<StoreScreen />}>
@@ -716,17 +733,15 @@ const router = createHashRouter(
             <Route path="createinvoice" element={<CreateOrderInvoce />} />
             <Route path="allorderinvoices" element={<OrderInvoiceList />} />
           </Route>
-          <Route path="orderposting" element={<OrderPostingScreen />}>
-            <Route index element={<OrderPostingList />} />
-            <Route path="allunpostedorders" element={<ClearedOrders />} />
-            <Route path="allpostedorders" element={<OrderPostingList />} />
+          <Route path="orderreceipts" element={<OrderReceiptScreen />}>
+            <Route path="bankreceipts" element={<CreateBankReceipt />} />
+            <Route path="cashreceipts" element={<CreateCashReceipts />} />
           </Route>
-          <Route path="orderreceipt" element={<OrderReceiptScreen />}>
-            <Route index element={<OrderReceiptList />} />
-            <Route path="Allreceipts" element={<OrderReceiptList />} />
-          </Route>
+          {/* <Route path="orderreceipt" element={<OrderReceiptScreen />}>
+            {/* <Route index element={<OrderReceiptList />} /> */}
+          {/* <Route path="Allreceipts" element={<OrderReceiptList />} />
+          </Route> */}
           <Route path="salespeople" element={<SalesPeopleScreen />}>
-            <Route index element={<OrderPostingList />} />
             <Route path="createsalesperson" element={<CreateSalesPeople />} />
             <Route path="allsalespeople" element={<SalesPeoplelist />} />
             <Route
@@ -829,11 +844,19 @@ const router = createHashRouter(
           <Route path="cashaccounts" element={<CashAccountScreen />}>
             <Route path="allcashaccounts" element={<AllCashAccount />} />
             <Route path="createCashAccount" element={<CReateCashAccount />} />
+            <Route
+              path="updatecashaccounts/:id"
+              element={<UpdateCashAccounts />}
+            />
           </Route>
           <Route path="bankaccounts" element={<BankAccountsScreem />}>
             <Route index element={<BankAccountsList />} />
             <Route path="createbankaccount" element={<CreateBankAccount />} />
             <Route path="bankaccounts" element={<BankAccountsList />} />
+            <Route
+              path="updateBankAccount/:id"
+              element={<UpdateBankAccounts />}
+            />
           </Route>
           <Route
             path="bankaccountentries"

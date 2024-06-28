@@ -5,6 +5,7 @@ import { useCreateSalesOrderHeaderMutation } from "../../../slices/sales/salesOr
 import { useGetAllSalesPeopleQuery } from "../../../slices/sales/salesPeopleApiSlice";
 import { useGetAllCustomersQuery } from "../../../slices/administration/customersApiSlice";
 import { useGetAllInstitutionsQuery } from "../../../slices/administration/institutionsApiSlice";
+import { useGetLastBatchNumbersQuery } from "../../../slices/production/productionHeaderApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import TextField from "@mui/material/TextField";
@@ -23,6 +24,7 @@ function CreateOrderHeader() {
 
   const [CreateSalesOrderHeader, { isLoading }] =
     useCreateSalesOrderHeaderMutation();
+  const { data: lastBatchNo } = useGetLastBatchNumbersQuery();
   const { data: institutions } = useGetAllInstitutionsQuery();
   const { data: customers } = useGetAllCustomersQuery();
   const { data: staff } = useGetAllSalesPeopleQuery();
@@ -247,13 +249,23 @@ function CreateOrderHeader() {
           <Col>
             <Form.Group className="my-2" controlId="sales_person_number">
               <Form.Label>Batch Number</Form.Label>
-              <Form.Control
+              <Form.Select
                 required
                 type="text"
                 placeholder="Batch Number"
                 value={batch_number}
                 onChange={(e) => set_batch_number(e.target.value)}
-              ></Form.Control>
+              >
+                <option value="">Select Batch </option>
+
+                {lastBatchNo?.data.map((item, index) => (
+                  <>
+                    <option key={index} value={item.batch_number}>
+                      {item.batch_number}
+                    </option>
+                  </>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
         </Row>

@@ -15,38 +15,50 @@ const Hero = () => {
   const handleSignIn = (e) => {};
 
   return (
-    <div className=" py-5">
-      <Container className="d-flex justify-content-center">
-        <Card className="p-5 d-flex flex-column align-items-center hero-card bg-light w-75">
-          <h1 className="text-center mb-4">NOVENA MAIZE MILLER LTD</h1>
-          <p className="text-center mb-4">
-            {userInfo
-              ? `Welcome back ${userInfo.first_name}!`
-              : "Login to get started!"}
-          </p>
-          <div className="d-flex">
-            {userInfo ? (
-              <Link to={"/securedhome"}>
-                {" "}
-                <Button variant="primary" className="me-3">
-                  Home page
-                </Button>{" "}
-              </Link>
-            ) : (
-              <Link to={"/login"}>
-                <Button
-                  variant="primary"
-                  className="me-3"
-                  onClick={(e) => handleSignIn}
-                >
-                  Sign in
-                </Button>
-              </Link>
-            )}
-          </div>
-        </Card>
-      </Container>
-    </div>
+    <>
+      <div className=" py-5">
+        <Container className="d-flex justify-content-center">
+          <Card className="p-5 d-flex flex-column align-items-center hero-card bg-light w-75">
+            <h1 className="text-center mb-4">NOVENA MAIZE MILLER LTD</h1>
+            <p className="text-center mb-4">
+              {userInfo
+                ? `Welcome back ${userInfo.first_name}!`
+                : "Login to get started!"}
+            </p>
+            <div className="d-flex">
+              {userInfo ? (
+                <>
+                  <div>
+                    <Link to={"/securedhome"}>
+                      {" "}
+                      <Button variant="primary" className="me-3">
+                        Home page
+                      </Button>{" "}
+                    </Link>
+                  </div>
+                </>
+              ) : (
+                <Link to={"/login"}>
+                  <Button
+                    variant="primary"
+                    className="me-3"
+                    onClick={(e) => handleSignIn}
+                  >
+                    Sign in
+                  </Button>
+                </Link>
+              )}
+            </div>
+          </Card>
+        </Container>
+      </div>
+      <p style={{ textAlign: "center", fontSize: "small" }}>
+        version 1.0.5 - allRights Reserved:{" "}
+        <a href="#" target="_blank">
+          www.mogulafric.co.ke
+        </a>
+      </p>
+    </>
   );
 };
 

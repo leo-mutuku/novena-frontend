@@ -80,7 +80,7 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
           toast.error(res.message);
         } else {
           toast.success("Sales order lines created successfully");
-          navigate("../allordersintansit");
+          navigate("/sales/orders/allordersintansit");
         }
       }
     } catch (err) {

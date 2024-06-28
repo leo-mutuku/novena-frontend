@@ -19,6 +19,13 @@ export const packTypeSettingApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["packtypesettings"],
     }),
+    deletePackTypeById: builder.mutation({
+      query: (id) => ({
+        url: `${PACKTYPE_SETTINGS}/deletepacktypebyid/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["packtypesettings"],
+    }),
     createPackType: builder.mutation({
       query: (data) => ({
         url: `${PACKTYPE_SETTINGS}/createpacktype`,
@@ -43,4 +50,5 @@ export const {
   useCreatePackTypeMutation,
   useGetPackTypeByIdQuery,
   useGetAllPackTypeQuery,
+  useDeletePackTypeByIdMutation,
 } = packTypeSettingApiSlice;

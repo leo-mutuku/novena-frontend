@@ -9,7 +9,7 @@ import {
   useUpdateGLAccountByIdMutation,
 } from "../../../slices/finance/glApiSlice";
 
-function UpdateBankAccounts() {
+function UpdateCashAccounts() {
   const [gl_name, set_gl_name] = useState("");
   const [gl_number, set_gl_number] = useState("");
 
@@ -105,4 +105,4 @@ function UpdateBankAccounts() {
   );
 }
 
-export default UpdateBankAccounts;
+export default UpdateCashAccounts;

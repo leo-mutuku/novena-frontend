@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useCreateDailyProductionHeaderMutation } from "../../../slices/production/dailyPackhouseHeadersApiSlice";
+import { useGetLastBatchNumbersQuery } from "../../../slices/production/productionHeaderApiSlice";
 import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
 import { useGetAllItemRegisterQuery } from "../../../slices/store/itemregisterApiSlice";
 import { useGetAllproductSetupQuery } from "../../../slices/productionsetup/productSettingApliSlice";
@@ -11,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function CreateDailyPackhouseHeader() {
-  const [batch_no, set_batch_no] = useState("");
+  const [batch_number, set_batch_number] = useState("");
   const [pack_date, set_pack_date] = useState("");
   const [pack_type, set_pack_type] = useState(null);
   const [pack_officer, set_pack_officer] = useState("");
@@ -21,12 +22,16 @@ function CreateDailyPackhouseHeader() {
 
   const [DailyProductionHeader, { isLoading }] =
     useCreateDailyProductionHeaderMutation();
+  const { data: last_batch_numbers } = useGetLastBatchNumbersQuery();
   const { data: pack_types } = useGetAllPackTypeQuery();
   const { data: allItemRegister } = useGetAllItemRegisterQuery();
+
+  const { data: allProductSetup } = useGetAllproductSetupQuery();
   const { data: allProductionProductSetup } = useGetAllproductSetupQuery();
+
   const { data: staff } = useGetAllStaffQuery();
   const { userInfo } = useSelector((state) => state.auth);
-
+  console.log(last_batch_numbers?.data);
   const navigate = useNavigate();
   useEffect(() => {
     if (userInfo) {
@@ -40,7 +45,7 @@ function CreateDailyPackhouseHeader() {
     try {
       const res = await DailyProductionHeader({
         pack_type,
-        batch_no,
+        batch_number,
         pack_date,
         pack_officer,
         product_code,
@@ -53,6 +58,8 @@ function CreateDailyPackhouseHeader() {
       toast.error(err?.data?.message || err.error);
     }
   };
+
+  const packhouseitem = [101, 102, 118];
   return (
     <>
       <span>*** New Daily Pack House *** </span>
@@ -69,14 +76,23 @@ function CreateDailyPackhouseHeader() {
           <Col>
             <Form.Group className="my-2" controlId="pay_per_bale">
               <Form.Label>Batch no.</Form.Label>
-              <Form.Control
+              <Form.Select
                 required
                 style={{ textTransform: "uppercase" }}
                 type="text"
                 placeholder="Enter Batch no."
-                value={batch_no}
-                onChange={(e) => set_batch_no(e.target.value)}
-              ></Form.Control>
+                value={batch_number}
+                onChange={(e) => set_batch_number(e.target.value)}
+              >
+                <option>Select Batch no</option>
+                {last_batch_numbers?.data.map((item, index) => (
+                  <>
+                    <option key={index} value={item.batch_number}>
+                      {item.batch_number}
+                    </option>
+                  </>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
           <Col>
@@ -90,17 +106,21 @@ function CreateDailyPackhouseHeader() {
                 onChange={(e) => set_product_code(e.target.value)}
               >
                 <option>Select Product</option>
-                {allProductionProductSetup?.data?.map((item, index) => (
-                  <>
-                    <option key={index} value={item.product_code}>
-                      {allItemRegister?.data.map((item2, index) => {
-                        if (item2.item_code == item.product_code) {
-                          return item2.item_name;
-                        }
-                      })}
-                    </option>
-                  </>
-                ))}
+                {allProductionProductSetup?.data
+                  ?.filter((x) => {
+                    return packhouseitem.includes(x.item_code);
+                  })
+                  .map((item, index) => (
+                    <>
+                      <option key={index} value={item.product_code}>
+                        {allItemRegister?.data.map((item2, index) => {
+                          if (item2.item_code == item.product_code) {
+                            return item2.item_name;
+                          }
+                        })}
+                      </option>
+                    </>
+                  ))}
               </Form.Select>
             </Form.Group>
           </Col>
