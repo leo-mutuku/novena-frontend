@@ -7,7 +7,7 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import Papa from "papaparse";
 import { toast } from "react-toastify";
 
-const BankAccountEntiresScreen = () => {
+const SupplierReportScreen = () => {
   const [report_name, set_report_name] = React.useState("");
   const [supplier_number, set_supplier_number] = React.useState(null);
   const [supplier_name, set_supplier_name] = React.useState("");
@@ -199,4 +199,4 @@ const BankAccountEntiresScreen = () => {
   );
 };
 
-export default BankAccountEntiresScreen;
+export default SupplierReportScreen;

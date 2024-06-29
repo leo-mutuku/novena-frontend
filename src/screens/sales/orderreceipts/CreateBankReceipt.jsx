@@ -3,20 +3,26 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { useGetAllStoreRegisterQuery } from "../../../slices/store/storeRegisterApiSlice";
 import { useGetAllItemRegisterQuery } from "../../../slices/store/itemregisterApiSlice";
 import { useCreateStoreItemMutation } from "../../../slices/store/storeItemsApiSlice";
-
+import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
+import { useGetAllSalesPeopleQuery } from "../../../slices/sales/salesPeopleApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { CheckBox } from "@mui/icons-material";
 
 function CreateBankReceipt() {
-  const [store_code, set_store_code] = useState("");
-  const [store_name, set_store_name] = useState("");
-  const [item_code, set_item_code] = useState("");
-  const [item_name, set_item_name] = useState("");
-  const [item_quantity, set_item_quantity] = useState("");
+  const [bank_id, set_bank_id] = useState("");
+  const [staff_id, set_staff_id] = useState("");
+  const [sale_order_type, set_sale_order_type] = useState("");
 
-  const [createStoreItem, { isLoading }] = useCreateStoreItemMutation();
+  const [amount, set_amount] = useState("");
+  const [reference, set_reference] = useState("");
+
+  const [createSalesBankReceipt, { isLoading }] = useCreateStoreItemMutation();
+  const { data: bankAccounts } = useGetAllBankAccountsQuery();
+  const { data: salesPeople } = useGetAllSalesPeopleQuery();
   const { data: items } = useGetAllItemRegisterQuery();
   const { data: stores } = useGetAllStoreRegisterQuery();
+
   const navigate = useNavigate();
   useEffect(() => {
     navigate();
@@ -25,12 +31,11 @@ function CreateBankReceipt() {
     e.preventDefault();
 
     try {
-      const res = await createStoreItem({
-        store_code,
-        store_name,
-        item_code,
-        item_name,
-        item_quantity,
+      const res = await createSalesBankReceipt({
+        bank_id,
+        staff_id,
+        amount,
+        reference,
       }).unwrap();
       if (res.status == "failed") {
         toast.error(err?.data?.message || err.error);
@@ -43,33 +48,9 @@ function CreateBankReceipt() {
     }
   };
 
-  const handleItem = (e) => {
-    let x = items?.data?.filter((a) => {
-      if (a.item_code == e.target.value) {
-        return a.item_code;
-      }
-    });
-
-    set_item_code(e.target.value);
-    set_item_name(x[0].item_name);
-  };
-
-  const handStore = (e) => {
-    let x = stores?.data?.filter((a) => {
-      if (a.store_code == e.target.value) {
-        return a.store_code;
-      }
-    });
-
-    set_store_code(parseInt(e.target.value));
-    set_store_name(x[0].store_name);
-
-    console.log(store_name);
-  };
-
   return (
     <>
-      <span>*** Create Store Item ***</span>
+      <span>*** Accept Bank Receipts ***</span>
       <Row>
         <div>
           {" "}
@@ -78,22 +59,37 @@ function CreateBankReceipt() {
       </Row>
       <Form onSubmit={handleSubmit}>
         {/* */}
-
         <Row>
           <Col>
-            <Form.Group className="my-2" controlId="store_code">
-              <Form.Label>Store </Form.Label>
+            <Form.Group className="my-2" controlId="">
+              <Form.Select
+                type="text"
+                required
+                value={sale_order_type}
+                onChange={(e) => set_sale_order_type(e.target.value)}
+              >
+                <option value={"sales_person"}>Sales Person</option>
+                <option value={"Institution"}>Institution</option>
+                <option value={"Customer"}>Customer</option>
+              </Form.Select>
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Form.Group className="my-2" controlId="bank_id">
+              <Form.Label>Bank Accounts </Form.Label>
               <Form.Select
                 type="number"
                 required
-                placeholder="store_code"
-                value={store_code}
-                onChange={handStore}
+                placeholder="bank_id"
+                value={bank_id}
+                onChange={(e) => set_bank_id(e.target.value)}
               >
-                <option value={""}>Select Store</option>
-                {stores?.data.map((item, index) => (
-                  <option key={index} value={item.store_code}>
-                    {item.store_code} | {item.store_name}
+                <option value={""}>Select bank account</option>
+                {bankAccounts?.data.map((item, index) => (
+                  <option key={index} value={item.bank_id}>
+                    {item.bank_name}
                   </option>
                 ))}
               </Form.Select>
@@ -101,40 +97,69 @@ function CreateBankReceipt() {
           </Col>
           <Col>
             {/* */}
-            <Form.Group className="my-2" controlId="item_code">
-              <Form.Label>Item </Form.Label>
-              <Form.Select
-                type="number"
-                required
-                placeholder="Item code"
-                value={item_code}
-                onChange={handleItem}
-              >
-                <option value={""}>Select Item</option>
-                {items?.data.map((item) => (
-                  <option value={item.item_code}>
-                    {item.item_code} | {item.item_name}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.Group>
+            {sale_order_type == "Customer" ? (
+              <></>
+            ) : sale_order_type == "Institution" ? (
+              <></>
+            ) : (
+              <Form.Group className="my-2" controlId="item_code">
+                <Form.Label>Sales person </Form.Label>
+                <Form.Select
+                  type="number"
+                  required
+                  placeholder="staff Name"
+                  value={staff_id}
+                  onChange={(e) => set_staff_id(e.target.value)}
+                >
+                  <option value={""}>Select person</option>
+                  {salesPeople?.data.map((item, index) => (
+                    <option value={item.staff_id} key={index}>
+                      {item.first_name} {item.last_name}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+            )}
           </Col>
         </Row>
 
         <Row>
           <Col>
-            {/* staff_number field */}
-            <Form.Group className="my-2" controlId="item_quantity">
-              <Form.Label>Item quantity</Form.Label>
+            <Form.Group className="my-2" controlId="amount">
+              <Form.Label>Amount</Form.Label>
               <Form.Control
                 required
                 type="number"
-                placeholder="Item quantity"
-                value={item_quantity}
-                onChange={(e) => set_item_quantity(parseInt(e.target.value))}
+                placeholder="Amount"
+                value={amount}
+                onChange={(e) => set_amount(parseFloat(e.target.value))}
               ></Form.Control>
             </Form.Group>
           </Col>
+          <Col>
+            <Form.Group className="my-2" controlId="reference">
+              <Form.Label>Reference</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Reference"
+                value={reference}
+                onChange={(e) => set_reference(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row>
+          <Form.Group className="my-2" controlId="reference">
+            <Form.Label>Amount in words</Form.Label>
+            <Form.Control
+              required
+              type="text"
+              placeholder="Amounts in words"
+              value={reference}
+              onChange={(e) => set_reference(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
         </Row>
 
         <Button type="submit" variant="primary" className="mt-3">

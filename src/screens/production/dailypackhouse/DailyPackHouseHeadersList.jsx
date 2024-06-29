@@ -111,9 +111,14 @@ const DailyPackHouseHeadersList = () => {
         accessor: "add",
         Cell: ({ row }) => (
           <Link
-            to={`/production/dailypackhouse/postdailypackhouse/${row.original.daily_packhouse_header_id}`}
+            to={
+              row.original.status == "Posted"
+                ? "#"
+                : `/production/dailypackhouse/postdailypackhouse/${row.original.daily_packhouse_header_id}`
+            }
           >
-            <IoIosAdd />
+            {" "}
+            {row.original.status == "Posted" ? "-" : <IoIosAdd />}
           </Link>
         ),
       },

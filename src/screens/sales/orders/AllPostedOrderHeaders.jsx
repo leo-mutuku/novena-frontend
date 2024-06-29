@@ -36,7 +36,7 @@ const AllPostedOrderHeaders = () => {
       setTableData(orders.data);
     }
   }, [orders]);
-  console.log(JSON.stringify(tableData));
+
   const columns = useMemo(
     () => [
       {

@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import { useGetAllStoreRegisterQuery } from "../../../slices/store/storeRegisterApiSlice";
-import { useGetAllItemRegisterQuery } from "../../../slices/store/itemregisterApiSlice";
-import { useCreateStoreItemMutation } from "../../../slices/store/storeItemsApiSlice";
-import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
-import { useGetAllSalesPeopleQuery } from "../../../slices/sales/salesPeopleApiSlice";
+import { useGetAllStoreRegisterQuery } from "../../../../slices/store/storeRegisterApiSlice";
+import { useGetAllItemRegisterQuery } from "../../../../slices/store/itemregisterApiSlice";
+import { useCreateStoreItemMutation } from "../../../../slices/store/storeItemsApiSlice";
+import { useGetAllBankAccountsQuery } from "../../../../slices/finance/bankAccountsApiSlice";
+import { useGetAllSalesPeopleQuery } from "../../../../slices/sales/salesPeopleApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { CheckBox } from "@mui/icons-material";
 
-function CreateCashReceipt() {
+function BankSupplier() {
   const [bank_id, set_bank_id] = useState("");
   const [staff_id, set_staff_id] = useState("");
   const [sale_order_type, set_sale_order_type] = useState("");
@@ -50,7 +49,7 @@ function CreateCashReceipt() {
 
   return (
     <>
-      <span>*** Accept Cash Receipts ***</span>
+      <span>*** Accept Bank Receipts ***</span>
       <Row>
         <div>
           {" "}
@@ -172,4 +171,4 @@ function CreateCashReceipt() {
   );
 }
 
-export default CreateCashReceipt;
+export default BankSupplier;

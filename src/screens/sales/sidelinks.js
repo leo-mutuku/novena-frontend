@@ -16,8 +16,8 @@ export const sidelinks = [
   {
     menuTitle: "Sales People",
     subMenus: [
-      { subMenuTitle: "SalesPeople", to: "salespeople" },
-      { subMenuTitle: "Statement", to: "statement" },
+      { subMenuTitle: "Sales People", to: "salespeople" },
+      // { subMenuTitle: "Statement", to: "statement" },
       { subMenuTitle: "Reports", to: "salepeoplereport" },
     ],
   },

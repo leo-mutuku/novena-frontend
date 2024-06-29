@@ -38,7 +38,7 @@ import OrderInvoiceScreen from "./screens/sales/OrderInvoiceScreen.jsx";
 import OrdersScreen from "./screens/sales/OrdersScreen.jsx";
 import OrderReceiptScreen from "./screens/sales/OrderReceiptScreen.jsx";
 import OrdersDispatchScreen from "./screens/sales/OrdersDispatchScreen.jsx";
-import SalesPeopleScreen from "./screens/sales/SalesPeopleScreen.jsx";
+
 import AccountsScreen from "./screens/finance/AccountsScreen.jsx";
 import GeneralledgerScreen from "./screens/finance/GeneralledgerScreen.jsx";
 import MpesaPaybillsScreen from "./screens/finance/MpesaPaybillsScreen.jsx";
@@ -134,10 +134,7 @@ import CreateCategory from "./screens/payroll/category/CreateCategory.jsx";
 import { PurchasesScreen } from "./screens/payment/PurchasesScreen.jsx";
 import { RequisitionsScreen } from "./screens/payment/RequisitionsScreen.jsx";
 import { PaymentVoucherScreen } from "./screens/payment/PaymentVoucherScreen.jsx";
-import PaymentVoucherList from "./screens/payment/payments/paymentvouchers/PaymentVoucherList.jsx";
-import CreatePaymentVoucher from "./screens/payment/payments/paymentvouchers/CreatePaymentVoucher.jsx";
-import AllPaymentVouchersInTransit from "./screens/payment/payments/paymentvouchers/AllPaymentVouchersInTransit.jsx";
-import PurchasesList from "./screens/payment/payments/purchases/PurchasesList.jsx";
+
 import { StoreItemEntriesScreen } from "./screens/store/StoreItemEntriesScreen.jsx";
 import AllItemEntries from "./screens/store/storeitementries/AllItemEntries.jsx";
 import AccountEntriesScreen from "./screens/finance/AccountEntriesScreen.jsx";
@@ -150,8 +147,7 @@ import CashAccountScreen from "./screens/finance/CashAccountScreen.jsx";
 import AllCashAccount from "./screens/finance/cashaccounts/AllCashAccount.jsx";
 import CReateCashAccount from "./screens/finance/cashaccounts/CReateCashAccount.jsx";
 import AllCashAccountEntries from "./screens/finance/cashaccountentries/AllCashAccountEntries.jsx";
-import AllPaymentRequisitionInTransit from "./screens/payment/payments/requisitions/AllPaymentRequisitionInTransit.jsx";
-import AllPostedPaymentRequisitions from "./screens/payment/payments/requisitions/AllPostedPaymentRequisitions.jsx";
+
 import DriverScreen from "./screens/fleet/DriverScreen.jsx";
 import RoutesScreen from "./screens/fleet/RoutesScreen.jsx";
 import VehicleScreen from "./screens/fleet/VehicleScreen.jsx";
@@ -173,7 +169,7 @@ import AllPostedOrderHeaders from "./screens/sales/orders/AllPostedOrderHeaders.
 import AllOrderHeadersInTransit from "./screens/sales/orders/AllOrderHeadersInTransit.jsx";
 import AllReurnOrdersInTransit from "./screens/sales/returnorders/AllReurnOrdersInTransit.jsx";
 import AllPostedReturnOrders from "./screens/sales/returnorders/AllPostedReturnOrders.jsx";
-import PaymentRequisitionList from "./screens/payment/payments/requisitions/PaymentRequisitionList.jsx";
+
 import EditDriver from "./screens/fleet/drivers/EditDriver.jsx";
 import EditRoute from "./screens/fleet/routes/EditRoute.jsx";
 import EditVehicle from "./screens/fleet/vehicles/EditVehicle.jsx";
@@ -228,11 +224,11 @@ import RemoveStaffSetup from "./screens/payroll/payrollsetup/RemoveStaffSetup.js
 import UpdateStaffSetup from "./screens/payroll/payrollsetup/UpdateStaffSetup.jsx";
 import ViewStaffSetup from "./screens/payroll/payrollsetup/ViewStaffSetup.jsx";
 import StaffSetupList from "./screens/payroll/payrollsetup/StaffSetupList.jsx";
-import OtherDuctionScreen from "./screens/payroll/OtherDuctionScreen.jsx";
+
 import RemoveDeduction from "./screens/payroll/otherdeductions/RemoveDeduction.jsx";
-import AddDeduction from "./screens/payroll/otherdeductions/addDeduction.jsx";
+
 import UpdateDeduction from "./screens/payroll/otherdeductions/UpdateDeduction.jsx";
-import DeductionSalaryList from "./screens/payroll/otherdeductions/DeductionSalaryList.jsx";
+
 import UpdatePayrollCategory from "./screens/payroll/category/UpdatePayrollCategory.jsx";
 import PayrollActions from "./screens/payroll/payrollheader/PayrollActions.jsx";
 import RolesScreen from "./screens/administration/RolesScreen.jsx";
@@ -273,7 +269,6 @@ import IncomeStatementList from "./screens/finance/incomestatement/IncomeStateme
 import UpdatePacktypeSetting from "./screens/production/packhousesetup/UpdatePacktypeSetting.jsx";
 import DeletePackHouseSettings from "./screens/production/packhousesetup/DeletePackHouseSettings.jsx";
 import PostDailyPackHouse from "./screens/production/dailypackhouse/lines/PostDailyPackHouse.jsx";
-import AllPostedPyamentVouchers from "./screens/payment/payments/paymentvouchers/AllPostedPaymentVouchers.jsx";
 
 import StorePurchaseReportScreen from "./screens/purchase/StorePurchaseReportScreen.jsx";
 import StoreRequisitionReportScreen from "./screens/purchase/StoreRequisitionReportScreen.jsx";
@@ -289,6 +284,18 @@ import UpdateBankAccounts from "./screens/finance/bankaccounts/UpdateBankAccount
 import UpdateCashAccounts from "./screens/finance/cashaccounts/UpdateCashAccounts.jsx";
 import CreateBankReceipt from "./screens/sales/orderreceipts/CreateBankReceipt.jsx";
 import CreateCashReceipts from "./screens/sales/orderreceipts/CreateCashReceipts.jsx";
+import BankSupplier from "./screens/payment/payments/purchases/BankSuppliers.jsx";
+import CashSupplier from "./screens/payment/payments/purchases/CashSuppliers.jsx";
+import AllSuppliersPayments from "./screens/payment/payments/purchases/AllSuppliersPayments.jsx";
+import NewRequisition from "./screens/payment/payments/requisitions/NewRequisition.jsx";
+import BankPv from "./screens/payment/payments/paymentvouchers/BankPV.jsx";
+import CashPv from "./screens/payment/payments/paymentvouchers/CashPV.jsx";
+import AllPostedPyamentVouchers from "./screens/payment/payments/paymentvouchers/AllPostedPaymentVouchers.jsx";
+import PaymentReportScreen from "./screens/payment/PaymentReportScreen.jsx";
+import SupplierPaymentReportScreen from "./screens/administration/SupplierReportScreen.jsx";
+
+import SalesReportScreen from "./screens/sales/SalesReportScreen.jsx";
+import SalesPeopleScreen from "./screens/sales/SalesPeopleScreen.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -396,45 +403,35 @@ const router = createHashRouter(
         {/* payment */}
         <Route path="payment" element={<PaymentScreen />}>
           <Route path="purchases" element={<PurchasesScreen />}>
-            <Route path="allpurchasepayment" element={<PurchasesList />} />
+            <Route path="bankpurchasepayment" element={<BankSupplier />} />
+            <Route path="cashpurchasepayment" element={<CashSupplier />} />
             <Route
-              path="allpurchasepaymentintransit"
-              element={<AllPaymentVouchersInTransit />}
-            />
-            <Route
-              path="allpostedpurchasepayment"
-              element={<AllPostedPyamentVouchers />}
-            />
-            <Route
-              path="createpurchasepayment"
-              element={<AllPaymentVouchersInTransit />}
+              path="allpurchasepurchasepayemnt"
+              element={<AllSuppliersPayments />}
             />
           </Route>
           <Route path="requsitions" element={<RequisitionsScreen />}>
             <Route
-              path="allpaymentrequisition"
-              element={<PaymentRequisitionList />}
+              path="createpaymentrequisition"
+              element={<NewRequisition />}
             />
             <Route
-              path="allpaymentrequisitionintransit"
-              element={<AllPaymentRequisitionInTransit />}
-            />
-            <Route
-              path="allpostedpaymentrequisition"
-              element={<AllPostedPaymentRequisitions />}
+              path="allpaymentrequisitions"
+              element={<RequisitionList />}
             />
           </Route>
-          <Route path="PaymentEntries" element={<PaymentEntriesScreen />}>
-            <Route path="PaymentEntries" element={<PaymentEntries />} />
-          </Route>
+          <Route
+            path="paymentreports"
+            element={<PaymentReportScreen />}
+          ></Route>
+          <Route
+            path="suppliersreport"
+            element={<SupplierPaymentReportScreen />}
+          ></Route>
           <Route path="paymentvoucher" element={<PaymentVoucherScreen />}>
-            <Route path="allpvs" element={<PaymentVoucherList />} />
-            <Route
-              path="allpvintransit"
-              element={<AllPaymentVouchersInTransit />}
-            />
-            <Route path="allpostedpv" element={<PaymentVoucherList />} />
-            <Route path="createpv" element={<CreatePaymentVoucher />} />
+            <Route path="bankpv" element={<BankPv />} />
+            <Route path="cashpv" element={<CashPv />} />
+            <Route path="allpv" element={<AllPostedPyamentVouchers />} />
           </Route>
         </Route>
 
@@ -728,6 +725,8 @@ const router = createHashRouter(
             />
             <Route path="dispatchedorders" element={<OrderDispatchList />} />
           </Route>
+          <Route path="salesreport" element={<SalesReportScreen />}></Route>
+
           <Route path="orderinvoice" element={<OrderInvoiceScreen />}>
             <Route index element={<OrderInvoiceList />} />
             <Route path="createinvoice" element={<CreateOrderInvoce />} />
@@ -737,10 +736,7 @@ const router = createHashRouter(
             <Route path="bankreceipts" element={<CreateBankReceipt />} />
             <Route path="cashreceipts" element={<CreateCashReceipts />} />
           </Route>
-          {/* <Route path="orderreceipt" element={<OrderReceiptScreen />}>
-            {/* <Route index element={<OrderReceiptList />} /> */}
-          {/* <Route path="Allreceipts" element={<OrderReceiptList />} />
-          </Route> */}
+
           <Route path="salespeople" element={<SalesPeopleScreen />}>
             <Route path="createsalesperson" element={<CreateSalesPeople />} />
             <Route path="allsalespeople" element={<SalesPeoplelist />} />

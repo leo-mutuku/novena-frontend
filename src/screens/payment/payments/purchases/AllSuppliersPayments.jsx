@@ -16,7 +16,7 @@ import axios from "axios";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
-const AllPostedPaymentRequisitions = () => {
+const AllSuppliersPayments = () => {
   const [columns_header, set_columns_header] = useState([]);
   const [columns_body, set_columns_body] = useState([]);
   const [footer_header, set_footer_header] = useState([]);
@@ -185,4 +185,4 @@ const AllPostedPaymentRequisitions = () => {
     </>
   );
 };
-export default AllPostedPaymentRequisitions;
+export default AllSuppliersPayments;

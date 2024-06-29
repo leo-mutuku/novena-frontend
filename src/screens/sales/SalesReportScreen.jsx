@@ -7,7 +7,7 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import Papa from "papaparse";
 import { toast } from "react-toastify";
 
-const BankAccountEntiresScreen = () => {
+const SalesReportScreen = () => {
   const [report_name, set_report_name] = React.useState("");
   const [supplier_number, set_supplier_number] = React.useState(null);
   const [supplier_name, set_supplier_name] = React.useState("");
@@ -138,17 +138,7 @@ const BankAccountEntiresScreen = () => {
               ></Form.Control>
             </Form.Group>
           </Col>
-          {/* <Col>
-            <Form.Group className="my-2" controlId="role_name">
-              <Form.Control
-                type="text"
-                required
-                placeholder="Role Name"
-                value={"#"}
-                // onChange={(e) => set_role_name(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-          </Col> */}
+
           <Col xs={1} style={{ marginTop: "8px" }}>
             <Button variant="primary" type="button" onClick={loaddata}>
               Load
@@ -199,4 +189,4 @@ const BankAccountEntiresScreen = () => {
   );
 };
 
-export default BankAccountEntiresScreen;
+export default SalesReportScreen;

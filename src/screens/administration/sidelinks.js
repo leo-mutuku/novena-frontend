@@ -1,18 +1,24 @@
 export const sidelinks = [
+  // {
+  //   menuTitle: "Suppliers",
+  //   subMenus: [
+  //     { subMenuTitle: "Suppliers", to: "suppliers" },
+  //     { subMenuTitle: "Reports", to: "supplierreports" },
+  //   ],
+  // },
   {
-    menuTitle: "Suppliers",
+    menuTitle: "Institutions",
     subMenus: [
-      { subMenuTitle: "Suppliers", to: "suppliers" },
+      { subMenuTitle: "Institutions", to: "institutions" },
       { subMenuTitle: "Reports", to: "supplierreports" },
     ],
   },
   {
-    menuTitle: "Institutions",
-    subMenus: [{ subMenuTitle: "Institutions", to: "institutions" }],
-  },
-  {
     menuTitle: "Customers",
-    subMenus: [{ subMenuTitle: "Customers", to: "customers" }],
+    subMenus: [
+      { subMenuTitle: "Customers", to: "customers" },
+      { subMenuTitle: "Reports", to: "supplierreports" },
+    ],
   },
   {
     menuTitle: "Staff",

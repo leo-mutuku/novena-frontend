@@ -23,14 +23,14 @@ export const sidelinks = [
     menuTitle: "Bank Accounts",
     subMenus: [
       { subMenuTitle: "Bank Accounts", to: "bankaccounts" },
-      { subMenuTitle: "Bank Acc Statement", to: "bankaccountentries" },
+      { subMenuTitle: "Report", to: "bankaccountentries" },
     ],
   },
   {
     menuTitle: "Cash Accounts",
     subMenus: [
       { subMenuTitle: "Cash Accounts", to: "cashaccounts" },
-      { subMenuTitle: "Cash Acc Statement", to: "allcashaccountentries" },
+      { subMenuTitle: "Report", to: "allcashaccountentries" },
     ],
   },
   {
