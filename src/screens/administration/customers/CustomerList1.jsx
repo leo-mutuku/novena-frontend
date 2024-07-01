@@ -133,13 +133,13 @@ const CustomerList = () => {
         Header: "Location",
         accessor: "customer_location",
       },
+      { Header: "Cus ID", accessor: "customer_id" },
+      { Header: "Balance", accessor: "balance" },
       {
         Header: "Edit",
         accessor: "edit",
         Cell: ({ row }) => (
-          <Link
-            to={`/administration/customers/update/${row.original.customer_id}`}
-          >
+          <Link to={`#`}>
             <CiEdit />
           </Link>
         ),

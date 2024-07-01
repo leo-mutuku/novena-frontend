@@ -15,8 +15,8 @@ function CreateOrderHeader() {
   const [sale_order_type, set_sale_order_type] = useState("");
   const [sales_person_number, set_sales_person_number] = useState("");
   const [customer_name, set_customer_name] = useState("null");
-  const [customer_id, set_customer_id] = useState(null);
-  const [institution_id, set_institution_id] = useState(null);
+  const [customer_id, set_customer_id] = useState("null");
+  const [institution_id, set_institution_id] = useState("null");
   const [phone_number, set_phone_number] = useState("null");
   const [created_by, set_created_by] = useState("");
   const [sales_order_date, set_sales_order_date] = useState("");
@@ -38,9 +38,7 @@ function CreateOrderHeader() {
     navigate();
   }, [navigate, userInfo, sale_order_type]);
   const handleSubmit = async (e) => {
-    alert("hi");
     e.preventDefault();
-    alert();
     try {
       if (batch_number.length !== 9) {
         toast.error(
@@ -71,8 +69,6 @@ function CreateOrderHeader() {
     }
   };
 
-  console.log();
-
   const handleCustomer = (_, newInputValue) => {
     let x = customers?.data?.filter((a) => {
       if (a.full_name == newInputValue) {
@@ -88,7 +84,7 @@ function CreateOrderHeader() {
 
     set_customer_id(x[0].customer_id);
     set_phone_number(x[0].customer_contact);
-    set_institution_id(null);
+    set_institution_id("null");
   };
   const handleInstitution = (e) => {
     let x = institutions?.data?.filter((a) => {
@@ -99,24 +95,25 @@ function CreateOrderHeader() {
     set_customer_name(x[0].institution_name);
     set_institution_id(x[0].institution_id);
     set_phone_number(x[0].institution_phone_number);
-    set_customer_id(null);
+    set_customer_id("null");
   };
   const handleOrderType = (e) => {
     if (e.target.value === "Institution") {
-      set_sales_person_number(2000);
       set_sale_order_type(e.target.value);
     }
-    if (e.target.value === "Credit") {
-      set_sales_person_number(1000);
+    if (e.target.value === "Customer") {
+      set_sale_order_type(e.target.value);
+    }
+    if (e.target.value === "Sales") {
       set_sale_order_type(e.target.value);
     }
   };
 
   console.log({
     sale_order_type,
-    customer_id,
-    institution_id,
     sales_person_number,
+    institution_id,
+    customer_id,
   });
 
   return (
@@ -143,9 +140,9 @@ function CreateOrderHeader() {
                 onChange={handleOrderType}
               >
                 <option>Sales Order Type</option>
-                <option value={"Cash"}>Cash Sale </option>
+                <option value={"Sales"}>Sales Person</option>
                 <option value={"Institution"}>Insititution</option>
-                <option value={"Credit"}>Credit Sale</option>
+                <option value={"Customer"}>Customer</option>
               </Form.Select>
             </Form.Group>
           </Col>
@@ -165,7 +162,7 @@ function CreateOrderHeader() {
         <br></br>
         <Row>
           <Col>
-            {sale_order_type === "Cash" || sale_order_type === "Credit" ? (
+            {sale_order_type === "Sales" || sale_order_type === "Customer" ? (
               <Autocomplete
                 fullWidth
                 disablePortal
@@ -208,7 +205,7 @@ function CreateOrderHeader() {
                   type="text"
                   required
                   placeholder="Customer Name"
-                  value={customer_name}
+                  value={""}
                   onChange={(e) => set_customer_name(e.target.value)}
                 ></Form.Control>
               </Form.Group>
@@ -229,29 +226,25 @@ function CreateOrderHeader() {
         </Row>
         <Row>
           <Col>
-            {sale_order_type === "Cash" ? (
-              <Form.Group className="my-2" controlId="sales_person_number">
-                <Form.Label>sales person number</Form.Label>
-                <Form.Select
-                  required
-                  type="text"
-                  placeholder="sales_person_number"
-                  value={sales_person_number}
-                  onChange={(e) => set_sales_person_number(e.target.value)}
-                >
-                  <option value={""}>Sales Person</option>
-                  {staff?.data.map((item, index) => (
-                    <>
-                      <option key={index} value={item.staff_id}>
-                        {item.first_name}
-                      </option>
-                    </>
-                  ))}
-                </Form.Select>
-              </Form.Group>
-            ) : (
-              <></>
-            )}
+            <Form.Group className="my-2" controlId="sales_person_number">
+              <Form.Label>sales person number</Form.Label>
+              <Form.Select
+                required
+                type="text"
+                placeholder="sales_person_number"
+                value={sales_person_number}
+                onChange={(e) => set_sales_person_number(e.target.value)}
+              >
+                <option value={""}> Select option</option>
+                {staff?.data.map((item, index) => (
+                  <>
+                    <option key={index} value={item.staff_id}>
+                      {item.first_name}
+                    </option>
+                  </>
+                ))}
+              </Form.Select>
+            </Form.Group>
           </Col>
           <Col>
             <Form.Group className="my-2" controlId="sales_person_number">

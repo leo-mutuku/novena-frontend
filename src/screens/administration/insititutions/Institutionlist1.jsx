@@ -116,6 +116,7 @@ const InstitutionList = () => {
         Header: "Location",
         accessor: "institution_location",
       },
+      { Header: "Balance", accessor: "balance" },
       {
         Header: "Edit",
         accessor: "edit",

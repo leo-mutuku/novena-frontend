@@ -63,7 +63,7 @@ const AllPostedOrderHeaders = () => {
       },
       {
         Header: "No. of Items",
-        accessor: "pay_per_bale",
+        accessor: "number_of_items",
       },
       {
         Header: "Cust Name",

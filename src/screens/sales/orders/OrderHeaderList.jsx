@@ -98,7 +98,7 @@ const OrderHeaderList = () => {
 
                   <td>{item.sales_order_number}</td>
                   <td>{item.total}</td>
-                  <td>{item.pay_per_bale}</td>
+                  <td>{item.number_of_items}</td>
                   <td>{item.customer_name}</td>
                   <td>{item.sales_person_number}</td>
                   <td>
