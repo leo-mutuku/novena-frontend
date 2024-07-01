@@ -29,6 +29,17 @@ function CreateOrderHeader() {
   const { data: customers } = useGetAllCustomersQuery();
   const { data: staff } = useGetAllSalesPeopleQuery();
   const { userInfo } = useSelector((state) => state.auth);
+  useEffect(() => {
+    // Get the current date
+    const today = new Date();
+    // Format the date as YYYY-MM-DD
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are 0-based, so we add 1
+    const day = String(today.getDate()).padStart(2, "0");
+    const formattedDate = `${year}-${month}-${day}`;
+    // Set the state with the formatted date
+    set_sales_order_date(formattedDate);
+  }, []); // Empty dependency array ensures this runs only once
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -226,25 +237,77 @@ function CreateOrderHeader() {
         </Row>
         <Row>
           <Col>
-            <Form.Group className="my-2" controlId="sales_person_number">
-              <Form.Label>sales person number</Form.Label>
-              <Form.Select
-                required
-                type="text"
-                placeholder="sales_person_number"
-                value={sales_person_number}
-                onChange={(e) => set_sales_person_number(e.target.value)}
-              >
-                <option value={""}> Select option</option>
-                {staff?.data.map((item, index) => (
-                  <>
-                    <option key={index} value={item.staff_id}>
-                      {item.first_name}
-                    </option>
-                  </>
-                ))}
-              </Form.Select>
-            </Form.Group>
+            {sale_order_type === "Sales" ? (
+              <Form.Group className="my-2" controlId="sales_person_number">
+                <Form.Label>sales person number</Form.Label>
+                <Form.Select
+                  required
+                  type="text"
+                  placeholder="sales_person_number"
+                  value={sales_person_number}
+                  onChange={(e) => set_sales_person_number(e.target.value)}
+                >
+                  <option value={""}> Select option</option>
+                  {staff?.data
+                    .filter(
+                      (order) =>
+                        order.first_name !== "Customer" &&
+                        order.first_name !== "Institution"
+                    )
+                    .map((item, index) => (
+                      <>
+                        <option key={index} value={item.staff_id}>
+                          {item.first_name}
+                        </option>
+                      </>
+                    ))}
+                </Form.Select>
+              </Form.Group>
+            ) : sale_order_type === "Institution" ? (
+              <Form.Group className="my-2" controlId="sales_person_number">
+                <Form.Label>Insititution</Form.Label>
+                <Form.Select
+                  required
+                  type="text"
+                  placeholder="sales_person_number"
+                  value={sales_person_number}
+                  onChange={(e) => set_sales_person_number(e.target.value)}
+                >
+                  <option value={""}> Select option</option>
+                  {staff?.data
+                    .filter((order) => order.first_name === "Institution")
+                    .map((item, index) => (
+                      <>
+                        <option key={index} value={item.staff_id}>
+                          {item.first_name}
+                        </option>
+                      </>
+                    ))}
+                </Form.Select>
+              </Form.Group>
+            ) : (
+              <Form.Group className="my-2" controlId="sales_person_number">
+                <Form.Label>Customer</Form.Label>
+                <Form.Select
+                  required
+                  type="text"
+                  placeholder="sales_person_number"
+                  value={sales_person_number}
+                  onChange={(e) => set_sales_person_number(e.target.value)}
+                >
+                  <option value={""}> Select option</option>
+                  {staff?.data
+                    .filter((order) => order.first_name === "Customer")
+                    .map((item, index) => (
+                      <>
+                        <option key={index} value={item.staff_id}>
+                          {item.first_name}
+                        </option>
+                      </>
+                    ))}
+                </Form.Select>
+              </Form.Group>
+            )}
           </Col>
           <Col>
             <Form.Group className="my-2" controlId="sales_person_number">
