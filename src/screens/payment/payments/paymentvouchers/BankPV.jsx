@@ -1,27 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import { useGetAllStoreRegisterQuery } from "../../../../slices/store/storeRegisterApiSlice";
-import { useGetAllItemRegisterQuery } from "../../../../slices/store/itemregisterApiSlice";
+
 import { useCreateStoreItemMutation } from "../../../../slices/store/storeItemsApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllSalesPeopleQuery } from "../../../../slices/sales/salesPeopleApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { CheckBox } from "@mui/icons-material";
 
 function BankPv() {
   const [bank_id, set_bank_id] = useState("");
   const [staff_id, set_staff_id] = useState("");
+  const [institution_id, set_institution_id] = useState("");
+  const [customer_id, set_customer_id] = useState("");
   const [sale_order_type, set_sale_order_type] = useState("");
-
-  const [amount, set_amount] = useState("");
   const [reference, set_reference] = useState("");
+  const [amount, set_amount] = useState("");
+  const [amount_in_words, set_amount_in_words] = useState("");
+  const [created_by, set_created_by] = useState("");
 
   const [createSalesBankReceipt, { isLoading }] = useCreateStoreItemMutation();
   const { data: bankAccounts } = useGetAllBankAccountsQuery();
   const { data: salesPeople } = useGetAllSalesPeopleQuery();
-  const { data: items } = useGetAllItemRegisterQuery();
-  const { data: stores } = useGetAllStoreRegisterQuery();
+
+  const handleCustomer = (_, newInputValue) => {
+    let x = customers?.data?.filter((a) => {
+      if (a.full_name == newInputValue) {
+        return a.customer_id;
+      }
+    });
+
+    set_customer_id(x[0].customer_id);
+    alert(x[0].customer_id);
+  };
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -34,6 +44,10 @@ function BankPv() {
       const res = await createSalesBankReceipt({
         bank_id,
         staff_id,
+        customer_id,
+        institution_id,
+        amount_in_words,
+        sale_order_type,
         amount,
         reference,
       }).unwrap();
@@ -50,7 +64,7 @@ function BankPv() {
 
   return (
     <>
-      <span>*** Accept Bank Receipts ***</span>
+      <span>*** PV Bank Payment ***</span>
       <Row>
         <div>
           {" "}
@@ -98,25 +112,65 @@ function BankPv() {
           <Col>
             {/* */}
             {sale_order_type == "Customer" ? (
-              <></>
+              <Autocomplete
+                fullWidth
+                disablePortal
+                id="combo-box-demo"
+                options={customers?.data}
+                getOptionLabel={(option) => option.full_name}
+                renderInput={(full_name) => (
+                  <TextField {...full_name} label="Customers" />
+                )}
+                inputValue={customers.full_name}
+                onInputChange={(event, newInputValue) =>
+                  handleCustomer(event, newInputValue)
+                }
+                isOptionEqualToValue={(option, value) =>
+                  option.full_name === value.full_name
+                }
+              />
             ) : sale_order_type == "Institution" ? (
-              <></>
-            ) : (
-              <Form.Group className="my-2" controlId="item_code">
-                <Form.Label>Sales person </Form.Label>
+              <Form.Group className="my-2" controlId="institution">
+                <Form.Label>Institution</Form.Label>
                 <Form.Select
-                  type="number"
+                  type="text"
                   required
-                  placeholder="staff Name"
+                  placeholder="Institution"
+                  value={institution_id}
+                  onChange={(e) => set_institution_id(e.target.value)}
+                >
+                  <option value={``}> Select institution</option>
+                  {institutions?.data.map((item, index) => (
+                    <option value={item.institution_id}>
+                      {item.institution_name}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+            ) : (
+              <Form.Group className="my-2" controlId="staff_id">
+                <Form.Label>Sales person</Form.Label>
+                <Form.Select
+                  required
+                  type="text"
+                  placeholder="sales_person_number"
                   value={staff_id}
                   onChange={(e) => set_staff_id(e.target.value)}
                 >
-                  <option value={""}>Select person</option>
-                  {salesPeople?.data.map((item, index) => (
-                    <option value={item.staff_id} key={index}>
-                      {item.first_name} {item.last_name}
-                    </option>
-                  ))}
+                  <option value={""}> Select option</option>
+                  {salesPeople?.data
+                    .filter(
+                      (order) =>
+                        order.first_name !== "Customer" &&
+                        order.first_name !== "Institution"
+                    )
+                    .map((item, index) => (
+                      <>
+                        <option key={index} value={item.staff_id}>
+                          {item.first_name} {item.last_name}
+                        </option>
+                      </>
+                    ))}
                 </Form.Select>
               </Form.Group>
             )}
@@ -156,8 +210,8 @@ function BankPv() {
               required
               type="text"
               placeholder="Amounts in words"
-              value={reference}
-              onChange={(e) => set_reference(e.target.value)}
+              value={amount_in_words}
+              onChange={(e) => set_amount_in_words(e.target.value)}
             ></Form.Control>
           </Form.Group>
         </Row>

@@ -296,6 +296,7 @@ import SupplierPaymentReportScreen from "./screens/administration/SupplierReport
 
 import SalesReportScreen from "./screens/sales/SalesReportScreen.jsx";
 import SalesPeopleScreen from "./screens/sales/SalesPeopleScreen.jsx";
+import CreateReturnOrder from "./screens/sales/returnorders/CreateReturnOrder.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -704,6 +705,7 @@ const router = createHashRouter(
           </Route>
           <Route path="returnorder" element={<ReturnOrdersScreen />}>
             <Route path="allreturnorders" element={<ReturnOrderlist />} />
+            <Route path="createreturnorder" element={<CreateReturnOrder />} />
             <Route path="reverseorderlist" element={<ReverseorderList />} />
             <Route path="returnorder/:id" element={<ReturnOrderpreview />} />
             <Route path="rerveseorder/:id" element={<ReverseOrderPreview />} />

@@ -1,8 +1,7 @@
 import PageActionComponent from "../../components/PageActionComponent";
 const pagemenus = [
-  { pagename: "Create Return Order", to: "allreturnorders" },
+  { pagename: "Create Return Order", to: "createreturnorder" },
   { pagename: "All Return Order", to: "allreturnorders" },
-  { pagename: "Reverse order", to: "reverseorderlist" },
 ];
 
 function ReturnOrdersScreen() {

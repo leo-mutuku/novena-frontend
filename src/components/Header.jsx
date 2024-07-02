@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../slices/administration/usersApiSlice";
 import { logout } from "../slices/authSlice";
 import { FaHome } from "react-icons/fa";
+import Idle from "../components/Idle";
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -30,6 +31,7 @@ const Header = () => {
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container>
+          <Idle />
           <LinkContainer to="/">
             <Navbar.Brand>
               <FaHome size={25} /> &nbsp;NOVENA MAIZE MILLER LTD
