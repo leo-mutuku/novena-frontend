@@ -5,7 +5,10 @@ import { useGetAllCustomersQuery } from "../../../slices/administration/customer
 import { useGetAllInstitutionsQuery } from "../../../slices/administration/institutionsApiSlice";
 
 import { useCreateStoreItemMutation } from "../../../slices/store/storeItemsApiSlice";
-import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
+import {
+  useGetAllBankAccountsQuery,
+  useCreateBankSaleOrderReceiptMutation,
+} from "../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllSalesPeopleQuery } from "../../../slices/sales/salesPeopleApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -24,13 +27,12 @@ function CreateBankReceipt() {
   const [created_by, set_created_by] = useState("");
 
   const [createSalesBankReceipt, { isLoading }] = useCreateStoreItemMutation();
+  const [Bankreceipts] = useCreateBankSaleOrderReceiptMutation();
   const { data: bankAccounts } = useGetAllBankAccountsQuery();
   const { data: salesPeople } = useGetAllSalesPeopleQuery();
 
   const { data: institutions } = useGetAllInstitutionsQuery();
   const { data: customers } = useGetAllCustomersQuery();
-
-  const handleInstitution = () => {};
 
   const handleCustomer = (_, newInputValue) => {
     let x = customers?.data?.filter((a) => {
@@ -40,7 +42,6 @@ function CreateBankReceipt() {
     });
 
     set_customer_id(x[0].customer_id);
-    alert(x[0].customer_id);
   };
 
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ function CreateBankReceipt() {
     e.preventDefault();
 
     try {
-      const res = await createSalesBankReceipt({
+      const res = await Bankreceipts({
         bank_id,
         staff_id,
         customer_id,
@@ -64,7 +65,7 @@ function CreateBankReceipt() {
       if (res.status == "failed") {
         toast.error(err?.data?.message || err.error);
       } else {
-        navigate("../allstoreitems");
+        // navigate("../allstoreitems");
         toast.success("Store  Item created successfully");
       }
     } catch (err) {
@@ -92,6 +93,7 @@ function CreateBankReceipt() {
                 value={sale_order_type}
                 onChange={(e) => set_sale_order_type(e.target.value)}
               >
+                <option value={""}>Sale order type</option>
                 <option value={"sales_person"}>Sales Person</option>
                 <option value={"Institution"}>Institution</option>
                 <option value={"Customer"}>Customer</option>

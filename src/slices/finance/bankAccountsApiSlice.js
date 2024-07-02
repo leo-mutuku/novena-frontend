@@ -20,6 +20,14 @@ export const bankAccountsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Banks"],
     }),
+    createBankSaleOrderReceipt: builder.mutation({
+      query: (data) => ({
+        url: `${BANKS_URL}/createbanksalesorderreceipt`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Banks"],
+    }),
     createBank: builder.mutation({
       query: (data) => ({
         url: `${BANKS_URL}/createbankaccount`,
@@ -32,6 +40,7 @@ export const bankAccountsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useCreateBankSaleOrderReceiptMutation,
   useGetAllBankAccountsQuery,
   useCreateBankMutation,
   useDeleteBankAccountMutation,

@@ -36,7 +36,7 @@ const Idle = () => {
 
   useIdleTimer({
     ref: idleTimerRef,
-    timeout: 1000 * 30, // 30 seconds
+    timeout: 1000 * 3000, // 30 seconds
     onIdle: handleOnIdle,
     onActive: handleOnActive,
     onAction: handleOnAction,
