@@ -70,7 +70,7 @@ function CreateCashReceipts() {
       if (res.status == "failed") {
         toast.error(err?.data?.message || err.error);
       } else {
-        navigate("../allstoreitems");
+        // navigate("../allstoreitems");
         toast.success("Store  Item created successfully");
       }
     } catch (err) {
