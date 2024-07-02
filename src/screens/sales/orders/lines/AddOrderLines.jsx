@@ -250,7 +250,8 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
                             )
                             .map((item, index) => (
                               <option key={index} value={item.store_item_id}>
-                                {item.store_name} & {item.item_name}
+                                {item.store_name} - {item.item_name} -
+                                {item.item_code}
                               </option>
                             ))}
                         </Form.Select>
