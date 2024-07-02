@@ -245,7 +245,8 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
                             .filter(
                               (item) =>
                                 item.store_name.includes("F") ||
-                                item.store_name.includes("Raw")
+                                item.store_name.includes("Raw") ||
+                                item.store_name.includes("By")
                             )
                             .map((item, index) => (
                               <option key={index} value={item.store_item_id}>

@@ -5,7 +5,11 @@ import { useGetAllCustomersQuery } from "../../../slices/administration/customer
 import { useGetAllInstitutionsQuery } from "../../../slices/administration/institutionsApiSlice";
 
 import { useCreateStoreItemMutation } from "../../../slices/store/storeItemsApiSlice";
-import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
+import { useSelector } from "react-redux";
+import {
+  useGetAllCashAccountsQuery,
+  useCreateCashSalesOrderReceiptMutation,
+} from "../../../slices/finance/cashAccountApiSlice";
 import { useGetAllSalesPeopleQuery } from "../../../slices/sales/salesPeopleApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -13,7 +17,8 @@ import { CheckBox } from "@mui/icons-material";
 import { Autocomplete, TextField } from "@mui/material";
 
 function CreateCashReceipts() {
-  const [cash_account, set_cash_account] = useState("");
+  const { userInfo } = useSelector((state) => state.auth);
+  const [cash_account_id, set_cash_account_id] = useState("");
   const [staff_id, set_staff_id] = useState("");
   const [institution_id, set_institution_id] = useState("");
   const [customer_id, set_customer_id] = useState("");
@@ -21,9 +26,10 @@ function CreateCashReceipts() {
 
   const [amount, set_amount] = useState("");
   const [amount_in_words, set_amount_in_words] = useState("");
-  const [created_by, set_created_by] = useState("");
+  const [created_by, set_created_by] = useState(userInfo.first_name);
 
   const [createSalesBankReceipt, { isLoading }] = useCreateStoreItemMutation();
+  const [createCashReceipt] = useCreateCashSalesOrderReceiptMutation();
   const { data: cashAccounts } = useGetAllCashAccountsQuery();
   const { data: salesPeople } = useGetAllSalesPeopleQuery();
 
@@ -51,14 +57,15 @@ function CreateCashReceipts() {
     e.preventDefault();
 
     try {
-      const res = await createSalesBankReceipt({
-        cash_account,
+      const res = await createCashReceipt({
+        cash_account_id,
         staff_id,
         customer_id,
         institution_id,
         amount_in_words,
         sale_order_type,
         amount,
+        created_by,
       }).unwrap();
       if (res.status == "failed") {
         toast.error(err?.data?.message || err.error);
@@ -91,6 +98,7 @@ function CreateCashReceipts() {
                 value={sale_order_type}
                 onChange={(e) => set_sale_order_type(e.target.value)}
               >
+                <option value={""}>Select Customer</option>
                 <option value={"sales_person"}>Sales Person</option>
                 <option value={"Institution"}>Institution</option>
                 <option value={"Customer"}>Customer</option>
@@ -106,8 +114,8 @@ function CreateCashReceipts() {
                 type="number"
                 required
                 placeholder="cash_account"
-                value={cash_account}
-                onChange={(e) => set_cash_account(e.target.value)}
+                value={cash_account_id}
+                onChange={(e) => set_cash_account_id(e.target.value)}
               >
                 <option value={""}>Select cash account</option>
                 {cashAccounts?.data.map((item, index) => (
