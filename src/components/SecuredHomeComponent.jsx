@@ -75,11 +75,7 @@ const SecuredHomeComponent = () => {
             {moduleMenu.map((module) => (
               <Card className="w-75 m-2 " key={module.module_name}>
                 <Link
-                  to={
-                    userInfo.roles?.includes(module.role)
-                      ? module.to
-                      : module.to
-                  }
+                  to={userInfo.roles?.includes(module.role) ? module.to : "#"}
                 >
                   <Card.Body>
                     <Card.Title

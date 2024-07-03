@@ -59,7 +59,7 @@ function CreateDailyPackhouseHeader() {
     }
   };
 
-  const packhouseitem = [101, 102, 118];
+  const packhouseitem = [101, 102, 118, 113];
   return (
     <>
       <span>*** New Daily Pack House *** </span>

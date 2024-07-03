@@ -71,7 +71,7 @@ function CreateCashReceipts() {
         toast.error(err?.data?.message || err.error);
       } else {
         // navigate("../allstoreitems");
-        toast.success("Store  Item created successfully");
+        toast.success("Cash receipt created successfully");
       }
     } catch (err) {
       toast.error(err?.data?.message || err.error);

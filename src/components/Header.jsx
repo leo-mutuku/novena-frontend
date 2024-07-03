@@ -31,12 +31,12 @@ const Header = () => {
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container>
-          <Idle />
           <LinkContainer to="/">
             <Navbar.Brand>
               <FaHome size={25} /> &nbsp;NOVENA MAIZE MILLER LTD
             </Navbar.Brand>
           </LinkContainer>
+          <Idle />
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">

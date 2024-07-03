@@ -65,8 +65,8 @@ function CreateBankReceipt() {
       if (res.status == "failed") {
         toast.error(err?.data?.message || err.error);
       } else {
-        // navigate("../allstoreitems");
-        toast.success("Store  Item created successfully");
+        navigate("../bankreceiptslist");
+        toast.success("Bank Receipt created successfully");
       }
     } catch (err) {
       toast.error(err?.data?.message || err.error);

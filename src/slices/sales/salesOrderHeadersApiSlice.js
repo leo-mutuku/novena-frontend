@@ -12,6 +12,14 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Sales_order"],
     }),
+    getAllDispatchedOrders: builder.query({
+      query: (data) => ({
+        url: `${SALESORDERHEADER_URL}/getalldispatchedorders`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Sales_order"],
+    }),
     getAllSalesOrderHeaders: builder.query({
       query: (data) => ({
         url: `${SALESORDERHEADER_URL}/getallsalesordersheaders`,
@@ -64,6 +72,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetAllDispatchedOrdersQuery,
   useCreateSalesOrderHeaderMutation,
   useGetAllSalesOrderHeadersQuery,
   useGetSalesOrderHeaderByIdQuery,

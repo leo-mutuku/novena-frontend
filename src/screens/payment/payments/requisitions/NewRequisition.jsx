@@ -9,15 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function NewRequisition() {
-  const [bank_id, set_bank_id] = useState("");
-  const [staff_id, set_staff_id] = useState("");
-  const [sale_order_type, set_sale_order_type] = useState("");
-
+  const [account_id, set_account_id] = useState("");
+  const [description, set_description] = useState("");
   const [amount, set_amount] = useState("");
-  const [reference, set_reference] = useState("");
-
-  const [createSalesBankReceipt, { isLoading }] = useCreateStoreItemMutation();
-  const { data: bankAccounts } = useGetAllBankAccountsQuery();
   const { data: salesPeople } = useGetAllSalesPeopleQuery();
   const { data: items } = useGetAllItemRegisterQuery();
   const { data: stores } = useGetAllStoreRegisterQuery();
@@ -30,18 +24,7 @@ function NewRequisition() {
     e.preventDefault();
 
     try {
-      const res = await createSalesBankReceipt({
-        bank_id,
-        staff_id,
-        amount,
-        reference,
-      }).unwrap();
-      if (res.status == "failed") {
-        toast.error(err?.data?.message || err.error);
-      } else {
-        navigate("../allstoreitems");
-        toast.success("Store  Item created successfully");
-      }
+      const res = await createSalesBankReceipt({}).unwrap();
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -49,7 +32,7 @@ function NewRequisition() {
 
   return (
     <>
-      <span>*** Accept Bank Receipts ***</span>
+      <span>*** New requisition ***</span>
       <Row>
         <div>
           {" "}
@@ -61,64 +44,14 @@ function NewRequisition() {
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="">
+              <Form.Label>Account</Form.Label>
               <Form.Select
                 type="text"
                 required
-                value={sale_order_type}
-                onChange={(e) => set_sale_order_type(e.target.value)}
-              >
-                <option value={"sales_person"}>Sales Person</option>
-                <option value={"Institution"}>Institution</option>
-                <option value={"Customer"}>Customer</option>
-              </Form.Select>
+                value={account_id}
+                onChange={(e) => set_account_id(e.target.value)}
+              ></Form.Select>
             </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Form.Group className="my-2" controlId="bank_id">
-              <Form.Label>Bank Accounts </Form.Label>
-              <Form.Select
-                type="number"
-                required
-                placeholder="bank_id"
-                value={bank_id}
-                onChange={(e) => set_bank_id(e.target.value)}
-              >
-                <option value={""}>Select bank account</option>
-                {bankAccounts?.data.map((item, index) => (
-                  <option key={index} value={item.bank_id}>
-                    {item.bank_name}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.Group>
-          </Col>
-          <Col>
-            {/* */}
-            {sale_order_type == "Customer" ? (
-              <></>
-            ) : sale_order_type == "Institution" ? (
-              <></>
-            ) : (
-              <Form.Group className="my-2" controlId="item_code">
-                <Form.Label>Sales person </Form.Label>
-                <Form.Select
-                  type="number"
-                  required
-                  placeholder="staff Name"
-                  value={staff_id}
-                  onChange={(e) => set_staff_id(e.target.value)}
-                >
-                  <option value={""}>Select person</option>
-                  {salesPeople?.data.map((item, index) => (
-                    <option value={item.staff_id} key={index}>
-                      {item.first_name} {item.last_name}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Form.Group>
-            )}
           </Col>
         </Row>
 
@@ -148,7 +81,7 @@ function NewRequisition() {
             </Form.Group>
           </Col>
         </Row>
-        <Row>
+        {/* <Row>
           <Form.Group className="my-2" controlId="reference">
             <Form.Label>Amount in words</Form.Label>
             <Form.Control
@@ -159,7 +92,7 @@ function NewRequisition() {
               onChange={(e) => set_reference(e.target.value)}
             ></Form.Control>
           </Form.Group>
-        </Row>
+        </Row> */}
         <Button type="submit" variant="primary" className="mt-3">
           submit
         </Button>
