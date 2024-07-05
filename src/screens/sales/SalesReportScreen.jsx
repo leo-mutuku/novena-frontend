@@ -1,7 +1,11 @@
 import React, { useEffect, useMemo } from "react";
 import { useGetSupplierStorePurchaseReportMutation } from "../../slices/purchase/storePurchaseHeadersApiSlice";
 import { useGetAllSuppliersQuery } from "../../slices/administration/suppliersApiSlice";
-import { useGetAllSalesPeopleQuery } from "../../slices/sales/salesPeopleApiSlice";
+import {
+  useSalesPeopleStatementMutation,
+  useGetAllSalesPeopleQuery,
+} from "../../slices/sales/salesPeopleApiSlice";
+
 import DataTable from "../../components/general/DataTable";
 import moment from "moment";
 import { Button, Form, Row, Col } from "react-bootstrap";
@@ -13,24 +17,24 @@ const SalesReportScreen = () => {
   const [supplier_number, set_supplier_number] = React.useState(null);
   const [supplier_name, set_supplier_name] = React.useState("");
   const [staff_id, set_staff_id] = React.useState("");
+  const { data: salesPeople } = useGetAllSalesPeopleQuery();
 
   const [start_date, set_start_date] = React.useState("");
   const [end_date, set_end_date] = React.useState("");
   const [getData, setGetData] = React.useState([]);
   const [supplier_filter, set_supplier_filter] = React.useState("");
   const [product_filter, set_product_filter] = React.useState("");
-  const { data: salesPeople } = useGetAllSalesPeopleQuery();
   const [setData, { isLoading, isSuccess, isError }] =
-    useGetSupplierStorePurchaseReportMutation();
+    useSalesPeopleStatementMutation();
   const { data: suppliers } = useGetAllSuppliersQuery();
 
   const loaddata = async () => {
-    if (!supplier_number || !start_date || !end_date) {
-      toast.error("Please select report name, start and end date");
+    if (!staff_id || !start_date || !end_date) {
+      toast.error("Please select sales person, start and end date");
       return;
     }
     const data = await setData({
-      supplier_number,
+      staff_id,
       start_date,
       end_date,
     }).unwrap();
@@ -87,12 +91,12 @@ const SalesReportScreen = () => {
         Header: "#",
         accessor: (row, index) => index + 1,
       },
-      { Header: "Purchase date", accessor: "purchase_date" },
+      { Header: "Entry date", accessor: "entry_date" },
 
-      { Header: "Item Name", accessor: "item_name" },
-      { Header: "@", accessor: "item_cost" },
-      { Header: "Quantity", accessor: "quantity" },
-      { Header: "Total ", accessor: "total_cost" },
+      { Header: "Desc.", accessor: "description" },
+      { Header: "Credit", accessor: "credit" },
+      { Header: "Debit", accessor: "debit" },
+      { Header: "Balance", accessor: "balance" },
     ],
     []
   );
@@ -110,9 +114,9 @@ const SalesReportScreen = () => {
                 value={staff_id}
                 onChange={(e) => set_staff_id(e.target.value)}
               >
-                <option value="">Select Supplier</option>
+                <option value="">Select Sales Person</option>
                 {salesPeople?.data.map((item, key) => (
-                  <option value={item.first_name} key={key}>
+                  <option value={item.staff_id} key={key}>
                     {item.last_name}
                   </option>
                 ))}

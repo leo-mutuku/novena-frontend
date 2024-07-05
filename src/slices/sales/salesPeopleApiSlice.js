@@ -12,6 +12,14 @@ export const salesPeopleApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Sales_people"],
     }),
+    salesPeopleStatement: builder.mutation({
+      query: (data) => ({
+        url: `${SALESPEOPLE_URL}/salespeoplestatement`,
+        method: "POST",
+        body: data,
+      }),
+      providesTags: ["Sales_people"],
+    }),
     deleteSalesPerson: builder.mutation({
       query: (data) => ({
         url: `${SALESPEOPLE_URL}/deletesalesperson`,
@@ -32,6 +40,7 @@ export const salesPeopleApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useSalesPeopleStatementMutation,
   useCreateSalesPersonMutation,
   useGetAllSalesPeopleQuery,
   useDeleteSalesPersonMutation,
