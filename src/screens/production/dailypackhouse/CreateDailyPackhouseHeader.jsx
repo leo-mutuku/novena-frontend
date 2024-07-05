@@ -170,7 +170,7 @@ function CreateDailyPackhouseHeader() {
                 {staff?.data.map((item, index) => (
                   <>
                     <option key={index} value={item.staff_id}>
-                      {item.first_name}
+                      {item.first_name} {item.last_name}
                     </option>
                   </>
                 ))}

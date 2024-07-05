@@ -61,6 +61,7 @@ const SecuredHomeComponent = () => {
       module_name: "Payment",
       to: "/payment",
       Icon: RiSecurePaymentFill,
+      role: 9000,
     },
   ];
 

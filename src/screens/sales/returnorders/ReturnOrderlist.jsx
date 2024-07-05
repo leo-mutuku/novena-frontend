@@ -1,16 +1,16 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Loader from "../../../components/Loader";
-import { useGetAllPostedSalesOrdersQuery } from "../../../slices/sales/salesOrderHeadersApiSlice";
+import { useGetAllSalesReturnOrderQuery } from "../../../slices/sales/salesOrderReturnApiSlice";
 
 import { Link, useNavigate } from "react-router-dom";
-import { IoMdEye } from "react-icons/io";
+import { IoMdAdd, IoMdEye } from "react-icons/io";
 
 import TimeDate from "../../../components/TimeDate";
 import DataTable from "../../../components/general/DataTable";
 import moment from "moment";
 
 const ReturnOrderlist = () => {
-  const { data: orders, isLoading } = useGetAllPostedSalesOrdersQuery();
+  const { data: orders, isLoading } = useGetAllSalesReturnOrderQuery();
 
   const [tableData, setTableData] = useState([]);
   let timeDate = new TimeDate();
@@ -36,7 +36,6 @@ const ReturnOrderlist = () => {
       setTableData(orders.data);
     }
   }, [orders]);
-  console.log(JSON.stringify(tableData));
   const columns = useMemo(
     () => [
       {
@@ -46,17 +45,18 @@ const ReturnOrderlist = () => {
       },
       {
         Header: "Sale Date",
-        accessor: "sales_order_date",
+        accessor: "created_at",
         Cell: ({ value }) => <span>{moment(value).format("YYYY-MM-DD")}</span>,
       },
       {
-        Header: "Sales Type",
-        accessor: "sale_order_type",
+        Header: "RO . No#",
+        accessor: "header_id",
       },
       {
-        Header: "Order No.",
-        accessor: "sales_order_number",
+        Header: "Sales Type",
+        accessor: "sales_order_type",
       },
+
       {
         Header: "Total",
         accessor: "total",
@@ -65,14 +65,7 @@ const ReturnOrderlist = () => {
         Header: "No. of Items",
         accessor: "pay_per_bale",
       },
-      {
-        Header: "Cust Name",
-        accessor: "customer_name",
-      },
-      {
-        Header: "Sales .P",
-        accessor: "first_name",
-      },
+
       {
         Header: "Status",
         accessor: "status",
@@ -85,11 +78,11 @@ const ReturnOrderlist = () => {
         accessor: "view",
         Cell: ({ row }) => (
           <>
-            {row.original.status === "Posted" ? (
+            {row.original.status === "New" ? (
               <Link
-                to={`/sales/returnorder/returnorder/${row.original.sales_order_number}`}
+                to={`/sales/returnorder/addlines/${row.original.header_id}`}
               >
-                <IoMdEye />
+                <IoMdAdd />
               </Link>
             ) : (
               "--"

@@ -299,6 +299,8 @@ import SalesPeopleScreen from "./screens/sales/SalesPeopleScreen.jsx";
 import CreateReturnOrder from "./screens/sales/returnorders/CreateReturnOrder.jsx";
 import BankReceipts from "./screens/sales/orderreceipts/BankReceiptsList.jsx";
 import CashReceiptList from "./screens/sales/orderreceipts/CashReceiptList.jsx";
+import AddLines from "./screens/sales/returnorders/AddLines.jsx";
+import PostReturnOrder from "./screens/sales/returnorders/PostReturnOrder.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -711,6 +713,8 @@ const router = createHashRouter(
             <Route path="reverseorderlist" element={<ReverseorderList />} />
             <Route path="returnorder/:id" element={<ReturnOrderpreview />} />
             <Route path="rerveseorder/:id" element={<ReverseOrderPreview />} />
+            <Route path="AddLines/:id" element={<AddLines />} />
+            <Route path="postreturnorder/:id" element={<PostReturnOrder />} />
 
             <Route
               path="allreturnordersintransit"

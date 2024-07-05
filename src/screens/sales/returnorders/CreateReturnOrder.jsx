@@ -6,6 +6,7 @@ import { useGetLastBatchNumbersQuery } from "../../../slices/production/producti
 import { useGetAllSalesPeopleQuery } from "../../../slices/sales/salesPeopleApiSlice";
 import { useGetAllCustomersQuery } from "../../../slices/administration/customersApiSlice";
 import { useGetAllInstitutionsQuery } from "../../../slices/administration/institutionsApiSlice";
+import { useCreateSalesReturnOrderMutation } from "../../../slices/sales/salesOrderReturnApiSlice";
 import { useCreateSalesOrderReverseMutation } from "../../../slices/sales/salesOrderReturnApiSlice";
 import { Autocomplete, TextField } from "@mui/material";
 
@@ -31,7 +32,7 @@ function CreateReturnOrder() {
   const { data: institutions } = useGetAllInstitutionsQuery();
   const { data: customers } = useGetAllCustomersQuery();
   const { data: staff } = useGetAllSalesPeopleQuery();
-  const [CreateReurnOrder] = useCreateSalesOrderReverseMutation();
+  const [CreateReurnOrder] = useCreateSalesReturnOrderMutation();
   const { userInfo } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
@@ -63,7 +64,7 @@ function CreateReturnOrder() {
     e.preventDefault();
 
     try {
-      const res = await DailyProductionHeader({
+      const res = await CreateReurnOrder({
         sale_order_type,
         staff_id,
         institution_id,

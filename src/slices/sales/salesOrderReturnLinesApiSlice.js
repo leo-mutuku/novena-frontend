@@ -1,36 +1,39 @@
 import { apiSlice } from "../apiSlice";
-const SALESRETURNORDER = "/api/v1/sales/salesreturnorderheaders";
+const RETURNORDER_LINE = "/api/v1/sales/salesreturnorderlines";
 
-export const salesOrderReturnApiSlice = apiSlice.injectEndpoints({
+export const orderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    tagTypes: ["sales_return"],
-    getAllSalesReturnOrder: builder.query({
-      query: (data) => ({
-        url: `${SALESRETURNORDER}/getallsalesreturnorders`,
+    tagTypes: ["Sales_orderLines"],
+
+    getRurnOrderLineByHeaderId: builder.query({
+      query: (header_id) => ({
+        url: `${RETURNORDER_LINE}/getallsalesorderbylineid`,
         method: "GET",
         body: data,
       }),
+      providesTags: ["Sales_orderLines"],
     }),
-    createSalesReturnOrder: builder.mutation({
+    getSalesLinesByHeaderId: builder.query({
+      query: (sales_order_number) => ({
+        url: `${RETURNORDER_LINE}/getallsalesorderslinesbysalesordernumber/${sales_order_number}`,
+        method: "GET",
+      }),
+      providesTags: ["Sales_orderLines"],
+    }),
+
+    createRurnOrderLine: builder.mutation({
       query: (data) => ({
-        url: `${SALESRETURNORDER}/createsalesreturnorder`,
+        url: `${RETURNORDER_LINE}/createreturnorderLine`,
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["sales_return"],
-    }),
-    createSalesOrderReverse: builder.mutation({
-      query: (data) => ({
-        url: `${SALESRETURNORDER}/createsalesorderreverse`,
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["sales_return"],
+      invalidatesTags: ["Sales_orderLines"],
     }),
   }),
 });
 
 export const {
-  useCreateSalesOrderReverseMutation,
-  useCreateSalesReturnOrderMutation,
-} = salesOrderReturnApiSlice;
+  useCreateRurnOrderLineMutation,
+  useGetRurnOrderLineByHeaderIdQuery,
+  useGetSalesLinesByHeaderIdQuery,
+} = orderApiSlice;

@@ -10,6 +10,38 @@ export const salesOrderReturnApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
+      providesTags: ["sales_return"],
+    }),
+    getAllsalesReturnOrdersLinesByHeaderId: builder.query({
+      query: (id) => ({
+        url: `${SALESRETURNORDER}/getallsalesreturnorderslinesbyheaderid/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["sales_return"],
+    }),
+    getAllPostedSaleReturnOrders: builder.query({
+      query: (data) => ({
+        url: `${SALESRETURNORDER}/getallpostedsalereturnorders`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["sales_return"],
+    }),
+    getAllReturnOrdersheadersIntransit: builder.query({
+      query: (data) => ({
+        url: `${SALESRETURNORDER}/getallreturnordersheadersintransit`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["sales_return"],
+    }),
+    postReturnOrder: builder.mutation({
+      query: (data) => ({
+        url: `${SALESRETURNORDER}/postreturnorder`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["sales_return"],
     }),
     createSalesReturnOrder: builder.mutation({
       query: (data) => ({
@@ -31,6 +63,11 @@ export const salesOrderReturnApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  usePostReturnOrderMutation,
+  useGetAllsalesReturnOrdersLinesByHeaderIdQuery,
+  useGetAllPostedSaleReturnOrdersQuery,
+  useGetAllReturnOrdersheadersIntransitQuery,
+  useGetAllSalesReturnOrderQuery,
   useCreateSalesOrderReverseMutation,
   useCreateSalesReturnOrderMutation,
 } = salesOrderReturnApiSlice;

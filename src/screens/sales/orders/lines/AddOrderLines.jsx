@@ -58,10 +58,9 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
     e.preventDefault();
 
     set_order_items({ ...order_items, created_by: userInfo.first_name });
-    console.log(order_items);
+
     if (order_items.item_code != order_items.store_item_code) {
       toast.error("Item and Store Item code must be the same");
-      return;
       return;
     }
     set_sales_list([...sales_list, order_items]);
