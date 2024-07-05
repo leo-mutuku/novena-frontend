@@ -2,6 +2,7 @@ node_modules
 src/slices.apislice.js
 package-lock.json
 
-this is a feature branch
+src/slices/apiSlice.js
+src/slices/authSlice.js
+src/slices/baseURLJasperReports.js
 
-dist
