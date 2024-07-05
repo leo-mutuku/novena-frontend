@@ -30,9 +30,7 @@ const Idle = () => {
     console.log("User is active");
   };
 
-  const handleOnAction = () => {
-    console.log("User performed an action");
-  };
+  const handleOnAction = () => {};
 
   useIdleTimer({
     ref: idleTimerRef,
