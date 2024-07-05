@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import { useGetSupplierStorePurchaseReportMutation } from "../../slices/purchase/storePurchaseHeadersApiSlice";
 import { useGetAllSuppliersQuery } from "../../slices/administration/suppliersApiSlice";
+import { useGetAllSalesPeopleQuery } from "../../slices/sales/salesPeopleApiSlice";
 import DataTable from "../../components/general/DataTable";
 import moment from "moment";
 import { Button, Form, Row, Col } from "react-bootstrap";
@@ -11,12 +12,14 @@ const SalesReportScreen = () => {
   const [report_name, set_report_name] = React.useState("");
   const [supplier_number, set_supplier_number] = React.useState(null);
   const [supplier_name, set_supplier_name] = React.useState("");
+  const [staff_id, set_staff_id] = React.useState("");
 
   const [start_date, set_start_date] = React.useState("");
   const [end_date, set_end_date] = React.useState("");
   const [getData, setGetData] = React.useState([]);
   const [supplier_filter, set_supplier_filter] = React.useState("");
   const [product_filter, set_product_filter] = React.useState("");
+  const { data: salesPeople } = useGetAllSalesPeopleQuery();
   const [setData, { isLoading, isSuccess, isError }] =
     useGetSupplierStorePurchaseReportMutation();
   const { data: suppliers } = useGetAllSuppliersQuery();
@@ -104,13 +107,13 @@ const SalesReportScreen = () => {
                 type="text"
                 required
                 placeholder="Select Report"
-                value={supplier_number}
-                onChange={(e) => set_supplier_number(e.target.value)}
+                value={staff_id}
+                onChange={(e) => set_staff_id(e.target.value)}
               >
                 <option value="">Select Supplier</option>
-                {suppliers?.data.map((item, key) => (
-                  <option value={item.supplier_number} key={key}>
-                    {item.supplier_name}
+                {salesPeople?.data.map((item, key) => (
+                  <option value={item.first_name} key={key}>
+                    {item.last_name}
                   </option>
                 ))}
               </Form.Select>

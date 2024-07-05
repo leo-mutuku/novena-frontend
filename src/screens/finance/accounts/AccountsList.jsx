@@ -31,9 +31,9 @@ const AccountsList = () => {
     setLoadingPdf(true);
     try {
       const response = await axios({
-        url: `${baseUrlJasper}/all/accounts/pdf`, // Endpoint on your Node.js server
+        url: `${baseUrlJasper}/all/accounts/pdf`,
         method: "GET",
-        responseType: "blob", // Important: responseType 'blob' for binary data
+        responseType: "blob",
       });
       const blob = new Blob([response.data], { type: "application/pdf" });
       const url = window.URL.createObjectURL(blob);

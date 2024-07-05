@@ -8,8 +8,11 @@ import { Table, Row, Col, Button } from "react-bootstrap";
 import Loader from "../../../components/Loader";
 import TimeDate from "../../../components/TimeDate";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const PostReturnOrder = () => {
+  const navigate = useNavigate();
+
   const { id: _new_id } = useParams();
   const id = parseInt(_new_id);
   const timeDate = new TimeDate();
@@ -21,7 +24,9 @@ const PostReturnOrder = () => {
       const res = await postReturnOrder({ id }).unwrap();
       if (res.status == "success") {
         toast.success(res.message);
+        Navigate(`/sales/returnorders`);
       } else {
+        toast.error(res.message);
       }
     } catch (error) {
       toast.error(error.message);
