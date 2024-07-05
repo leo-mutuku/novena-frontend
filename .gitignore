@@ -6,3 +6,6 @@ src/slices/apiSlice.js
 src/slices/authSlice.js
 src/slices/baseURLJasperReports.js
 
+
+src/components/Idle.jsx
+
