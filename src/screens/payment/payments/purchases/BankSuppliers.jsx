@@ -1,39 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 
-import { useCreateStoreItemMutation } from "../../../../slices/store/storeItemsApiSlice";
+import { useCreateBankSupplierPaymentMutation } from "../../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../../slices/finance/bankAccountsApiSlice";
-import { useGetAllSalesPeopleQuery } from "../../../../slices/sales/salesPeopleApiSlice";
+import { useGetAllSuppliersQuery } from "../../../../slices/administration/suppliersApiSlice";
+
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function BankSuppliers() {
   const [bank_id, set_bank_id] = useState("");
-  const [staff_id, set_staff_id] = useState("");
-  const [institution_id, set_institution_id] = useState("");
-  const [customer_id, set_customer_id] = useState("");
-  const [sale_order_type, set_sale_order_type] = useState("");
+  const [supplier_id, set_supplier_id] = useState("");
   const [reference, set_reference] = useState("");
   const [amount, set_amount] = useState("");
   const [amount_in_words, set_amount_in_words] = useState("");
   const [created_by, set_created_by] = useState("");
 
-  const [createSalesBankReceipt, { isLoading }] = useCreateStoreItemMutation();
+  const [createSuplierBankPayment, { isLoading }] =
+    useCreateBankSupplierPaymentMutation();
   const { data: bankAccounts } = useGetAllBankAccountsQuery();
-  const { data: salesPeople } = useGetAllSalesPeopleQuery();
-
-  const handleInstitution = () => {};
-
-  const handleCustomer = (_, newInputValue) => {
-    let x = customers?.data?.filter((a) => {
-      if (a.full_name == newInputValue) {
-        return a.customer_id;
-      }
-    });
-
-    set_customer_id(x[0].customer_id);
-    alert(x[0].customer_id);
-  };
+  const { data: suppliers } = useGetAllSuppliersQuery();
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -43,15 +29,13 @@ function BankSuppliers() {
     e.preventDefault();
 
     try {
-      const res = await createSalesBankReceipt({
+      const res = await createSuplierBankPayment({
         bank_id,
-        staff_id,
-        customer_id,
-        institution_id,
+        supplier_id,
         amount_in_words,
-        sale_order_type,
         amount,
         reference,
+        created_by,
       }).unwrap();
       if (res.status == "failed") {
         toast.error(err?.data?.message || err.error);
@@ -75,22 +59,7 @@ function BankSuppliers() {
       </Row>
       <Form onSubmit={handleSubmit}>
         {/* */}
-        <Row>
-          <Col>
-            <Form.Group className="my-2" controlId="">
-              <Form.Select
-                type="text"
-                required
-                value={sale_order_type}
-                onChange={(e) => set_sale_order_type(e.target.value)}
-              >
-                <option value={"sales_person"}>Sales Person</option>
-                <option value={"Institution"}>Institution</option>
-                <option value={"Customer"}>Customer</option>
-              </Form.Select>
-            </Form.Group>
-          </Col>
-        </Row>
+
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="bank_id">
@@ -112,38 +81,23 @@ function BankSuppliers() {
             </Form.Group>
           </Col>
           <Col>
-            {/* */}
-            {sale_order_type == "Customer" ? (
-              <></>
-            ) : sale_order_type == "Institution" ? (
-              <></>
-            ) : (
-              <Form.Group className="my-2" controlId="staff_id">
-                <Form.Label>Sales person</Form.Label>
-                <Form.Select
-                  required
-                  type="text"
-                  placeholder="sales_person_number"
-                  value={staff_id}
-                  onChange={(e) => set_staff_id(e.target.value)}
-                >
-                  <option value={""}> Select option</option>
-                  {salesPeople?.data
-                    .filter(
-                      (order) =>
-                        order.first_name !== "Customer" &&
-                        order.first_name !== "Institution"
-                    )
-                    .map((item, index) => (
-                      <>
-                        <option key={index} value={item.staff_id}>
-                          {item.first_name} {item.last_name}
-                        </option>
-                      </>
-                    ))}
-                </Form.Select>
-              </Form.Group>
-            )}
+            <Form.Group className="my-2" controlId="supplier_id">
+              <Form.Label>Suppliers</Form.Label>
+              <Form.Select
+                type="number"
+                required
+                placeholder="supplier_id"
+                value={supplier_id}
+                onChange={(e) => set_supplier_id(e.target.value)}
+              >
+                <option value={""}>Select supplier</option>
+                {suppliers?.data.map((item, index) => (
+                  <option key={index} value={item.supplier_id}>
+                    {item.supplier_name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
           </Col>
         </Row>
 

@@ -3,6 +3,7 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 
 import { useGetAllCustomersQuery } from "../../../slices/administration/customersApiSlice";
 import { useGetAllInstitutionsQuery } from "../../../slices/administration/institutionsApiSlice";
+import throttle from "lodash/throttle";
 
 import { useCreateStoreItemMutation } from "../../../slices/store/storeItemsApiSlice";
 import {
@@ -73,6 +74,8 @@ function CreateBankReceipt() {
     }
   };
 
+  const throttledSubmit = throttle(handleSubmit, 3000);
+
   return (
     <>
       <span>*** Accept Bank Receipts ***</span>
@@ -82,7 +85,7 @@ function CreateBankReceipt() {
           <hr />
         </div>
       </Row>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={throttledSubmit}>
         {/* */}
         <Row>
           <Col>

@@ -3,6 +3,7 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 
 import { useGetAllCustomersQuery } from "../../../slices/administration/customersApiSlice";
 import { useGetAllInstitutionsQuery } from "../../../slices/administration/institutionsApiSlice";
+import throttle from "lodash/throttle";
 
 import { useCreateStoreItemMutation } from "../../../slices/store/storeItemsApiSlice";
 import { useSelector } from "react-redux";
