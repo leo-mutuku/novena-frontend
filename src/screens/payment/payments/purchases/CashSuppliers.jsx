@@ -10,8 +10,10 @@ import { useGetAllSuppliersQuery } from "../../../../slices/administration/suppl
 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 function CashSupplier() {
+  const { userInfo } = useSelector((state) => state.auth);
   const [cash_account_id, set_cash_account_id] = useState("");
   const [supplier_id, set_supplier_id] = useState("");
   const [amount, set_amount] = useState("");
@@ -24,7 +26,9 @@ function CashSupplier() {
   const { data: suppliers } = useGetAllSuppliersQuery();
 
   const navigate = useNavigate();
+  console.log(userInfo);
   useEffect(() => {
+    set_created_by(userInfo.first_name);
     navigate();
   }, [navigate]);
   const handleSubmit = async (e) => {
@@ -71,7 +75,7 @@ function CashSupplier() {
                 required
                 placeholder="cash_account_id"
                 value={cash_account_id}
-                onChange={(e) => set_cash_account_id(e.target.value)}
+                onChange={(e) => set_cash_account_id(parseInt(e.target.value))}
               >
                 <option value={""}>Select cash account</option>
                 {cashAccount?.data.map((item, index) => (
