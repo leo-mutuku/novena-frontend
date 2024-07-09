@@ -2,7 +2,7 @@ import { apiSlice } from "../apiSlice";
 const DAILYPACJHOUSE_URL = "/api/v1/production/dailypackhouselines";
 
 export const dailyPackhouseLinesApiSlice = apiSlice.injectEndpoints({
-  tagTypes: ["dailypackhouselines"],
+  tagTypes: ["dailypackhouselines", "dailypackhouseheader"],
   endpoints: (builder) => ({
     createDailyPackhouseLine: builder.mutation({
       query: (data) => ({
@@ -10,7 +10,7 @@ export const dailyPackhouseLinesApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["dailypackhouselines"],
+      invalidatesTags: ["dailypackhouselines", "dailypackhouseheader"],
     }),
 
     getAllDailyPackhouseLines: builder.query({
@@ -19,7 +19,7 @@ export const dailyPackhouseLinesApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["dailypackhouselines"],
+      providesTags: ["dailypackhouselines", "dailypackhouseheader"],
     }),
     getAllPostedDailyPackhouseLinest: builder.query({
       query: (data) => ({
@@ -27,7 +27,7 @@ export const dailyPackhouseLinesApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["dailypackhouselines"],
+      providesTags: ["dailypackhouselines", "dailypackhouseheader"],
     }),
     getAllDailyPackhouseLinesInTransit: builder.query({
       query: (data) => ({
@@ -35,7 +35,7 @@ export const dailyPackhouseLinesApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["dailypackhouselines"],
+      providesTags: ["dailypackhouselines", "dailypackhouseheader"],
     }),
   }),
 });
