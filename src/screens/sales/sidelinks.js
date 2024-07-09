@@ -10,7 +10,9 @@ export const sidelinks = [
 
       // { subMenuTitle: "Order Receipt", to: "orderreceipt" },
       // { subMenuTitle: "GRN", to: "#" },
-      { subMenuTitle: "Reports", to: "salesreport" },
+
+      // { subMenuTitle: "Detailed Order Report", to: "#" },
+      // { subMenuTitle: "Detailed Return Report", to: "#" },
     ],
   },
   {
@@ -18,7 +20,9 @@ export const sidelinks = [
     subMenus: [
       { subMenuTitle: "Sales People", to: "salespeople" },
       // { subMenuTitle: "Statement", to: "statement" },
-      { subMenuTitle: "Reports", to: "salespeoplereport" },
+      { subMenuTitle: "SP Sales Report", to: "salespeoplereport" },
+      { subMenuTitle: "Detailed SP Order Report", to: "detailedsporderreport" },
+      // { subMenuTitle: "Detailed SP Return Report", to: "#" },
     ],
   },
   // {

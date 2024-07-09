@@ -301,6 +301,7 @@ import BankReceipts from "./screens/sales/orderreceipts/BankReceiptsList.jsx";
 import CashReceiptList from "./screens/sales/orderreceipts/CashReceiptList.jsx";
 import AddLines from "./screens/sales/returnorders/AddLines.jsx";
 import PostReturnOrder from "./screens/sales/returnorders/PostReturnOrder.jsx";
+import DetailedSPOrderReport from "./screens/sales/DetailedSPOrderReport.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -734,6 +735,10 @@ const router = createHashRouter(
             <Route path="dispatchedorders" element={<OrderDispatchList />} />
           </Route>
           <Route path="salesreport" element={<SalesReportScreen />}></Route>
+          <Route
+            path="detailedsporderreport"
+            element={<DetailedSPOrderReport />}
+          ></Route>
           <Route
             path="salespeoplereport"
             element={<SalesReportScreen />}

@@ -29,19 +29,19 @@ const PostDailyPackHouse = () => {
 
   const handleSubmit = async (e) => {
     try {
-      if (daily_pack_list.length) {
-        const res = await CraeteDailyPack({
-          daily_packhouse_header_id: id,
-          daily_pack_list,
-        }).unwrap();
-
-        if (res.status == "success") {
-          toast.success("success");
-        } else {
-          toast.error(res.message);
-        }
-      } else {
-        toast.error("Error no item found");
+      if (!daily_pack_list.length) {
+        toast.error("Please add at least one pack house entry");
+        return;
+      }
+      const res = await CraeteDailyPack({
+        daily_packhouse_header_id: id,
+        daily_pack_list,
+      }).unwrap();
+      console.log(res);
+      if (res.status === "success") {
+        toast.success(res.message);
+      } else if (res.status === "failed") {
+        toast.error(res.message);
       }
     } catch (error) {
       toast.error(error.message);

@@ -20,6 +20,14 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Sales_orderLines"],
     }),
+    detailedSPOrderReport: builder.mutation({
+      query: (data) => ({
+        url: `${SALESORDERLINES_URL}/detailedsporderreport`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Sales_orderLines"],
+    }),
 
     createSalesOrderLine: builder.mutation({
       query: (data) => ({
@@ -33,6 +41,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useDetailedSPOrderReportMutation,
   useCreateSalesOrderLineMutation,
   useGetSalesOrderLineByHeaderIdQuery,
   useGetSalesLinesByHeaderIdQuery,

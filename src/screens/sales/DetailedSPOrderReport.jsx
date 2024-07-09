@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from "react";
+import { useDetailedSPOrderReportMutation } from "../../slices/sales/salesOrderLinesApiSlice";
 
 import {
   useSalesPeopleStatementMutation,
@@ -11,7 +12,7 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import Papa from "papaparse";
 import { toast } from "react-toastify";
 
-const SalesReportScreen = () => {
+const DetailedSPOrderReport = () => {
   const [report_name, set_report_name] = React.useState("");
   const [supplier_number, set_supplier_number] = React.useState(null);
   const [supplier_name, set_supplier_name] = React.useState("");
@@ -24,7 +25,7 @@ const SalesReportScreen = () => {
   const [supplier_filter, set_supplier_filter] = React.useState("");
   const [product_filter, set_product_filter] = React.useState("");
   const [setData, { isLoading, isSuccess, isError }] =
-    useSalesPeopleStatementMutation();
+    useDetailedSPOrderReportMutation();
 
   const loaddata = async () => {
     if (!staff_id || !start_date || !end_date) {
@@ -52,7 +53,7 @@ const SalesReportScreen = () => {
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", `supplier_report.csv`);
+      link.setAttribute("download", `Detailed_sales_person_report.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -89,12 +90,14 @@ const SalesReportScreen = () => {
         Header: "#",
         accessor: (row, index) => index + 1,
       },
-      { Header: "Entry date", accessor: "entry_date" },
+      { Header: "Entry date", accessor: "date" },
 
-      { Header: "Desc.", accessor: "description" },
-      { Header: "Credit", accessor: "credit" },
-      { Header: "Debit", accessor: "debit" },
-      { Header: "Balance", accessor: "balance" },
+      { Header: "SO #", accessor: "sales_order_number" },
+      { Header: "Product", accessor: "item_name" },
+      { Header: "Quantity", accessor: "quantity" },
+      { Header: "@", accessor: "cost_per_item" },
+      { Header: "Created By", accessor: "created_by" },
+      { Header: "Total", accessor: "total" },
     ],
     []
   );
@@ -194,4 +197,4 @@ const SalesReportScreen = () => {
   );
 };
 
-export default SalesReportScreen;
+export default DetailedSPOrderReport;
