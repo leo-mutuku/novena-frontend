@@ -37,11 +37,14 @@ const PostDailyPackHouse = () => {
         daily_packhouse_header_id: id,
         daily_pack_list,
       }).unwrap();
-      console.log(res);
+      console.log(res.status);
       if (res.status === "success") {
         toast.success(res.message);
-      } else if (res.status === "failed") {
-        toast.error(res.message);
+        navigate("/production/dailypackhouse/alldailypackhouse");
+      } else {
+        toast.error(
+          "Sorry something went wrong Please check the status of your entries before trying again"
+        );
       }
     } catch (error) {
       toast.error(error.message);
