@@ -73,6 +73,7 @@ function CreateCashReceipts() {
       } else {
         // navigate("../allstoreitems");
         toast.success("Cash receipt created successfully");
+        navigate("../bankreceiptslist");
       }
     } catch (err) {
       toast.error(err?.data?.message || err.error);

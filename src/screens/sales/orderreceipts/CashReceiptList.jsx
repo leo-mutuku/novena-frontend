@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Loader from "../../../components/Loader";
-import { useGetAllPostedSalesOrdersQuery } from "../../../slices/sales/salesOrderHeadersApiSlice";
+import { useGetAllSalesBankReceptsQuery } from "../../../slices/finance/bankAccountsApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { IoMdEye } from "react-icons/io";
@@ -13,7 +13,9 @@ import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
 import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
 
 const CashReceiptList = () => {
-  const { data: orders, isLoading } = useGetAllPostedSalesOrdersQuery();
+  const { data: orders, isLoading } = useGetAllSalesBankReceptsQuery();
+  console.log("hi");
+  console.log(orders?.data);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
   let timeDate = new TimeDate();
@@ -94,57 +96,21 @@ const CashReceiptList = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "Sale Date",
-        accessor: "sales_order_date",
+        Header: "Date",
+        accessor: "entry_date",
         Cell: ({ value }) => <span>{moment(value).format("YYYY-MM-DD")}</span>,
       },
       {
-        Header: "Sales Type",
-        accessor: "sale_order_type",
+        Header: "Bank",
+        accessor: "bank_name",
       },
       {
-        Header: "Order No.",
-        accessor: "sales_order_number",
+        Header: "Ref.No",
+        accessor: "reference",
       },
       {
-        Header: "Total",
-        accessor: "total",
-      },
-      {
-        Header: "No. of Items",
-        accessor: "pay_per_bale",
-      },
-      {
-        Header: "Cust Name",
-        accessor: "customer_name",
-      },
-      {
-        Header: "Sales .P",
-        accessor: "first_name",
-      },
-      {
-        Header: "Status",
-        accessor: "status",
-        Cell: ({ value }) => (
-          <span style={{ color: getStatusColor(value) }}>{value}</span>
-        ),
-      },
-      {
-        Header: "View",
-        accessor: "view",
-        Cell: ({ row }) => (
-          <span>
-            {row.original.status === "Posted" ? (
-              <Link
-                to={`/sales/orders/postedorderpreview/${row.original.sales_order_number}`}
-              >
-                <IoMdEye />
-              </Link>
-            ) : (
-              "--"
-            )}
-          </span>
-        ),
+        Header: "Amount",
+        accessor: "amount",
       },
     ],
     []
@@ -170,7 +136,7 @@ const CashReceiptList = () => {
   return (
     <>
       <div>
-        <p>*** All Dispatch Sales Orders ***</p>
+        <p>*** All Sales Bank Receipts ***</p>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <div style={{ marginLeft: "10px" }}>
             <button onClick={handleDownloadPDF} disabled={loadingPdf}>
