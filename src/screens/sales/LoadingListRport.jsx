@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 
 import {
+  useLoadReportPrintMutation,
   useGetAllSalesPeopleQuery,
   useLoadReportDataMutation,
 } from "../../slices/sales/salesPeopleApiSlice";
@@ -23,6 +24,7 @@ const LoadingListRport = () => {
   const [getData, setGetData] = React.useState([]);
   const [supplier_filter, set_supplier_filter] = React.useState("");
   const [product_filter, set_product_filter] = React.useState("");
+  const [loadReportPrint] = useLoadReportPrintMutation();
   const [setData, { isLoading, isSuccess, isError }] =
     useLoadReportDataMutation();
 
@@ -42,6 +44,16 @@ const LoadingListRport = () => {
     } else {
       toast.error("No data found");
     }
+  };
+
+  const handPrintLoadReport = () => {
+    if (!staff_id || !start_date || !end_date) {
+      toast.error("Please select sales person, start and end date");
+      return;
+    }
+    const data = loadReportPrint({ staff_id, start_date, end_date }).unwrap();
+
+    toast.success("Report printed successfully");
   };
 
   const handleDownloadCSV = () => {
@@ -180,7 +192,11 @@ const LoadingListRport = () => {
             </Col>
             <Col xs={1}>
               {" "}
-              <Button variant="secondary" type="button" onClick={""}>
+              <Button
+                variant="secondary"
+                type="button"
+                onClick={handPrintLoadReport}
+              >
                 POS
               </Button>
             </Col>
