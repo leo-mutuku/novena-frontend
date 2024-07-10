@@ -20,9 +20,11 @@ const OrderHeaderList = () => {
   const [mode, set_mode] = useState("none");
   const [mode_delete, set_mode_delete] = useState("none");
   const [store_purchase_id, set_store_purchase_id] = useState("");
+  const [order_number, set_order_number] = useState(0);
 
-  const handleAdd = (e, id, style) => {
+  const handleAdd = (e, id, style, order_number_id) => {
     set_store_purchase_id(parseInt(id));
+    set_order_number(parseInt(order_number_id));
     set_mode(style);
   };
 
@@ -31,6 +33,8 @@ const OrderHeaderList = () => {
     set_mode_delete(style);
   };
   const { data, isLoading } = useGetAllSalesOrderHeadersQuery();
+
+
 
   const navigate = useNavigate();
   useEffect(() => {}, [data]);
@@ -45,6 +49,7 @@ const OrderHeaderList = () => {
         <div style={{ display: `${mode}` }}>
           <AddOrderLines
             store_purchase_id={store_purchase_id}
+            order_number={order_number}
             set_mode={set_mode}
           />
         </div>
@@ -118,7 +123,12 @@ const OrderHeaderList = () => {
                       <Link to={`#`}>
                         <IoMdAdd
                           onClick={(e) =>
-                            handleAdd(e, item.sales_order_number, "block")
+                            handleAdd(
+                              e,
+                              item.sales_order_number,
+                              "block",
+                              item.sales_person_number
+                            )
                           }
                         />
                       </Link>

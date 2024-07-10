@@ -13,7 +13,12 @@ import { useGetAllSuppliersQuery } from "../../../../slices/administration/suppl
 import { useCreateSalesOrderLineMutation } from "../../../../slices/sales/salesOrderLinesApiSlice";
 import { useGetAllStoreItemsQuery } from "../../../../slices/store/storeItemsApiSlice";
 
-function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
+function AddOrderLines({
+  purchase_data,
+  store_purchase_id,
+  set_mode,
+  order_number,
+}) {
   let purchase_id = parseInt(store_purchase_id);
 
   const { data: item_register } = useGetAllItemRegisterQuery();
@@ -26,6 +31,7 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
   const [total_cost, set_total_cost] = useState(0);
   const [order_items, set_order_items] = useState({
     sales_order_number: 0,
+    sales_person_number: 0,
     item_code: 0,
     item_name: null,
     account_number: 0,
@@ -48,6 +54,7 @@ function AddOrderLines({ purchase_data, store_purchase_id, set_mode }) {
         ...order_items,
         created_by: userInfo.first_name,
         sales_order_number: purchase_id,
+        sales_person_number: order_number,
       });
     }
 
