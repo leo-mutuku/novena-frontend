@@ -62,10 +62,6 @@ const AllPostedReturnOrders = () => {
         Header: "Total",
         accessor: "total",
       },
-      {
-        Header: "No. of Items",
-        accessor: "pay_per_bale",
-      },
 
       {
         Header: "Status",

@@ -24,7 +24,7 @@ const PostReturnOrder = () => {
       const res = await postReturnOrder({ id }).unwrap();
       if (res.status == "success") {
         toast.success(res.message);
-        Navigate(`/sales/returnorders`);
+        navigate(`../allpostedreturnorders`);
       } else {
         toast.error(res.message);
       }

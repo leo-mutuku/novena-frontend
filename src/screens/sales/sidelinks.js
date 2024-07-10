@@ -10,8 +10,7 @@ export const sidelinks = [
 
       { subMenuTitle: "Ledger Entry", to: "#" },
 
-      { subMenuTitle: "Detailed Item Order Report", to: "#" },
-      { subMenuTitle: "Detailed Item Return Report", to: "#" },
+      { subMenuTitle: "Detailed Item Report", to: "#" },
     ],
   },
   {
