@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Loader from "../../../components/Loader";
-import { useGetAllSalesBankReceptsQuery } from "../../../slices/finance/bankAccountsApiSlice";
+import { useGetAllSalesCashReceptsQuery } from "../../../slices/finance/cashAccountApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { IoMdEye } from "react-icons/io";
@@ -13,8 +13,8 @@ import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
 import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
 
 const CashReceiptList = () => {
-  const { data: orders, isLoading } = useGetAllSalesBankReceptsQuery();
-  console.log("hi");
+  const { data: orders, isLoading } = useGetAllSalesCashReceptsQuery();
+
   console.log(orders?.data);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
@@ -101,13 +101,10 @@ const CashReceiptList = () => {
         Cell: ({ value }) => <span>{moment(value).format("YYYY-MM-DD")}</span>,
       },
       {
-        Header: "Bank",
-        accessor: "bank_name",
+        Header: "Cash Account",
+        accessor: "cash_account_name",
       },
-      {
-        Header: "Ref.No",
-        accessor: "reference",
-      },
+
       {
         Header: "Amount",
         accessor: "amount",
@@ -136,7 +133,7 @@ const CashReceiptList = () => {
   return (
     <>
       <div>
-        <p>*** All Sales Bank Receipts ***</p>
+        <p>*** All Sales Cash Receipts ***</p>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <div style={{ marginLeft: "10px" }}>
             <button onClick={handleDownloadPDF} disabled={loadingPdf}>

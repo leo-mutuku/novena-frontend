@@ -36,10 +36,19 @@ export const salesPeopleApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Sales_people"],
     }),
+    loadReportData: builder.mutation({
+      query: (data) => ({
+        url: `${SALESPEOPLE_URL}/loadreportdata`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Sales_people"],
+    }),
   }),
 });
 
 export const {
+  useLoadReportDataMutation,
   useSalesPeopleStatementMutation,
   useCreateSalesPersonMutation,
   useGetAllSalesPeopleQuery,
