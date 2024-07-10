@@ -8,23 +8,28 @@ export const sidelinks = [
       { subMenuTitle: "Order Dispatch", to: "orderdispatch" },
       { subMenuTitle: "Order Invoice", to: "orderinvoice" },
 
-      // { subMenuTitle: "Order Receipt", to: "orderreceipt" },
-      // { subMenuTitle: "GRN", to: "#" },
+      { subMenuTitle: "Ledger Entry", to: "#" },
 
-      // { subMenuTitle: "Detailed Order Report", to: "#" },
-      // { subMenuTitle: "Detailed Return Report", to: "#" },
+      { subMenuTitle: "Detailed Item Order Report", to: "#" },
+      { subMenuTitle: "Detailed Item Return Report", to: "#" },
     ],
   },
   {
     menuTitle: "Sales People",
     subMenus: [
       { subMenuTitle: "Sales People", to: "salespeople" },
+      { subMenuTitle: "Loading List", to: "#" },
       // { subMenuTitle: "Statement", to: "statement" },
       { subMenuTitle: "SP Sales Report", to: "salespeoplereport" },
       { subMenuTitle: "Detailed SP Order Report", to: "detailedsporderreport" },
-      // { subMenuTitle: "Detailed SP Return Report", to: "#" },
+      { subMenuTitle: "Detailed SP Return Report", to: "#" },
     ],
   },
+
+  // {
+  //   menuTitle: "Advanced Filter Reports",
+  //   subMenus: [],
+  // },
   // {
   //   menuTitle: "Customers",
   //   subMenus: [{ subMenuTitle: "Customer's statement", to: "#" }],
