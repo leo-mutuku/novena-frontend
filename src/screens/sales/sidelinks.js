@@ -10,7 +10,7 @@ export const sidelinks = [
 
       { subMenuTitle: "Ledger Entry", to: "#" },
 
-      { subMenuTitle: "Detailed Item Report", to: "#" },
+      // { subMenuTitle: "Detailed Item Report", to: "#" },
     ],
   },
   {
@@ -21,7 +21,7 @@ export const sidelinks = [
       // { subMenuTitle: "Statement", to: "statement" },
       { subMenuTitle: "SP Sales Report", to: "salespeoplereport" },
       { subMenuTitle: "Detailed SP Order Report", to: "detailedsporderreport" },
-      { subMenuTitle: "Detailed SP Return Report", to: "#" },
+      // { subMenuTitle: "Detailed SP Return Report", to: "#" },
     ],
   },
 

@@ -184,12 +184,7 @@ const LoadingListRport = () => {
                 Clear filter
               </Button>
             </Col>
-            <Col xs={1}>
-              {" "}
-              <Button variant="secondary" type="button" onClick={""}>
-                SMS
-              </Button>
-            </Col>
+
             <Col xs={1}>
               {" "}
               <Button
