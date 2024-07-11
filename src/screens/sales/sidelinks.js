@@ -25,16 +25,4 @@ export const sidelinks = [
     ],
   },
 
-  // {
-  //   menuTitle: "Advanced Filter Reports",
-  //   subMenus: [],
-  // },
-  // {
-  //   menuTitle: "Customers",
-  //   subMenus: [{ subMenuTitle: "Customer's statement", to: "#" }],
-  // },
-  // {
-  //   menuTitle: "Institutions ",
-  //   subMenus: [{ subMenuTitle: "Institution's Statement", to: "#" }],
-  // },
 ];
