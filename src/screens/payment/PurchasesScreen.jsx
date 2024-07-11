@@ -3,7 +3,8 @@ const pagemenus = [
   { pagename: "Bank", to: "bankpurchasepayment" },
   { pagename: "Cash", to: "cashpurchasepayment" },
 
-  { pagename: "All", to: "allpurchasepurchasepayemnt" },
+  { pagename: "All Bank", to: "#" },
+  { pagename: "All Cash", to: "#" },
 ];
 export const PurchasesScreen = () => {
   return (
