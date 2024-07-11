@@ -102,7 +102,7 @@ const CashReceiptList = () => {
       },
       {
         Header: "Cash Account",
-        accessor: "cash_account_name",
+        accessor: "cash_account_id",
       },
 
       {
