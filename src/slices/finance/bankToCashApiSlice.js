@@ -20,8 +20,19 @@ export const bankToCashAPiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["BankToCash"],
     }),
+    bankToCashTransfer: builder.mutation({
+      query: (data) => ({
+        url: `${URL}/banktocashtransfer`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["BankToCash"],
+    }),
   }),
 });
 
-export const { useGetAllBankToCashQuery, useCreateBankToCashMutation } =
-  bankToCashAPiSlice;
+export const {
+  useGetAllBankToCashQuery,
+  useCreateBankToCashMutation,
+  useBankToCashTransferMutation,
+} = bankToCashAPiSlice;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { useCreateBankToCashMutation } from "../../../slices/finance/bankToCashApiSlice";
+import { useBankToCashTransferMutation } from "../../../slices/finance/bankToCashApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ function CreateBank2Cash() {
   const [naration, set_naration] = useState("");
   const [created_by, set_created_by] = useState("");
 
-  const [CreateAccount, { isLoading }] = useCreateBankToCashMutation();
+  const [bankToCashTransfer, { isLoading }] = useBankToCashTransferMutation();
   const { data: cashAccounts } = useGetAllCashAccountsQuery();
   const { data: bankAccounts } = useGetAllBankAccountsQuery();
   const { userInfo } = useSelector((state) => state.auth);
@@ -30,11 +30,10 @@ function CreateBank2Cash() {
     e.preventDefault();
 
     try {
-      const res = await CreateAccount({
+      const res = await bankToCashTransfer({
         bank_account_id,
         cash_account_id,
         amount,
-        naration,
         created_by,
       }).unwrap();
       navigate("../bank2cash");
@@ -106,18 +105,6 @@ function CreateBank2Cash() {
                 placeholder="Amount"
                 value={amount}
                 onChange={(e) => set_amount(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group className="my-2" controlId="naration">
-              <Form.Label>Naration</Form.Label>
-              <Form.Control
-                required
-                type="number"
-                placeholder="Naration"
-                value={naration}
-                onChange={(e) => set_naration(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
