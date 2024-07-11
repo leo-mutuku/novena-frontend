@@ -40,7 +40,7 @@ function BankSuppliers() {
       if (res.status == "failed") {
         toast.error(err?.data?.message || err.error);
       } else {
-        navigate("../allstoreitems");
+        navigate("../allbanksupplierpayment");
         toast.success("Store  Item created successfully");
       }
     } catch (err) {

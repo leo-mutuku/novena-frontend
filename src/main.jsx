@@ -303,6 +303,8 @@ import AddLines from "./screens/sales/returnorders/AddLines.jsx";
 import PostReturnOrder from "./screens/sales/returnorders/PostReturnOrder.jsx";
 import DetailedSPOrderReport from "./screens/sales/DetailedSPOrderReport.jsx";
 import LoadingListRport from "./screens/sales/LoadingListRport.jsx";
+import AllBankSupplierPayment from "./screens/payment/payments/purchases/AllBankSupplierPayment.jsx";
+import AllCashSupplierPayment from "./screens/payment/payments/purchases/AllCashSupplierPayment.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -415,6 +417,14 @@ const router = createHashRouter(
             <Route
               path="allpurchasepurchasepayemnt"
               element={<AllSuppliersPayments />}
+            />
+            <Route
+              path="allbanksupplierpayment"
+              element={<AllBankSupplierPayment />}
+            />
+            <Route
+              path="allcashsupplierpayment"
+              element={<AllCashSupplierPayment />}
             />
           </Route>
           <Route path="requsitions" element={<RequisitionsScreen />}>

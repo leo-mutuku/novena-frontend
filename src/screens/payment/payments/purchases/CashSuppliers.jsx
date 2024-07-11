@@ -46,7 +46,7 @@ function CashSupplier() {
       if (res.status == "failed") {
         toast.error(err?.data?.message || err.error);
       } else {
-        navigate("../allstoreitems");
+        navigate("../allcashsupplierpayment");
         toast.success("Store  Item created successfully");
       }
     } catch (err) {
