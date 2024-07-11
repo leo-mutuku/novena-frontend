@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
-import { useCreateCashToBankMutation } from "../../../slices/finance/cashToBankApiSlice";
+import {
+  useCreateCashToBankMutation,
+  useCashToBankTransferMutation,
+} from "../../../slices/finance/cashToBankApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +18,7 @@ function CreateCash2Bank() {
   const [naration, set_naration] = useState("");
   const [created_by, set_created_by] = useState("");
 
-  const [CreateAccount, { isLoading }] = useCreateCashToBankMutation();
+  const [CashToBankTransfer, { isLoading }] = useCashToBankTransferMutation();
   const { data: cashAccounts } = useGetAllCashAccountsQuery();
   const { data: bankAccounts } = useGetAllBankAccountsQuery();
   const { userInfo } = useSelector((state) => state.auth);
@@ -31,11 +34,11 @@ function CreateCash2Bank() {
     e.preventDefault();
 
     try {
-      const res = await CreateAccount({
+      const res = await CashToBankTransfer({
         cash_account_id,
         bank_account_id,
         amount,
-        naration,
+
         created_by,
       }).unwrap();
       console.log(res);
@@ -108,18 +111,6 @@ function CreateCash2Bank() {
                 placeholder="amount"
                 value={amount}
                 onChange={(e) => set_amount(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group className="my-2" controlId="naration">
-              <Form.Label>Naration</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Naration"
-                value={naration}
-                onChange={(e) => set_naration(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
