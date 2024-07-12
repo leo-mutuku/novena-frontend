@@ -305,6 +305,7 @@ import DetailedSPOrderReport from "./screens/sales/DetailedSPOrderReport.jsx";
 import LoadingListRport from "./screens/sales/LoadingListRport.jsx";
 import AllBankSupplierPayment from "./screens/payment/payments/purchases/AllBankSupplierPayment.jsx";
 import AllCashSupplierPayment from "./screens/payment/payments/purchases/AllCashSupplierPayment.jsx";
+import SalesDashboard from "./screens/sales/SalesDashboard.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -705,7 +706,7 @@ const router = createHashRouter(
 
         {/* sales routes */}
         <Route path="sales" element={<SalesScreen />}>
-          {/* <Route index element={<SalesDashboard />}></Route> */}
+          <Route index element={<SalesDashboard />} />
           <Route path="orders" element={<OrdersScreen />}>
             <Route index element={<Orderlist />} />
             <Route path="CreateOrder" element={<CreateOrder />} />
