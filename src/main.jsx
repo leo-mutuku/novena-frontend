@@ -306,6 +306,13 @@ import LoadingListRport from "./screens/sales/LoadingListRport.jsx";
 import AllBankSupplierPayment from "./screens/payment/payments/purchases/AllBankSupplierPayment.jsx";
 import AllCashSupplierPayment from "./screens/payment/payments/purchases/AllCashSupplierPayment.jsx";
 import SalesDashboard from "./screens/sales/SalesDashboard.jsx";
+import StoreDashboard from "./screens/store/StoreDashboard.jsx";
+import PurchaseDashboard from "./screens/purchase/PurchaseDashboard.jsx";
+import ProductionDashboard from "./screens/production/ProductionDashboard.jsx";
+import FinanceDashboard from "./screens/finance/FinanceDashboard.jsx";
+import AdminDashboard from "./screens/administration/AdminiDashboard.jsx";
+import FleetDashboard from "./screens/fleet/FleetDashboard.jsx";
+import PayrollDashboard from "./screens/payroll/PayrollDashboard.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -319,6 +326,7 @@ const router = createHashRouter(
 
         {/* administration routes */}
         <Route path="administration" element={<AdministrationScreen />}>
+          <Route index element={<AdminDashboard />} />
           <Route index element={<AdministrationDashboardScreen />} />
           <Route path="users" element={<UsersScreen />}>
             <Route index element={<UserList />} />
@@ -375,6 +383,7 @@ const router = createHashRouter(
 
         {/* payroll */}
         <Route path="payroll" element={<PayrollScreen />}>
+          <Route index element={<PayrollDashboard />} />
           <Route path="category" element={<CategoryScreen />}>
             <Route path="categories" element={<CategoryList />} />
             <Route path="createcategory" element={<CreateCategory />} />
@@ -416,6 +425,7 @@ const router = createHashRouter(
 
         {/* payment */}
         <Route path="payment" element={<PaymentScreen />}>
+          <Route index element={<ProductionDashboard />} />
           <Route path="purchases" element={<PurchasesScreen />}>
             <Route path="bankpurchasepayment" element={<BankSupplier />} />
             <Route path="cashpurchasepayment" element={<CashSupplier />} />
@@ -459,6 +469,7 @@ const router = createHashRouter(
 
         {/* production routes */}
         <Route path="production" element={<ProductionScreen />}>
+          <Route index element={<ProductionDashboard />} />
           <Route index element={<ProductionDashboardScreen />} />
           {/* production header routes */}
           <Route path="productionheaders" element={<ProductionHeaderScreen />}>
@@ -573,6 +584,7 @@ const router = createHashRouter(
         </Route>
         {/* store routes */}
         <Route path="store" element={<StoreScreen />}>
+          <Route index element={<StoreDashboard />} />
           <Route path="storeitemregister" element={<StoreItemRegister />}>
             <Route index element={<ItemListList />} />
             <Route path="registeritem" element={<CreateItemList />} />
@@ -652,6 +664,7 @@ const router = createHashRouter(
         </Route>
         {/* purchase routes */}
         <Route path="purchase" element={<PurchaseScreen />}>
+          <Route index element={<PurchaseDashboard />} />
           <Route path="suppliers" element={<SuppliersScreen />}>
             <Route index element={<SupplierList />} />
             <Route path="createsupplier" element={<CreateSupplier />} />
@@ -785,6 +798,7 @@ const router = createHashRouter(
         </Route>
 
         <Route path="fleet" element={<FleetScreen />}>
+          <Route index element={<FleetDashboard />} />
           <Route path="drivers" element={<DriverScreen />}>
             <Route path="alldrivers" element={<DriversList />} />
             <Route path="createdriver" element={<CreateDrivers />} />
@@ -829,6 +843,7 @@ const router = createHashRouter(
 
         {/* finance routes */}
         <Route path="finance" element={<FinanceScreen />}>
+          <Route index element={<FinanceDashboard />} />
           <Route path="accounts" element={<AccountsScreen />}>
             <Route index element={<AccountsList />} />
             <Route path="allaccounts" element={<AccountsList />} />
