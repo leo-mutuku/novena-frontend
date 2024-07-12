@@ -342,6 +342,10 @@ const router = createHashRouter(
             element={<SupplierReportScreen />}
           ></Route>
           <Route
+            path="suppliersreport"
+            element={<SupplierPaymentReportScreen />}
+          ></Route>
+          <Route
             path="suppliermaizereports"
             element={<SupplierMaizeReports />}
           ></Route>

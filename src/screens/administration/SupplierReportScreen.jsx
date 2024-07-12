@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import { useGetSupplierStorePurchaseReportMutation } from "../../slices/purchase/storePurchaseHeadersApiSlice";
+import { useGetSupplierBalanceMutation } from "../../slices/administration/suppliersApiSlice";
 import { useGetAllSuppliersQuery } from "../../slices/administration/suppliersApiSlice";
 import DataTable from "../../components/general/DataTable";
 import moment from "moment";
@@ -18,7 +18,7 @@ const SupplierPaymentReportScreen = () => {
   const [supplier_filter, set_supplier_filter] = React.useState("");
   const [product_filter, set_product_filter] = React.useState("");
   const [setData, { isLoading, isSuccess, isError }] =
-    useGetSupplierStorePurchaseReportMutation();
+    useGetSupplierBalanceMutation();
   const { data: suppliers } = useGetAllSuppliersQuery();
 
   const loaddata = async () => {
@@ -84,12 +84,14 @@ const SupplierPaymentReportScreen = () => {
         Header: "#",
         accessor: (row, index) => index + 1,
       },
-      { Header: "Purchase date", accessor: "purchase_date" },
+      { Header: " Date", accessor: "entry_date" },
 
-      { Header: "Item Name", accessor: "item_name" },
-      { Header: "@", accessor: "item_cost" },
+      { Header: "Supplier", accessor: "supplier_name" },
+      { Header: "Desc", accessor: "description" },
       { Header: "Quantity", accessor: "quantity" },
-      { Header: "Total ", accessor: "total_cost" },
+      { Header: "Debit", accessor: "debit" },
+      { Header: "Credit", accessor: "credit" },
+      { Header: "Balance ", accessor: "balance" },
     ],
     []
   );
