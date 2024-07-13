@@ -132,7 +132,7 @@ function AddOrderLines({
   const handleQuantity = (e) => {
     set_order_items({
       ...order_items,
-      quantity: parseInt(e.target.value),
+      quantity: parseFloat(e.target.value),
       total_cost_per_item: order_items.item_cost * e.target.value,
     });
   };
@@ -143,7 +143,7 @@ function AddOrderLines({
         return a.store_name;
       }
     });
-    console.log(x[0], "x");
+
     set_order_items({
       ...order_items,
       store_code: x[0].store_code,
