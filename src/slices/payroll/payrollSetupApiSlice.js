@@ -29,9 +29,9 @@ export const payrollSetupApiSlice = apiSlice.injectEndpoints({
       providesTags: ["Payroll_setup"],
     }),
     updateStaffPayrollSetup: builder.mutation({
-      query: ({ id, data }) => ({
-        url: `${PAYROLLSETUP_URL}/updatestaffpayrollsetup/${id}`,
-        method: "PUT",
+      query: (data) => ({
+        url: `${PAYROLLSETUP_URL}/updatestaffpayrollsetup`,
+        method: "POST",
         body: data,
       }),
       invalidatesTags: ["Payroll_setup"],

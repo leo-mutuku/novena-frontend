@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { useCreateGlMutation } from "../../../slices/finance/glApiSlice";
+import { useCreateDeductionsMutation } from "../../../slices/payroll/deductionsApiSlice";
 import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -14,7 +14,7 @@ function CreateDeduction() {
   const [amount, set_amount] = useState(null);
   const [created_by, set_created_by] = useState("");
 
-  const [createGl, { isLoading }] = useCreateGlMutation();
+  const [createGl, { isLoading }] = useCreateDeductionsMutation();
   const { data: staffData } = useGetAllStaffQuery();
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -33,14 +33,18 @@ function CreateDeduction() {
     try {
       const res = await createGl({
         staff_id,
-        naration,
         amount,
+        naration,
         date,
         created_by,
       }).unwrap();
+      if (res.status === "success") {
+        toast.success("Gl created successfully");
+        navigate("../deductionlist");
+        return;
+      }
 
-      navigate("../allgl");
-      toast.success("Gl created successfully");
+      toast.error(res?.message || res?.error || "Something went wrong");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }

@@ -1,11 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
-//import { useGetTodosQuery } from './apiSlice';
-import Loader from "../../../components/Loader";
-import { useGetAllGLAccountsQuery } from "../../../slices/finance/glApiSlice";
-import { Table, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { FaPrint } from "react-icons/fa6";
-import { IoMdEye } from "react-icons/io";
+
+import { useGetAlldeDuctionsQuery } from "../../../slices/payroll/deductionsApiSlice";
 
 import { CiEdit } from "react-icons/ci";
 import PrintA4A5ExcelButton from "../../../components/PrintA4A5ExcelButton";
@@ -24,7 +19,7 @@ const DeductionsList = () => {
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
-  const { data, isLoading } = useGetAllGLAccountsQuery();
+  const { data, isLoading } = useGetAlldeDuctionsQuery();
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);
@@ -133,8 +128,12 @@ const DeductionsList = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "GL Name",
-        accessor: "gl_name",
+        Header: "First Name",
+        accessor: "first_name",
+      },
+      {
+        Header: "Last Name",
+        accessor: "last_name",
       },
 
       {
@@ -148,31 +147,18 @@ const DeductionsList = () => {
       },
 
       {
-        Header: "Gl Number",
-        accessor: "gl_number",
+        Header: "Naration",
+        accessor: "naration",
         // Cell: () => (
         //   <Link to="#">
         //     <IoMdEye />
         //   </Link>
         // ),
       },
+
       {
-        Header: "Edit",
-        accessor: "edit",
-        Cell: ({ row }) => (
-          <Link to={`/finance/gl/updategl/${row.original.gl_id}`}>
-            <CiEdit />
-          </Link>
-        ),
-      },
-      {
-        Header: "View",
-        accessor: "view",
-        Cell: () => (
-          <Link to="#">
-            <IoMdEye />
-          </Link>
-        ),
+        Header: "Amount",
+        accessor: "amount",
       },
     ],
     []
@@ -180,7 +166,7 @@ const DeductionsList = () => {
 
   return (
     <>
-      <p>*** All GL ***</p>
+      <p>*** Deduction list ***</p>
       <DataTable columns={columns} data={tableData} />
     </>
   );

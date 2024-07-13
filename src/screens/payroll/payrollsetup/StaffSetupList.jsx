@@ -118,6 +118,10 @@ const StaffSetupList = () => {
         accessor: "other_deductions",
       },
       {
+        Header: "Allowances",
+        accessor: "allowances",
+      },
+      {
         Header: "Edit",
         accessor: "edit",
         Cell: ({ row }) => (

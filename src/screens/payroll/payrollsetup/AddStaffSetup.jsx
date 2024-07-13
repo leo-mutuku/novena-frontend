@@ -21,6 +21,7 @@ function AddStaffSetup() {
   const [created_by, set_created_by] = useState("");
   const [isnssf, set_isnssf] = useState("");
   const [isnhif, set_isnhif] = useState("");
+  const [allowances, set_allowances] = useState("");
 
   const [createStaffSetup, { isLoading }] =
     useCreateStaffPayrollSetupMutation();
@@ -54,7 +55,8 @@ function AddStaffSetup() {
         paye === "" ||
         isSacco === "" ||
         sacco_contribution === "" ||
-        other_deductions === ""
+        other_deductions === "" ||
+        allowances === ""
       ) {
         return toast.error("All fields are required");
       }
@@ -70,6 +72,7 @@ function AddStaffSetup() {
         isSacco,
         sacco_contribution,
         other_deductions,
+        allowances,
       }).unwrap();
       console.log(res);
       navigate("../staffsetlist");
@@ -254,6 +257,18 @@ function AddStaffSetup() {
                 placeholder="Other Deductions"
                 value={other_deductions}
                 onChange={(e) => set_other_deductions(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="my-2" controlId="allowances">
+              <Form.Label>Allowances</Form.Label>
+              <Form.Control
+                required
+                type="number"
+                placeholder="Allowances"
+                value={allowances}
+                onChange={(e) => set_allowances(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>

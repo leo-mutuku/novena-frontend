@@ -13,19 +13,17 @@ import { First } from "react-bootstrap/esm/PageItem";
 
 function UpdateStaffSetup() {
   const [staff_id, set_staff_id] = useState("");
-  const [staff_name, set_staff_name] = useState("");
+  const [allowances, set_allowances] = useState("");
   const [payroll_category, set_payroll_category] = useState("");
   const [gross_salary, set_gross_salary] = useState("");
   const [nssf, set_nssf] = useState("");
   const [nhif, set_nhif] = useState("");
-  const [isPaye, set_isPaye] = useState("");
+
   const [paye, set_paye] = useState("");
-  const [isSacco, set_isSacco] = useState("");
+
   const [sacco_contribution, set_sacco_contribution] = useState("");
   const [other_deductions, set_other_deductions] = useState("");
   const [created_by, set_created_by] = useState("");
-  const [isnssf, set_isnssf] = useState("");
-  const [isnhif, set_isnhif] = useState("");
 
   const [updatePayroll, { isError, isSuccess, error: errorUpdate }] =
     useUpdateStaffPayrollSetupMutation();
@@ -35,36 +33,28 @@ function UpdateStaffSetup() {
 
   const navigate = useNavigate();
 
-  const {
-    data: payroll_setup,
-    error,
-    isLoading,
-  } = useGetStaffPayrollSetupByIdQuery(id);
+  const { data: payroll_setup } = useGetStaffPayrollSetupByIdQuery(id);
   const { data: staff_list } = useGetAllStaffQuery();
 
   useEffect(() => {
     if (id && errorUpdate) {
       toast.error(`Error occured `);
+      console.log("ji");
     }
   }, [id, payroll_setup]);
 
   useEffect(() => {
     if (id) {
       if (payroll_setup) {
-        set_staff_id(payroll_setup.staff_id);
-
-        set_payroll_category(payroll_setup.payroll_category);
-        set_gross_salary(payroll_setup.gross_salary);
-        set_nssf(payroll_setup.nssf);
-        set_nhif(payroll_setup.nhif);
-        set_isPaye(payroll_setup.isPaye);
-        set_paye(payroll_setup.paye);
-        set_isSacco(payroll_setup.isSacco);
-        set_sacco_contribution(payroll_setup.sacco_contribution);
-        set_other_deductions(payroll_setup.other_deductions);
-
-        set_isnssf(payroll_setup.isnssf);
-        set_isnhif(payroll_setup.isnhif);
+        set_staff_id(payroll_setup?.data.staff_id);
+        set_allowances(payroll_setup?.data.allowances);
+        set_payroll_category(payroll_setup?.data.payroll_category);
+        set_gross_salary(payroll_setup?.data.gross_salary);
+        set_nssf(payroll_setup?.data.nssf);
+        set_nhif(payroll_setup?.data.nhif);
+        set_paye(payroll_setup?.data.paye);
+        set_sacco_contribution(payroll_setup?.data.sacco_contribution);
+        set_other_deductions(payroll_setup?.data.other_deductions);
       }
     }
   }, [id, payroll_setup]);
@@ -80,29 +70,19 @@ function UpdateStaffSetup() {
 
     try {
       const result = await updatePayroll({
-        id: id,
-        data: {
-          staff_id,
-          payroll_category,
-          gross_salary,
-          nssf,
-          nhif,
-          isPaye,
-          paye,
-          isSacco,
-          sacco_contribution,
-          other_deductions,
-          created_by,
-          isnssf,
-          isnhif,
-        },
+        staff_id,
+        gross_salary,
+        allowances,
+        sacco_contribution,
+        nhif,
+        nssf,
       }).unwrap();
 
       if (result == "failed") {
-        toast.error(error.message);
+        toast.error(result.message);
       } else {
         toast.success(result.message);
-        navigate("../allaccounts");
+        navigate("../staffsetlist");
       }
     } catch (error) {
       toast.error(error.message);
@@ -122,21 +102,14 @@ function UpdateStaffSetup() {
           <Col>
             <Form.Group className="my-2" controlId="staff_id">
               <Form.Label>Staff </Form.Label>
-              <Form.Select
-                type="text"
+              <Form.Control
+                type="number"
                 required
                 disabled
                 placeholder="Staff"
                 value={staff_id}
-                onChange={handleStaffChange}
-              >
-                <option value={staff_id}>{staff_id}</option>
-                {staff_list?.data.map((item, index) => (
-                  <option key={index} value={item.staff_id}>
-                    {item.first_name} {item.last_name}
-                  </option>
-                ))}
-              </Form.Select>
+                onChange={(e) => set_staff_id(e.target.value)}
+              ></Form.Control>
             </Form.Group>
           </Col>
           <Col>
@@ -156,6 +129,18 @@ function UpdateStaffSetup() {
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="nssf">
+              <Form.Label>Allowances</Form.Label>
+              <Form.Control
+                required
+                type="number"
+                placeholder="Allowances"
+                value={allowances}
+                onChange={(e) => set_allowances(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="my-2" controlId="nssf">
               <Form.Label>NSSF</Form.Label>
               <Form.Control
                 required
@@ -164,22 +149,6 @@ function UpdateStaffSetup() {
                 value={nssf}
                 onChange={(e) => set_nssf(e.target.value)}
               ></Form.Control>
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group className="my-2" controlId="isSacco">
-              <Form.Label>is NSSF</Form.Label>
-              <Form.Select
-                required
-                type="text"
-                placeholder="isSacco"
-                value={isnssf}
-                onChange={(e) => set_isnssf(e.target.value)}
-              >
-                <option value={""}>Select</option>
-                <option value={true}>True</option>
-                <option value={false}>False</option>
-              </Form.Select>
             </Form.Group>
           </Col>
         </Row>
@@ -196,52 +165,6 @@ function UpdateStaffSetup() {
               ></Form.Control>
             </Form.Group>
           </Col>
-          <Col>
-            <Form.Group className="my-2" controlId="isPaye">
-              <Form.Label>Is NHIF</Form.Label>
-              <Form.Select
-                required
-                type="text"
-                placeholder="IS PAYE"
-                value={isnhif}
-                onChange={(e) => set_isnhif(e.target.value)}
-              >
-                <option value={""}>Select</option>
-                <option value={true}>True</option>
-                <option value={false}>False</option>
-              </Form.Select>
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Form.Group className="my-2" controlId="paye">
-              <Form.Label>PAYE</Form.Label>
-              <Form.Control
-                required
-                type="number"
-                placeholder="paye"
-                value={paye}
-                onChange={(e) => set_paye(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group className="my-2" controlId="isPaye">
-              <Form.Label>Is PAYE</Form.Label>
-              <Form.Select
-                required
-                type="text"
-                placeholder="IS PAYE"
-                value={isPaye}
-                onChange={(e) => set_isPaye(e.target.value)}
-              >
-                <option value={""}>Select</option>
-                <option value={true}>True</option>
-                <option value={false}>False</option>
-              </Form.Select>
-            </Form.Group>
-          </Col>
         </Row>
         <Row>
           <Col>
@@ -253,36 +176,6 @@ function UpdateStaffSetup() {
                 placeholder="SACCO Contribution"
                 value={sacco_contribution}
                 onChange={(e) => set_sacco_contribution(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group className="my-2" controlId="isSacco">
-              <Form.Label>is Sacco</Form.Label>
-              <Form.Select
-                required
-                type="text"
-                placeholder="isSacco"
-                value={isSacco}
-                onChange={(e) => set_isSacco(e.target.value)}
-              >
-                <option value={""}>Select</option>
-                <option value={true}>True</option>
-                <option value={false}>False</option>
-              </Form.Select>
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Form.Group className="my-2" controlId="other_deductions">
-              <Form.Label>Other Deductions</Form.Label>
-              <Form.Control
-                required
-                type="number"
-                placeholder="Other Deductions"
-                value={other_deductions}
-                onChange={(e) => set_other_deductions(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>

@@ -14,10 +14,10 @@ export const sidelinks = [
     menuTitle: "Deductions",
     subMenus: [{ subMenuTitle: "Deductions", to: "deductions" }],
   },
-  {
-    menuTitle: "Wages",
-    subMenus: [{ subMenuTitle: "Wages", to: "wages" }],
-  },
+  // {
+  //   menuTitle: "Wages",
+  //   subMenus: [{ subMenuTitle: "Wages", to: "wages" }],
+  // },
 
   {
     menuTitle: "Payroll Reports",
