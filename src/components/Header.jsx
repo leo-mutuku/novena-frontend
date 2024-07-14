@@ -21,16 +21,19 @@ const Header = () => {
   const [smsBalance] = useSmsBalanceMutation();
   const [credit, set_credit] = useState(null);
   useEffect(() => {
-    const fetchSMSBalance = async () => {
-      try {
-        const data = await smsBalance().unwrap();
-        set_credit(data?.data.credit);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+    if (!userInfo) {
+    } else {
+      const fetchSMSBalance = async () => {
+        try {
+          const data = await smsBalance().unwrap();
+          set_credit(data?.data.credit);
+        } catch (err) {
+          console.error(err);
+        }
+      };
 
-    fetchSMSBalance();
+      fetchSMSBalance();
+    }
   }, []);
 
   const logoutHandler = async () => {
@@ -55,7 +58,7 @@ const Header = () => {
           </LinkContainer>
           <Idle />
           <div
-            style={{ color: "green", textAlign: "center", marginLeft: "45%" }}
+            style={{ color: "green", textAlign: "center", marginLeft: "35%" }}
           >
             Credit : sms. {credit}
           </div>
