@@ -34,7 +34,7 @@ const Header = () => {
 
       fetchSMSBalance();
     }
-  }, []);
+  }, [userInfo]);
 
   const logoutHandler = async () => {
     try {
@@ -57,11 +57,16 @@ const Header = () => {
             </Navbar.Brand>
           </LinkContainer>
           <Idle />
-          <div
-            style={{ color: "green", textAlign: "center", marginLeft: "35%" }}
-          >
-            Credit : sms. {credit}
-          </div>
+          {userInfo ? (
+            <div
+              style={{ color: "green", textAlign: "center", marginLeft: "20%" }}
+            >
+              Credit : sms. {credit}
+            </div>
+          ) : (
+            ""
+          )}
+
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
