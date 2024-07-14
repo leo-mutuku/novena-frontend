@@ -5,9 +5,11 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../slices/administration/usersApiSlice";
+import { useSmsBalanceMutation } from "../slices/administration/bulkSmsApiSlice";
 import { logout } from "../slices/authSlice";
 import { FaHome } from "react-icons/fa";
 import Idle from "../components/Idle";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -16,6 +18,20 @@ const Header = () => {
   const navigate = useNavigate();
 
   const [logoutApiCall] = useLogoutMutation();
+  const [smsBalance] = useSmsBalanceMutation();
+  const [credit, set_credit] = useState(null);
+  useEffect(() => {
+    const fetchSMSBalance = async () => {
+      try {
+        const data = await smsBalance().unwrap();
+        set_credit(data?.data.credit);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchSMSBalance();
+  }, []);
 
   const logoutHandler = async () => {
     try {
@@ -37,6 +53,11 @@ const Header = () => {
             </Navbar.Brand>
           </LinkContainer>
           <Idle />
+          <div
+            style={{ color: "green", textAlign: "center", marginLeft: "45%" }}
+          >
+            Credit : sms. {credit}
+          </div>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">

@@ -39,7 +39,7 @@ function CreateStockAdjustment() {
 
         created_by,
       }).unwrap();
-      console.log(res);
+
       navigate("../allaccounts");
       toast.success("Account created successfully");
     } catch (err) {
@@ -72,7 +72,8 @@ function CreateStockAdjustment() {
                 <option value="">Store & Item</option>
                 {storeItemsData?.data.map((item, key) => (
                   <option value={item.store_item_id} key={key}>
-                    {item.store_name} & {item.item_name}
+                    {item.store_name} {item.item_name} -----{" "}
+                    {item.item_quantity}
                   </option>
                 ))}
               </Form.Select>
