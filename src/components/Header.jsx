@@ -40,6 +40,7 @@ const Header = () => {
       navigate("/login");
     } catch (err) {
       console.error(err);
+      console.log("Error logging out");
     }
   };
 
