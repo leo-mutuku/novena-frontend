@@ -55,7 +55,7 @@ const SecuredHomeComponent = () => {
       role: 5000,
     },
     { module_name: "Admin", to: "/administration", Icon: FiUsers, role: 6000 },
-    { module_name: "Fleet", to: "/fleet", Icon: FaTrailer, role: 7000 },
+    { module_name: "Fleet", to: "/fleet", Icon: FaTrailer, role: 7000999 },
     { module_name: "Payroll", to: "/payroll", Icon: GiWallet, role: 8000 },
     {
       module_name: "Payment",

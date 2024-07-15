@@ -19,15 +19,18 @@ const SalesPeoplelist = () => {
   const { data: data } = useGetAllSalesPeopleQuery();
 
   const handleRemovePerson = async (staff_id) => {
-    const res = await removePerson({
-      staff_id,
-    }).unwrap();
-    if (res.status == "success") {
-      F;
-      toast.success("Removed!");
-    } else {
-      toast.error("Something went wrong try again!");
-    }
+    toast.error(
+      "Sorry account can only be removed after 6 months of in activity"
+    );
+    // const res = await removePerson({
+    //   staff_id,
+    // }).unwrap();
+    // if (res.status == "success") {
+    //   F;
+    //   toast.success("Removed!");
+    // } else {
+    //   toast.error("Something went wrong try again!");
+    // }
   };
   return (
     <>

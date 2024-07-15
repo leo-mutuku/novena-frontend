@@ -39,18 +39,22 @@ const UpdateStoreItems = () => {
     }
   }, [id, updateStore]);
   const handleSubmit = async (e) => {
-    const res = await updateStore({
-      id: id,
-      data: {
-        item_quantity,
-      },
-    }).unwrap();
-    if (res.status == "failed") {
-      toast.error("Sorry an error occoured");
-    } else {
-      toast.success("Updated successfully");
-      navigate("../allstoreitems");
-    }
+    toast.error(
+      "Sorry, direct editting of inventory not allowed on production, please use the stock adjustment module for audit trail!"
+    );
+
+    // const res = await updateStore({
+    //   id: id,
+    //   data: {
+    //     item_quantity,
+    //   },
+    // }).unwrap();
+    // if (res.status == "failed") {
+    //   toast.error("Sorry an error occoured");
+    // } else {
+    //   toast.success("Updated successfully");
+    //   navigate("../allstoreitems");
+    // }
   };
 
   return (

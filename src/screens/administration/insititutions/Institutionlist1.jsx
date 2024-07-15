@@ -121,29 +121,31 @@ const InstitutionList = () => {
         Header: "Edit",
         accessor: "edit",
         Cell: ({ row }) => (
-          <Link to="#">
+          <Link
+            to={`/administration/institutions/update/${row.original.institution_id}`}
+          >
             <CiEdit />
           </Link>
         ),
       },
-      {
-        Header: "View",
-        accessor: "view",
-        Cell: ({ row }) => (
-          <Link to="#">
-            <IoMdEye />
-          </Link>
-        ),
-      },
-      {
-        Header: "Del",
-        accessor: "del",
-        Cell: ({ row }) => (
-          <Link to="#">
-            <MdDelete />
-          </Link>
-        ),
-      },
+      // {
+      //   Header: "View",
+      //   accessor: "view",
+      //   Cell: ({ row }) => (
+      //     <Link to="#">
+      //       <IoMdEye />
+      //     </Link>
+      //   ),
+      // },
+      // {
+      //   Header: "Del",
+      //   accessor: "del",
+      //   Cell: ({ row }) => (
+      //     <Link to="#">
+      //       <MdDelete />
+      //     </Link>
+      //   ),
+      // },
     ],
     []
   );
@@ -156,18 +158,7 @@ const InstitutionList = () => {
     <>
       <div>
         <p>*** All Institutions ***</p>
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <div style={{ marginLeft: "10px" }}>
-            <button onClick={handleDownloadPDF} disabled={loadingPdf}>
-              {loadingPdf ? <Loader /> : <FaFilePdf />}
-            </button>
-          </div>
-          <div style={{ marginLeft: "10px" }}>
-            <button onClick={handleDownloadExcel} disabled={loadingExcel}>
-              {loadingExcel ? <Loader /> : <FaFileExcel />}
-            </button>
-          </div>
-        </div>
+
         <DataTable columns={columns} data={tableData} />
       </div>
     </>

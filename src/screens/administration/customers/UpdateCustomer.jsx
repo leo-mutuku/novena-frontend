@@ -16,7 +16,6 @@ const UpdateCustomer = () => {
   const { data: customer } = useGetCustomerByIdQuery(id);
   useEffect(() => {
     if (id) {
-      toast.error(`Error occured `);
     }
   }, [id, customer]);
 

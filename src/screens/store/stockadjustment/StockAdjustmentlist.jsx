@@ -150,21 +150,8 @@ const StockAdjustmentlist = () => {
       {
         Header: "Gl Number",
         accessor: "gl_number",
-        // Cell: () => (
-        //   <Link to="#">
-        //     <IoMdEye />
-        //   </Link>
-        // ),
       },
-      {
-        Header: "Edit",
-        accessor: "edit",
-        Cell: ({ row }) => (
-          <Link to={`/finance/gl/updategl/${row.original.gl_id}`}>
-            <CiEdit />
-          </Link>
-        ),
-      },
+
       {
         Header: "View",
         accessor: "view",
@@ -180,7 +167,7 @@ const StockAdjustmentlist = () => {
 
   return (
     <>
-      <p>*** All GL ***</p>
+      <p>*** All Adjusment ***</p>
       <DataTable columns={columns} data={tableData} />
     </>
   );

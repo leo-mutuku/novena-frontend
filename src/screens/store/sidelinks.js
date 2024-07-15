@@ -15,10 +15,6 @@ export const sidelinks = [
     menuTitle: "Stock Take",
     subMenus: [{ subMenuTitle: "Stock Take", to: "stocktake" }],
   },
-  {
-    menuTitle: "Transfer Order (TO)",
-    subMenus: [{ subMenuTitle: "Transfer Order (TO)", to: "storetransfer" }],
-  },
 
   {
     menuTitle: "Store Register",

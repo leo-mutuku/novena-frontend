@@ -313,6 +313,7 @@ import FinanceDashboard from "./screens/finance/FinanceDashboard.jsx";
 import AdminDashboard from "./screens/administration/AdminiDashboard.jsx";
 import FleetDashboard from "./screens/fleet/FleetDashboard.jsx";
 import PayrollDashboard from "./screens/payroll/PayrollDashboard.jsx";
+import UpdateInstitution from "./screens/administration/insititutions/UpdateInstitution.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -339,6 +340,7 @@ const router = createHashRouter(
             <Route index element={<Institutionlist />} />
             <Route path="createinstitution" element={<CreateInstition />} />
             <Route path="allinstitution" element={<Institutionlist />} />
+            <Route path="update/:id" element={<UpdateInstitution />} />
           </Route>
           <Route path="suppliers" element={<SuppliersScreen />}>
             <Route index element={<SupplierList />} />

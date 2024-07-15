@@ -41,17 +41,18 @@ function UpdateGL() {
     e.preventDefault();
     console.log(errorUpdate);
     try {
-      const result = await updateGL({
-        id: id,
-        data: { gl_name, gl_number },
-      }).unwrap();
+      toast.error("Sorry direct editting of GL accounts not allowed!");
+      // const result = await updateGL({
+      //   id: id,
+      //   data: { gl_name, gl_number },
+      // }).unwrap();
 
-      if (result == "failed") {
-        toast.error(error.message);
-      } else {
-        toast.success(result.message);
-        navigate("../allgl");
-      }
+      // if (result == "failed") {
+      //   toast.error(error.message);
+      // } else {
+      //   toast.success(result.message);
+      //   navigate("../allgl");
+      // }
     } catch (error) {
       toast.error(error.message);
     }

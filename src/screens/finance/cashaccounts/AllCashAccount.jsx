@@ -116,9 +116,7 @@ const AllCashAccount = () => {
         Header: "Edit",
         accessor: "edit",
         Cell: ({ row }) => (
-          <Link
-            to={`/finance/cashaccounts/updatecashaccounts/${row.original.cash_account_id}`}
-          >
+          <Link to={`#`}>
             <CiEdit />
           </Link>
         ),

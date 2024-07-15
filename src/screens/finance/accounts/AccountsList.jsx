@@ -112,7 +112,7 @@ const AccountsList = () => {
         Header: "Edit",
         accessor: "edit",
         Cell: ({ row }) => (
-          <Link to={`/finance/accounts/update/${row.original.account_id}`}>
+          <Link to={`#`}>
             <CiEdit />
           </Link>
         ),
