@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import { useGetAllStoreRegisterQuery } from "../../../../slices/store/storeRegisterApiSlice";
-import { useGetAllItemRegisterQuery } from "../../../../slices/store/itemregisterApiSlice";
-import { useCreateStoreItemMutation } from "../../../../slices/store/storeItemsApiSlice";
-import { useGetAllBankAccountsQuery } from "../../../../slices/finance/bankAccountsApiSlice";
-import { useGetAllSalesPeopleQuery } from "../../../../slices/sales/salesPeopleApiSlice";
+import { useCreateRequisitionHeaderMutation } from "../../../../slices/payment/requisitionHeaderApiSlice";
+
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function NewRequisition() {
-  const [account_id, set_account_id] = useState("");
-  const [description, set_description] = useState("");
-  const [amount, set_amount] = useState("");
-  const { data: salesPeople } = useGetAllSalesPeopleQuery();
-  const { data: items } = useGetAllItemRegisterQuery();
-  const { data: stores } = useGetAllStoreRegisterQuery();
+  const [account_number, set_account_number] = useState("");
+  const [date, set_date] = useState("");
+  const [created_by, set_created_by] = useState("");
+  const [createPaymentRequisition] = useCreateRequisitionHeaderMutation();
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -24,7 +19,10 @@ function NewRequisition() {
     e.preventDefault();
 
     try {
-      const res = await createSalesBankReceipt({}).unwrap();
+      const res = await createPaymentRequisition({
+        account_number,
+        date,
+      }).unwrap();
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -41,42 +39,29 @@ function NewRequisition() {
       </Row>
       <Form onSubmit={handleSubmit}>
         {/* */}
-        <Row>
-          <Col>
-            <Form.Group className="my-2" controlId="">
-              <Form.Label>Account</Form.Label>
-              <Form.Select
-                type="text"
-                required
-                value={account_id}
-                onChange={(e) => set_account_id(e.target.value)}
-              ></Form.Select>
-            </Form.Group>
-          </Col>
-        </Row>
 
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="amount">
-              <Form.Label>Amount</Form.Label>
+              <Form.Label>Acount Number</Form.Label>
               <Form.Control
                 required
                 type="number"
                 placeholder="Amount"
-                value={amount}
-                onChange={(e) => set_amount(parseFloat(e.target.value))}
+                value={account_number}
+                onChange={(e) => set_account_number(parseInt(e.target.value))}
               ></Form.Control>
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group className="my-2" controlId="reference">
-              <Form.Label>Reference</Form.Label>
+            <Form.Group className="my-2" controlId="">
+              <Form.Label>Date</Form.Label>
               <Form.Control
                 required
-                type="text"
-                placeholder="Reference"
-                value={reference}
-                onChange={(e) => set_reference(e.target.value)}
+                type="date"
+                placeholder="date"
+                value={date}
+                onChange={(e) => set_date(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
