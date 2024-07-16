@@ -1,11 +1,23 @@
 import React, { useState } from "react";
+import {
+  useUpdateInstitutionMutation,
+  useGetInstitutionByIdQuery,
+} from "../../../slices/administration/institutionsApiSlice";
+import { useNavigate, useParams } from "react-router-dom";
 import { Form, Row, Col, Button } from "react-bootstrap";
 
 const UpdateInstitution = () => {
-  const [institution_email, set_institution_email] = useState();
-  const [institution_name, set_institution_name] = useState();
-  const [institution_location, set_institution_location] = useState();
-  const [institution_phone_number, set_institution_phone_number] = useState();
+  const navigate = useNavigate();
+  const { id: _new_id } = useParams();
+  const id = parseInt(_new_id);
+  console.log(id);
+  const [institution_email, set_institution_email] = useState("");
+  const [institution_name, set_institution_name] = useState("");
+  const [institution_location, set_institution_location] = useState("");
+  const [institution_phone_number, set_institution_phone_number] = useState("");
+  const { data: institution } = useGetInstitutionByIdQuery(id);
+
+  console.log(institution?.data);
 
   const handleSubmit = () => {};
   return (

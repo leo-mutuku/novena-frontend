@@ -13,12 +13,11 @@ function CreateDeduction() {
   const [date, set_date] = useState(null);
   const [amount, set_amount] = useState(null);
   const [created_by, set_created_by] = useState("");
+  const [deduction_type, set_deduction_type] = useState("");
 
   const [createGl, { isLoading }] = useCreateDeductionsMutation();
   const { data: staffData } = useGetAllStaffQuery();
   const { userInfo } = useSelector((state) => state.auth);
-
-  console.log(staffData);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -37,14 +36,15 @@ function CreateDeduction() {
         naration,
         date,
         created_by,
+        deduction_type,
       }).unwrap();
       if (res.status === "success") {
         toast.success("Gl created successfully");
         navigate("../deductionlist");
         return;
+      } else {
+        toast.error(res?.message || res?.error || "Something went wrong");
       }
-
-      toast.error(res?.message || res?.error || "Something went wrong");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -117,6 +117,24 @@ function CreateDeduction() {
                 value={naration}
                 onChange={(e) => set_naration(e.target.value)}
               ></Form.Control>
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Form.Group className="my-2" controlId="naration">
+              <Form.Label></Form.Label>
+              <Form.Select
+                required
+                type="number"
+                placeholder="Naration"
+                value={deduction_type}
+                onChange={(e) => set_deduction_type(e.target.value)}
+              >
+                <option value={""}>Type</option>
+                <option value="negative">Negative</option>
+                <option value="positive"> Positive</option>
+              </Form.Select>
             </Form.Group>
           </Col>
         </Row>

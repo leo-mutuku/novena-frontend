@@ -216,6 +216,7 @@ function AddOrderLines({
                       <Form.Group className="my-2" controlId="order_items">
                         <Form.Label>Price</Form.Label>
                         <Form.Control
+                          disabled
                           type="number"
                           required
                           placeholder="Cost per unit (Ksh)"

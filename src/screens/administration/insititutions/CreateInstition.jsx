@@ -97,7 +97,7 @@ function CreateInstition() {
               <Form.Control
                 required
                 type="text"
-                placeholder="Supplier location"
+                placeholder=" location"
                 value={institution_location}
                 onChange={(e) => set_institution_location(e.target.value)}
               ></Form.Control>

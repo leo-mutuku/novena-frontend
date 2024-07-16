@@ -112,7 +112,8 @@ function CreateCustomer() {
               ></Form.Control>
             </Form.Group>
           </Col>
-
+        </Row>
+        <Row>
           <Col>
             <Form.Group className="my-2" controlId="customer_location">
               <Form.Label>Customer location</Form.Label>

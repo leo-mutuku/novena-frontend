@@ -57,7 +57,7 @@ const Header = () => {
             </Navbar.Brand>
           </LinkContainer>
           <Idle />
-          {userInfo ? (
+          {/* {userInfo ? (
             <div
               style={{ color: "green", textAlign: "center", marginLeft: "20%" }}
             >
@@ -65,7 +65,7 @@ const Header = () => {
             </div>
           ) : (
             ""
-          )}
+          )} */}
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
