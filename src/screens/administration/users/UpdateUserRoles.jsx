@@ -151,7 +151,13 @@ function UpdateUserRoles() {
         throw new Error(res.message);
       }
     } catch (error) {
-      toast.error(error.message);
+      if (error.data && error.data.message) {
+        // This is the response from the server with the error message
+        toast.error(error.data.message);
+      } else {
+        // This is a generic error message if the response does not contain a message
+        toast.error("An error occurred. Please try again.");
+      }
     }
   };
   const handlAddUserRoles = async () => {
@@ -170,7 +176,13 @@ function UpdateUserRoles() {
         throw new Error(res.message);
       }
     } catch (error) {
-      toast.error(error.message);
+      if (error.data && error.data.message) {
+        // This is the response from the server with the error message
+        toast.error(error.data.message);
+      } else {
+        // This is a generic error message if the response does not contain a message
+        toast.error("An error occurred. Please try again.");
+      }
     }
   };
 
