@@ -10,7 +10,10 @@ import {
 } from "../../../slices/administration/rolesSlice";
 import { useGetUserByIdQuery } from "../../../slices/administration/usersApiSlice";
 import { MdAdd } from "react-icons/md";
-import { MdHorizontalRule } from "react-icons/md";
+import {
+  useAddUserRolesMutation,
+  useRemoveUserRolesMutation,
+} from "../../../slices/administration/userRolesApiSlice";
 
 function UpdateUserRoles() {
   const [user_id, set_user_id] = useState("");
@@ -22,6 +25,10 @@ function UpdateUserRoles() {
     role_code: 0,
     role_name: "",
   });
+  const [addUserRoles, { isLoading: isLoadingAddUserRoles }] =
+    useAddUserRolesMutation();
+  const [removeUserRoles, { isLoading: isLoadingRemoveUserRoles }] =
+    useRemoveUserRolesMutation();
   const [addRoles, set_addRoles] = useState([]);
   const [removeRoles, set_removeRoles] = useState([]);
   const [all_roles, set_all_roles] = useState([]);
@@ -29,6 +36,8 @@ function UpdateUserRoles() {
 
   useEffect(() => {}, [addRoles]);
   useEffect(() => {}, [removeRoles]);
+
+  console.log(addRoles, removeRoles);
 
   const addRoleBtn = () => {
     if (addRole.role_code === 0) {
@@ -124,6 +133,44 @@ function UpdateUserRoles() {
         role_code: parseInt(e.target.value),
         role_name: role_name[0].role_name,
       });
+    }
+  };
+
+  const handleRemooveUserRoles = async () => {
+    if (removeRoles.length < 1) {
+      toast.error("Please add the roles first");
+    }
+    try {
+      const res = await removeUserRoles({
+        user_id: user_id,
+        removeRoles,
+      }).unwrap();
+      if (res.status == "success") {
+        toast.success(res.message);
+      } else {
+        throw new Error(res.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+  const handlAddUserRoles = async () => {
+    if (addRoles.length < 1) {
+      toast.error("Please add the roles first");
+    }
+
+    try {
+      const res = await addUserRoles({
+        user_id: user_id,
+        addRoles,
+      }).unwrap();
+      if (res.status == "success") {
+        toast.success(res.message);
+      } else {
+        throw new Error(res.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
@@ -228,7 +275,12 @@ function UpdateUserRoles() {
             <Col></Col>
             <Col xs={3}>
               {" "}
-              <Button type="submit" variant="primary" className="mt-3">
+              <Button
+                type="submit"
+                variant="primary"
+                className="mt-3"
+                onClick={handlAddUserRoles}
+              >
                 Submit
               </Button>
             </Col>
@@ -282,7 +334,12 @@ function UpdateUserRoles() {
           <Row>
             <Col></Col>
             <Col xs={3}>
-              <Button type="submit" variant="primary" className="mt-3">
+              <Button
+                type="submit"
+                variant="primary"
+                className="mt-3"
+                onClick={handleRemooveUserRoles}
+              >
                 Submit
               </Button>
             </Col>
