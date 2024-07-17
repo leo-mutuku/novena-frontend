@@ -18,13 +18,17 @@ function UpdateUserRoles() {
   const [last_name, set_last_name] = useState("");
   const [roles, set_roles] = useState([]);
   const [addRole, set_addRole] = useState({ role_code: 0, role_name: "" });
-  const [removeRole, set_removeRole] = useState({});
+  const [removeRole, set_removeRole] = useState({
+    role_code: 0,
+    role_name: "",
+  });
   const [addRoles, set_addRoles] = useState([]);
   const [removeRoles, setRemove] = useState([]);
   const [all_roles, set_all_roles] = useState([]);
   const { data: allRoles } = useGetAllRolesQuery();
 
   useEffect(() => {}, [addRoles]);
+  useEffect(() => {}, [removeRoles]);
 
   const addRoleBtn = () => {
     if (addRole.role_code === 0) {
@@ -36,12 +40,31 @@ function UpdateUserRoles() {
     );
     if (roleIndex !== -1) {
       // Role exists, update it
-      console.log("Role already exists");
+      toast.error("Role already exists");
       return;
     } else {
       set_addRoles((prevRoles) => [...prevRoles, addRole]);
       console.log(addRoles);
 
+      return;
+    }
+  };
+
+  const removeRoleBtn = () => {
+    alert("hi");
+    if (removeRole.role_code === 0) {
+      toast.error("Please select a role");
+      return;
+    }
+    const roleIndex = roles.findIndex(
+      (role) => role.role_code === removeRole.role_code
+    );
+
+    if (roleIndex !== -1) {
+      toast.success("role exists procede to remove");
+      return;
+    } else {
+      toast.error("Role does not exist");
       return;
     }
   };
@@ -87,6 +110,20 @@ function UpdateUserRoles() {
 
     if (e.target.value) {
       set_addRole({
+        role_code: parseInt(e.target.value),
+        role_name: role_name[0].role_name,
+      });
+    }
+  };
+
+  const handleRemoveRoleField = (e) => {
+    const role_name = all_roles.filter((role) => {
+      if (parseInt(role.role_code) === parseInt(e.target.value)) {
+        return role.role_name;
+      }
+    });
+    if (e.target.value) {
+      set_removeRole({
         role_code: parseInt(e.target.value),
         role_name: role_name[0].role_name,
       });
@@ -212,8 +249,8 @@ function UpdateUserRoles() {
                   type="text"
                   required
                   placeholder="First Name"
-                  value={""}
-                  onChange={""}
+                  value={removeRole.role_code}
+                  onChange={handleRemoveRoleField}
                 >
                   <option value="">Select Role</option>
                   {all_roles.length &&
@@ -228,7 +265,7 @@ function UpdateUserRoles() {
             <Col xs={2}>
               <MdAdd
                 size={30}
-                onClick={() => {}}
+                onClick={removeRoleBtn}
                 style={{ marginTop: "10px", cursor: "pointer" }}
               />
             </Col>
