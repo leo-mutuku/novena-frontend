@@ -23,7 +23,7 @@ function UpdateUserRoles() {
     role_name: "",
   });
   const [addRoles, set_addRoles] = useState([]);
-  const [removeRoles, setRemove] = useState([]);
+  const [removeRoles, set_removeRoles] = useState([]);
   const [all_roles, set_all_roles] = useState([]);
   const { data: allRoles } = useGetAllRolesQuery();
 
@@ -44,14 +44,12 @@ function UpdateUserRoles() {
       return;
     } else {
       set_addRoles((prevRoles) => [...prevRoles, addRole]);
-      console.log(addRoles);
 
       return;
     }
   };
 
   const removeRoleBtn = () => {
-    alert("hi");
     if (removeRole.role_code === 0) {
       toast.error("Please select a role");
       return;
@@ -61,14 +59,13 @@ function UpdateUserRoles() {
     );
 
     if (roleIndex !== -1) {
-      toast.success("role exists procede to remove");
+      set_removeRoles((prevRoles) => [...prevRoles, removeRole]);
       return;
     } else {
       toast.error("Role does not exist");
       return;
     }
   };
-  console.log(addRoles);
 
   const { id: _new_id } = useParams();
   const id = parseInt(_new_id);
@@ -268,6 +265,18 @@ function UpdateUserRoles() {
                 onClick={removeRoleBtn}
                 style={{ marginTop: "10px", cursor: "pointer" }}
               />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              {" "}
+              {removeRoles.length !== 0 &&
+                removeRoles?.map((role) => (
+                  <>
+                    <span>{role.role_code}</span> <> - </>
+                    <span>{role.role_name}</span> <br></br>
+                  </>
+                ))}
             </Col>
           </Row>
           <Row>
