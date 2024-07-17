@@ -9,14 +9,21 @@ import {
   useUpdateRoleByIdMutation,
 } from "../../../slices/administration/rolesSlice";
 import { useGetUserByIdQuery } from "../../../slices/administration/usersApiSlice";
+import { MdAdd } from "react-icons/md";
+import { MdHorizontalRule } from "react-icons/md";
 
 function UpdateUserRoles() {
   const [user_id, set_user_id] = useState("");
   const [first_name, set_first_name] = useState("");
   const [last_name, set_last_name] = useState("");
   const [roles, set_roles] = useState([]);
+  const [addRoles, set_addRoles] = useState([]);
+  const [removeRoles, setRemove] = useState([]);
   const [all_roles, set_all_roles] = useState([]);
   const { data: allRoles } = useGetAllRolesQuery();
+
+  console.log(addRoles);
+  console.log(removeRoles);
 
   const { id: _new_id } = useParams();
   const id = parseInt(_new_id);
@@ -43,30 +50,10 @@ function UpdateUserRoles() {
     }
   }, [id, user, allRoles]);
 
-  useEffect(() => {
-    // subset
-    //super set
-  }, [all_roles, roles]);
+  useEffect(() => {}, [all_roles, roles]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // try {
-    //   const result = await updateRole({
-    //     id: id,
-    //     data: { role_name, role_description, role_code },
-    //   }).unwrap();
-
-    //   if (result.error == true) {
-    //     console.log(result);
-    //     toast.error(result.data.message);
-    //   } else {
-    //     toast.success(result.message);
-    //     navigate("../allroles");
-    //   }
-    // } catch (error) {
-    //   toast.error(error.message);
-    // }
   };
   return (
     <>
@@ -121,12 +108,79 @@ function UpdateUserRoles() {
 
       <hr></hr>
       <Row>
-        <Col>Add Role</Col>
-        <Col>Remove Role</Col>
+        <Col>
+          <Row>
+            <Col>Add Roles</Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group className="my-2" controlId="FirstName">
+                <Form.Select
+                  type="text"
+                  required
+                  placeholder="First Name"
+                  value={""}
+                  onChange={""}
+                >
+                  <option value="">Select Role</option>
+                  {all_roles.length &&
+                    all_roles?.map((role) => (
+                      <option value={role.role_code}>
+                        {" "}
+                        {role.role_code} - {role.role_name}
+                      </option>
+                    ))}
+                </Form.Select>
+              </Form.Group>
+            </Col>
+            <Col xs={2}>
+              <MdAdd
+                size={30}
+                onClick={() => {}}
+                style={{ marginTop: "10px", cursor: "pointer" }}
+              />
+            </Col>
+          </Row>
+          <Button type="submit" variant="primary" className="mt-3">
+            Add role
+          </Button>
+        </Col>
+        <Col>
+          <Row>
+            <Col>Remove Role</Col>
+          </Row>
+          <Row>
+            <Col>
+              {" "}
+              <Form.Group className="my-2" controlId="FirstName">
+                <Form.Select
+                  type="text"
+                  required
+                  placeholder="First Name"
+                  value={""}
+                  onChange={""}
+                >
+                  <option value="">Select Role</option>
+                  {all_roles.length &&
+                    all_roles?.map((role) => (
+                      <option value={role.role_code}>
+                        {role.role_code} - {role.role_name}
+                      </option>
+                    ))}
+                </Form.Select>
+              </Form.Group>
+            </Col>
+            <Col xs={2}>
+              <MdAdd
+                size={30}
+                onClick={() => {}}
+                style={{ marginTop: "10px", cursor: "pointer" }}
+              />
+            </Col>
+          </Row>
+        </Col>
       </Row>
-      <Button type="submit" variant="primary" className="mt-3">
-        Update
-      </Button>
+
       {isLoading && <Loader />}
     </>
   );
