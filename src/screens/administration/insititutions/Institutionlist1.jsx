@@ -108,6 +108,7 @@ const InstitutionList = () => {
         Header: "Email",
         accessor: "institution_email",
       },
+      { Header: "Institution ID", accessor: "institution_id" },
       {
         Header: "Contact",
         accessor: "institution_phone_number",

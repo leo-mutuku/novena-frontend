@@ -22,15 +22,31 @@ export const institutionsApiSlice = apiSlice.injectEndpoints({
       providesTags: ["Institutions"],
     }),
     getInstitutionById: builder.query({
-      query: ({ id }) => ({
+      query: (id) => ({
         url: `${INSTITUTIONS_URL}/getinstitutionbyid/${id}`,
         method: "GET",
       }),
-      invalidatesTags: ["Institutions"],
+      providesTags: ["Institutions"],
     }),
     updateInstitution: builder.mutation({
       query: (data) => ({
         url: `${INSTITUTIONS_URL}/updateinstitution`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Institutions"],
+    }),
+    createInstitution: builder.mutation({
+      query: (data) => ({
+        url: `${INSTITUTIONS_URL}/createinstitution`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Institutions"],
+    }),
+    institutionStatement: builder.mutation({
+      query: (data) => ({
+        url: `${INSTITUTIONS_URL}/institutionstatement`,
         method: "POST",
         body: data,
       }),
@@ -44,4 +60,5 @@ export const {
   useCreateInstitutionMutation,
   useUpdateInstitutionMutation,
   useGetInstitutionByIdQuery,
+  useInstitutionStatementMutation,
 } = institutionsApiSlice;

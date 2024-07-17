@@ -10,14 +10,14 @@ export const sidelinks = [
     menuTitle: "Institutions",
     subMenus: [
       { subMenuTitle: "Institutions", to: "institutions" },
-      { subMenuTitle: "Reports", to: "supplierreports" },
+      { subMenuTitle: "Reports", to: "institutionreports" },
     ],
   },
   {
     menuTitle: "Customers",
     subMenus: [
       { subMenuTitle: "Customers", to: "customers" },
-      { subMenuTitle: "Reports", to: "supplierreports" },
+      { subMenuTitle: "Reports", to: "customerreports" },
     ],
   },
   {

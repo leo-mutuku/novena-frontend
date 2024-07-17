@@ -35,6 +35,14 @@ export const customersApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Customer"],
     }),
+    customerStatement: builder.mutation({
+      query: (data) => ({
+        url: `${CUSTOMERS_URL}/customerstatement`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Customer"],
+    }),
   }),
 });
 
@@ -43,4 +51,5 @@ export const {
   useGetAllCustomersQuery,
   useGetCustomerByIdQuery,
   useUpdateCustomerMutation,
+  useCustomerStatementMutation,
 } = customersApiSlice;

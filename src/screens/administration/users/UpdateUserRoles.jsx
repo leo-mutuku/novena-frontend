@@ -26,7 +26,7 @@ function UpdateUserRoles() {
   const { data: user, error, isLoading } = useGetUserByIdQuery(id);
 
   useEffect(() => {
-    if (allRoles) {
+    if (allRoles?.data) {
       set_all_roles(...all_roles, allRoles.data);
     }
   }, [allRoles]);
@@ -118,20 +118,12 @@ function UpdateUserRoles() {
           </div>
         </Col>
       </Row>
-      {/* <Row>
-        <Col>
-          <Form.Group className="my-2" controlId="gl_number">
-            <Form.Label>Role Description</Form.Label>
-            <Form.Control
-              type="text"
-              required
-              placeholder="Role description"
-              value={role_description}
-              onChange={(e) => set_role_description(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-        </Col>
-      </Row> */}
+
+      <hr></hr>
+      <Row>
+        <Col>Add Role</Col>
+        <Col>Remove Role</Col>
+      </Row>
       <Button type="submit" variant="primary" className="mt-3">
         Update
       </Button>

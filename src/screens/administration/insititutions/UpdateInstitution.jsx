@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   useUpdateInstitutionMutation,
   useGetInstitutionByIdQuery,
@@ -10,16 +10,35 @@ const UpdateInstitution = () => {
   const navigate = useNavigate();
   const { id: _new_id } = useParams();
   const id = parseInt(_new_id);
-  console.log(id);
+
   const [institution_email, set_institution_email] = useState("");
   const [institution_name, set_institution_name] = useState("");
   const [institution_location, set_institution_location] = useState("");
   const [institution_phone_number, set_institution_phone_number] = useState("");
   const { data: institution } = useGetInstitutionByIdQuery(id);
+  useEffect(() => {
+    if (id) {
+      set_institution_email(institution?.data?.institution_email);
+      set_institution_name(institution?.data?.institution_name);
+      set_institution_location(institution?.data?.institution_location);
+      set_institution_phone_number(institution?.data?.institution_phone_number);
+    }
+  }, [institution]);
 
-  console.log(institution?.data);
+  const [updateInstitution] = useUpdateInstitutionMutation();
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    try {
+      updateInstitution({
+        id,
+        institution_email,
+        institution_name,
+        institution_location,
+        institution_phone_number,
+      });
+      navigate("../allinstitution");
+    } catch (error) {}
+  };
   return (
     <>
       <Form onSubmit={handleSubmit}>

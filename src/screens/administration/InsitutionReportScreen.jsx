@@ -1,6 +1,9 @@
 import React, { useEffect, useMemo } from "react";
 import { useGetSupplierStorePurchaseReportMutation } from "../../slices/purchase/storePurchaseHeadersApiSlice";
-import { useGetAllSuppliersQuery } from "../../slices/administration/suppliersApiSlice";
+import {
+  useGetAllInstitutionsQuery,
+  useInstitutionStatementMutation,
+} from "../../slices/administration/institutionsApiSlice";
 import DataTable from "../../components/general/DataTable";
 import moment from "moment";
 import { Button, Form, Row, Col } from "react-bootstrap";
@@ -18,8 +21,8 @@ const InsitituionReportScreen = () => {
   const [supplier_filter, set_supplier_filter] = React.useState("");
   const [product_filter, set_product_filter] = React.useState("");
   const [setData, { isLoading, isSuccess, isError }] =
-    useGetSupplierStorePurchaseReportMutation();
-  const { data: suppliers } = useGetAllSuppliersQuery();
+    useInstitutionStatementMutation();
+  const { data: suppliers } = useGetAllInstitutionsQuery();
 
   const loaddata = async () => {
     if (!supplier_number || !start_date || !end_date) {
@@ -27,7 +30,7 @@ const InsitituionReportScreen = () => {
       return;
     }
     const data = await setData({
-      supplier_number,
+      institution_id: supplier_number,
       start_date,
       end_date,
     }).unwrap();
@@ -84,12 +87,11 @@ const InsitituionReportScreen = () => {
         Header: "#",
         accessor: (row, index) => index + 1,
       },
-      { Header: "Purchase date", accessor: "purchase_date" },
-
-      { Header: "Item Name", accessor: "item_name" },
-      { Header: "@", accessor: "item_cost" },
-      { Header: "Quantity", accessor: "quantity" },
-      { Header: "Total ", accessor: "total_cost" },
+      { Header: "Date", accessor: "entry_date" },
+      { Header: "Desc", accessor: "description" },
+      { Header: "Debit", accessor: "debit" },
+      { Header: "Credit", accessor: "credit" },
+      { Header: "Balance ", accessor: "balance" },
     ],
     []
   );
@@ -100,20 +102,13 @@ const InsitituionReportScreen = () => {
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="role_name">
-              <Form.Select
-                type="text"
+              <Form.Control
+                type="number"
                 required
-                placeholder="Select Report"
+                placeholder="Enter Institution ID"
                 value={supplier_number}
-                onChange={(e) => set_supplier_number(e.target.value)}
-              >
-                <option value="">Select Supplier</option>
-                {suppliers?.data.map((item, key) => (
-                  <option value={item.supplier_number} key={key}>
-                    {item.supplier_name}
-                  </option>
-                ))}
-              </Form.Select>
+                onChange={(e) => set_supplier_number(parseInt(e.target.value))}
+              ></Form.Control>
             </Form.Group>
           </Col>
           <Col>
@@ -138,17 +133,7 @@ const InsitituionReportScreen = () => {
               ></Form.Control>
             </Form.Group>
           </Col>
-          {/* <Col>
-            <Form.Group className="my-2" controlId="role_name">
-              <Form.Control
-                type="text"
-                required
-                placeholder="Role Name"
-                value={"#"}
-                // onChange={(e) => set_role_name(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-          </Col> */}
+
           <Col xs={1} style={{ marginTop: "8px" }}>
             <Button variant="primary" type="button" onClick={loaddata}>
               Load

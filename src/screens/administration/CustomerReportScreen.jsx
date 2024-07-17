@@ -1,6 +1,9 @@
 import React, { useEffect, useMemo } from "react";
 import { useGetSupplierStorePurchaseReportMutation } from "../../slices/purchase/storePurchaseHeadersApiSlice";
-import { useGetAllSuppliersQuery } from "../../slices/administration/suppliersApiSlice";
+import {
+  useGetAllCustomersQuery,
+  useCustomerStatementMutation,
+} from "../../slices/administration/customersApiSlice";
 import DataTable from "../../components/general/DataTable";
 import moment from "moment";
 import { Button, Form, Row, Col } from "react-bootstrap";
@@ -18,8 +21,8 @@ const CustomerReportScreen = () => {
   const [supplier_filter, set_supplier_filter] = React.useState("");
   const [product_filter, set_product_filter] = React.useState("");
   const [setData, { isLoading, isSuccess, isError }] =
-    useGetSupplierStorePurchaseReportMutation();
-  const { data: suppliers } = useGetAllSuppliersQuery();
+    useCustomerStatementMutation();
+  const { data: customers } = useGetAllCustomersQuery();
 
   const loaddata = async () => {
     if (!supplier_number || !start_date || !end_date) {
@@ -27,7 +30,7 @@ const CustomerReportScreen = () => {
       return;
     }
     const data = await setData({
-      supplier_number,
+      customer_id: supplier_number,
       start_date,
       end_date,
     }).unwrap();
@@ -84,12 +87,12 @@ const CustomerReportScreen = () => {
         Header: "#",
         accessor: (row, index) => index + 1,
       },
-      { Header: "Purchase date", accessor: "purchase_date" },
+      { Header: "Date", accessor: "entry_date" },
 
-      { Header: "Item Name", accessor: "item_name" },
-      { Header: "@", accessor: "item_cost" },
-      { Header: "Quantity", accessor: "quantity" },
-      { Header: "Total ", accessor: "total_cost" },
+      { Header: "Desc", accessor: "description" },
+      { Header: "Crdit", accessor: "credit" },
+      { Header: "Debit", accessor: "debit" },
+      { Header: "Balance ", accessor: "balance" },
     ],
     []
   );
@@ -100,20 +103,13 @@ const CustomerReportScreen = () => {
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="role_name">
-              <Form.Select
-                type="text"
+              <Form.Control
+                type="number"
                 required
-                placeholder="Select Report"
+                placeholder="Enter Customer ID"
                 value={supplier_number}
-                onChange={(e) => set_supplier_number(e.target.value)}
-              >
-                <option value="">Select Supplier</option>
-                {suppliers?.data.map((item, key) => (
-                  <option value={item.supplier_number} key={key}>
-                    {item.supplier_name}
-                  </option>
-                ))}
-              </Form.Select>
+                onChange={(e) => set_supplier_number(parseInt(e.target.value))}
+              ></Form.Control>
             </Form.Group>
           </Col>
           <Col>
