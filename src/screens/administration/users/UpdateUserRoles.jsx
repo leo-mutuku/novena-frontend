@@ -17,13 +17,35 @@ function UpdateUserRoles() {
   const [first_name, set_first_name] = useState("");
   const [last_name, set_last_name] = useState("");
   const [roles, set_roles] = useState([]);
+  const [addRole, set_addRole] = useState({ role_code: 0, role_name: "" });
+  const [removeRole, set_removeRole] = useState({});
   const [addRoles, set_addRoles] = useState([]);
   const [removeRoles, setRemove] = useState([]);
   const [all_roles, set_all_roles] = useState([]);
   const { data: allRoles } = useGetAllRolesQuery();
 
+  useEffect(() => {}, [addRoles]);
+
+  const addRoleBtn = () => {
+    if (addRole.role_code === 0) {
+      toast.error("Please select a role");
+      return;
+    }
+    const roleIndex = roles.findIndex(
+      (role) => role.role_code === addRole.role_code
+    );
+    if (roleIndex !== -1) {
+      // Role exists, update it
+      console.log("Role already exists");
+      return;
+    } else {
+      set_addRoles((prevRoles) => [...prevRoles, addRole]);
+      console.log(addRoles);
+
+      return;
+    }
+  };
   console.log(addRoles);
-  console.log(removeRoles);
 
   const { id: _new_id } = useParams();
   const id = parseInt(_new_id);
@@ -55,6 +77,22 @@ function UpdateUserRoles() {
   const handleSubmit = async (e) => {
     e.preventDefault();
   };
+
+  const handleAddRoleField = (e) => {
+    const role_name = all_roles.filter((role) => {
+      if (parseInt(role.role_code) === parseInt(e.target.value)) {
+        return role.role_name;
+      }
+    });
+
+    if (e.target.value) {
+      set_addRole({
+        role_code: parseInt(e.target.value),
+        role_name: role_name[0].role_name,
+      });
+    }
+  };
+
   return (
     <>
       <span>*** {first_name + " " + last_name}***</span>
@@ -119,8 +157,8 @@ function UpdateUserRoles() {
                   type="text"
                   required
                   placeholder="First Name"
-                  value={""}
-                  onChange={""}
+                  value={addRole.role_code}
+                  onChange={handleAddRoleField}
                 >
                   <option value="">Select Role</option>
                   {all_roles.length &&
@@ -136,14 +174,31 @@ function UpdateUserRoles() {
             <Col xs={2}>
               <MdAdd
                 size={30}
-                onClick={() => {}}
+                onClick={addRoleBtn}
                 style={{ marginTop: "10px", cursor: "pointer" }}
               />
             </Col>
           </Row>
-          <Button type="submit" variant="primary" className="mt-3">
-            Add role
-          </Button>
+          <Row>
+            <Col>
+              {addRoles.length !== 0 &&
+                addRoles?.map((role) => (
+                  <>
+                    <span>{role.role_code}</span> <> - </>
+                    <span>{role.role_name}</span> <br></br>
+                  </>
+                ))}
+            </Col>
+          </Row>
+          <Row>
+            <Col></Col>
+            <Col xs={3}>
+              {" "}
+              <Button type="submit" variant="primary" className="mt-3">
+                Submit
+              </Button>
+            </Col>
+          </Row>
         </Col>
         <Col>
           <Row>
@@ -176,6 +231,14 @@ function UpdateUserRoles() {
                 onClick={() => {}}
                 style={{ marginTop: "10px", cursor: "pointer" }}
               />
+            </Col>
+          </Row>
+          <Row>
+            <Col></Col>
+            <Col xs={3}>
+              <Button type="submit" variant="primary" className="mt-3">
+                Submit
+              </Button>
             </Col>
           </Row>
         </Col>
