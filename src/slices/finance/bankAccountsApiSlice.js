@@ -12,6 +12,13 @@ export const bankAccountsApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Banks"],
     }),
+    getBankById: builder.query({
+      query: (id) => ({
+        url: `${BANKS_URL}/getbankaccountbyid/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Banks"],
+    }),
     getAllSalesBankRecepts: builder.query({
       query: (data) => ({
         url: `${BANKS_URL}/getallsalesbankrecepts`,
@@ -52,6 +59,14 @@ export const bankAccountsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Banks"],
     }),
+    updateBank: builder.mutation({
+      query: (data) => ({
+        url: `${BANKS_URL}/updatebank`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Banks"],
+    }),
   }),
 });
 
@@ -62,4 +77,6 @@ export const {
   useGetAllBankAccountsQuery,
   useCreateBankMutation,
   useDeleteBankAccountMutation,
+  useGetBankByIdQuery,
+  useUpdateBankMutation,
 } = bankAccountsApiSlice;

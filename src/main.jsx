@@ -905,15 +905,13 @@ const router = createHashRouter(
           <Route path="cashaccounts" element={<CashAccountScreen />}>
             <Route path="allcashaccounts" element={<AllCashAccount />} />
             <Route path="createCashAccount" element={<CReateCashAccount />} />
-            <Route
-              path="updatecashaccounts/:id"
-              element={<UpdateCashAccounts />}
-            />
+            <Route path="update/:id" element={<UpdateCashAccounts />} />
           </Route>
           <Route path="bankaccounts" element={<BankAccountsScreem />}>
             <Route index element={<BankAccountsList />} />
             <Route path="createbankaccount" element={<CreateBankAccount />} />
             <Route path="bankaccounts" element={<BankAccountsList />} />
+            <Route path="update/:id" element={<UpdateBankAccounts />} />
             <Route
               path="updateBankAccount/:id"
               element={<UpdateBankAccounts />}

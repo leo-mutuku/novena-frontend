@@ -22,6 +22,14 @@ export const cashAccountsApiSlice = apiSlice.injectEndpoints({
       providesTags: ["cashaccounts"],
       // refetchOnMountOrArgChange: true,
     }),
+    getCashAccountById: builder.query({
+      query: (id) => ({
+        url: `${URL}/getcashaccountbyid/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["cashaccounts"],
+      // refetchOnMountOrArgChange: true,
+    }),
     deleteCashAccount: builder.mutation({
       query: (data) => ({
         url: `${URL}/deletecashaccount`,
@@ -64,4 +72,5 @@ export const {
   useCreateCashSalesOrderReceiptMutation,
   useGetAllCashAccountsQuery,
   useDeleteCashAccountMutation,
+  useGetCashAccountByIdQuery,
 } = cashAccountsApiSlice;

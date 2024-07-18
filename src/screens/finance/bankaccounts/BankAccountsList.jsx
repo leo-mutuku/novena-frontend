@@ -119,20 +119,8 @@ const BankAccountsList = () => {
         Header: "Edit",
         accessor: "edit",
         Cell: ({ row }) => (
-          <Link to={`#`}>
+          <Link to={`/finance/bankaccounts/update/${row.original.bank_id}`}>
             <CiEdit />
-          </Link>
-        ),
-      },
-      {
-        Header: "View",
-        accessor: "view",
-        Cell: ({ row }) => (
-          <Link
-            to="#"
-            onClick={`() => handleDeleteAccount(row.original.bank_id)`}
-          >
-            Remove
           </Link>
         ),
       },

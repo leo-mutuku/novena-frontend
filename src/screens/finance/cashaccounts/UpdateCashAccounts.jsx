@@ -4,17 +4,15 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader";
-import {
-  useGetGLByIdQuery,
-  useUpdateGLAccountByIdMutation,
-} from "../../../slices/finance/glApiSlice";
+
+import { useGetCashAccountByIdQuery } from "../../../slices/finance/cashAccountApiSlice";
 
 function UpdateCashAccounts() {
-  const [gl_name, set_gl_name] = useState("");
-  const [gl_number, set_gl_number] = useState("");
+  const [cash_account, set_cash_account] = useState("");
+  const [balance, set_balance] = useState("");
 
-  const [updateGL, { isError, isSuccess, error: errorUpdate }] =
-    useUpdateGLAccountByIdMutation();
+  // const [updateGL, { isError, isSuccess, error: errorUpdate }] =
+  //   useUpdateGLAccountByIdMutation();
 
   const { id: _new_id } = useParams();
   const id = parseInt(_new_id);
@@ -22,45 +20,57 @@ function UpdateCashAccounts() {
   const navigate = useNavigate();
 
   //call Vehicle get query
-  const { data: gl, error, isLoading } = useGetGLByIdQuery(id);
+  const { data: cash, error, isLoading } = useGetCashAccountByIdQuery(id);
+  console.log(cash?.data);
   console.log(error);
   useEffect(() => {
-    if (id && errorUpdate) {
-      toast.error(`Error occured `);
+    if (id) {
     }
-  }, [id, gl]);
+  }, [id, cash]);
+  cash_account;
 
   useEffect(() => {
     if (id) {
-      if (gl) {
-        set_gl_name(gl.data.gl_name);
-        set_gl_number(gl.data.gl_number);
+      if (cash) {
+        set_cash_account(cash.data.cash_account_name);
+        set_balance(parseFloat(cash.data.cash_account_balance));
       }
     }
-  }, [id, gl]);
+  }, [id, cash]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(errorUpdate);
-    try {
-      const result = await updateGL({
-        id: id,
-        data: { gl_name, gl_number },
-      }).unwrap();
+    cash_account;
 
-      if (result == "failed") {
-        toast.error(error.message);
-      } else {
-        toast.success(result.message);
-        navigate("../allgl");
-      }
-    } catch (error) {
-      toast.error(error.message);
-    }
+    // try {
+    //   const result = await updateGL({
+    //     id: id,
+    //     data: { cash_account, balance },
+    //   }).unwrap();
+
+    //   if (result == "failed") {
+    //     toast.error(error.message);
+    //   } else {
+    //     toast.success(result.message);
+    //     navigate("../allcash");
+    //   }
+    // } catch (error) {
+    //   toast.error(error.message);
+    // }
   };
   return (
     <>
-      <span>*** Edit GL ***</span>
+      <span>
+        *** Direct Cash Account Editting ***
+        <span style={{ color: "red" }}>
+          {" "}
+          This function will be disable only availed at request. A general
+          Journal will be used to effect the changes. Only a super user can edit
+          the bank balance. This should be done when no other activities e.g
+          sales orders, purchase, payment e.t.c has it can result to false
+          reading or updating from invalid record.
+        </span>
+      </span>
       <Row>
         <div>
           {" "}
@@ -70,27 +80,27 @@ function UpdateCashAccounts() {
       <Form onSubmit={handleSubmit}>
         <Row>
           <Col>
-            <Form.Group className="my-2" controlId="gl_name">
-              <Form.Label>GL Name</Form.Label>
+            <Form.Group className="my-2" controlId="cash_account">
+              <Form.Label>Cash Account </Form.Label>
               <Form.Control
                 type="text"
                 required
-                placeholder="Gl name"
-                value={gl_name}
-                onChange={(e) => set_gl_name(e.target.value)}
+                placeholder="Cash Account"
+                value={cash_account}
+                onChange={(e) => set_cash_account(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
           <Col>
             {/* */}
             <Form.Group className="my-2" controlId="model">
-              <Form.Label>GL Number</Form.Label>
+              <Form.Label>Balance</Form.Label>
               <Form.Control
                 type="number"
                 required
-                placeholder="GL Number"
-                value={gl_number}
-                onChange={(e) => set_gl_number(e.target.value)}
+                placeholder="Balance"
+                value={balance}
+                onChange={(e) => set_balance(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
