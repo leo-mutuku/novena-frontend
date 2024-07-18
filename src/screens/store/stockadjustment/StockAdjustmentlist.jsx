@@ -22,8 +22,7 @@ const StockAdjustmentlist = () => {
   const [footer_header, set_footer_header] = useState([]);
   const [footer_data, set_footer_data] = useState([]);
   const [tableData, setTableData] = useState([]);
-  const [loadingPdf, setLoadingPdf] = useState(false);
-  const [loadingExcel, setLoadingExcel] = useState(false);
+
   const { data, isLoading } = useGetAllGLAccountsQuery();
   useEffect(() => {
     if (data?.data) {

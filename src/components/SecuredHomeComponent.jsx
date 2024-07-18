@@ -45,7 +45,7 @@ const SecuredHomeComponent = () => {
       module_name: "Finance",
       to: "/finance",
       Icon: FaRegMoneyBillAlt,
-      role: 3000,
+      role: 9999,
     },
     { module_name: "Store", to: "/store", Icon: LiaWarehouseSolid, role: 4000 },
     {
@@ -61,7 +61,7 @@ const SecuredHomeComponent = () => {
       module_name: "Payment",
       to: "/payment",
       Icon: RiSecurePaymentFill,
-      role: 9000,
+      role: 9999,
     },
   ];
 
