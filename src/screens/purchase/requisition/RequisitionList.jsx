@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
-import { useGetAllGLAccountsQuery } from "../../../slices/finance/glApiSlice";
+import { useGetAllRequisitionHeadersQuery } from "../../../slices/payment/requisitionHeaderApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
@@ -24,12 +24,13 @@ const RequisitionList = () => {
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
-  const { data, isLoading } = useGetAllGLAccountsQuery();
+  const { data, isLoading } = useGetAllRequisitionHeadersQuery();
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);
     }
   }, [data]);
+
   const [title, set_title] = useState({
     report_title: "",
     generated_by: "",
@@ -133,13 +134,13 @@ const RequisitionList = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "GL Name",
-        accessor: "gl_name",
+        Header: "Number",
+        accessor: "entry_id",
       },
 
       {
-        Header: "Created At",
-        accessor: "created_at",
+        Header: "Requisition Date",
+        accessor: "requsition_date",
         Cell: ({ value }) => (
           <span>{`${moment(value).format("YYYY-MM-DD")} : ${moment(
             value
@@ -148,30 +149,49 @@ const RequisitionList = () => {
       },
 
       {
-        Header: "Gl Number",
-        accessor: "gl_number",
+        Header: "Account",
+        accessor: "account_number",
         // Cell: () => (
         //   <Link to="#">
         //     <IoMdEye />
         //   </Link>
         // ),
       },
+      // {
+      //   Header: "Edit",
+      //   accessor: "edit",
+      //   Cell: ({ row }) => (
+      //     <Link to={`/finance/gl/updategl/${row.original.gl_id}`}>
+      //       <CiEdit />
+      //     </Link>
+      //   ),
+      // },
       {
-        Header: "Edit",
-        accessor: "edit",
-        Cell: ({ row }) => (
-          <Link to={`/finance/gl/updategl/${row.original.gl_id}`}>
-            <CiEdit />
-          </Link>
-        ),
+        Header: "Amount",
+        accessor: "amount",
       },
       {
-        Header: "View",
-        accessor: "view",
-        Cell: () => (
-          <Link to="#">
-            <IoMdEye />
-          </Link>
+        Header: "Status",
+        accessor: "status",
+      },
+      {
+        Header: "Action",
+        accessor: "action",
+        Cell: ({ row }) => (
+          <>
+            {row.original.status === "New" && (
+              <Link
+                to={`/payment/requsitions/addrequisitionlines/${row.original.entry_id}`}
+              >
+                <button
+                  className="btn btn-primary"
+                  style={{ fontSize: "12px" }}
+                >
+                  +
+                </button>
+              </Link>
+            )}
+          </>
         ),
       },
     ],
@@ -180,7 +200,7 @@ const RequisitionList = () => {
 
   return (
     <>
-      <p>*** All GL ***</p>
+      <p>*** Requisition Headers List ***</p>
       <DataTable columns={columns} data={tableData} />
     </>
   );

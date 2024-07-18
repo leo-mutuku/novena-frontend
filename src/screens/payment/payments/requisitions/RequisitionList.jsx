@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../../components/Loader";
-import { useGetAllGLAccountsQuery } from "../../../../slices/finance/glApiSlice";
+import { useGetAllRequisitionHeadersQuery } from "../../../../slices/payment/requisitionHeaderApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
@@ -24,7 +24,7 @@ const RequisitionList = () => {
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
-  const { data, isLoading } = useGetAllGLAccountsQuery();
+  const { data, isLoading } = useGetAllRequisitionHeadersQuery();
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);
@@ -133,7 +133,7 @@ const RequisitionList = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "GL Name",
+        Header: "Number",
         accessor: "gl_name",
       },
 
@@ -156,15 +156,7 @@ const RequisitionList = () => {
         //   </Link>
         // ),
       },
-      {
-        Header: "Edit",
-        accessor: "edit",
-        Cell: ({ row }) => (
-          <Link to={`/finance/gl/updategl/${row.original.gl_id}`}>
-            <CiEdit />
-          </Link>
-        ),
-      },
+
       {
         Header: "View",
         accessor: "view",
@@ -180,7 +172,7 @@ const RequisitionList = () => {
 
   return (
     <>
-      <p>*** All GL ***</p>
+      <p>*** Requisition Headers List ***</p>
       <DataTable columns={columns} data={tableData} />
     </>
   );

@@ -29,6 +29,7 @@ function NewRequisition() {
       }).unwrap();
       if (res.status === "success") {
         toast.success(res.message);
+        navigate("../allpaymentrequisitions");
       } else {
         toast.error(res.message);
       }

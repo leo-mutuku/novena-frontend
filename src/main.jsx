@@ -316,6 +316,7 @@ import PayrollDashboard from "./screens/payroll/PayrollDashboard.jsx";
 import UpdateInstitution from "./screens/administration/insititutions/UpdateInstitution.jsx";
 import CustomerReportScreen from "./screens/administration/CustomerReportScreen.jsx";
 import InsitituionReportScreen from "./screens/administration/InsitutionReportScreen.jsx";
+import AddRequisitionLines from "./screens/purchase/requisition/AddRequisitionLines.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -462,6 +463,10 @@ const router = createHashRouter(
             <Route
               path="allpaymentrequisitions"
               element={<RequisitionList />}
+            />
+            <Route
+              path="addrequisitionlines/:id"
+              element={<AddRequisitionLines />}
             />
           </Route>
           <Route
