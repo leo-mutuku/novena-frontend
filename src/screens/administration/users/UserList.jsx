@@ -138,15 +138,6 @@ const UserList = () => {
           </Link>
         ),
       },
-      // {
-      //   Header: "View",
-      //   accessor: "view",
-      //   Cell: ({ row }) => (
-      //     <Link to="#">
-      //       <IoMdEye />
-      //     </Link>
-      //   ),
-      // },
     ],
     []
   );

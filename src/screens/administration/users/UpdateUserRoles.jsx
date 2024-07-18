@@ -139,6 +139,7 @@ function UpdateUserRoles() {
   const handleRemooveUserRoles = async () => {
     if (removeRoles.length < 1) {
       toast.error("Please add the roles first");
+      return;
     }
     try {
       const res = await removeUserRoles({
@@ -147,6 +148,7 @@ function UpdateUserRoles() {
       }).unwrap();
       if (res.status == "success") {
         toast.success(res.message);
+        navigate("../allusers");
       } else {
         throw new Error(res.message);
       }
@@ -154,15 +156,18 @@ function UpdateUserRoles() {
       if (error.data && error.data.message) {
         // This is the response from the server with the error message
         toast.error(error.data.message);
+        return;
       } else {
         // This is a generic error message if the response does not contain a message
         toast.error("An error occurred. Please try again.");
+        return;
       }
     }
   };
   const handlAddUserRoles = async () => {
     if (addRoles.length < 1) {
       toast.error("Please add the roles first");
+      return;
     }
 
     try {
@@ -172,16 +177,20 @@ function UpdateUserRoles() {
       }).unwrap();
       if (res.status == "success") {
         toast.success(res.message);
+        navigate("../allusers");
       } else {
         throw new Error(res.message);
+        return;
       }
     } catch (error) {
       if (error.data && error.data.message) {
         // This is the response from the server with the error message
         toast.error(error.data.message);
+        return;
       } else {
         // This is a generic error message if the response does not contain a message
         toast.error("An error occurred. Please try again.");
+        return;
       }
     }
   };
