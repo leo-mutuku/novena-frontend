@@ -12,8 +12,13 @@ import { FaFilePdf, FaFileExcel } from "react-icons/fa";
 import DataTable from "../../../components/general/DataTable";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const UserList = () => {
+  const role = 9999;
+  const { userInfo } = useSelector((state) => state.auth);
+  const [accessDenied, setAccessDenied] = useState(false);
+  const [roles, setRoles] = useState([]);
   const { data: users, isLoading } = useGetUsersQuery();
   const [tableData, setTableData] = useState([]);
 
@@ -122,20 +127,26 @@ const UserList = () => {
         Header: "Roles",
         accessor: "roles",
         Cell: ({ row }) => (
-          <Link to={`/administration/users/roles/${row.original.user_id}`}>
+          <Link
+            to={
+              userInfo.roles.includes(role)
+                ? `/administration/users/roles/${row.original.user_id}`
+                : "#"
+            }
+          >
             <CiEdit />
           </Link>
         ),
       },
-      {
-        Header: "View",
-        accessor: "view",
-        Cell: ({ row }) => (
-          <Link to="#">
-            <IoMdEye />
-          </Link>
-        ),
-      },
+      // {
+      //   Header: "View",
+      //   accessor: "view",
+      //   Cell: ({ row }) => (
+      //     <Link to="#">
+      //       <IoMdEye />
+      //     </Link>
+      //   ),
+      // },
     ],
     []
   );

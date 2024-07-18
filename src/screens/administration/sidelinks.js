@@ -20,15 +20,15 @@ export const sidelinks = [
 
   {
     menuTitle: "Users",
-    subMenus: [{ subMenuTitle: "Users", to: "users", role: 6000 }],
+    subMenus: [{ subMenuTitle: "Users", to: "users", role: 9999 }],
   },
   {
     menuTitle: "Bulk SMS",
-    subMenus: [{ subMenuTitle: "Bulk SMS", to: "bulksms", role: 6000 }],
+    subMenus: [{ subMenuTitle: "Bulk SMS", to: "bulksms", role: 999 }],
   },
   {
     menuTitle: "Roles",
-    subMenus: [{ subMenuTitle: "Roles", to: "roles", role: 6000 }],
+    subMenus: [{ subMenuTitle: "Roles", to: "roles", role: 9999 }],
   },
   // {
   //   menuTitle: "Administrator",
