@@ -4,12 +4,15 @@ import { useCreateRequisitionHeaderMutation } from "../../../../slices/payment/r
 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 function NewRequisition() {
+  const { userInfo } = useSelector((state) => state.auth);
   const [account_number, set_account_number] = useState("");
   const [date, set_date] = useState("");
   const [created_by, set_created_by] = useState("");
   const [createPaymentRequisition] = useCreateRequisitionHeaderMutation();
+  console.log(userInfo);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -20,9 +23,15 @@ function NewRequisition() {
 
     try {
       const res = await createPaymentRequisition({
+        created_by: userInfo?.first_name,
         account_number,
         date,
       }).unwrap();
+      if (res.status === "success") {
+        toast.success(res.message);
+      } else {
+        toast.error(res.message);
+      }
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
