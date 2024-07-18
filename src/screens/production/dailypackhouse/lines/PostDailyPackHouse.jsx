@@ -42,12 +42,10 @@ const PostDailyPackHouse = () => {
         toast.success(res.message);
         navigate("/production/dailypackhouse/alldailypackhouse");
       } else {
-        toast.error(
-          "Sorry something went wrong Please check the status of your entries before trying again"
-        );
+        toast.error(res.message);
       }
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.data?.message);
     }
   };
   const handleAdd = (e) => {
