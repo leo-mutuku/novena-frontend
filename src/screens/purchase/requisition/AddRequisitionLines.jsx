@@ -1,16 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Form, Button, Table } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const AddRequisitionLines = () => {
-  const handleSubmit = (e) => e.preventDefault();
-  const handleAdd = (e) => e.preventDefault();
   const [item, set_item] = useState({
     name: "",
     quantity: 0,
-    unit_cost: 0,
+    cost: 0,
     total: 0,
   });
-  const [item_list, sey_item_list] = useState([]);
+  const [item_list, set_item_list] = useState([]);
+  const [total, set_title] = useState(0);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert("submit");
+  };
+  const handleAdd = (e) => {
+    e.preventDefault();
+    if (item.name == "" || item.quantity == 0 || item.cost == 0) {
+      toast.error("All field must be filled");
+      return;
+    }
+
+    set_item_list([...item_list, item]);
+  };
+  const hanldeQuantity = (e) => {
+    let q = parseFloat(e.target.value);
+    set_item({ ...item, quantity: q });
+    set_item({ ...item, total: cost * q });
+  };
+  const handleCost = (e) => {
+    let c = parseFloat(e.target.value);
+    set_item({ ...item, cost: c });
+    set_item({ ...item, total: quantity * c });
+  };
+  const removeItem = (index) => {
+    item_list.filter((item, i) => {
+      if (i === index) {
+        item_list.splice(i, 1);
+        set_item_list([...item_list]);
+      }
+    });
+  };
+  useEffect(() => {}, [item_list]);
+
   return (
     <>
       <>
@@ -22,7 +55,7 @@ const AddRequisitionLines = () => {
             <hr />
           </div>
         </Row>
-        <Form onSubmit={handleSubmit}>
+        <Form>
           {/* */}
           <Row>
             <Col>
@@ -32,8 +65,8 @@ const AddRequisitionLines = () => {
                   type="text"
                   required
                   placeholder="Name"
-                  value={""}
-                  onChange={""}
+                  value={item.name}
+                  onChange={(e) => set_item({ ...item, name: e.target.value })}
                 ></Form.Control>
               </Form.Group>
             </Col>
@@ -45,8 +78,8 @@ const AddRequisitionLines = () => {
                   required
                   type="number"
                   placeholder="Quantity"
-                  value={""}
-                  onChange={""}
+                  value={item.quantity}
+                  onChange={hanldeQuantity}
                 ></Form.Control>
               </Form.Group>
             </Col>
@@ -56,9 +89,11 @@ const AddRequisitionLines = () => {
                 <Form.Control
                   required
                   type="number"
-                  placeholder="unit_cost"
-                  value=""
-                  onChange={""}
+                  placeholder="cost"
+                  value={item.cost}
+                  onChange={(e) =>
+                    set_item({ ...item, cost: parseFloat(e.target.value) })
+                  }
                 ></Form.Control>
               </Form.Group>
             </Col>
@@ -88,14 +123,11 @@ const AddRequisitionLines = () => {
                     {item_list?.map((item, index) => (
                       <tr key={index}>
                         <td>{index + 1}</td>
-                        <td>{item.item_name}</td>
+                        <td>{item.name}</td>
 
                         <td>{item.quantity}</td>
-                        <td>{item.unit_cost}</td>
-                        <td>
-                          {parseFloat(item.quantity) *
-                            parseFloat(item.unit_cost)}
-                        </td>
+                        <td>{item.cost}</td>
+                        <td>{item.quantity * item.cost}</td>
                         <td onClick={() => removeItem(index)}>Remove</td>
                       </tr>
                     ))}
@@ -103,7 +135,7 @@ const AddRequisitionLines = () => {
                 </Table>
               </Row>
 
-              <Button type="submit" variant="primary" className="mt-3">
+              <Button onClick={handleSubmit} variant="primary" className="mt-3">
                 submit
               </Button>
             </>
