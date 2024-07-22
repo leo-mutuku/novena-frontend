@@ -59,7 +59,7 @@ function CreateDailyPackhouseHeader() {
     }
   };
 
-  const packhouseitem = [101, 102, 118, 113];
+  const packhouseitem = [101, 102, 201, 202];
   return (
     <>
       <span>*** New Daily Pack House *** </span>
@@ -101,7 +101,7 @@ function CreateDailyPackhouseHeader() {
               <Form.Select
                 required
                 type="text"
-                placeholder="Enter Batch no."
+                placeholder="."
                 value={product_code}
                 onChange={(e) => set_product_code(e.target.value)}
               >

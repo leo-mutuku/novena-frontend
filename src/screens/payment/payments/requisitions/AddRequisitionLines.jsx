@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Form, Button, Table } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { useParams, useNavigate } from "react-router-dom";
+import { useCreatePaymentPurchaseMutation } from "../../../../slices/payment/requisitionLineApiSlice";
 
 const AddRequisitionLines = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const [item, set_item] = useState({
     name: "",
     quantity: 0,
     cost: 0,
-    total: 0,
   });
+  const [createrequisitionLine] = useCreatePaymentPurchaseMutation();
   const [item_list, set_item_list] = useState([]);
   const [total, set_title] = useState(0);
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    alert("");
     e.preventDefault();
-    alert("submit");
+    const res = await createrequisitionLine({
+      id,
+      item_list,
+    }).unwrap();
   };
   const handleAdd = (e) => {
     e.preventDefault();
@@ -27,12 +36,10 @@ const AddRequisitionLines = () => {
   const hanldeQuantity = (e) => {
     let q = parseFloat(e.target.value);
     set_item({ ...item, quantity: q });
-    set_item({ ...item, total: cost * q });
   };
   const handleCost = (e) => {
     let c = parseFloat(e.target.value);
     set_item({ ...item, cost: c });
-    set_item({ ...item, total: quantity * c });
   };
   const removeItem = (index) => {
     item_list.filter((item, i) => {

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../../components/Loader";
 import { useGetAllGLAccountsQuery } from "../../../../slices/finance/glApiSlice";
+import { useCreatePaymentPurchaseMutation } from "../../../../slices/payment/requisitionLineApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
@@ -37,6 +38,8 @@ const PaymentRequisitionList = () => {
     date: "",
     filename: "",
   });
+
+  const [paymentRequisition] = useCreatePaymentPurchaseMutation();
 
   const handleDownloadPDF = async () => {
     setLoadingPdf(true);

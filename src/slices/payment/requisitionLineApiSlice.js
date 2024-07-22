@@ -1,20 +1,27 @@
 import { apiSlice } from "../apiSlice";
-const PAYMENTPURCHASE_URL = "/api/v1/payment/purchases";
+const REQUISITION_LINE = "/api/v1/payment/requisitionlines";
 
 export const requisitionLineApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createPaymentPurchase: builder.mutation({
       query: (data) => ({
-        url: `${PAYMENTPURCHASE_URL}/createpaymentpurchase`,
+        url: `${REQUISITION_LINE}/createrequisitionline`,
         method: "POST",
         body: data,
       }),
     }),
 
-    getAllPaymentPurchase: builder.query({
+    getAllRequisitionlineInProgressByHeaderId: builder.mutation({
       query: (data) => ({
-        url: `${PAYMENTPURCHASE_URL}/getallpaymentpurchase`,
-        method: "GET",
+        url: `${REQUISITION_LINE}/getallrequisitionlineinprogressbyheaderid`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+    getAllPostedRequisitionlineByHeaderId: builder.mutation({
+      query: (data) => ({
+        url: `${REQUISITION_LINE}/getallrequisitionlineinprogressbyheaderid`,
+        method: "POST",
         body: data,
       }),
     }),

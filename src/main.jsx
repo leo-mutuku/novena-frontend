@@ -316,7 +316,7 @@ import PayrollDashboard from "./screens/payroll/PayrollDashboard.jsx";
 import UpdateInstitution from "./screens/administration/insititutions/UpdateInstitution.jsx";
 import CustomerReportScreen from "./screens/administration/CustomerReportScreen.jsx";
 import InsitituionReportScreen from "./screens/administration/InsitutionReportScreen.jsx";
-import AddRequisitionLines from "./screens/purchase/requisition/AddRequisitionLines.jsx";
+import AddRequisitionLines from "./screens/payment/payments/requisitions/AddRequisitionLines.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
