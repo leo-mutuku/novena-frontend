@@ -18,10 +18,18 @@ export const requisitionHeaderApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getAllRequisitionHeadersInProgress: builder.query({
+      query: (data) => ({
+        url: `${PAYMENTPURCHASE_URL}/getallrequisitionheadersinprogress`,
+        method: "GET",
+        body: data,
+      }),
+    }),
   }),
 });
 
 export const {
   useCreateRequisitionHeaderMutation,
   useGetAllRequisitionHeadersQuery,
+  useGetAllRequisitionHeadersInProgressQuery,
 } = requisitionHeaderApiSlice;

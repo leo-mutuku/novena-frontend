@@ -1,8 +1,8 @@
 import PageActionComponent from "../../components/PageActionComponent";
 const pagemenus = [
   { pagename: "All", to: "allpaymentrequisitions" },
-  { pagename: "In Progress", to: "createpaymentrequisition" },
-  { pagename: "Posted", to: "createpaymentrequisition" },
+  { pagename: "In Progress", to: "allrequisitioninprogress" },
+  { pagename: "Posted", to: "allpostedrequisition" },
   { pagename: "New", to: "createpaymentrequisition" },
   // { pagename: "Create Payment Requisition", to: "createpaymentrequisition" },
 ];

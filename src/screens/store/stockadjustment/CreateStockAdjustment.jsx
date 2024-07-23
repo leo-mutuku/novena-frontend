@@ -112,8 +112,8 @@ function CreateStockAdjustment() {
                 onChange={(e) => set_adjustment_type(e.target.value)}
               >
                 <option value="">Select Type</option>
-                <option value="positive">Postive</option>
-                <option value="negative">Negative</option>
+                <option value="Positive">Postive</option>
+                <option value="Negative">Negative</option>
               </Form.Select>
             </Form.Group>
           </Col>

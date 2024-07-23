@@ -76,17 +76,17 @@ function BankPv() {
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="">
-              <Form.Select
+              <Form.Control
                 type="text"
                 required
                 value={sale_order_type}
                 onChange={(e) => set_sale_order_type(e.target.value)}
-              >
-                <option value={"sales_person"}>Sales Person</option>
-                <option value={"Institution"}>Institution</option>
-                <option value={"Customer"}>Customer</option>
-              </Form.Select>
+              ></Form.Control>
             </Form.Group>
+          </Col>
+
+          <Col xs={2} style={{ marginTop: "8px" }}>
+            <Button>Verify</Button>
           </Col>
         </Row>
         <Row>

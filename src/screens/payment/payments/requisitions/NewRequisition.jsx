@@ -76,23 +76,10 @@ function NewRequisition() {
             </Form.Group>
           </Col>
         </Row>
-        {/* <Row>
-          <Form.Group className="my-2" controlId="reference">
-            <Form.Label>Amount in words</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              placeholder="Amounts in words"
-              value={reference}
-              onChange={(e) => set_reference(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-        </Row> */}
+
         <Button type="submit" variant="primary" className="mt-3">
           submit
         </Button>
-
-        {/* {isLoading && <Loader />} */}
       </Form>
     </>
   );

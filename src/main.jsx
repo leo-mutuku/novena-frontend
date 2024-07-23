@@ -317,6 +317,11 @@ import UpdateInstitution from "./screens/administration/insititutions/UpdateInst
 import CustomerReportScreen from "./screens/administration/CustomerReportScreen.jsx";
 import InsitituionReportScreen from "./screens/administration/InsitutionReportScreen.jsx";
 import AddRequisitionLines from "./screens/payment/payments/requisitions/AddRequisitionLines.jsx";
+import ViewPostedRequisition from "./screens/payment/payments/requisitions/ViewPostedRequisition.jsx";
+import AllRequisitionsInProgress from "./screens/payment/payments/requisitions/AllRequisitionsInProgress.jsx";
+import AllPostedRequisitions from "./screens/payment/payments/requisitions/AllPostedRequisitions.jsx";
+import RunningInventoryReport from "./screens/store/storeitems/RunningInventoryReport.jsx";
+import RunningInventoryReportScreen from "./screens/store/RunningInventoryReportScreen.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -467,6 +472,18 @@ const router = createHashRouter(
             <Route
               path="addrequisitionlines/:id"
               element={<AddRequisitionLines />}
+            />
+            <Route
+              path="viewrequisition/:id"
+              element={<ViewPostedRequisition />}
+            />
+            <Route
+              path="allrequisitioninprogress"
+              element={<AllRequisitionsInProgress />}
+            />
+            <Route
+              path="allpostedrequisition"
+              element={<AllPostedRequisitions />}
             />
           </Route>
           <Route
@@ -655,6 +672,15 @@ const router = createHashRouter(
             <Route path="createstoreitem" element={<CreateStoreItemslist />} />
             <Route path="update/:id" element={<UpdateStoreItems />} />
             <Route path="allstoreitems" element={<StoreItemslist />} />
+          </Route>
+          <Route
+            path="runninginventoryreportscreen"
+            element={<RunningInventoryReportScreen />}
+          >
+            <Route
+              path="runninginventoryreport"
+              element={<RunningInventoryReport />}
+            />
           </Route>
           <Route path="storeitemsentries" element={<StoreItemEntriesScreen />}>
             <Route path="allitementries" element={<AllItemEntries />} />
