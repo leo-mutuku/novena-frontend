@@ -30,6 +30,7 @@ const RequisitionList = () => {
       setTableData(data.data);
     }
   }, [data]);
+
   const [title, set_title] = useState({
     report_title: "",
     generated_by: "",
@@ -134,12 +135,12 @@ const RequisitionList = () => {
       },
       {
         Header: "Number",
-        accessor: "gl_name",
+        accessor: "entry_id",
       },
 
       {
-        Header: "Created At",
-        accessor: "created_at",
+        Header: "Requisition Date",
+        accessor: "requsition_date",
         Cell: ({ value }) => (
           <span>{`${moment(value).format("YYYY-MM-DD")} : ${moment(
             value
@@ -148,22 +149,49 @@ const RequisitionList = () => {
       },
 
       {
-        Header: "Gl Number",
-        accessor: "gl_number",
+        Header: "Account",
+        accessor: "account_number",
         // Cell: () => (
         //   <Link to="#">
         //     <IoMdEye />
         //   </Link>
         // ),
       },
-
+      // {
+      //   Header: "Edit",
+      //   accessor: "edit",
+      //   Cell: ({ row }) => (
+      //     <Link to={`/finance/gl/updategl/${row.original.gl_id}`}>
+      //       <CiEdit />
+      //     </Link>
+      //   ),
+      // },
       {
-        Header: "View",
-        accessor: "view",
-        Cell: () => (
-          <Link to="#">
-            <IoMdEye />
-          </Link>
+        Header: "Amount",
+        accessor: "amount",
+      },
+      {
+        Header: "Status",
+        accessor: "status",
+      },
+      {
+        Header: "Action",
+        accessor: "action",
+        Cell: ({ row }) => (
+          <>
+            {row.original.status === "New" && (
+              <Link
+                to={`/payment/requsitions/addrequisitionlines/${row.original.entry_id}`}
+              >
+                <button
+                  className="btn btn-primary"
+                  style={{ fontSize: "12px" }}
+                >
+                  +
+                </button>
+              </Link>
+            )}
+          </>
         ),
       },
     ],

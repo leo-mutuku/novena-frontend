@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../../components/Loader";
-import { useGetAllRequisitionHeadersQuery } from "../../../../slices/payment/requisitionHeaderApiSlice";
+import { useGetAllPostedRequisitionHeadersQuery } from "../../../../slices/payment/requisitionHeaderApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
@@ -24,7 +24,7 @@ const AllPostedRequisitions = () => {
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
-  const { data, isLoading } = useGetAllRequisitionHeadersQuery();
+  const { data, isLoading } = useGetAllPostedRequisitionHeadersQuery();
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);
@@ -164,7 +164,9 @@ const AllPostedRequisitions = () => {
         accessor: "view",
         Cell: () => (
           <Link to="#">
-            <IoMdEye />
+            <Button>
+              <IoMdEye style={{ color: "white" }} />
+            </Button>
           </Link>
         ),
       },

@@ -25,6 +25,13 @@ export const requisitionHeaderApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getAllPostedRequisitionHeaders: builder.query({
+      query: (data) => ({
+        url: `${PAYMENTPURCHASE_URL}/getllpostedrequisitionHeaders`,
+        method: "GET",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -32,4 +39,5 @@ export const {
   useCreateRequisitionHeaderMutation,
   useGetAllRequisitionHeadersQuery,
   useGetAllRequisitionHeadersInProgressQuery,
+  useGetAllPostedRequisitionHeadersQuery,
 } = requisitionHeaderApiSlice;

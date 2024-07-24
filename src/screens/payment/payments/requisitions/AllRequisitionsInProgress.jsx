@@ -170,11 +170,15 @@ const AllRequisitionsInProgress = () => {
       },
 
       {
-        Header: "Post",
-        accessor: "post",
-        Cell: () => (
-          <Link to="#">
-            <MdEdit />
+        Header: "Edit",
+        accessor: "edit",
+        Cell: ({ row }) => (
+          <Link
+            to={`/payment/requsitions/postrequisition/${row.original.entry_id}`}
+          >
+            <Button>
+              <MdEdit style={{ color: "white" }} />
+            </Button>
           </Link>
         ),
       },

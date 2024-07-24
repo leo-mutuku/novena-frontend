@@ -45,6 +45,10 @@ function CreateBankReceipt() {
     set_customer_id(x[0].customer_id);
   };
 
+  const handleReferenceChange = (e) => {
+    set_reference(e.target.value.toUpperCase());
+  };
+
   const navigate = useNavigate();
   useEffect(() => {
     navigate();
@@ -213,7 +217,7 @@ function CreateBankReceipt() {
                 type="text"
                 placeholder="Reference"
                 value={reference}
-                onChange={(e) => set_reference(e.target.value)}
+                onChange={handleReferenceChange}
               ></Form.Control>
             </Form.Group>
           </Col>

@@ -93,7 +93,7 @@ import OrderReceiptList from "./screens/sales/orderreceipt/OrderReceiptList.jsx"
 import SalesPeoplelist from "./screens/sales/salespeople/SalesPeoplelist.jsx";
 import CreateSalesPeople from "./screens/sales/salespeople/CreateSalesPeople.jsx";
 import RequisitionList from "./screens/purchase/requisition/RequisitionList.jsx";
-import CreatePurchase from "./screens/purchase/purchase/CreatePurchase.jsx";
+import CreatePurchase from "./screens/payment/payments/requisitions/RequisitionList.jsx";
 import PurchaseList from "./screens/purchase/purchase/PurchaseList.jsx";
 import StoreRegisterScreen from "./screens/store/storeRegisterScreen.jsx";
 import StoreRegisterList from "./screens/store/storeregister/StoreRegisterList.jsx";
@@ -103,7 +103,7 @@ import AllStorePurchasesInTransit from "./screens/purchase/purchase/AllStorePurc
 import CreateBankAccount from "./screens/finance/bankaccounts/CreateBankAccount.jsx";
 import CreatePackhousePerson from "./screens/production/packhousepeople/CreatePackhousePerson.jsx";
 import PackhosePeopleList from "./screens/production/packhousepeople/PackhosePeopleList.jsx";
-import Allpostedrequisitions from "./screens/purchase/requisition/AllPostedRequisitions.jsx";
+import Allpostedrequisitions from "./screens/payment/payments/requisitions/AllPostedRequisitions.jsx";
 import CreateRequisition from "./screens/purchase/requisition/CreateRequisition.jsx";
 import StockTakeInProgress from "./screens/store/stocktake/StockTakeInProgress.jsx";
 import PostedStockTake from "./screens/store/stocktake/PostedStockTake.jsx";
@@ -322,6 +322,7 @@ import AllRequisitionsInProgress from "./screens/payment/payments/requisitions/A
 import AllPostedRequisitions from "./screens/payment/payments/requisitions/AllPostedRequisitions.jsx";
 import RunningInventoryReport from "./screens/store/storeitems/RunningInventoryReport.jsx";
 import RunningInventoryReportScreen from "./screens/store/RunningInventoryReportScreen.jsx";
+import PostRequisition from "./screens/payment/payments/requisitions/PostRequisition.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -470,9 +471,14 @@ const router = createHashRouter(
               element={<RequisitionList />}
             />
             <Route
+              path="allpostedrequisitions"
+              element={<Allpostedrequisitions />}
+            />
+            <Route
               path="addrequisitionlines/:id"
               element={<AddRequisitionLines />}
             />
+            <Route path="postrequisition/:id" element={<PostRequisition />} />
             <Route
               path="viewrequisition/:id"
               element={<ViewPostedRequisition />}
@@ -746,17 +752,12 @@ const router = createHashRouter(
             />
           </Route>
           <Route path="storerequisition" element={<StoreRequisitionScreen />}>
-            <Route index element={<RequisitionList />} />
             <Route path="createrequisition" element={<CreateRequisition />} />
             <Route
               path="allinprogressrequisitions"
               element={<StockTakeInProgress />}
             />
 
-            <Route
-              path="allpostedrequisitions"
-              element={<Allpostedrequisitions />}
-            />
             <Route path="allstorerequisitions" element={<RequisitionList />} />
           </Route>
         </Route>
