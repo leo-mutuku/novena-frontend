@@ -93,7 +93,7 @@ import OrderReceiptList from "./screens/sales/orderreceipt/OrderReceiptList.jsx"
 import SalesPeoplelist from "./screens/sales/salespeople/SalesPeoplelist.jsx";
 import CreateSalesPeople from "./screens/sales/salespeople/CreateSalesPeople.jsx";
 import RequisitionList from "./screens/purchase/requisition/RequisitionList.jsx";
-import CreatePurchase from "./screens/payment/payments/requisitions/RequisitionList.jsx";
+import CreatePurchase from "./screens/purchase/purchase/CreatePurchase.jsx";
 import PurchaseList from "./screens/purchase/purchase/PurchaseList.jsx";
 import StoreRegisterScreen from "./screens/store/storeRegisterScreen.jsx";
 import StoreRegisterList from "./screens/store/storeregister/StoreRegisterList.jsx";
