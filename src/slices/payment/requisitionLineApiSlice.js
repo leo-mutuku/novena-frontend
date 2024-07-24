@@ -25,10 +25,17 @@ export const requisitionLineApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getRequisitionLineById: builder.query({
+      query: (id) => ({
+        url: `${REQUISITION_LINE}/getrequisitionlinebyid/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
 export const {
   useCreatePaymentPurchaseMutation,
   useGetAllPaymentPurchaseQuery,
+  useGetRequisitionLineByIdQuery,
 } = requisitionLineApiSlice;
