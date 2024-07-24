@@ -5,7 +5,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader";
 
-import { useGetCashAccountByIdQuery } from "../../../slices/finance/cashAccountApiSlice";
+import {
+  useGetCashAccountByIdQuery,
+  useUpdateCashAccountBalanceMutation,
+} from "../../../slices/finance/cashAccountApiSlice";
 
 function UpdateCashAccounts() {
   const [cash_account, set_cash_account] = useState("");
@@ -21,13 +24,13 @@ function UpdateCashAccounts() {
 
   //call Vehicle get query
   const { data: cash, error, isLoading } = useGetCashAccountByIdQuery(id);
+  const [UpdateBalance] = useUpdateCashAccountBalanceMutation();
   console.log(cash?.data);
   console.log(error);
   useEffect(() => {
     if (id) {
     }
   }, [id, cash]);
-  cash_account;
 
   useEffect(() => {
     if (id) {
@@ -40,23 +43,22 @@ function UpdateCashAccounts() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    cash_account;
 
-    // try {
-    //   const result = await updateGL({
-    //     id: id,
-    //     data: { cash_account, balance },
-    //   }).unwrap();
+    try {
+      const result = await UpdateBalance({
+        id,
+        balance,
+      }).unwrap();
 
-    //   if (result == "failed") {
-    //     toast.error(error.message);
-    //   } else {
-    //     toast.success(result.message);
-    //     navigate("../allcash");
-    //   }
-    // } catch (error) {
-    //   toast.error(error.message);
-    // }
+      if (result == "failed") {
+        toast.error(error.message);
+      } else {
+        toast.success(result.message);
+        navigate("../allcashaccounts");
+      }
+    } catch (error) {
+      toast.error(error.data.message || "Error occured");
+    }
   };
   return (
     <>
