@@ -5,6 +5,7 @@ export const sidelinks = [
       { subMenuTitle: "Orders", to: "orders" },
       { subMenuTitle: "Receipts", to: "orderreceipts" },
       { subMenuTitle: "Return Order", to: "returnorder" },
+      { subMenuTitle: "Sales Expense", to: "salesexpense" },
       { subMenuTitle: "Order Dispatch", to: "orderdispatch" },
       { subMenuTitle: "Order Invoice", to: "orderinvoice" },
 
@@ -24,5 +25,4 @@ export const sidelinks = [
       // { subMenuTitle: "Detailed SP Return Report", to: "#" },
     ],
   },
-
 ];

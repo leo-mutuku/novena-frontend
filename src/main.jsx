@@ -323,6 +323,9 @@ import AllPostedRequisitions from "./screens/payment/payments/requisitions/AllPo
 import RunningInventoryReport from "./screens/store/storeitems/RunningInventoryReport.jsx";
 import RunningInventoryReportScreen from "./screens/store/RunningInventoryReportScreen.jsx";
 import PostRequisition from "./screens/payment/payments/requisitions/PostRequisition.jsx";
+import SalesExpenseScreen from "./screens/sales/SalesExpenseScreen.jsx";
+import SalesExpenseList from "./screens/sales/salesexpense/SalesExpenseList.jsx";
+import NewSalesExpense from "./screens/sales/salesexpense/NewSalesExpense.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -779,6 +782,11 @@ const router = createHashRouter(
               element={<PostedOrderPreview />}
             />
           </Route>
+
+          <Route path="salesexpense" element={<SalesExpenseScreen />}>
+            <Route path="salesexpenselist" element={<SalesExpenseList />} />
+            <Route path="newsalesexpense" element={<NewSalesExpense />} />
+          </Route>
           <Route path="commission" element={<CommissionScreen />}>
             <Route path="salescommission" element={<SalesPeopleCommission />} />
           </Route>
@@ -817,9 +825,7 @@ const router = createHashRouter(
             path="salespeoplereport"
             element={<SalesReportScreen />}
           ></Route>
-
           <Route path="loadinglist" element={<LoadingListRport />}></Route>
-
           <Route path="orderinvoice" element={<OrderInvoiceScreen />}>
             <Route index element={<OrderInvoiceList />} />
             <Route path="createinvoice" element={<CreateOrderInvoce />} />
@@ -831,7 +837,6 @@ const router = createHashRouter(
             <Route path="bankreceipts" element={<CreateBankReceipt />} />
             <Route path="cashreceipts" element={<CreateCashReceipts />} />
           </Route>
-
           <Route path="salespeople" element={<SalesPeopleScreen />}>
             <Route path="createsalesperson" element={<CreateSalesPeople />} />
             <Route path="allsalespeople" element={<SalesPeoplelist />} />
