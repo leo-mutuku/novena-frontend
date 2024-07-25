@@ -3,15 +3,32 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useGetRequisitionLineByIdQuery } from "../../../../slices/payment/requisitionLineApiSlice";
 import { usePostRequisitionMutation } from "../../../../slices/payment/requisitionHeaderApiSlice";
 import { Table, Row, Col, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const PostRequisition = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate();
+  }, [navigate]);
   const { data: requisition } = useGetRequisitionLineByIdQuery(id);
   const [postRequisition] = usePostRequisitionMutation();
+  const handlepostRequisition = async () => {
+    try {
+      const res = await postRequisition({ id }).unwrap();
+      if (res.status == "success") {
+        toast.success("Requisition Posted Successfully");
+        navigate("../allpostedrequisition");
+      } else {
+        toast.error(res.message || "Requisition Not Posted");
+      }
+    } catch (error) {
+      toast.error(error.data?.message || "Requisition Not Posted");
+    }
+  };
 
   const [total, set_total] = useState(0);
 
-  const navigate = useNavigate();
   useEffect(() => {
     if (requisition?.data) {
       set_total(
@@ -54,7 +71,9 @@ const PostRequisition = () => {
 
         <Col xs={3}>
           <Button variant="danger">Reject</Button> &nbsp;
-          <Button variant="success">Approve</Button>
+          <Button onClick={handlepostRequisition} variant="success">
+            Approve
+          </Button>
         </Col>
       </Row>
     </>

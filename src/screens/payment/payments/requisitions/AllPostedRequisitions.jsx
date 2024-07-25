@@ -151,19 +151,16 @@ const AllPostedRequisitions = () => {
       {
         Header: "Amount",
         accessor: "amount",
-        // Cell: () => (
-        //   <Link to="#">
-        //     <IoMdEye />
-        //   </Link>
-        // ),
       },
       { Header: "Satus", accessor: "status" },
 
       {
         Header: "View",
         accessor: "view",
-        Cell: () => (
-          <Link to="#">
+        Cell: ({ row }) => (
+          <Link
+            to={`/payment/requsitions/viewrequisition/${row.original.entry_id}`}
+          >
             <Button>
               <IoMdEye style={{ color: "white" }} />
             </Button>

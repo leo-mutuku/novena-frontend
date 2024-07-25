@@ -290,7 +290,7 @@ import AllSuppliersPayments from "./screens/payment/payments/purchases/AllSuppli
 import NewRequisition from "./screens/payment/payments/requisitions/NewRequisition.jsx";
 import BankPv from "./screens/payment/payments/paymentvouchers/BankPV.jsx";
 import CashPv from "./screens/payment/payments/paymentvouchers/CashPV.jsx";
-import AllPostedPyamentVouchers from "./screens/payment/payments/paymentvouchers/AllPostedPaymentVouchers.jsx";
+import AllPostedPyamentVouchers from "./screens/payment/payments/paymentvouchers/AllPV.jsx";
 import PaymentReportScreen from "./screens/payment/PaymentReportScreen.jsx";
 import SupplierPaymentReportScreen from "./screens/administration/SupplierReportScreen.jsx";
 

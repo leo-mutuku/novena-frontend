@@ -17,12 +17,22 @@ const AddRequisitionLines = () => {
   const [item_list, set_item_list] = useState([]);
   const [total, set_title] = useState(0);
   const handleSubmit = async (e) => {
-    alert("");
     e.preventDefault();
-    const res = await createrequisitionLine({
-      id,
-      item_list,
-    }).unwrap();
+    try {
+      const res = await createrequisitionLine({
+        id,
+        item_list,
+      }).unwrap();
+      console.log(res);
+      if (res.status == "success") {
+        toast.success("Requisition Line Created Successfully");
+        navigate("../allrequisitioninprogress");
+      } else {
+        toast.error(res.message);
+      }
+    } catch (error) {
+      toast.error(error.data.message || error.message || "error");
+    }
   };
   const handleAdd = (e) => {
     e.preventDefault();

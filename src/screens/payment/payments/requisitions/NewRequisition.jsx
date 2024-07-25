@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 
 function NewRequisition() {
   const { userInfo } = useSelector((state) => state.auth);
+  const [name, set_name] = useState("");
   const [account_number, set_account_number] = useState("");
   const [date, set_date] = useState("");
   const [created_by, set_created_by] = useState("");
@@ -26,6 +27,7 @@ function NewRequisition() {
         created_by: userInfo?.first_name,
         account_number,
         date,
+        name,
       }).unwrap();
       if (res.status === "success") {
         toast.success(res.message);
@@ -50,6 +52,20 @@ function NewRequisition() {
       <Form onSubmit={handleSubmit}>
         {/* */}
 
+        <Row>
+          <Col>
+            <Form.Group className="my-2" controlId="amount">
+              <Form.Label>Title / Description</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Description"
+                value={name}
+                onChange={(e) => set_name(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+        </Row>
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="amount">
