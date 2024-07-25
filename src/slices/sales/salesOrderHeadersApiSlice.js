@@ -68,10 +68,19 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Sales_order"],
     }),
+    cancelOrder: builder.mutation({
+      query: (data) => ({
+        url: `${SALESORDERHEADER_URL}/cancelorder`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Sales_order"],
+    }),
   }),
 });
 
 export const {
+  useCancelOrderMutation,
   useGetAllDispatchedOrdersQuery,
   useCreateSalesOrderHeaderMutation,
   useGetAllSalesOrderHeadersQuery,

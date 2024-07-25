@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Loader from "../../../components/Loader";
-import { useGetAllSalesOrderHeadersQuery } from "../../../slices/sales/salesOrderHeadersApiSlice";
+import {
+  useGetAllSalesOrderHeadersQuery,
+  useCancelOrderMutation,
+} from "../../../slices/sales/salesOrderHeadersApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa6";
@@ -13,6 +16,7 @@ import AddOrderLines from "./lines/AddOrderLines";
 import TimeDate from "../../../components/TimeDate";
 import PrintSalesOrder from "./lines/PrintSalesOrder";
 import { TiPrinter } from "react-icons/ti";
+import { toast } from "react-toastify";
 
 const OrderHeaderList = () => {
   let timeDate = new TimeDate();
@@ -33,8 +37,20 @@ const OrderHeaderList = () => {
     set_mode_delete(style);
   };
   const { data, isLoading } = useGetAllSalesOrderHeadersQuery();
+  const [cancleOrder] = useCancelOrderMutation();
 
-
+  const handleCancelOrder = async (id) => {
+    try {
+      const res = await cancleOrder({ id }).unwrap();
+      if (res.status === "success") {
+        toast.success(res.message);
+      } else {
+        toast.error(res.message);
+      }
+    } catch (error) {
+      toast.error(error.data.message || "Error occurred");
+    }
+  };
 
   const navigate = useNavigate();
   useEffect(() => {}, [data]);
@@ -120,31 +136,35 @@ const OrderHeaderList = () => {
 
                   <td>
                     {item.status === "New" ? (
-                      <Link to={`#`}>
-                        <IoMdAdd
-                          onClick={(e) =>
-                            handleAdd(
-                              e,
-                              item.sales_order_number,
-                              "block",
-                              item.sales_person_number
-                            )
-                          }
-                        />
-                      </Link>
+                      <Button
+                        variant="outline-success"
+                        size="sm"
+                        onClick={(e) =>
+                          handleAdd(
+                            e,
+                            item.sales_order_number,
+                            "block",
+                            item.sales_person_number
+                          )
+                        }
+                      >
+                        <IoMdAdd />
+                      </Button>
                     ) : (
                       "--"
                     )}
                   </td>
                   <td>
                     {item.status === "New" ? (
-                      <Link to={`#`}>
-                        <MdDelete
-                          onClick={(e) =>
-                            handleDelete(e, item.store_purchase_number, "block")
-                          }
-                        />
-                      </Link>
+                      <Button
+                        variant="outline-danger"
+                        size="sm"
+                        onClick={(e) =>
+                          handleCancelOrder(item.sales_order_number)
+                        }
+                      >
+                        <MdDelete />
+                      </Button>
                     ) : (
                       "--"
                     )}
