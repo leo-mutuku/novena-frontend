@@ -8,6 +8,8 @@ import { useGetAllCustomersQuery } from "../../../slices/administration/customer
 import { useGetAllInstitutionsQuery } from "../../../slices/administration/institutionsApiSlice";
 import { useCreateSalesReturnOrderMutation } from "../../../slices/sales/salesOrderReturnApiSlice";
 import { useCreateSalesOrderReverseMutation } from "../../../slices/sales/salesOrderReturnApiSlice";
+import { useCreateSalesExpenseMutation } from "../../../slices/sales/salesExpenseApiSlice";
+import { useGetAllAccountsQuery } from "../../../slices/finance/accountsApiSlice";
 import { Autocomplete, TextField } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
@@ -25,6 +27,7 @@ function NewSalesExpense() {
   const [sale_order_type, set_sale_order_type] = useState("");
 
   const [created_by, set_created_by] = useState("");
+  const [SalesExpense] = useCreateSalesExpenseMutation();
 
   const [DailyProductionHeader, { isLoading }] =
     useCreateDailyProductionHeaderMutation();
@@ -33,6 +36,7 @@ function NewSalesExpense() {
   const { data: customers } = useGetAllCustomersQuery();
   const { data: staff } = useGetAllSalesPeopleQuery();
   const [CreateReurnOrder] = useCreateSalesReturnOrderMutation();
+  const { data: allAccounts } = useGetAllAccountsQuery();
   const { userInfo } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
@@ -84,7 +88,12 @@ function NewSalesExpense() {
     }
   };
 
-  const packhouseitem = [101, 102, 118];
+  console.log(allAccounts?.data);
+
+  const salesExpenseAccounts = Array.from(
+    { length: 7399 - 7301 + 1 },
+    (v, i) => i + 7301
+  );
   return (
     <>
       <span>*** New Sales Expense *** </span>
@@ -100,7 +109,7 @@ function NewSalesExpense() {
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="pay_per_bale">
-              <Form.Label>Batch no.</Form.Label>
+              <Form.Label>Account </Form.Label>
               <Form.Select
                 required
                 style={{ textTransform: "uppercase" }}
@@ -109,14 +118,20 @@ function NewSalesExpense() {
                 value={batch_number}
                 onChange={(e) => set_batch_number(e.target.value)}
               >
-                <option>Select Batch no</option>
-                {last_batch_numbers?.data.map((item, index) => (
-                  <>
-                    <option key={index} value={item.batch_number}>
-                      {item.batch_number}
-                    </option>
-                  </>
-                ))}
+                <option>Select Account</option>
+                {allAccounts?.data
+                  .filter(
+                    (account) =>
+                      account.account_number >= 7301 &&
+                      account.account_number <= 7399
+                  )
+                  .map((item, index) => (
+                    <>
+                      <option key={index} value={item.account_number}>
+                        {item.account_name}
+                      </option>
+                    </>
+                  ))}
               </Form.Select>
             </Form.Group>
           </Col>
