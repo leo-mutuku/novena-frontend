@@ -19,8 +19,11 @@ function NewSalesExpense() {
   const [staff_id, set_staff_id] = useState("");
   const [customer_id, set_customer_id] = useState("");
   const [institution_id, set_institution_id] = useState("");
-  const [batch_number, set_batch_number] = useState("");
+  const [accunt_number, set_accunt_number] = useState("");
   const [return_reason, set_return_reason] = useState("");
+  const [amount, set_amount] = useState("");
+  const [description, set_description] = useState("");
+  const [date, set_date] = useState("");
 
   const [pack_officer, set_pack_officer] = useState("");
 
@@ -31,7 +34,7 @@ function NewSalesExpense() {
 
   const [DailyProductionHeader, { isLoading }] =
     useCreateDailyProductionHeaderMutation();
-  const { data: last_batch_numbers } = useGetLastBatchNumbersQuery();
+  const { data: last_accunt_numbers } = useGetLastBatchNumbersQuery();
   const { data: institutions } = useGetAllInstitutionsQuery();
   const { data: customers } = useGetAllCustomersQuery();
   const { data: staff } = useGetAllSalesPeopleQuery();
@@ -47,34 +50,16 @@ function NewSalesExpense() {
     navigate();
   }, [navigate, userInfo]);
 
-  const handleCustomer = (_, newInputValue) => {
-    let x = customers?.data?.filter((a) => {
-      if (a.full_name == newInputValue) {
-        return a.customer_id;
-      }
-    });
-    set_customer_id(x[0].customer_id);
-  };
-  const handleInstitution = (e) => {
-    let x = institutions?.data?.filter((a) => {
-      if (a.institution_id == e.target.value) {
-        return a.institution_id;
-      }
-    });
-    set_institution_id(x[0].institution_id);
-    set_customer_id("null");
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await CreateReurnOrder({
-        sale_order_type,
+      const res = await SalesExpense({
         staff_id,
-        institution_id,
-        customer_id,
-        batch_number,
-        return_reason,
+        accunt_number,
+        date,
+        description,
+        amount,
         created_by,
       }).unwrap();
       if (res.status == "failed") {
@@ -88,12 +73,6 @@ function NewSalesExpense() {
     }
   };
 
-  console.log(allAccounts?.data);
-
-  const salesExpenseAccounts = Array.from(
-    { length: 7399 - 7301 + 1 },
-    (v, i) => i + 7301
-  );
   return (
     <>
       <span>*** New Sales Expense *** </span>
@@ -115,8 +94,8 @@ function NewSalesExpense() {
                 style={{ textTransform: "uppercase" }}
                 type="text"
                 placeholder="Enter Batch no."
-                value={batch_number}
-                onChange={(e) => set_batch_number(e.target.value)}
+                value={accunt_number}
+                onChange={(e) => set_accunt_number(e.target.value)}
               >
                 <option>Select Account</option>
                 {allAccounts?.data
@@ -135,102 +114,74 @@ function NewSalesExpense() {
               </Form.Select>
             </Form.Group>
           </Col>
+
           <Col>
-            <Form.Group className="my-2" controlId="pay_per_bale">
-              <Form.Label>Sale Order Type</Form.Label>
+            <Form.Group className="my-2" controlId="sales_person_number">
+              <Form.Label>sales person </Form.Label>
               <Form.Select
                 required
                 type="text"
-                placeholder="Enter Batch no."
-                value={sale_order_type}
-                onChange={(e) => set_sale_order_type(e.target.value)}
+                placeholder="sales_person_number"
+                value={staff_id}
+                onChange={(e) => set_staff_id(e.target.value)}
               >
-                <option value={""}>Sales order type</option>
-                <option value={"sales_person"}> Sales Person</option>
-                <option value={"Customer"}> Customer</option>
-                <option value={"Institution"}>Institution</option>
+                <option value={""}> Select option</option>
+                {staff?.data
+                  .filter(
+                    (order) =>
+                      order.first_name !== "Customer" &&
+                      order.first_name !== "Institution"
+                  )
+                  .map((item, index) => (
+                    <>
+                      <option key={index} value={item.staff_id}>
+                        {item.first_name} {item.last_name}
+                      </option>
+                    </>
+                  ))}
               </Form.Select>
             </Form.Group>
-          </Col>
-          <Col>
-            {sale_order_type == "sales_person" ? (
-              <Form.Group className="my-2" controlId="sales_person_number">
-                <Form.Label>sales person </Form.Label>
-                <Form.Select
-                  required
-                  type="text"
-                  placeholder="sales_person_number"
-                  value={staff_id}
-                  onChange={(e) => set_staff_id(e.target.value)}
-                >
-                  <option value={""}> Select option</option>
-                  {staff?.data
-                    .filter(
-                      (order) =>
-                        order.first_name !== "Customer" &&
-                        order.first_name !== "Institution"
-                    )
-                    .map((item, index) => (
-                      <>
-                        <option key={index} value={item.staff_id}>
-                          {item.first_name} {item.last_name}
-                        </option>
-                      </>
-                    ))}
-                </Form.Select>
-              </Form.Group>
-            ) : sale_order_type == "Customer" ? (
-              <Autocomplete
-                sx={{ marginTop: "25px" }}
-                fullWidth
-                disablePortal
-                id="combo-box-demo"
-                options={customers?.data}
-                getOptionLabel={(option) => option.full_name}
-                renderInput={(full_name) => (
-                  <TextField {...full_name} label="Customers" />
-                )}
-                inputValue={customers.full_name}
-                onInputChange={(event, newInputValue) =>
-                  handleCustomer(event, newInputValue)
-                }
-                isOptionEqualToValue={(option, value) =>
-                  option.full_name === value.full_name
-                }
-              />
-            ) : sale_order_type == "Institution" ? (
-              <Form.Group className="my-2" controlId="institution">
-                <Form.Label>Institution</Form.Label>
-                <Form.Select
-                  type="text"
-                  required
-                  placeholder="Institution"
-                  value={institution_id}
-                  onChange={handleInstitution}
-                >
-                  <option value={``}> Select institution</option>
-                  {institutions?.data.map((item, index) => (
-                    <option value={item.institution_id}>
-                      {item.institution_name}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Form.Group>
-            ) : (
-              <></>
-            )}
           </Col>
         </Row>
         <Row>
           <Col>
+            {" "}
             <Form.Group className="my-2" controlId="pack_officer">
-              <Form.Label>Reason for returning</Form.Label>
+              <Form.Label>Expense date</Form.Label>
+              <Form.Control
+                required
+                type="date"
+                placeholder=""
+                value={date}
+                onChange={(e) => set_date(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+          <Col>
+            {" "}
+            <Form.Group className="my-2" controlId="pack_officer">
+              <Form.Label>Description</Form.Label>
               <Form.Control
                 required
                 type="text"
                 placeholder=""
-                value={return_reason}
-                onChange={(e) => set_return_reason(e.target.value)}
+                value={description}
+                onChange={(e) => set_description(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col>
+            <Form.Group className="my-2" controlId="pack_officer">
+              <Form.Label>Amount</Form.Label>
+              <Form.Control
+                required
+                type="number"
+                placeholder=""
+                value={amount}
+                onChange={(e) => set_amount(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
