@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useGetRequisitionLineByIdQuery } from "../../../../slices/payment/requisitionLineApiSlice";
+import { usePostRequisitionMutation } from "../../../../slices/payment/requisitionHeaderApiSlice";
 import { Table, Row, Col, Button } from "react-bootstrap";
 
 const PostRequisition = () => {
   const { id } = useParams();
   const { data: requisition } = useGetRequisitionLineByIdQuery(id);
+  const [postRequisition] = usePostRequisitionMutation();
+
   const [total, set_total] = useState(0);
 
   const navigate = useNavigate();
