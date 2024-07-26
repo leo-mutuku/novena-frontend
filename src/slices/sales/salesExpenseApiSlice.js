@@ -6,7 +6,7 @@ export const salesExpenseApiSlice = apiSlice.injectEndpoints({
     tagTypes: ["salesExpense"],
     getSalesExpense: builder.query({
       query: (data) => ({
-        url: `${SALES_EXPENSE_URL}/getsalesexpense`,
+        url: `${SALES_EXPENSE_URL}/getallsalesexpense`,
         method: "GET",
         body: data,
       }),

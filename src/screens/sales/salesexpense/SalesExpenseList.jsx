@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Loader from "../../../components/Loader";
-import { useGetAllSalesReturnOrderQuery } from "../../../slices/sales/salesOrderReturnApiSlice";
+import { useGetSalesExpenseQuery } from "../../../slices/sales/salesExpenseApiSlice";
 
 import { Link, useNavigate } from "react-router-dom";
 import { IoMdAdd, IoMdEye } from "react-icons/io";
@@ -10,7 +10,7 @@ import DataTable from "../../../components/general/DataTable";
 import moment from "moment";
 
 const SalesExpenseList = () => {
-  const { data: orders, isLoading } = useGetAllSalesReturnOrderQuery();
+  const { data: orders, isLoading } = useGetSalesExpenseQuery();
 
   const [tableData, setTableData] = useState([]);
   let timeDate = new TimeDate();
@@ -44,51 +44,26 @@ const SalesExpenseList = () => {
         Cell: ({ value }) => <span>{value}</span>,
       },
       {
-        Header: "Sale Date",
+        Header: "Entry Date",
         accessor: "created_at",
         Cell: ({ value }) => <span>{moment(value).format("YYYY-MM-DD")}</span>,
       },
       {
-        Header: "RO . No#",
-        accessor: "header_id",
+        Header: "Staff",
+        accessor: "staff_id",
       },
       {
-        Header: "Sales Type",
-        accessor: "sales_order_type",
-      },
-
-      {
-        Header: "Total",
-        accessor: "total",
-      },
-      {
-        Header: "No. of Items",
-        accessor: "pay_per_bale",
+        Header: "description",
+        accessor: "description",
       },
 
       {
-        Header: "Status",
-        accessor: "status",
-        Cell: ({ value }) => (
-          <span style={{ color: getStatusColor(value) }}>{value}</span>
-        ),
+        Header: "Amount",
+        accessor: "amount",
       },
       {
-        Header: "View",
-        accessor: "view",
-        Cell: ({ row }) => (
-          <>
-            {row.original.status === "New" ? (
-              <Link
-                to={`/sales/returnorder/addlines/${row.original.header_id}`}
-              >
-                <IoMdAdd />
-              </Link>
-            ) : (
-              "--"
-            )}
-          </>
-        ),
+        Header: "Captured By",
+        accessor: "created_by",
       },
     ],
     []

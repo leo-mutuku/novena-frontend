@@ -19,11 +19,11 @@ function NewSalesExpense() {
   const [staff_id, set_staff_id] = useState("");
   const [customer_id, set_customer_id] = useState("");
   const [institution_id, set_institution_id] = useState("");
-  const [accunt_number, set_accunt_number] = useState("");
+  const [account_number, set_account_number] = useState("");
   const [return_reason, set_return_reason] = useState("");
   const [amount, set_amount] = useState("");
   const [description, set_description] = useState("");
-  const [date, set_date] = useState("");
+  const [expense_date, set_expense_date] = useState("");
 
   const [pack_officer, set_pack_officer] = useState("");
 
@@ -34,7 +34,7 @@ function NewSalesExpense() {
 
   const [DailyProductionHeader, { isLoading }] =
     useCreateDailyProductionHeaderMutation();
-  const { data: last_accunt_numbers } = useGetLastBatchNumbersQuery();
+  const { data: last_account_numbers } = useGetLastBatchNumbersQuery();
   const { data: institutions } = useGetAllInstitutionsQuery();
   const { data: customers } = useGetAllCustomersQuery();
   const { data: staff } = useGetAllSalesPeopleQuery();
@@ -56,8 +56,8 @@ function NewSalesExpense() {
     try {
       const res = await SalesExpense({
         staff_id,
-        accunt_number,
-        date,
+        account_number,
+        expense_date,
         description,
         amount,
         created_by,
@@ -94,8 +94,8 @@ function NewSalesExpense() {
                 style={{ textTransform: "uppercase" }}
                 type="text"
                 placeholder="Enter Batch no."
-                value={accunt_number}
-                onChange={(e) => set_accunt_number(e.target.value)}
+                value={account_number}
+                onChange={(e) => set_account_number(e.target.value)}
               >
                 <option>Select Account</option>
                 {allAccounts?.data
@@ -147,13 +147,13 @@ function NewSalesExpense() {
           <Col>
             {" "}
             <Form.Group className="my-2" controlId="pack_officer">
-              <Form.Label>Expense date</Form.Label>
+              <Form.Label>Expense expense_date</Form.Label>
               <Form.Control
                 required
                 type="date"
                 placeholder=""
-                value={date}
-                onChange={(e) => set_date(e.target.value)}
+                value={expense_date}
+                onChange={(e) => set_expense_date(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
