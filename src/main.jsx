@@ -290,7 +290,7 @@ import AllSuppliersPayments from "./screens/payment/payments/purchases/AllSuppli
 import NewRequisition from "./screens/payment/payments/requisitions/NewRequisition.jsx";
 import BankPv from "./screens/payment/payments/paymentvouchers/BankPV.jsx";
 import CashPv from "./screens/payment/payments/paymentvouchers/CashPV.jsx";
-import AllPostedPyamentVouchers from "./screens/payment/payments/paymentvouchers/AllPV.jsx";
+import AllPV from "./screens/payment/payments/paymentvouchers/AllPV.jsx";
 import PaymentReportScreen from "./screens/payment/PaymentReportScreen.jsx";
 import SupplierPaymentReportScreen from "./screens/administration/SupplierReportScreen.jsx";
 
@@ -326,6 +326,8 @@ import PostRequisition from "./screens/payment/payments/requisitions/PostRequisi
 import SalesExpenseScreen from "./screens/sales/SalesExpenseScreen.jsx";
 import SalesExpenseList from "./screens/sales/salesexpense/SalesExpenseList.jsx";
 import NewSalesExpense from "./screens/sales/salesexpense/NewSalesExpense.jsx";
+import MakePayment from "./screens/payment/payments/paymentvouchers/MakePayment.jsx";
+import AllPaidPV from "./screens/payment/payments/paymentvouchers/AllPaidPV.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -507,7 +509,9 @@ const router = createHashRouter(
           <Route path="paymentvoucher" element={<PaymentVoucherScreen />}>
             <Route path="bankpv" element={<BankPv />} />
             <Route path="cashpv" element={<CashPv />} />
-            <Route path="allpv" element={<AllPostedPyamentVouchers />} />
+            <Route path="allpv" element={<AllPV />} />
+            <Route path="allpaidpv" element={<AllPaidPV />} />
+            <Route path="makepayment/:id" element={<MakePayment />} />
           </Route>
         </Route>
 

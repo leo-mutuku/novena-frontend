@@ -160,7 +160,7 @@ const PaymentVoucherList = () => {
         Header: "Edit",
         accessor: "edit",
         Cell: ({ row }) => (
-          <Link to={`/finance/gl/updategl/${row.original.gl_id}`}>
+          <Link to={`payment/paymentvoucher/makepayment${row.original.gl_id}`}>
             <CiEdit />
           </Link>
         ),

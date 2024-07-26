@@ -2,7 +2,8 @@ import React, { useState, useEffect, useMemo } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../../components/Loader";
 import { useGetAllRequisitionHeadersQuery } from "../../../../slices/payment/requisitionHeaderApiSlice";
-import { Table, Button } from "react-bootstrap";
+import { Table } from "react-bootstrap";
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
 import { IoMdEye } from "react-icons/io";
@@ -183,12 +184,9 @@ const RequisitionList = () => {
               <Link
                 to={`/payment/requsitions/addrequisitionlines/${row.original.entry_id}`}
               >
-                <button
-                  className="btn btn-primary"
-                  style={{ fontSize: "12px" }}
-                >
+                <Button variant="outline-primary" style={{ fontSize: "12px" }}>
                   +
-                </button>
+                </Button>
               </Link>
             )}
           </>

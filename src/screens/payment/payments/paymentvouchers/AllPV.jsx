@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useMemo } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../../components/Loader";
-import { useGetAllGLAccountsQuery } from "../../../../slices/finance/glApiSlice";
+import { useGetAllPostedRequisitionHeadersQuery } from "../../../../slices/payment/requisitionHeaderApiSlice";
+import { useGetAllBankAccountsQuery } from "../../../../slices/finance/bankAccountsApiSlice";
+import { useGetAllCashAccountsQuery } from "../../../../slices/finance/cashAccountApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
 import { IoMdEye } from "react-icons/io";
 
-import { CiEdit } from "react-icons/ci";
+import { MdMonetizationOn } from "react-icons/md";
 import PrintA4A5ExcelButton from "../../../../components/PrintA4A5ExcelButton";
 import DataTable from "../../../../components/general/DataTable";
 import moment from "moment";
@@ -16,7 +18,9 @@ import axios from "axios";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
-const AllPostedPyamentVouchers = () => {
+const AllPV = () => {
+  const [paying_account_type, set_paying_account_type] = useState("");
+  const [paying_account_id, set_paying_account_id] = useState("");
   const [columns_header, set_columns_header] = useState([]);
   const [columns_body, set_columns_body] = useState([]);
   const [footer_header, set_footer_header] = useState([]);
@@ -24,7 +28,7 @@ const AllPostedPyamentVouchers = () => {
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
-  const { data, isLoading } = useGetAllGLAccountsQuery();
+  const { data, isLoading } = useGetAllPostedRequisitionHeadersQuery();
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);
@@ -133,8 +137,8 @@ const AllPostedPyamentVouchers = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "GL Name",
-        accessor: "gl_name",
+        Header: "Name",
+        accessor: "name",
       },
 
       {
@@ -146,10 +150,18 @@ const AllPostedPyamentVouchers = () => {
           ).format("HH:mm A")}`}</span>
         ),
       },
+      {
+        Header: "Amount",
+        accessor: "amount",
+      },
+      {
+        Header: "Account",
+        accessor: "account_number",
+      },
 
       {
-        Header: "Gl Number",
-        accessor: "gl_number",
+        Header: "Status",
+        accessor: "status",
         // Cell: () => (
         //   <Link to="#">
         //     <IoMdEye />
@@ -157,21 +169,22 @@ const AllPostedPyamentVouchers = () => {
         // ),
       },
       {
-        Header: "Edit",
-        accessor: "edit",
+        Header: "Pay",
+        accessor: "Pay",
         Cell: ({ row }) => (
-          <Link to={`/finance/gl/updategl/${row.original.gl_id}`}>
-            <CiEdit />
-          </Link>
-        ),
-      },
-      {
-        Header: "View",
-        accessor: "view",
-        Cell: () => (
-          <Link to="#">
-            <IoMdEye />
-          </Link>
+          <>
+            {row.original.status === "Posted" ? (
+              <Link
+                to={`/payment/paymentvoucher/makepayment/${row.original.entry_id}`}
+              >
+                <Button variant="outline-success">
+                  <MdMonetizationOn />
+                </Button>
+              </Link>
+            ) : (
+              <p>{row.original.status}</p>
+            )}
+          </>
         ),
       },
     ],
@@ -180,9 +193,9 @@ const AllPostedPyamentVouchers = () => {
 
   return (
     <>
-      <p>*** All GL ***</p>
+      <p>*** All PV ***</p>
       <DataTable columns={columns} data={tableData} />
     </>
   );
 };
-export default AllPostedPyamentVouchers;
+export default AllPV;
