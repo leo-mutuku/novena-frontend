@@ -138,6 +138,7 @@ const AllRequisitionsInProgress = () => {
         Header: "Number",
         accessor: "entry_id",
       },
+      { Header: "Name", accessor: "name" },
 
       {
         Header: "Created At",

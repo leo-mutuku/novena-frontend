@@ -12,6 +12,14 @@ export const accountsApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Account"],
     }),
+    getCombinedExpenseAccounts: builder.query({
+      query: (data) => ({
+        url: `${ACCOUNTS_URL}/getcombinedexpenseaccounts`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Account"],
+    }),
     getAccountById: builder.query({
       query: (id) => ({
         url: `${ACCOUNTS_URL}/getaccountbyid/${id}`,
@@ -39,6 +47,7 @@ export const accountsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetCombinedExpenseAccountsQuery,
   useGetAllAccountsQuery,
   useCreateAccountMutation,
   useUpdateAccountByIdMutation,

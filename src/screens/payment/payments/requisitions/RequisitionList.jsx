@@ -137,7 +137,7 @@ const RequisitionList = () => {
         Header: "Number",
         accessor: "entry_id",
       },
-
+      { Header: "Name", accessor: "name" },
       {
         Header: "Requisition Date",
         accessor: "requsition_date",

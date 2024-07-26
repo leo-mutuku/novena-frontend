@@ -136,7 +136,7 @@ const AllPostedRequisitions = () => {
         Header: "Number",
         accessor: "entry_id",
       },
-
+      { Header: "Name", accessor: "name" },
       {
         Header: "Created At",
         accessor: "created_at",

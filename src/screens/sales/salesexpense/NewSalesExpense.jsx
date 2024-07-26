@@ -65,7 +65,7 @@ function NewSalesExpense() {
       if (res.status == "failed") {
         toast.error(res.message);
       } else {
-        navigate("../allreturnorders");
+        navigate("../salesexpenselist");
         toast.success("Daily Packhouse  Intiated Successfully");
       }
     } catch (err) {
