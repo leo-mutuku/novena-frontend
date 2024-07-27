@@ -49,6 +49,11 @@ const SalesExpenseList = () => {
         Cell: ({ value }) => <span>{moment(value).format("YYYY-MM-DD")}</span>,
       },
       {
+        Header: "Expense Date",
+        accessor: "expense_date",
+        Cell: ({ value }) => <span>{moment(value).format("YYYY-MM-DD")}</span>,
+      },
+      {
         Header: "Staff",
         accessor: "staff_id",
       },
