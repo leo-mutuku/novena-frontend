@@ -62,7 +62,6 @@ const MakePayment = () => {
           </Form.Group>
         </Col>
         <Col>
-          {" "}
           <Form.Group className="my-2" controlId="amount">
             <Form.Label>Account</Form.Label>
             <Form.Select
