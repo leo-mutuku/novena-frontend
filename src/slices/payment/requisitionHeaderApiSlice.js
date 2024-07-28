@@ -21,6 +21,14 @@ export const requisitionHeaderApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["requisitionHeaders", "requisitionLine"],
     }),
+    makePayment: builder.mutation({
+      query: (data) => ({
+        url: `${PAYMENTPURCHASE_URL}/makepayment`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["requisitionHeaders", "requisitionLine"],
+    }),
     getAllRequisitionHeaders: builder.query({
       query: (data) => ({
         url: `${PAYMENTPURCHASE_URL}/getallrequisitionheaders`,
@@ -49,6 +57,7 @@ export const requisitionHeaderApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useMakePaymentMutation,
   usePostRequisitionMutation,
   useCreateRequisitionHeaderMutation,
   useGetAllRequisitionHeadersQuery,

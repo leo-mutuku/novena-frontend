@@ -7,7 +7,7 @@ import { useGetAllCashAccountsQuery } from "../../../../slices/finance/cashAccou
 import { Table, Row, Col, Button, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 
-const MakePayment = () => {
+const SalaryPayment = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
@@ -149,4 +149,4 @@ const MakePayment = () => {
   );
 };
 
-export default MakePayment;
+export default SalaryPayment;

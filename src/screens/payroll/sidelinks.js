@@ -16,20 +16,23 @@ export const sidelinks = [
   },
   {
     menuTitle: "Advance Mgt",
-    subMenus: [{ subMenuTitle: "Advance", to: "#" }],
+    subMenus: [{ subMenuTitle: "Advance", to: "advancemanagement" }],
   },
   {
     menuTitle: "Sales People Comm Mgt",
-    subMenus: [{ subMenuTitle: "Sales People Comm", to: "#" }],
+    subMenus: [
+      { subMenuTitle: "Sales People Comm", to: "salespeoplecommision" },
+      { subMenuTitle: "Comm Setup", to: "salespeoplecommissionsetup" },
+    ],
   },
   {
     menuTitle: "Pack house Wage Mgt",
-    subMenus: [{ subMenuTitle: "Pack house Wage", to: "#" }],
+    subMenus: [{ subMenuTitle: "Pack house Wage", to: "packhousewage" }],
   },
-  // {
-  //   menuTitle: "Wages",
-  //   subMenus: [{ subMenuTitle: "Wages", to: "wages" }],
-  // },
+  {
+    menuTitle: "Bi Weekly Register",
+    subMenus: [{ subMenuTitle: "Bi Weekly Register", to: "biweeklyregister" }],
+  },
 
   {
     menuTitle: "Payroll Reports",

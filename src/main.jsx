@@ -328,6 +328,14 @@ import SalesExpenseList from "./screens/sales/salesexpense/SalesExpenseList.jsx"
 import NewSalesExpense from "./screens/sales/salesexpense/NewSalesExpense.jsx";
 import MakePayment from "./screens/payment/payments/paymentvouchers/MakePayment.jsx";
 import AllPaidPV from "./screens/payment/payments/paymentvouchers/AllPaidPV.jsx";
+import AdvanceManagementScreen from "./screens/payroll/AdvanceManagementScreen.jsx";
+import BiWeeklyRegisterScreen from "./screens/payroll/BiWeeklyRegisterScreen.jsx";
+import PackHouseWageScreen from "./screens/payroll/PackHouseWageScreen.jsx";
+import SalesPeopleCommisionScreen from "./screens/payroll/SalesPeopleCommisionScreen.jsx";
+import SalesPeopleCommissionSetup from "./screens/payroll/SalesPeopleCommissionSetup.jsx";
+import { SalaryJournalScreen } from "./screens/payment/SalaryJournalScreen.jsx";
+import AllSalaryJournals from "./screens/payment/payments/salaryjournal/AllSalaryJournals.jsx";
+import AllPaidSalaryJournals from "./screens/payment/payments/salaryjournal/AllPaidSalaryJournals.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -445,6 +453,23 @@ const router = createHashRouter(
 
             <Route path="createpayroll" element={<CreatePayrollHeaders />} />
           </Route>
+          <Route
+            path="advancemanagement"
+            element={<AdvanceManagementScreen />}
+          ></Route>
+          <Route
+            path="biweeklyregister"
+            element={<BiWeeklyRegisterScreen />}
+          ></Route>
+          <Route path="packhousewage" element={<PackHouseWageScreen />}></Route>
+          <Route
+            path="salespeoplecommision"
+            element={<SalesPeopleCommisionScreen />}
+          ></Route>
+          <Route
+            path="salespeoplecommissionsetup"
+            element={<SalesPeopleCommissionSetup />}
+          ></Route>
         </Route>
 
         {/* payment */}
@@ -501,6 +526,13 @@ const router = createHashRouter(
             path="paymentreports"
             element={<PaymentReportScreen />}
           ></Route>
+          <Route path="salaryjournal" element={<SalaryJournalScreen />}>
+            <Route path="allsalaryjournals" element={<AllSalaryJournals />} />
+            <Route
+              path="allpaidsalaryjournals"
+              element={<AllPaidSalaryJournals />}
+            />
+          </Route>
           <Route
             path="suppliersreport"
             element={<SupplierPaymentReportScreen />}
