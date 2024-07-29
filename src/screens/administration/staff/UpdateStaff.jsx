@@ -12,6 +12,8 @@ import { useGetAllPayrollcategoriesQuery } from "../../../slices/payroll/categor
 
 function UpdateStaff() {
   const [staff_email, set_staff_email] = useState("");
+  const [biweekly, set_biweeekly] = useState(0);
+  const [monthly, set_monthly] = useState(0);
   const [national_id, set_national_id] = useState("");
   const [first_name, set_first_name] = useState("");
   const [last_name, set_last_name] = useState("");
@@ -187,6 +189,38 @@ function UpdateStaff() {
                     {item.category_name}
                   </option>
                 ))}
+              </Form.Select>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="my-2" controlId="bank_account_number">
+              <Form.Label>Bi Weekly</Form.Label>
+              <Form.Select
+                type="number"
+                required
+                placeholder="Bank Account Number"
+                value={biweekly}
+                onChange={(e) => set_biweeekly(e.target.value)}
+              >
+                <option value=""> Select </option>
+                <option value={1}>Yes</option>
+                <option value={0}>No</option>
+              </Form.Select>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="my-2" controlId="bank_account_number">
+              <Form.Label>Monthly</Form.Label>
+              <Form.Select
+                type="number"
+                required
+                placeholder="Bank Account Number"
+                value={monthly}
+                onChange={(e) => set_monthly(e.target.value)}
+              >
+                <option value=""> Select </option>
+                <option value={1}>Yes</option>
+                <option value={0}>No</option>
               </Form.Select>
             </Form.Group>
           </Col>
