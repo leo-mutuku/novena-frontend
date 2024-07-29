@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../../components/Loader";
-import { useGetAllPostedRequisitionHeadersQuery } from "../../../../slices/payment/requisitionHeaderApiSlice";
+import { useGetGeneratedPayrollHeadersQuery } from "../../../../slices/payroll/payrollHeadersApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllCashAccountsQuery } from "../../../../slices/finance/cashAccountApiSlice";
 import { Table, Button } from "react-bootstrap";
@@ -28,7 +28,7 @@ const AllSalaryJournals = () => {
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
-  const { data, isLoading } = useGetAllPostedRequisitionHeadersQuery();
+  const { data, isLoading } = useGetGeneratedPayrollHeadersQuery();
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);
@@ -137,8 +137,8 @@ const AllSalaryJournals = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "Name",
-        accessor: "name",
+        Header: "P No.",
+        accessor: "payroll_header_id",
       },
 
       {
@@ -150,13 +150,18 @@ const AllSalaryJournals = () => {
           ).format("HH:mm A")}`}</span>
         ),
       },
+
       {
-        Header: "Amount",
-        accessor: "amount",
+        Header: "Gross",
+        accessor: "gross_pay",
       },
       {
-        Header: "Account",
-        accessor: "account_number",
+        Header: "Deductions",
+        accessor: "total_deductions",
+      },
+      {
+        Header: "Net",
+        accessor: "net_pay",
       },
 
       {
@@ -173,7 +178,7 @@ const AllSalaryJournals = () => {
         accessor: "Pay",
         Cell: ({ row }) => (
           <>
-            {row.original.status === "Posted" ? (
+            {row.original.status === "Generated" ? (
               <Link
                 to={`/payment/paymentvoucher/makepayment/${row.original.entry_id}`}
               >
@@ -193,7 +198,7 @@ const AllSalaryJournals = () => {
 
   return (
     <>
-      <p>*** All PV ***</p>
+      <p>*** Generated Payroll List***</p>
       <DataTable columns={columns} data={tableData} />
     </>
   );

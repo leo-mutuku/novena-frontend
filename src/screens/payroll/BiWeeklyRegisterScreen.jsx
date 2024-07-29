@@ -1,8 +1,7 @@
 import React from "react";
 import PageActionComponent from "../../components/PageActionComponent";
 const pagemenus = [
-  { pagename: "Add Staff", to: "addstaffsetup" },
-  { pagename: "Stff List", to: "staffsetlist" },
+  { pagename: "Bi-Weekly Staff Register", to: "biweeklystaffregister" },
 ];
 
 const BiWeeklyRegisterScreen = () => {

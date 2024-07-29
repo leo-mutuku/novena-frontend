@@ -46,6 +46,14 @@ export const payrollHeadersApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Payroll_headers", "Payroll_lines"],
     }),
+    getGeneratedPayrollHeaders: builder.query({
+      query: (data) => ({
+        url: `${PAYROLLHEADER_URL}/getgeneratedpayrollheaders`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Payroll_headers"],
+    }),
 
     getPayrollHeaderSalesCategory: builder.query({
       query: (data) => ({
@@ -102,6 +110,7 @@ export const {
   useCreatePayrollheaderMutation,
   useGetAllPayRollHeadersQuery,
   useGetPayrollHeaderGeneralCategoryQuery,
+  useGetGeneratedPayrollHeadersQuery,
   useGetAllPayrollHeadersByIdQuery,
   useGetPayrollHeaderProductionCategoryQuery,
   useGetPayrollHeaderPackhouseCategoryQuery,
