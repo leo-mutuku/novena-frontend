@@ -13,8 +13,8 @@ import { useGetAllPayrollcategoriesQuery } from "../../../slices/payroll/categor
 
 function UpdateStaff() {
   const [staff_email, set_staff_email] = useState("");
-  const [biweekly, set_biweeekly] = useState(0);
-  const [monthly, set_monthly] = useState(0);
+  const [biweekly, set_biweeekly] = useState("");
+  const [monthly, set_monthly] = useState("");
   const [national_id, set_national_id] = useState("");
   const [first_name, set_first_name] = useState("");
   const [last_name, set_last_name] = useState("");
@@ -213,7 +213,7 @@ function UpdateStaff() {
                 value={biweekly}
                 onChange={(e) => set_biweeekly(e.target.value)}
               >
-                <option value=""> Select </option>
+                <option value={null}>Select</option>
                 <option value={1}>Yes</option>
                 <option value={0}>No</option>
               </Form.Select>
@@ -229,7 +229,7 @@ function UpdateStaff() {
                 value={monthly}
                 onChange={(e) => set_monthly(e.target.value)}
               >
-                <option value=""> Select </option>
+                <option value={null}>Select</option>
                 <option value={1}>Yes</option>
                 <option value={0}>No</option>
               </Form.Select>

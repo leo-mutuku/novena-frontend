@@ -26,6 +26,8 @@ const StaffList = () => {
     }
   }, [staffs]);
 
+  console.log(staffs?.data);
+
   const handleDownloadPDF = async () => {
     setLoadingPdf(true);
     try {
@@ -121,6 +123,11 @@ const StaffList = () => {
         Header: "Category",
         accessor: "category_name",
       },
+      { Header: "Bi Weekly", accessor: "biweekly" },
+      {
+        Header: "Monthly",
+        accessor: "monthly",
+      },
       {
         Header: "Edit",
         accessor: "edit",
@@ -130,15 +137,7 @@ const StaffList = () => {
           </Link>
         ),
       },
-      {
-        Header: "View",
-        accessor: "view",
-        Cell: ({ row }) => (
-          <Link to="#">
-            <IoMdEye />
-          </Link>
-        ),
-      },
+
       {
         Header: "Del",
         accessor: "del",
@@ -159,7 +158,7 @@ const StaffList = () => {
   return (
     <>
       <div>
-        <p>*** All Staffs ***</p>
+        <p>*** All Staff ***</p>
 
         <DataTable columns={columns} data={tableData} />
       </div>
