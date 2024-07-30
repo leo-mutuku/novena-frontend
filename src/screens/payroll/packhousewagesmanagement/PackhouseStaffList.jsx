@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useMemo } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
-import { useGetGeneratedPayrollHeadersQuery } from "../../../slices/payroll/payrollHeadersApiSlice";
+import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
-import { Table, Button } from "react-bootstrap";
+import { MdAddTask } from "react-icons/md";
+
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
 import { IoMdEye } from "react-icons/io";
+import { Row, Col, Button } from "react-bootstrap";
 
-import { MdMonetizationOn } from "react-icons/md";
+import { MdAdd, MdMonetizationOn } from "react-icons/md";
 import PrintA4A5ExcelButton from "../../../components/PrintA4A5ExcelButton";
 import DataTable from "../../../components/general/DataTable";
 import moment from "moment";
@@ -28,12 +30,14 @@ const PackhouseStaffList = () => {
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
-  const { data, isLoading } = useGetGeneratedPayrollHeadersQuery();
+  const { data, isLoading } = useGetAllStaffQuery();
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);
     }
   }, [data]);
+
+  console.log(data);
   const [title, set_title] = useState({
     report_title: "",
     generated_by: "",
@@ -137,53 +141,36 @@ const PackhouseStaffList = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "P No.",
-        accessor: "payroll_header_id",
+        Header: "First Name.",
+        accessor: "first_name",
       },
 
       {
-        Header: "Created At",
-        accessor: "created_at",
-        Cell: ({ value }) => (
-          <span>{`${moment(value).format("YYYY-MM-DD")} : ${moment(
-            value
-          ).format("HH:mm A")}`}</span>
-        ),
+        Header: "Last Name",
+        accessor: "last_name",
       },
 
       {
-        Header: "Gross",
-        accessor: "gross_pay",
+        Header: "Staff No.",
+        accessor: "staff_number",
       },
       {
-        Header: "Deductions",
-        accessor: "total_deductions",
-      },
-      {
-        Header: "Net",
-        accessor: "net_pay",
+        Header: "Advance",
+        accessor: "advance",
       },
 
+      { Header: "Deduction %", accessor: "advance_deduction_ration" },
       {
-        Header: "Status",
-        accessor: "status",
-        // Cell: () => (
-        //   <Link to="#">
-        //     <IoMdEye />
-        //   </Link>
-        // ),
-      },
-      {
-        Header: "Pay",
-        accessor: "Pay",
+        Header: "Vadidate",
+        accessor: "advance_validated",
         Cell: ({ row }) => (
           <>
-            {row.original.status === "Generated" ? (
+            {row.original.status !== "Generated" ? (
               <Link
-                to={`/payment/salaryjournal/paysalary/${row.original.payrolll_header_id}`}
+                to={`/payroll/advancemanagement/newadvance/${row.original.staff_number}`}
               >
-                <Button variant="outline-success">
-                  <MdMonetizationOn />
+                <Button variant="outline-primary">
+                  <MdAddTask />
                 </Button>
               </Link>
             ) : (
@@ -198,7 +185,14 @@ const PackhouseStaffList = () => {
 
   return (
     <>
-      <p>*** Bi Weekly staff List***</p>
+      <Row>
+        <Col>
+          <p>*** Packhouse Staff List*** </p>
+        </Col>
+        <Col xs={4}>
+          <Button>Validate Packhouse Week Entries</Button>
+        </Col>
+      </Row>
       <DataTable columns={columns} data={tableData} />
     </>
   );
