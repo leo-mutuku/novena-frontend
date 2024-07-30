@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
-import { useGetGeneratedPayrollHeadersQuery } from "../../../slices/payroll/payrollHeadersApiSlice";
+import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
 import { Table, Button } from "react-bootstrap";
@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
 import { IoMdEye } from "react-icons/io";
 
-import { MdMonetizationOn } from "react-icons/md";
+import { MdAdd, MdMonetizationOn } from "react-icons/md";
 import PrintA4A5ExcelButton from "../../../components/PrintA4A5ExcelButton";
 import DataTable from "../../../components/general/DataTable";
 import moment from "moment";
@@ -28,12 +28,14 @@ const AdvanceStaffList = () => {
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
-  const { data, isLoading } = useGetGeneratedPayrollHeadersQuery();
+  const { data, isLoading } = useGetAllStaffQuery();
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);
     }
   }, [data]);
+
+  console.log(data);
   const [title, set_title] = useState({
     report_title: "",
     generated_by: "",
@@ -137,53 +139,36 @@ const AdvanceStaffList = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "P No.",
-        accessor: "payroll_header_id",
+        Header: "First Name.",
+        accessor: "first_name",
       },
 
       {
-        Header: "Created At",
-        accessor: "created_at",
-        Cell: ({ value }) => (
-          <span>{`${moment(value).format("YYYY-MM-DD")} : ${moment(
-            value
-          ).format("HH:mm A")}`}</span>
-        ),
+        Header: "Last Name",
+        accessor: "last_name",
       },
 
       {
-        Header: "Gross",
-        accessor: "gross_pay",
+        Header: "Staff No.",
+        accessor: "staff_number",
       },
       {
-        Header: "Deductions",
-        accessor: "total_deductions",
+        Header: "Advance",
+        accessor: "advance",
       },
-      {
-        Header: "Net",
-        accessor: "net_pay",
-      },
+      { Header: "Deduction %", accessor: "advance_deduction_ration" },
 
       {
-        Header: "Status",
-        accessor: "status",
-        // Cell: () => (
-        //   <Link to="#">
-        //     <IoMdEye />
-        //   </Link>
-        // ),
-      },
-      {
-        Header: "Pay",
-        accessor: "Pay",
+        Header: "New",
+        accessor: "New",
         Cell: ({ row }) => (
           <>
-            {row.original.status === "Generated" ? (
+            {row.original.status !== "Generated" ? (
               <Link
                 to={`/payment/salaryjournal/paysalary/${row.original.payrolll_header_id}`}
               >
-                <Button variant="outline-success">
-                  <MdMonetizationOn />
+                <Button variant="outline-primary">
+                  <MdAdd />
                 </Button>
               </Link>
             ) : (
@@ -198,7 +183,7 @@ const AdvanceStaffList = () => {
 
   return (
     <>
-      <p>*** Bi Weekly staff List***</p>
+      <p>*** Advance staff List***</p>
       <DataTable columns={columns} data={tableData} />
     </>
   );
