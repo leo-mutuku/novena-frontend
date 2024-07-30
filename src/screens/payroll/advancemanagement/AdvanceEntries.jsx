@@ -176,21 +176,6 @@ const AdvanceEntries = () => {
       {
         Header: "Pay",
         accessor: "Pay",
-        Cell: ({ row }) => (
-          <>
-            {row.original.status === "Generated" ? (
-              <Link
-                to={`/payment/salaryjournal/paysalary/${row.original.payrolll_header_id}`}
-              >
-                <Button variant="outline-success">
-                  <MdMonetizationOn />
-                </Button>
-              </Link>
-            ) : (
-              <p>{row.original.status}</p>
-            )}
-          </>
-        ),
       },
     ],
     []

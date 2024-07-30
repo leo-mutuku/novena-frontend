@@ -4,6 +4,7 @@ import Loader from "../../../components/Loader";
 import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
+import { MdAddTask } from "react-icons/md";
 
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
@@ -157,7 +158,27 @@ const AdvanceStaffList = () => {
         Header: "Advance",
         accessor: "advance",
       },
+
       { Header: "Deduction %", accessor: "advance_deduction_ration" },
+      {
+        Header: "Vadidate",
+        accessor: "advance_validated",
+        Cell: ({ row }) => (
+          <>
+            {row.original.status !== "Generated" ? (
+              <Link
+                to={`/payroll/advancemanagement/newadvance/${row.original.staff_number}`}
+              >
+                <Button variant="outline-primary">
+                  <MdAddTask />
+                </Button>
+              </Link>
+            ) : (
+              <p>{row.original.status}</p>
+            )}
+          </>
+        ),
+      },
 
       {
         Header: "New",
@@ -166,7 +187,7 @@ const AdvanceStaffList = () => {
           <>
             {row.original.status !== "Generated" ? (
               <Link
-                to={`/payment/salaryjournal/paysalary/${row.original.payrolll_header_id}`}
+                to={`/payroll/advancemanagement/newadvance/${row.original.staff_number}`}
               >
                 <Button variant="outline-primary">
                   <MdAdd />

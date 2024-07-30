@@ -344,6 +344,7 @@ import RationedDeductionsEntries from "./screens/payroll/advancemanagement/Ratio
 import PackhouseStaffList from "./screens/payroll/packhousewagesmanagement/PackhouseStaffList.jsx";
 import ProductslistSetup from "./screens/payroll/salespeoplecommissionsetup/ProductslistSetup.jsx";
 import SalesStaffList from "./screens/payroll/salespeoplecommissionmgt/SalesStaffList.jsx";
+import NewAdvance from "./screens/payroll/advancemanagement/NewAdvance.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -464,6 +465,7 @@ const router = createHashRouter(
           <Route path="advancemanagement" element={<AdvanceManagementScreen />}>
             <Route path="advanceentries" element={<AdvanceEntries />} />
             <Route path="advancestafflist" element={<AdvanceStaffList />} />
+            <Route path="newadvance/:id" element={<NewAdvance />} />
             <Route
               path="rationdeductions"
               element={<RationedDeductionsEntries />}

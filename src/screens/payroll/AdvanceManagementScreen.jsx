@@ -4,7 +4,6 @@ const pagemenus = [
   { pagename: "Staff List", to: "advancestafflist" },
   { pagename: "Advance Entries", to: "advanceentries" },
   { pagename: "Rationed Deductions Entries", to: "rationdeductions" },
-  { pagename: "Add staff", to: "addstaff" },
 ];
 
 const AdvanceManagementScreen = () => {
