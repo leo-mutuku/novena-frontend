@@ -4,10 +4,11 @@ import Loader from "../../../components/Loader";
 import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
-import { Table, Button } from "react-bootstrap";
+
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
 import { IoMdEye } from "react-icons/io";
+import { Row, Col, Button } from "react-bootstrap";
 
 import { MdAdd, MdMonetizationOn } from "react-icons/md";
 import PrintA4A5ExcelButton from "../../../components/PrintA4A5ExcelButton";
@@ -183,7 +184,14 @@ const AdvanceStaffList = () => {
 
   return (
     <>
-      <p>*** Advance staff List***</p>
+      <Row>
+        <Col>
+          <p>*** Advance staff List*** </p>
+        </Col>
+        <Col xs={3}>
+          <Button>Validate Staff Advances</Button>
+        </Col>
+      </Row>
       <DataTable columns={columns} data={tableData} />
     </>
   );

@@ -117,6 +117,7 @@ const StaffSetupList = () => {
         Header: "Other Deductions",
         accessor: "other_deductions",
       },
+      { Header: "Advance", accessor: "advance" },
       {
         Header: "Allowances",
         accessor: "allowances",
