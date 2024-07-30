@@ -18,7 +18,7 @@ import axios from "axios";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
-const PackhouseStaffList = () => {
+const ProductslistSetup = () => {
   const [paying_account_type, set_paying_account_type] = useState("");
   const [paying_account_id, set_paying_account_id] = useState("");
   const [columns_header, set_columns_header] = useState([]);
@@ -203,4 +203,4 @@ const PackhouseStaffList = () => {
     </>
   );
 };
-export default PackhouseStaffList;
+export default ProductslistSetup;

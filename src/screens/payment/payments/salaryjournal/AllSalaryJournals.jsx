@@ -180,7 +180,7 @@ const AllSalaryJournals = () => {
           <>
             {row.original.status === "Generated" ? (
               <Link
-                to={`/payment/paymentvoucher/makepayment/${row.original.entry_id}`}
+                to={`/payment/salaryjournal/paysalary/${row.original.payrolll_header_id}`}
               >
                 <Button variant="outline-success">
                   <MdMonetizationOn />

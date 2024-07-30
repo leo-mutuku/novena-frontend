@@ -336,6 +336,14 @@ import SalesPeopleCommissionSetup from "./screens/payroll/SalesPeopleCommissionS
 import { SalaryJournalScreen } from "./screens/payment/SalaryJournalScreen.jsx";
 import AllSalaryJournals from "./screens/payment/payments/salaryjournal/AllSalaryJournals.jsx";
 import AllPaidSalaryJournals from "./screens/payment/payments/salaryjournal/AllPaidSalaryJournals.jsx";
+import PaySalary from "./screens/payment/payments/salaryjournal/PaySalary.jsx";
+import BiWeekStaffList from "./screens/payroll/biweeklyregister/BiWeekStaffList.jsx";
+import AdvanceStaffList from "./screens/payroll/advancemanagement/AdvanceStaffList.jsx";
+import AdvanceEntries from "./screens/payroll/advancemanagement/AdvanceEntries.jsx";
+import RationedDeductionsEntries from "./screens/payroll/advancemanagement/RationedDeductionsEntries.jsx";
+import PackhouseStaffList from "./screens/payroll/packhousewagesmanagement/PackhouseStaffList.jsx";
+import ProductslistSetup from "./screens/payroll/salespeoplecommissionsetup/ProductslistSetup.jsx";
+import SalesStaffList from "./screens/payroll/salespeoplecommissionmgt/SalesStaffList.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -453,23 +461,32 @@ const router = createHashRouter(
 
             <Route path="createpayroll" element={<CreatePayrollHeaders />} />
           </Route>
-          <Route
-            path="advancemanagement"
-            element={<AdvanceManagementScreen />}
-          ></Route>
-          <Route
-            path="biweeklyregister"
-            element={<BiWeeklyRegisterScreen />}
-          ></Route>
-          <Route path="packhousewage" element={<PackHouseWageScreen />}></Route>
+          <Route path="advancemanagement" element={<AdvanceManagementScreen />}>
+            <Route path="advanceentries" element={<AdvanceEntries />} />
+            <Route path="advancestafflist" element={<AdvanceStaffList />} />
+            <Route
+              path="rationdeductions"
+              element={<RationedDeductionsEntries />}
+            />
+          </Route>
+          <Route path="biweeklyregister" element={<BiWeeklyRegisterScreen />}>
+            <Route path="biweeklystaffregister" element={<BiWeekStaffList />} />
+          </Route>
+          <Route path="packhousewage" element={<PackHouseWageScreen />}>
+            <Route path="staffsetlist" element={<PackhouseStaffList />} />
+          </Route>
           <Route
             path="salespeoplecommision"
             element={<SalesPeopleCommisionScreen />}
-          ></Route>
+          >
+            <Route path="staffsetlist" element={<SalesStaffList />} />
+          </Route>
           <Route
             path="salespeoplecommissionsetup"
             element={<SalesPeopleCommissionSetup />}
-          ></Route>
+          >
+            <Route path="productbalesetup" element={<ProductslistSetup />} />
+          </Route>
         </Route>
 
         {/* payment */}
@@ -532,6 +549,7 @@ const router = createHashRouter(
               path="allpaidsalaryjournals"
               element={<AllPaidSalaryJournals />}
             />
+            <Route path="paysalary/:id" element={<PaySalary />} />
           </Route>
           <Route
             path="suppliersreport"
