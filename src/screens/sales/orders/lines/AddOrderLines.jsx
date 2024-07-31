@@ -21,6 +21,8 @@ function AddOrderLines({
 }) {
   let purchase_id = parseInt(store_purchase_id);
 
+  const sale_admin_role = 2999;
+
   const { data: item_register } = useGetAllItemRegisterQuery();
   const { data: accounts } = useGetAllAccountsQuery();
   const { data: suppliers } = useGetAllSuppliersQuery();
@@ -47,6 +49,8 @@ function AddOrderLines({
   });
 
   const [sales_list, set_sales_list] = useState([]);
+
+  const [edit_price, set_edit_price] = useState(false);
 
   useEffect(() => {
     if (userInfo) {
@@ -216,7 +220,9 @@ function AddOrderLines({
                       <Form.Group className="my-2" controlId="order_items">
                         <Form.Label>Price</Form.Label>
                         <Form.Control
-                          disabled
+                          disabled={
+                            userInfo?.roles.includes(2999) ? "" : "disabled"
+                          }
                           type="number"
                           required
                           placeholder="Cost per unit (Ksh)"
