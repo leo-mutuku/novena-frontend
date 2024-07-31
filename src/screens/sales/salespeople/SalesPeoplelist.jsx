@@ -46,7 +46,7 @@ const SalesPeoplelist = () => {
             <th>Balance</th>
             <th>Limit</th>
             <th>Make Order</th>
-            <th>Validate</th>
+            <th>Make Order Status</th>
             {/* <th>Remove</th> */}
           </tr>
         </thead>
