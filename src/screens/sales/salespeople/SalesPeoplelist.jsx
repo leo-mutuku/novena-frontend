@@ -18,6 +18,7 @@ const SalesPeoplelist = () => {
   const [removePerson] = useDeleteSalesPersonMutation();
   const { data: data } = useGetAllSalesPeopleQuery();
 
+  console.log(data);
   const handleRemovePerson = async (staff_id) => {
     toast.error(
       "Sorry account can only be removed after 6 months of in activity"
@@ -43,9 +44,10 @@ const SalesPeoplelist = () => {
             <th>First name</th>
             <th>Last name</th>
             <th>Balance</th>
-            <th>Bales</th>
-            <th>Clear</th>
-            <th>Remove</th>
+            <th>Limit</th>
+            <th>Make Order</th>
+            <th>Validate</th>
+            {/* <th>Remove</th> */}
           </tr>
         </thead>
         <tbody>
@@ -56,21 +58,22 @@ const SalesPeoplelist = () => {
               <td>{item.first_name}</td>
               <td>{item.last_name}</td>
               <td>{item.balance}</td>
-              <td>{item.bales}</td>
+              <td>{item.order_limit}</td>
+              <td>{item.make_order === false ? <>No</> : <>Yes</>}</td>
 
               <td>
                 <Link to={`/sales/salespeople/clear/${item.staff_id}`}>
-                  {"Clear"}
+                  {"Validate"}
                 </Link>
               </td>
-              <td>
+              {/* <td>
                 <Link
                   to={"#"}
                   onClick={() => handleRemovePerson(item.staff_id)}
                 >
                   {item.first_name}
                 </Link>
-              </td>
+              </td> */}
             </tr>
           ))}
         </tbody>
