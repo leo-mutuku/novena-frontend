@@ -347,6 +347,7 @@ import SalesStaffList from "./screens/payroll/salespeoplecommissionmgt/SalesStaf
 import NewAdvance from "./screens/payroll/advancemanagement/NewAdvance.jsx";
 import AutoStockTakeScreen from "./screens/store/autoStockTakeScreen.jsx";
 import AutoStock from "./screens/store/autostocktake/AutoStock.jsx";
+import AutoStockTakeLines from "./screens/store/autostocktake/AutoStockTakeLines.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -716,7 +717,12 @@ const router = createHashRouter(
           </Route>
           <Route path="autostocktake" element={<AutoStockTakeScreen />}>
             <Route path="autostock" element={<AutoStock />} />
+            <Route
+              path="autostocktakelist/:id"
+              element={<AutoStockTakeLines />}
+            />
           </Route>
+
           <Route path="itemadjustment" element={<ItemAdjustmentScreen />}>
             <Route index element={<StockAdjustmentlist />} />
             <Route

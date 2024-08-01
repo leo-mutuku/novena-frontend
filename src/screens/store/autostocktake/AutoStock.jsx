@@ -167,7 +167,7 @@ const AutoStock = () => {
           <>
             {row.original.status !== "Generated" ? (
               <Link
-                to={`/payroll/advancemanagement/newadvance/${row.original.staff_number}`}
+                to={`/store/autostocktake/autostocktakelist/${row.original.entry_id}`}
               >
                 <Button variant="primary">
                   <IoMdClock />
