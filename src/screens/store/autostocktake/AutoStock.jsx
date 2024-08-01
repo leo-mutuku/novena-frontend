@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useMemo } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
-import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
+import { useGetAllAutoStockTakeQuery } from "../../../slices/store/storeItemsApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
 import { MdAddTask, MdEarbuds, MdEast, MdExpand } from "react-icons/md";
+import TimeDate from "../../../components/TimeDate";
 
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
@@ -21,6 +22,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
 const AutoStock = () => {
+  const timeDate = new TimeDate();
   const [paying_account_type, set_paying_account_type] = useState("");
   const [paying_account_id, set_paying_account_id] = useState("");
   const [columns_header, set_columns_header] = useState([]);
@@ -30,7 +32,7 @@ const AutoStock = () => {
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
-  const { data, isLoading } = useGetAllStaffQuery();
+  const { data, isLoading } = useGetAllAutoStockTakeQuery();
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);
@@ -147,10 +149,19 @@ const AutoStock = () => {
 
       {
         Header: "Date ",
-        accessor: "created_at",
+        accessor: "date",
+        Cell: ({ row }) => (
+          <p>{moment(row.original.created_at).format("DD-MM-YYYY")}</p>
+        ),
       },
 
-      { Header: "Time", accessor: "created_atu" },
+      {
+        Header: "Time",
+        accessor: "time",
+        Cell: ({ row }) => (
+          <p>{moment(row.original.created_at, "HH:mm:ss").format("hh:mm A")}</p>
+        ),
+      },
       {
         Header: "View",
         accessor: "view",

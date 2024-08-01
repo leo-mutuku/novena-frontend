@@ -43,6 +43,13 @@ export const storeItemsApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Store_items"],
     }),
+    getAllAutoStockTake: builder.query({
+      query: () => ({
+        url: `${STOREITEMS_URL}/getallautostocktake`,
+        method: "GET",
+      }),
+      providesTags: ["Store_items"],
+    }),
     createStoreItem: builder.mutation({
       query: (data) => ({
         url: `${STOREITEMS_URL}/createstoreitem`,
@@ -63,6 +70,7 @@ export const storeItemsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetAllAutoStockTakeQuery,
   useGetAllStoreItemsQuery,
   useCreateStoreItemMutation,
   useGetStoreItemByIdQuery,
