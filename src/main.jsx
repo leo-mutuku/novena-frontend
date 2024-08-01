@@ -345,6 +345,8 @@ import PackhouseStaffList from "./screens/payroll/packhousewagesmanagement/Packh
 import ProductslistSetup from "./screens/payroll/salespeoplecommissionsetup/ProductslistSetup.jsx";
 import SalesStaffList from "./screens/payroll/salespeoplecommissionmgt/SalesStaffList.jsx";
 import NewAdvance from "./screens/payroll/advancemanagement/NewAdvance.jsx";
+import AutoStockTakeScreen from "./screens/store/autoStockTakeScreen.jsx";
+import AutoStock from "./screens/store/autostocktake/AutoStock.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -711,6 +713,9 @@ const router = createHashRouter(
               element={<StockTakeInProgress />}
             />
             <Route path="allpostedstocktakes" element={<PostedStockTake />} />
+          </Route>
+          <Route path="autostocktake" element={<AutoStockTakeScreen />}>
+            <Route path="autostock" element={<AutoStock />} />
           </Route>
           <Route path="itemadjustment" element={<ItemAdjustmentScreen />}>
             <Route index element={<StockAdjustmentlist />} />

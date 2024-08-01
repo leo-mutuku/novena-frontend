@@ -19,7 +19,10 @@ export const sidelinks = [
     menuTitle: "Stock Take",
     subMenus: [{ subMenuTitle: "Stock Take", to: "stocktake" }],
   },
-
+  {
+    menuTitle: "Auto Stock Take",
+    subMenus: [{ subMenuTitle: "", to: "autostocktake" }],
+  },
   {
     menuTitle: "Store Register",
     subMenus: [{ subMenuTitle: "Store Register", to: "storeregister" }],
