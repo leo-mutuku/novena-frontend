@@ -158,9 +158,7 @@ const AutoStock = () => {
       {
         Header: "Time",
         accessor: "time",
-        Cell: ({ row }) => (
-          <p>{moment(row.original.created_at, "HH:mm:ss").format("hh:mm A")}</p>
-        ),
+        Cell: ({ row }) => <p>{timeDate.time(row.original.created_at)}</p>,
       },
       {
         Header: "View",
