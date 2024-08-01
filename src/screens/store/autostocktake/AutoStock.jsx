@@ -8,7 +8,7 @@ import { MdAddTask, MdEarbuds, MdEast, MdExpand } from "react-icons/md";
 
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
-import { IoMdEye } from "react-icons/io";
+import { IoMdClock, IoMdEye } from "react-icons/io";
 import { Row, Col, Button } from "react-bootstrap";
 
 import { MdAdd, MdMonetizationOn } from "react-icons/md";
@@ -160,8 +160,8 @@ const AutoStock = () => {
               <Link
                 to={`/payroll/advancemanagement/newadvance/${row.original.staff_number}`}
               >
-                <Button variant="outline-primary">
-                  <MdExpand />
+                <Button variant="primary">
+                  <IoMdClock />
                 </Button>
               </Link>
             ) : (
