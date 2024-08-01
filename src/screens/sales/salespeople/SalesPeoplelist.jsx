@@ -4,6 +4,7 @@ import Loader from "../../../components/Loader";
 import {
   useDeleteSalesPersonMutation,
   useGetAllSalesPeopleQuery,
+  useValidateSalesperSonmakeOrderMutation,
 } from "../../../slices/sales/salesPeopleApiSlice";
 
 import { Table, Button } from "react-bootstrap";
@@ -17,8 +18,8 @@ import { toast } from "react-toastify";
 const SalesPeoplelist = () => {
   const [removePerson] = useDeleteSalesPersonMutation();
   const { data: data } = useGetAllSalesPeopleQuery();
+  const [validateSales] = useValidateSalesperSonmakeOrderMutation();
 
-  console.log(data);
   const handleRemovePerson = async (staff_id) => {
     toast.error(
       "Sorry account can only be removed after 6 months of in activity"
@@ -32,6 +33,21 @@ const SalesPeoplelist = () => {
     // } else {
     //   toast.error("Something went wrong try again!");
     // }
+  };
+
+  const handleValidatePerson = async (e, staff_id) => {
+    try {
+      const res = await validateSales({
+        staff_id,
+      }).unwrap();
+      if (res.status == "success") {
+        toast.success("Validated successfully!");
+      } else {
+        toast.error("Something went wrong try again!");
+      }
+    } catch (error) {
+      toast.error("Something went wrong try again!");
+    }
   };
   return (
     <>
@@ -62,9 +78,12 @@ const SalesPeoplelist = () => {
               <td>{item.make_order === false ? <>No</> : <>Yes</>}</td>
 
               <td>
-                <Link to={`/sales/salespeople/clear/${item.staff_id}`}>
-                  {"Validate"}
-                </Link>
+                <Button
+                  onClick={(e) => handleValidatePerson(e, item.staff_id)}
+                  variant="success"
+                >
+                  Validate
+                </Button>
               </td>
               {/* <td>
                 <Link

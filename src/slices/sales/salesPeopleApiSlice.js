@@ -52,6 +52,14 @@ export const salesPeopleApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Sales_people"],
     }),
+    validateSalesperSonmakeOrder: builder.mutation({
+      query: (data) => ({
+        url: `${SALESPEOPLE_URL}/validatesalespersonmakeorder`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Sales_people"],
+    }),
   }),
 });
 
@@ -62,4 +70,5 @@ export const {
   useCreateSalesPersonMutation,
   useGetAllSalesPeopleQuery,
   useDeleteSalesPersonMutation,
+  useValidateSalesperSonmakeOrderMutation,
 } = salesPeopleApiSlice;
