@@ -23,14 +23,33 @@ const MakePayment = () => {
   const { data: cashAccounts } = useGetAllCashAccountsQuery();
   const handlepostRequisition = async () => {
     try {
+      if (!paying_account_type) {
+        toast.error("Please select paying account type");
+        return;
+      }
+
+      if (paying_account_type == "bank") {
+        if (!bank) {
+          toast.error("Please select bank");
+          return;
+        }
+      }
+      if (paying_account_type == "cash") {
+        if (!cash) {
+          toast.error("Please select cash");
+          return;
+        }
+      }
       const res = await postRequisition({
+        requisition_id: id,
+        amount: total,
         paying_account_type,
         bank,
         cash,
       }).unwrap();
       if (res.status == "success") {
         toast.success("Requisition Posted Successfully");
-        navigate("../allpostedrequisition");
+        navigate("../allpaidpv");
       } else {
         toast.error(res.message || "Requisition Not Posted");
       }
@@ -99,7 +118,7 @@ const MakePayment = () => {
                 type="text"
                 placeholder="Description"
                 value={cash}
-                onChange={(e) => set_name(e.target.value)}
+                onChange={(e) => set_cash(e.target.value)}
               >
                 <option value="">Select</option>
                 {cashAccounts?.data.map((item, index) => (
