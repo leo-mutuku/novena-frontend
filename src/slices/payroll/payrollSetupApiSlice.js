@@ -21,6 +21,15 @@ export const payrollSetupApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Payroll_setup"],
     }),
+    getAllpackHousestaffPayrollSetup: builder.query({
+      query: (data) => ({
+        url: `${PAYROLLSETUP_URL}/getallpackhousestaffpayrollsetup`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Payroll_setup"],
+    }),
+
     getStaffPayrollSetupById: builder.query({
       query: (id) => ({
         url: `${PAYROLLSETUP_URL}/getstaffpayrollsetupbyid/${id}`,
@@ -28,6 +37,7 @@ export const payrollSetupApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Payroll_setup"],
     }),
+
     updateStaffPayrollSetup: builder.mutation({
       query: (data) => ({
         url: `${PAYROLLSETUP_URL}/updatestaffpayrollsetup`,
@@ -40,6 +50,7 @@ export const payrollSetupApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetAllpackHousestaffPayrollSetupQuery,
   useCreateStaffPayrollSetupMutation,
   useGetAllStaffPayrollSetupQuery,
   useGetStaffPayrollSetupByIdQuery,

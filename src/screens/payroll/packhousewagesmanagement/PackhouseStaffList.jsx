@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
-import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
+import { useGetAllpackHousestaffPayrollSetupQuery } from "../../../slices/payroll/payrollSetupApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
 import { MdAddTask } from "react-icons/md";
@@ -9,7 +9,7 @@ import { MdAddTask } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
 import { IoMdEye } from "react-icons/io";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Form } from "react-bootstrap";
 
 import { MdAdd, MdMonetizationOn } from "react-icons/md";
 import PrintA4A5ExcelButton from "../../../components/PrintA4A5ExcelButton";
@@ -30,7 +30,9 @@ const PackhouseStaffList = () => {
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
-  const { data, isLoading } = useGetAllStaffQuery();
+  const { data, isLoading } = useGetAllpackHousestaffPayrollSetupQuery();
+  const [start_date, set_start_date] = useState("");
+  const [end_date, set_end_date] = useState("");
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);
@@ -134,6 +136,8 @@ const PackhouseStaffList = () => {
     doc.save(`${title.filename}.pdf`);
   };
 
+  console.log();
+
   const columns = useMemo(
     () => [
       {
@@ -151,23 +155,27 @@ const PackhouseStaffList = () => {
       },
 
       {
-        Header: "Staff No.",
-        accessor: "staff_number",
+        Header: "Gross Salary.",
+        accessor: "gross_salary",
       },
+      {
+        Header: "Deductions",
+        accessor: "other_deductions",
+      },
+
       {
         Header: "Advance",
         accessor: "advance",
       },
 
-      { Header: "Deduction %", accessor: "advance_deduction_ration" },
       {
-        Header: "Vadidate",
+        Header: "Calculate",
         accessor: "advance_validated",
         Cell: ({ row }) => (
           <>
             {row.original.status !== "Generated" ? (
               <Link
-                to={`/payroll/advancemanagement/newadvance/${row.original.staff_number}`}
+                to={"#"} //`/payroll/advancemanagement/newadvance/${row.original.staff_number
               >
                 <Button variant="outline-primary">
                   <MdAddTask />
@@ -186,11 +194,37 @@ const PackhouseStaffList = () => {
   return (
     <>
       <Row>
+        {" "}
         <Col>
           <p>*** Packhouse Staff List*** </p>
         </Col>
+      </Row>
+      <Row>
         <Col xs={4}>
-          <Button>Validate Packhouse Week Entries</Button>
+          {" "}
+          <Form.Group className="my-2" controlId="amount">
+            <Form.Control
+              required
+              type="date"
+              placeholder="Description"
+              value={start_date}
+              onChange={(e) => set_start_date(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+        </Col>
+        <Col xs={4}>
+          <Form.Group className="my-2" controlId="amount">
+            <Form.Control
+              required
+              type="date"
+              placeholder="Description"
+              value={end_date}
+              onChange={(e) => set_end_date(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+        </Col>
+        <Col xs={4}>
+          <Button>Calculate Weekly Entries</Button>
         </Col>
       </Row>
       <DataTable columns={columns} data={tableData} />
