@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { useNavigate, useParams } from "react-router-dom";
@@ -35,6 +36,10 @@ const PayrollActions = () => {
     if (parollHeader) {
     }
   }, [id, parollHeader]);
+
+  const handleViewPayroll = (e) => {
+    navigate(`/payroll/payrolllines/${id}`);
+  };
   const handleBulkprint = async (e) => {
     try {
       const res = await bulkPrintPayslip({ payroll_header_id: id }).unwrap();
@@ -137,8 +142,10 @@ const PayrollActions = () => {
 
         <Col>
           <Stack spacing={2} direction="row">
-            <Button variant="outlined">PAY</Button>
-            <Button variant="outlined">POST</Button>
+            {/* <Button variant="outlined">PAY</Button> */}
+            <Link to={`../viewpayrollheader/${id}`}>
+              <Button variant="outlined">View</Button>
+            </Link>
 
             <Button variant="outlined" onClick={handleBulkprint}>
               PRINT

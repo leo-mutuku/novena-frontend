@@ -30,6 +30,13 @@ export const payrollLinesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Payroll_lines", "Payroll_headers"],
     }),
+    getPayrollEntries: builder.query({
+      query: (id) => ({
+        url: `${PAYROLLLINES_URL}/getpayrollentries/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Payroll_lines", "Payroll_headers"],
+    }),
 
     generatePayroll: builder.mutation({
       query: (data) => ({
@@ -50,6 +57,7 @@ export const payrollLinesApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetPayrollEntriesQuery,
   useValidatePayrollMutation,
   useProcessPayrollMutation,
   useGeneratePayrollMutation,

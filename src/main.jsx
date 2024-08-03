@@ -348,6 +348,7 @@ import NewAdvance from "./screens/payroll/advancemanagement/NewAdvance.jsx";
 import AutoStockTakeScreen from "./screens/store/autoStockTakeScreen.jsx";
 import AutoStock from "./screens/store/autostocktake/AutoStock.jsx";
 import AutoStockTakeLines from "./screens/store/autostocktake/AutoStockTakeLines.jsx";
+import ViewPayrollHeader from "./screens/payroll/payrollheader/viewpayrollheader.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -462,6 +463,10 @@ const router = createHashRouter(
             <Route path="productioncategory" element={<ProductionCategory />} />
             <Route path="generalcategory" element={<GeneralCategory />} />
             <Route path="actions/:id" element={<PayrollActions />} />
+            <Route
+              path="viewpayrollheader/:id"
+              element={<ViewPayrollHeader />}
+            />
 
             <Route path="createpayroll" element={<CreatePayrollHeaders />} />
           </Route>
