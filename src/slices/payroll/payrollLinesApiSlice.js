@@ -12,6 +12,14 @@ export const payrollLinesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Payroll_lines", "Payroll_headers"],
     }),
+    printSinglepaySlip: builder.mutation({
+      query: (data) => ({
+        url: `${PAYROLLLINES_URL}/printsinglepayslip`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Payroll_lines", "Payroll_headers"],
+    }),
 
     bulkPrintPayslip: builder.mutation({
       query: (data) => ({
@@ -57,6 +65,7 @@ export const payrollLinesApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  usePrintSinglepaySlipMutation,
   useGetPayrollEntriesQuery,
   useValidatePayrollMutation,
   useProcessPayrollMutation,

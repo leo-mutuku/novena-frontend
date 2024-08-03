@@ -43,12 +43,12 @@ export const handlePrintA4 = (payrollHeader, getlistOfStaffId) => {
       { header: "First Name", dataKey: "first_name" },
       { header: "Last Name", dataKey: "last_name" },
       { header: "Gross Pay", dataKey: "gross_pay" },
-      { header: "Net Pay", dataKey: "net_pay" },
       { header: "Deductions", dataKey: "total_deductions" },
       { header: "NHIF", dataKey: "nhif" },
       { header: "NSSF", dataKey: "nssf" },
       { header: "PAYE", dataKey: "paye" },
       { header: "SACCO", dataKey: "sacco" },
+      { header: "Net Pay", dataKey: "net_pay" },
     ],
   });
   autoTable(doc, {
