@@ -28,6 +28,14 @@ export const packHousePeopleApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["packhousepeople"],
     }),
+    calculateWage: builder.mutation({
+      query: (data) => ({
+        url: `${PACKHOUSEPEOPLE_URL}/calculatewage`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["packhousepeople"],
+    }),
     deletePackhousePerson: builder.mutation({
       query: (id) => ({
         url: `${PACKHOUSEPEOPLE_URL}/deletepackhouseperson/${id}`,
@@ -39,6 +47,7 @@ export const packHousePeopleApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useCalculateWageMutation,
   useGetStatementMutation,
   useCreatePackHousePersonMutation,
   useGetAllPackHousePeopleQuery,

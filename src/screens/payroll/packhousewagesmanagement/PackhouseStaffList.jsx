@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
 import { useGetAllpackHousestaffPayrollSetupQuery } from "../../../slices/payroll/payrollSetupApiSlice";
+import { useCalculateWageMutation } from "../../../slices/production/packHousePeopleApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
 import { MdAddTask } from "react-icons/md";
@@ -19,6 +20,7 @@ import axios from "axios";
 
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { toast } from "react-toastify";
 
 const PackhouseStaffList = () => {
   const [paying_account_type, set_paying_account_type] = useState("");
@@ -31,6 +33,7 @@ const PackhouseStaffList = () => {
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
   const { data, isLoading } = useGetAllpackHousestaffPayrollSetupQuery();
+  const [calculateWage] = useCalculateWageMutation();
   const [start_date, set_start_date] = useState("");
   const [end_date, set_end_date] = useState("");
   useEffect(() => {
@@ -46,6 +49,21 @@ const PackhouseStaffList = () => {
     date: "",
     filename: "",
   });
+
+  const handleCalculateWage = async () => {
+    if (!start_date || !end_date) {
+      toast.error("Please select start and end date");
+      return;
+    }
+    const payload = {
+      start_date: start_date,
+      end_date: end_date,
+    };
+    const response = await calculateWage(payload);
+    if (response?.data?.data) {
+      set_columns_header(response?.data?.data?.columns_header);
+    }
+  };
 
   const handleDownloadPDF = async () => {
     setLoadingPdf(true);
@@ -224,7 +242,9 @@ const PackhouseStaffList = () => {
           </Form.Group>
         </Col>
         <Col xs={4}>
-          <Button>Calculate Weekly Entries</Button>
+          <Button onClick={handleCalculateWage} variant="outline-primary">
+            Calculate Weekly Entries
+          </Button>
         </Col>
       </Row>
       <DataTable columns={columns} data={tableData} />
