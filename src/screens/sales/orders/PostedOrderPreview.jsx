@@ -16,6 +16,7 @@ const PostedOrderPreview = () => {
   const id = parseInt(_new_id);
   const { data: posted_sales_order_line_id } =
     useGetSalesLinesByHeaderIdQuery(id);
+
   const [printToPOS, { isLoading, error }] = useCreatePrintToPosMutation();
 
   useEffect(() => {}, [id, posted_sales_order_line_id]);
@@ -74,6 +75,9 @@ const PostedOrderPreview = () => {
       <Row>
         <Col></Col>
         <Col className="text-center text-md-right">{"Total Kshs."}</Col>
+        <Col xs={3} className="text-center text-md-right">
+          {posted_sales_order_line_id?.data?.order_header?.grand_total}
+        </Col>
       </Row>
       <hr></hr>
       <Row>
