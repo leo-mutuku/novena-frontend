@@ -1,6 +1,40 @@
 import React from "react";
 import { Grid } from "@mui/material";
 import { Card, Container } from "react-bootstrap";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+} from "recharts";
+
+// Sample data
+const data = [
+  { name: "Group A", value: 400 },
+  { name: "Group B", value: 300 },
+  { name: "Group C", value: 300 },
+  { name: "Group D", value: 200 },
+];
+
+const datax = [
+  { day: "Monday", lastWeekSales: 300, currentWeekSales: 400 },
+  { day: "Tuesday", lastWeekSales: 200, currentWeekSales: 300 },
+  { day: "Wednesday", lastWeekSales: 278, currentWeekSales: 500 },
+  { day: "Thursday", lastWeekSales: 189, currentWeekSales: 200 },
+  { day: "Friday", lastWeekSales: 239, currentWeekSales: 300 },
+  { day: "Saturday", lastWeekSales: 349, currentWeekSales: 700 },
+  { day: "Sunday", lastWeekSales: 400, currentWeekSales: 600 },
+];
+
+// Colors for each section of the pie
+const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const SalesDashboard = () => {
   return (
@@ -13,7 +47,44 @@ const SalesDashboard = () => {
             height: { xs: "20rem", md: "20rem" },
             background: "#E7EEFE",
           }}
-        ></Grid>
+        >
+          <p
+            style={{
+              position: "absolute",
+              padding: "10px",
+              fontWeight: "bold",
+              fontSize: "14px",
+            }}
+          >
+            Daily Total Sales
+          </p>
+          <ResponsiveContainer
+            width="100%"
+            height={400}
+            style={{ marginTop: -40, backgroundPositionX: "center" }}
+          >
+            <PieChart>
+              <Pie
+                data={data}
+                cx="50%"
+                cy="50%"
+                innerRadius={60}
+                outerRadius={100}
+                fill="#8884d8"
+                paddingAngle={0}
+                dataKey="value"
+              >
+                {data.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </Grid>
         <Grid
           item
           sx={{
@@ -21,7 +92,52 @@ const SalesDashboard = () => {
             height: { xs: "20rem", md: "20rem" },
             background: "#E7EEFE",
           }}
-        ></Grid>
+        >
+          <p
+            style={{
+              position: "absolute",
+              padding: "10px",
+              fontWeight: "bold",
+              fontSize: "14px",
+            }}
+          >
+            Weekly Sales Comparison
+          </p>
+          <ResponsiveContainer
+            width="100%"
+            height={250}
+            style={{ marginTop: 40, marginLeft: -10 }}
+          >
+            <LineChart
+              width={500}
+              height={250}
+              data={datax}
+              margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="day" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="lastWeekSales"
+                stroke="#8884d8"
+                activeDot={{ r: 8 }}
+              />
+              <Line
+                type="monotone"
+                dataKey="currentWeekSales"
+                stroke="#82ca9d"
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </Grid>
         <Grid
           item
           sx={{
