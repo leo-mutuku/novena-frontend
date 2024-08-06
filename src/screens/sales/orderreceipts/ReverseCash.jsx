@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 import { CheckBox } from "@mui/icons-material";
 import { Autocomplete, TextField } from "@mui/material";
 
-function CreateBankReceipt() {
+function ReverseCash() {
   const [bank_id, set_bank_id] = useState("");
   const [staff_id, set_staff_id] = useState("");
   const [institution_id, set_institution_id] = useState("");
@@ -251,4 +251,4 @@ function CreateBankReceipt() {
   );
 }
 
-export default CreateBankReceipt;
+export default ReverseCash;

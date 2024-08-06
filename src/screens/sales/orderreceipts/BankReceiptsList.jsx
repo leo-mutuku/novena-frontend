@@ -14,8 +14,7 @@ import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
 
 const BankReceipts = () => {
   const { data: orders, isLoading } = useGetAllSalesBankReceptsQuery();
-  console.log("hi");
-  console.log(orders?.data);
+
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
   let timeDate = new TimeDate();

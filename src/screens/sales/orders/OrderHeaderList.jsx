@@ -121,7 +121,7 @@ const OrderHeaderList = () => {
                   <td>{item.total}</td>
                   <td>{item.number_of_items}</td>
                   <td>{item.customer_name}</td>
-                  <td>{item.sales_person_number}</td>
+                  <td>{item.first_name}</td>
                   <td>
                     {item.status === "New" ? (
                       <span style={{ color: "orange" }}>{item.status}</span>
