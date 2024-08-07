@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState, useRef } from "react";
 import Loader from "../../../components/Loader";
 import { useGetAllDispatchedOrdersQuery } from "../../../slices/sales/salesOrderHeadersApiSlice";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Col, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { IoMdEye } from "react-icons/io";
 
@@ -15,27 +15,43 @@ import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
 import ReactToPrint from "react-to-print";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
+import { RoundedCorner } from "@mui/icons-material";
 
 // Sample component to be printed
 const PrintComponent = React.forwardRef((props, ref) => (
   <div ref={ref} style={{ padding: 20, border: "1px solid black" }}>
-    <h1>Monthly Product Analysis</h1>
+    <div>
+      <h3 style={{ textAlign: "center" }}>INVOICE</h3>
+      <p
+        style={{ textAlign: "center", marginBottom: "-5px", marginTop: "-5px" }}
+      >
+        Novena Maize Miller LTD
+      </p>
+      <p style={{ textAlign: "center", marginTop: "-5px" }}>
+        Dealers in All Types of Animal Feeds , Maize Mill
+      </p>
+    </div>
+
+    <div
+      style={{
+        border: "1px solid black",
+        padding: "8px",
+      }}
+    >
+      <Row>
+        <Col></Col>
+        <Col xs={3}>
+          <p>Date:{`08/08/2024`}</p>
+          <p>Del No: 10301</p>
+        </Col>
+      </Row>
+    </div>
+
     <table style={{ width: "100%", borderCollapse: "collapse" }}>
-      <thead>
-        <tr>
-          <th style={{ border: "1px solid black", padding: "8px" }}>Product</th>
-          <th style={{ border: "1px solid black", padding: "8px" }}>Sales</th>
-        </tr>
-      </thead>
+      <thead></thead>
       <tbody>
         <tr>
           <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product A
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
             Product B
           </td>
           <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
@@ -46,150 +62,7 @@ const PrintComponent = React.forwardRef((props, ref) => (
           </td>
           <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
         </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product A
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product B
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product C
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product A
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product B
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product C
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product A
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product B
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product C
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product A
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product B
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product C
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product A
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product B
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product C
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product A
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product B
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product C
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product A
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product B
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product C
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product A
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product B
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product C
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
-        </tr>
+
         <tr>
           <td style={{ border: "1px solid black", padding: "8px" }}>
             Product A

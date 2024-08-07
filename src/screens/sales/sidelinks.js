@@ -4,10 +4,10 @@ export const sidelinks = [
     subMenus: [
       { subMenuTitle: "Orders", to: "orders" },
       { subMenuTitle: "Receipts", to: "orderreceipts" },
+      { subMenuTitle: "Delivery", to: "orderdispatch" },
+      { subMenuTitle: "Invoice", to: "orderinvoice" },
       { subMenuTitle: "Return Order", to: "returnorder" },
       { subMenuTitle: "Sales Expense", to: "salesexpense" },
-      { subMenuTitle: "Order Dispatch", to: "orderdispatch" },
-      { subMenuTitle: "Order Invoice", to: "orderinvoice" },
 
       { subMenuTitle: "Ledger Entry", to: "#" },
 
