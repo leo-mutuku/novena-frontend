@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import Loader from "../../../components/Loader";
 import { useGetAllDispatchedOrdersQuery } from "../../../slices/sales/salesOrderHeadersApiSlice";
 import { Table, Button } from "react-bootstrap";
@@ -10,7 +10,208 @@ import DataTable from "../../../components/general/DataTable";
 import moment from "moment";
 import axios from "axios";
 import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
+
 import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
+import ReactToPrint from "react-to-print";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
+
+// Sample component to be printed
+const PrintComponent = React.forwardRef((props, ref) => (
+  <div ref={ref} style={{ padding: 20, border: "1px solid black" }}>
+    <h1>Monthly Product Analysis</h1>
+    <table style={{ width: "100%", borderCollapse: "collapse" }}>
+      <thead>
+        <tr>
+          <th style={{ border: "1px solid black", padding: "8px" }}>Product</th>
+          <th style={{ border: "1px solid black", padding: "8px" }}>Sales</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product A
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product B
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product C
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product A
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product B
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product C
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product A
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product B
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product C
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product A
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product B
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product C
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product A
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product B
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product C
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product A
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product B
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product C
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product A
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product B
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product C
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product A
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product B
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product C
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product A
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product B
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product C
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product A
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product B
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
+        </tr>
+        <tr>
+          <td style={{ border: "1px solid black", padding: "8px" }}>
+            Product C
+          </td>
+          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+));
 
 const OrderInvoiceList = () => {
   const { data: OrderInvoices, isLoading } = useGetAllDispatchedOrdersQuery();
@@ -36,27 +237,19 @@ const OrderInvoiceList = () => {
     }
   }, [OrderInvoices]);
 
-  const handleDownloadPDF = async () => {
-    setLoadingPdf(true);
-    try {
-      const response = await axios({
-        url: `${baseUrlJasper}/all/sales/orders/posted/pdf`, // Endpoint on your Node.js server
-        method: "GET",
-        responseType: "blob", // Important: responseType 'blob' for binary data
-      });
-      const blob = new Blob([response.data], { type: "application/pdf" });
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "all-salesorder-posted-report.pdf");
-      document.body.appendChild(link);
-      link.click();
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("Error downloading PDF:", error);
-    } finally {
-      setLoadingPdf(false);
-    }
+  const componentRef = useRef();
+
+  const handlePrint = async () => {
+    const input = componentRef.current;
+    const canvas = await html2canvas(input);
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save("download.pdf");
   };
 
   const handleDownloadExcel = async () => {
@@ -167,18 +360,15 @@ const OrderInvoiceList = () => {
     <>
       <div>
         <p>*** All Posted Sales Orders ***</p>
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <div style={{ marginLeft: "10px" }}>
-            <button onClick={handleDownloadPDF} disabled={loadingPdf}>
-              {loadingPdf ? <Loader /> : <FaFilePdf />}
-            </button>
-          </div>
-          <div style={{ marginLeft: "10px" }}>
-            <button onClick={handleDownloadExcel} disabled={loadingExcel}>
-              {loadingExcel ? <Loader /> : <FaFileExcel />}
-            </button>
-          </div>
+        <div>
+          <ReactToPrint
+            trigger={() => <button>Print this out!</button>}
+            content={() => componentRef.current}
+          />
+          <button onClick={handlePrint}>Save as PDF</button>
+          <PrintComponent ref={componentRef} />
         </div>
+
         <DataTable columns={columns} data={tableData} />
       </div>
     </>
