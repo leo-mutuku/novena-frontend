@@ -349,6 +349,7 @@ import AutoStockTakeScreen from "./screens/store/autoStockTakeScreen.jsx";
 import AutoStock from "./screens/store/autostocktake/AutoStock.jsx";
 import AutoStockTakeLines from "./screens/store/autostocktake/AutoStockTakeLines.jsx";
 import ViewPayrollHeader from "./screens/payroll/payrollheader/viewpayrollheader.jsx";
+import ProductionCertificate from "./screens/production/productionheaders/ProductionCertificate.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -588,6 +589,10 @@ const router = createHashRouter(
             <Route
               path="allproductionheaders"
               element={<ProductionHeaderList />}
+            />
+            <Route
+              path="productioncertificate/:id"
+              element={<ProductionCertificate />}
             />
             <Route
               path="allproductionheaderlistintransit"

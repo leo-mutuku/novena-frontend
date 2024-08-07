@@ -115,7 +115,9 @@ const ProductionHeaderList = () => {
                       </Button>
                     </Link>
                   ) : item.status === "Posted" ? (
-                    <Link to={`#`}>
+                    <Link
+                      to={`/production/productionheaders/productioncertificate/${item.production_batch_no}`}
+                    >
                       <Button className="btn btn-success" size="sm">
                         <IoMdEye
                           onClick={(e) =>
