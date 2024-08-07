@@ -36,6 +36,14 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Sales_order"],
     }),
+    getAllDailySales: builder.query({
+      query: (data) => ({
+        url: `${SALESORDERHEADER_URL}/getalldailysales`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Sales_order"],
+    }),
     getAllPostedSalesOrders: builder.query({
       query: (data) => ({
         url: `${SALESORDERHEADER_URL}/getallpostedsalesorders`,
@@ -80,6 +88,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetAllDailySalesQuery,
   useCancelOrderMutation,
   useGetAllDispatchedOrdersQuery,
   useCreateSalesOrderHeaderMutation,

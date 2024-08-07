@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid } from "@mui/material";
 import { Card, Container } from "react-bootstrap";
+import { useGetAllDailySalesQuery } from "../../slices/sales/salesOrderHeadersApiSlice";
 import {
   PieChart,
   Pie,
@@ -15,28 +16,37 @@ import {
   CartesianGrid,
 } from "recharts";
 
-// Sample data
-const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-];
-
-const datax = [
-  { day: "Monday", lastWeekSales: 300, currentWeekSales: 400 },
-  { day: "Tuesday", lastWeekSales: 200, currentWeekSales: 300 },
-  { day: "Wednesday", lastWeekSales: 278, currentWeekSales: 500 },
-  { day: "Thursday", lastWeekSales: 189, currentWeekSales: 200 },
-  { day: "Friday", lastWeekSales: 239, currentWeekSales: 300 },
-  { day: "Saturday", lastWeekSales: 349, currentWeekSales: 700 },
-  { day: "Sunday", lastWeekSales: 400, currentWeekSales: 600 },
-];
-
 // Colors for each section of the pie
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const SalesDashboard = () => {
+  const { data: dailySales, isLoading, isSuccess } = useGetAllDailySalesQuery();
+
+  // Sample data
+  const datay = [
+    { name: "Group A", value: 0 },
+    { name: "Group B", value: 300 },
+    { name: "Group C", value: 300 },
+    { name: "Group D", value: 200 },
+  ];
+  console.log(datay);
+  const data = [
+    { name: "Group A", value: 0 },
+    { name: "Group B", value: 300 },
+    { name: "Group C", value: 300 },
+    { name: "Group D", value: 200 },
+  ];
+
+  const datax = [
+    { day: "Monday", lastWeekSales: 300, currentWeekSales: 400 },
+    { day: "Tuesday", lastWeekSales: 200, currentWeekSales: 300 },
+    { day: "Wednesday", lastWeekSales: 278, currentWeekSales: 500 },
+    { day: "Thursday", lastWeekSales: 189, currentWeekSales: 200 },
+    { day: "Friday", lastWeekSales: 239, currentWeekSales: 300 },
+    { day: "Saturday", lastWeekSales: 349, currentWeekSales: 700 },
+    { day: "Sunday", lastWeekSales: 400, currentWeekSales: 600 },
+  ];
+
   return (
     <>
       <Grid container gap={3} sx={{ marginTop: "20px" }}>
@@ -58,32 +68,36 @@ const SalesDashboard = () => {
           >
             Daily Total Sales
           </p>
-          <ResponsiveContainer
-            width="100%"
-            height={400}
-            style={{ marginTop: -40, backgroundPositionX: "center" }}
-          >
-            <PieChart>
-              <Pie
-                data={data}
-                cx="50%"
-                cy="50%"
-                innerRadius={60}
-                outerRadius={100}
-                fill="#8884d8"
-                paddingAngle={0}
-                dataKey="value"
-              >
-                {data.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <ResponsiveContainer
+              width="100%"
+              height={400}
+              style={{ marginTop: -40, backgroundPositionX: "center" }}
+            >
+              <PieChart>
+                <Pie
+                  data={datay}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={100}
+                  fill="#8884d8"
+                  paddingAngle={0}
+                  dataKey="value"
+                >
+                  {datay.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          )}
         </Grid>
         <Grid
           item

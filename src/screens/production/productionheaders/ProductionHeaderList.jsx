@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa6";
 import { CiEdit } from "react-icons/ci";
 import { BsFileEarmarkPdf } from "react-icons/bs";
-import { IoMdAdd } from "react-icons/io";
+import { IoMdAdd, IoMdEye } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import AddProductionModal from "./lines/AddProductionModal";
 
@@ -60,7 +60,7 @@ const ProductionHeaderList = () => {
             <th style={{ position: "initial" }}>Variance</th>
             <th style={{ position: "initial" }}>Created By</th>
             <th style={{ position: "initial" }}>Status</th>
-            <th style={{ position: "initial" }}>Add</th>
+            <th style={{ position: "initial" }}>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -101,16 +101,33 @@ const ProductionHeaderList = () => {
                 <td>
                   {item.status === "New" ? (
                     <Link to={`#`}>
-                      <IoMdAdd
-                        onClick={(e) =>
-                          handleAdd(
-                            e,
-                            item.production_batch_no,
-                            item.batch_number,
-                            "block"
-                          )
-                        }
-                      />
+                      <Button className="btn btn-primary" size="sm">
+                        <IoMdAdd
+                          onClick={(e) =>
+                            handleAdd(
+                              e,
+                              item.production_batch_no,
+                              item.batch_number,
+                              "block"
+                            )
+                          }
+                        />
+                      </Button>
+                    </Link>
+                  ) : item.status === "Posted" ? (
+                    <Link to={`#`}>
+                      <Button className="btn btn-success" size="sm">
+                        <IoMdEye
+                          onClick={(e) =>
+                            handleAdd(
+                              e,
+                              item.production_batch_no,
+                              item.batch_number,
+                              "none"
+                            )
+                          }
+                        />
+                      </Button>
                     </Link>
                   ) : (
                     "--"
