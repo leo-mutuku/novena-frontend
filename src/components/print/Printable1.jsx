@@ -4,7 +4,42 @@ import { Divider, Chip } from "@mui/material";
 
 const Printable1 = forwardRef(({ header, body, footer }, ref) => {
   return (
-    <div ref={ref} style={{ padding: 20, border: "1px solid black" }}>
+    <div
+      ref={ref}
+      style={{
+        padding: 20,
+        border: "1px solid black",
+        position: "relative",
+      }}
+    >
+      <style>
+        {`
+        @page {
+          margin: 20mm 15mm;
+          counter-reset: page 1;
+        }
+
+        .page-footer {
+          position: fixed;
+          bottom: 0;
+          width: 100%;
+          text-align: center;
+          font-size: 12px;
+          color: grey;
+        }
+
+        .page-footer::after {
+          content: "Page " counter(page);
+        }
+
+        @media screen {
+          .page-footer {
+            display: none;
+          }
+        }
+        `}
+      </style>
+
       <div>
         <h3 style={{ textAlign: "center" }}>{header.title}</h3>
         {header.subTitle && (
@@ -50,7 +85,7 @@ const Printable1 = forwardRef(({ header, body, footer }, ref) => {
         )}
       </div>
       <Divider textAlign="left">
-        <Chip label="Production Sumarry" size="small" />
+        <Chip label="Production Summary" size="small" />
       </Divider>
       <div
         style={{
@@ -63,7 +98,6 @@ const Printable1 = forwardRef(({ header, body, footer }, ref) => {
           <Col>
             <Row>
               <Col>
-                {" "}
                 {header.input && (
                   <p>PRODUCTION INPUT:&nbsp; &nbsp; &nbsp;{header.input} </p>
                 )}
@@ -76,7 +110,6 @@ const Printable1 = forwardRef(({ header, body, footer }, ref) => {
           <Col>
             <Row>
               <Col>
-                {" "}
                 {header.output && (
                   <p>OUTPUT:&nbsp; &nbsp; &nbsp;{header.output}</p>
                 )}
@@ -88,7 +121,7 @@ const Printable1 = forwardRef(({ header, body, footer }, ref) => {
           </Col>
         </Row>
       </div>
-      <br></br>
+      <br />
       <Divider textAlign="left">
         <Chip label="Production" size="small" />
       </Divider>
@@ -122,7 +155,7 @@ const Printable1 = forwardRef(({ header, body, footer }, ref) => {
           ))}
         </tbody>
       </table>
-      <br></br>
+      <br />
       <Divider textAlign="left">
         <Chip label="Pack House" size="small" />
       </Divider>
@@ -162,6 +195,8 @@ const Printable1 = forwardRef(({ header, body, footer }, ref) => {
           <p>{footer}</p>
         </div>
       )}
+
+      <div className="page-footer" />
     </div>
   );
 });
