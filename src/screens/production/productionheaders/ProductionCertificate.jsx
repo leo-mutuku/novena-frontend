@@ -57,6 +57,8 @@ const ProductionCertificate = () => {
     body: {
       columns: columns,
       rows: rows,
+      columns1: columns1,
+      rows1: rows1,
     },
     footer: footer,
   };
@@ -84,8 +86,8 @@ const ProductionCertificate = () => {
       setRows(updatedRows);
       setColumns1(["Product ", "Output"]);
       const updatedRows1 = res3.map((item) => [
-        item.product_code,
-        item.product_output,
+        item.item_name,
+        item.number_packed,
       ]);
       setRows1(updatedRows1);
 
