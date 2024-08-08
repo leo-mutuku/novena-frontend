@@ -350,6 +350,7 @@ import AutoStock from "./screens/store/autostocktake/AutoStock.jsx";
 import AutoStockTakeLines from "./screens/store/autostocktake/AutoStockTakeLines.jsx";
 import ViewPayrollHeader from "./screens/payroll/payrollheader/viewpayrollheader.jsx";
 import ProductionCertificate from "./screens/production/productionheaders/ProductionCertificate.jsx";
+import EditLimit from "./screens/sales/salespeople/EditLimit.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -849,6 +850,7 @@ const router = createHashRouter(
             <Route index element={<Orderlist />} />
             <Route path="CreateOrder" element={<CreateOrder />} />
             <Route path="allorders" element={<Orderlist />} />
+
             <Route
               path="allordersintansit"
               element={<AllOrderHeadersInTransit />}
@@ -917,6 +919,7 @@ const router = createHashRouter(
           <Route path="salespeople" element={<SalesPeopleScreen />}>
             <Route path="createsalesperson" element={<CreateSalesPeople />} />
             <Route path="allsalespeople" element={<SalesPeoplelist />} />
+            <Route path="edit/:id" element={<EditLimit />} />
             <Route
               path="deletesalesperson/:id"
               element={<DeleteSalesPerson />}

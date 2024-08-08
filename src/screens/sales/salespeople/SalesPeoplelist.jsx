@@ -5,6 +5,7 @@ import {
   useDeleteSalesPersonMutation,
   useGetAllSalesPeopleQuery,
   useValidateSalesperSonmakeOrderMutation,
+  useEditSalesPersonLimitMutation,
 } from "../../../slices/sales/salesPeopleApiSlice";
 
 import { Table, Button } from "react-bootstrap";
@@ -62,7 +63,8 @@ const SalesPeoplelist = () => {
             <th>Balance</th>
             <th>Limit</th>
             <th>Make Order</th>
-            <th>Make Order Status</th>
+            <th>Update Status</th>
+            <th>Edit Limit</th>
             {/* <th>Remove</th> */}
           </tr>
         </thead>
@@ -84,6 +86,13 @@ const SalesPeoplelist = () => {
                 >
                   Validate
                 </Button>
+              </td>
+              <td>
+                <Link to={`/sales/salespeople/edit/${item.staff_id}`}>
+                  <Button variant="warning">
+                    <CiEdit />
+                  </Button>
+                </Link>
               </td>
               {/* <td>
                 <Link
