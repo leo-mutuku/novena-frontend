@@ -1,4 +1,6 @@
 import React, { forwardRef } from "react";
+import { Row, Col } from "react-bootstrap";
+import { Divider, Chip } from "@mui/material";
 
 const Printable1 = forwardRef(({ header, body, footer }, ref) => {
   return (
@@ -17,12 +19,39 @@ const Printable1 = forwardRef(({ header, body, footer }, ref) => {
           </p>
         )}
         {header.description && (
-          <p style={{ textAlign: "center", marginTop: "-5px" }}>
+          <p
+            style={{
+              textAlign: "center",
+              marginTop: "-5px",
+              marginBottom: "2px",
+            }}
+          >
             {header.description}
           </p>
         )}
+        {header.address && (
+          <p
+            style={{ textAlign: "center", marginTop: "-5px", fontSize: "12px" }}
+          >
+            {header.address} {header.date}
+          </p>
+        )}
+        {header.address && (
+          <p
+            style={{
+              textAlign: "center",
+              marginTop: "-5px",
+              fontSize: "12px",
+              fontWeight: "900",
+            }}
+          >
+            BATCH NO # {header.batch_number} - PROD NO # {header.prod_number}
+          </p>
+        )}
       </div>
-
+      <Divider textAlign="left">
+        <Chip label="Production Sumarry" size="small" />
+      </Divider>
       <div
         style={{
           border: "1px solid black",
@@ -30,10 +59,73 @@ const Printable1 = forwardRef(({ header, body, footer }, ref) => {
           marginTop: "10px",
         }}
       >
-        {header.date && <p>Date: {header.date}</p>}
-        {header.deliveryNumber && <p>Del No: {header.deliveryNumber}</p>}
+        <Row>
+          <Col>
+            <Row>
+              <Col>
+                {" "}
+                {header.input && (
+                  <p>PRODUCTION INPUT:&nbsp; &nbsp; &nbsp;{header.input} </p>
+                )}
+                {header.expected && (
+                  <p>EXPECTED OUTPUT:&nbsp; &nbsp; &nbsp;{header.expected} </p>
+                )}
+              </Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>
+                {" "}
+                {header.output && (
+                  <p>OUTPUT:&nbsp; &nbsp; &nbsp;{header.output}</p>
+                )}
+                {header.variance && (
+                  <p>VARIANCE:&nbsp; &nbsp; &nbsp; {header.variance} </p>
+                )}
+              </Col>
+            </Row>
+          </Col>
+        </Row>
       </div>
-
+      <br></br>
+      <Divider textAlign="left">
+        <Chip label="Production" size="small" />
+      </Divider>
+      <table
+        style={{ width: "100%", borderCollapse: "collapse", marginTop: "10px" }}
+      >
+        <thead>
+          <tr>
+            {body.columns.map((col, index) => (
+              <th
+                key={index}
+                style={{ border: "1px solid black", padding: "8px" }}
+              >
+                {col}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {body.rows.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {row.map((cell, cellIndex) => (
+                <td
+                  key={cellIndex}
+                  style={{ border: "1px solid black", padding: "8px" }}
+                >
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <br></br>
+      <Divider textAlign="left">
+        <Chip label="Pack House" size="small" />
+      </Divider>
       <table
         style={{ width: "100%", borderCollapse: "collapse", marginTop: "10px" }}
       >

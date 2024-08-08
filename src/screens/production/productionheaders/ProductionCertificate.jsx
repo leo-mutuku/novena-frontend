@@ -19,9 +19,15 @@ const ProductionCertificate = () => {
   const [headers, setHeaders] = useState({
     title: "PRODUCTION REPORT",
     subTitle: "Novena Maize Miller LTD",
-    description: "Dealers in All Types of Animal Feeds , Maize Mill",
+    description: "Dealers in: All types of cereals, Animal feeds",
+    address: "P.O Box 238, Meru, Kenya",
     date: "08/08/2024",
+    batch_number: "",
     deliveryNumber: "10301",
+    input: 0,
+    output: 0,
+    expected: 0,
+    variance: 0,
   });
   const [columns, setColumns] = useState(["Product", "Quantity"]);
   const [rows, setRows] = useState([
@@ -31,7 +37,9 @@ const ProductionCertificate = () => {
     ["Product B", "200"],
     ["Product C", "150"],
   ]);
-  const [footer, setFooter] = useState("Thank you for your business!");
+  const [footer, setFooter] = useState(
+    "Your Satisfaction is our number one priority!"
+  );
 
   const { data: productionReport } = useProductionCertificateQuery(id);
   console.log(JSON.stringify(productionReport?.data));
@@ -46,12 +54,17 @@ const ProductionCertificate = () => {
   };
   useEffect(() => {
     if (productionReport?.data) {
-      const { res1, res2 } = productionReport.data;
+      const { res1, res2, res3 } = productionReport.data;
 
       setHeaders((prevHeaders) => ({
         ...prevHeaders,
         date: res1.production_date,
         deliveryNumber: res1.production_batch_no,
+        batch_number: res1.batch_number,
+        input: res1.production_input,
+        output: res1.actual_output,
+        expected: res1.expected_output,
+        variance: res1.production_variance,
       }));
 
       setColumns(["Product Code", "Output"]);
