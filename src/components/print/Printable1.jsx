@@ -131,7 +131,7 @@ const Printable1 = forwardRef(({ header, body, footer }, ref) => {
       >
         <thead>
           <tr>
-            {body.columns.map((col, index) => (
+            {body.columns1?.map((col, index) => (
               <th
                 key={index}
                 style={{ border: "1px solid black", padding: "8px" }}
@@ -142,7 +142,7 @@ const Printable1 = forwardRef(({ header, body, footer }, ref) => {
           </tr>
         </thead>
         <tbody>
-          {body.rows.map((row, rowIndex) => (
+          {body.rows1?.map((row, rowIndex) => (
             <tr key={rowIndex}>
               {row.map((cell, cellIndex) => (
                 <td

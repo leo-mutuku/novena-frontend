@@ -37,6 +37,14 @@ const ProductionCertificate = () => {
     ["Product B", "200"],
     ["Product C", "150"],
   ]);
+  const [columns1, setColumns1] = useState(["Product", "Quantity"]);
+  const [rows1, setRows1] = useState([
+    ["Product B", "200"],
+    ["Product C", "150"],
+    ["Product A", "100"],
+    ["Product B", "200"],
+    ["Product C", "150"],
+  ]);
   const [footer, setFooter] = useState(
     "Your Satisfaction is our number one priority!"
   );
@@ -67,13 +75,19 @@ const ProductionCertificate = () => {
         variance: res1.production_variance,
       }));
 
-      setColumns(["Product Code", "Output"]);
+      setColumns(["Product ", "Output"]);
 
       const updatedRows = res2.map((item) => [
-        item.product_code,
+        item.item_name,
         item.product_output,
       ]);
       setRows(updatedRows);
+      setColumns1(["Product ", "Output"]);
+      const updatedRows1 = res3.map((item) => [
+        item.product_code,
+        item.product_output,
+      ]);
+      setRows1(updatedRows1);
 
       // Update footer or any other data if needed
       // setFooter("Your custom footer");
