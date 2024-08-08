@@ -20,6 +20,13 @@ export const productionHeaderApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["ProductionLines", "productionHeaders"],
     }),
+    productionCertificate: builder.query({
+      query: (id) => ({
+        url: `${PRODUCTIONHEADER_URL}/productioncertificate/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["ProductionLines", "productionHeaders"],
+    }),
     cancelProductionHeader: builder.mutation({
       query: (data) => ({
         url: `${PRODUCTIONHEADER_URL}/cancleproduction`,
@@ -74,6 +81,7 @@ export const productionHeaderApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useProductionCertificateQuery,
   useCreateProductionHeaderMutation,
   useCancelProductionHeaderMutation,
   useDailyProductionReportMutation,
