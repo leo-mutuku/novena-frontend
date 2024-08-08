@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
 import {
@@ -15,8 +15,21 @@ import { CiEdit } from "react-icons/ci";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdEye } from "react-icons/io";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const SalesPeoplelist = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+  const [created_by, set_created_by] = React.useState("");
+
+  const navigate = useNavigate();
+  const role = 9999;
+  useEffect(() => {
+    if (userInfo) {
+      set_created_by(userInfo.first_name);
+    }
+    navigate();
+  }, [navigate, userInfo]);
   const [removePerson] = useDeleteSalesPersonMutation();
   const { data: data } = useGetAllSalesPeopleQuery();
   const [validateSales] = useValidateSalesperSonmakeOrderMutation();
@@ -88,7 +101,13 @@ const SalesPeoplelist = () => {
                 </Button>
               </td>
               <td>
-                <Link to={`/sales/salespeople/edit/${item.staff_id}`}>
+                <Link
+                  to={
+                    userInfo?.roles.includes(role)
+                      ? `/sales/salespeople/edit/${item.staff_id}`
+                      : "#"
+                  }
+                >
                   <Button variant="warning">
                     <CiEdit />
                   </Button>
