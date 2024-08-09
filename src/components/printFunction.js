@@ -10,7 +10,7 @@ export const handlePrintA4 = (payrollHeader, getlistOfStaffId) => {
     { header: "Total Deductions", datakey: "total_deductions" },
   ];
   let total_gross_pay = payrollHeader.gross_pay;
-  const footer_body = [{ gross_pay: total_gross_pay }];
+  const footer_body = [{ gross_pay: payrollHeader.gross_pay }];
   const doc = new jsPDF("p", "mm", [219, 210]);
 
   doc.setLineWidth(2);

@@ -45,6 +45,7 @@ const PayrollActions = () => {
       const res = await bulkPrintPayslip({ payroll_header_id: id }).unwrap();
       if (res.status === "success") {
         const payrollHeader = res.data.payrollHeader;
+        console.log(payrollHeader);
         const getlistOfStaffId = res.data.getlistOfStaffId;
 
         handlePrintA4(payrollHeader, getlistOfStaffId);

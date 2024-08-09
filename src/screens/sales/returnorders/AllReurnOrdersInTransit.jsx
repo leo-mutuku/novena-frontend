@@ -60,7 +60,7 @@ const AllReurnOrdersInTransit = () => {
                 <td>{index + 1}</td>
                 <td>{`${timeDate.date(item.created_at)}`}</td>
                 <td>{item.header_id}</td>
-                <td>{item.sales_order_type}</td>
+                <td>{item.sales_type_name}</td>
 
                 <td>{item.total}</td>
 

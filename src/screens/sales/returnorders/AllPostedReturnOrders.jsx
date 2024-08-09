@@ -54,8 +54,8 @@ const AllPostedReturnOrders = () => {
         accessor: "header_id",
       },
       {
-        Header: "Sales Type",
-        accessor: "sales_order_type",
+        Header: "By",
+        accessor: "sales_type_name",
       },
 
       {
