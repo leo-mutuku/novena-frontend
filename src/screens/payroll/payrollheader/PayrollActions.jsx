@@ -115,7 +115,8 @@ const PayrollActions = () => {
         <Col>Payroll ID</Col>
         <Col>Gross</Col>
         <Col>NET</Col>
-        <Col>Deductions</Col>
+        <Col>Ttl. Dctns</Col>
+        <Col>Other. Dedtns</Col>
         <Col>STAFF COUNT</Col>
         <Col>STATUS </Col>
       </Row>
@@ -127,6 +128,7 @@ const PayrollActions = () => {
           <Col>{item.gross_pay}</Col>
           <Col>{item.net_pay}</Col>
           <Col>{item.total_deductions}</Col>
+          <Col>{item.other_deductions}</Col>
           <Col>{item.number_of_staff}</Col>
           <Col>{item.status}</Col>
         </Row>
