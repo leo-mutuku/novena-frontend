@@ -13,9 +13,16 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Sales_orderLines"],
     }),
+    getAllReturnOrdersLines: builder.query({
+      query: (id) => ({
+        url: `${RETURNORDER_LINE}/getreturnorderbylineId/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Sales_orderLines"],
+    }),
     getSalesLinesByHeaderId: builder.query({
-      query: (sales_order_number) => ({
-        url: `${RETURNORDER_LINE}/getallsalesorderslinesbysalesordernumber/${sales_order_number}`,
+      query: (id) => ({
+        url: `${RETURNORDER_LINE}/getallsalesorderslinesbysalesordernumber/${id}`,
         method: "GET",
       }),
       providesTags: ["Sales_orderLines"],
@@ -33,6 +40,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetAllReturnOrdersLinesQuery,
   useCreateRurnOrderLineMutation,
   useGetRurnOrderLineByHeaderIdQuery,
   useGetSalesLinesByHeaderIdQuery,

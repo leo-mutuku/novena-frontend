@@ -76,7 +76,9 @@ const AllPostedReturnOrders = () => {
         Cell: ({ row }) => (
           <>
             {row.original.status === "Posted" ? (
-              <Link to={`/sales/returnorder/preview/${row.original.header_id}`}>
+              <Link
+                to={`/sales/returnorder/returnorderview/${row.original.header_id}`}
+              >
                 <IoMdEye />
               </Link>
             ) : (

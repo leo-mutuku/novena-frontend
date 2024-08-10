@@ -873,7 +873,10 @@ const router = createHashRouter(
             <Route path="allreturnorders" element={<ReturnOrderlist />} />
             <Route path="createreturnorder" element={<CreateReturnOrder />} />
             <Route path="reverseorderlist" element={<ReverseorderList />} />
-            <Route path="returnorder/:id" element={<ReturnOrderpreview />} />
+            <Route
+              path="returnorderview/:id"
+              element={<ReturnOrderpreview />}
+            />
             <Route path="rerveseorder/:id" element={<ReverseOrderPreview />} />
             <Route path="AddLines/:id" element={<AddLines />} />
             <Route path="postreturnorder/:id" element={<PostReturnOrder />} />
