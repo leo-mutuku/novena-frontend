@@ -5,13 +5,19 @@ import { useGetAllPurchaseLinesByHeaderIdQuery } from "../../../slices/purchase/
 
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FaRegFileExcel } from "react-icons/fa6";
 import { CiEdit } from "react-icons/ci";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdEye } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import TimeDate from "../../../components/TimeDate";
 import EditMaizePurchaseModal from "./lines/EditMaizePurchaseModal";
+
+import DataTable from "../../../components/general/DataTable";
+import moment from "moment";
+import axios from "axios";
+import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
+import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
+
 const AllMaizePurchase = () => {
   const [edit_mode, set_edit_mode] = useState("none");
   const [purchase_header_id, set_purchase_header_id] = useState("");
@@ -26,7 +32,7 @@ const AllMaizePurchase = () => {
   };
   return (
     <>
-      <p>*** All Store Purchases In Transit ***</p>
+      <p>*** All Maize Purchases In Transit ***</p>
       <div style={{ display: `${edit_mode}` }}>
         <EditMaizePurchaseModal
           set_edit_mode={set_edit_mode}

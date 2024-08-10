@@ -12,6 +12,37 @@ export const productionHeaderApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["ProductionLines", "productionHeaders"],
     }),
+    dailyProductionReport: builder.mutation({
+      query: (data) => ({
+        url: `${PRODUCTIONHEADER_URL}/dailyproductionreport`,
+        method: "POST",
+        body: data,
+      }),
+      providesTags: ["ProductionLines", "productionHeaders"],
+    }),
+    productionCertificate: builder.query({
+      query: (id) => ({
+        url: `${PRODUCTIONHEADER_URL}/productioncertificate/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["ProductionLines", "productionHeaders"],
+    }),
+    cancelProductionHeader: builder.mutation({
+      query: (data) => ({
+        url: `${PRODUCTIONHEADER_URL}/cancleproduction`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["ProductionLines", "productionHeaders"],
+    }),
+    getLastBatchNumbers: builder.query({
+      query: (data) => ({
+        url: `${PRODUCTIONHEADER_URL}/getlastbatchnumbers`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["ProductionLines", "productionHeaders"],
+    }),
 
     getAllPostedProductionHeaders: builder.query({
       query: (data) => ({
@@ -50,8 +81,12 @@ export const productionHeaderApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useProductionCertificateQuery,
   useCreateProductionHeaderMutation,
+  useCancelProductionHeaderMutation,
+  useDailyProductionReportMutation,
   useGetAllProductionHeadersQuery,
+  useGetLastBatchNumbersQuery,
   useGetAllProductionHeadersInTransitQuery,
   useGetAllPostedProductionHeadersQuery,
 } = productionHeaderApiSlice;

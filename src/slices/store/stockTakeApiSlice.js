@@ -1,26 +1,27 @@
 import { apiSlice } from "../apiSlice";
-const STOREITEMS_URL = "/api/v1/store/storeitems";
+const URL = "/api/v1/store/stocktake";
 
 export const stockTakeApiSlice = apiSlice.injectEndpoints({
+  tagTypes: ["StockTake"],
   endpoints: (builder) => ({
-    getAllStoreItems: builder.query({
+    getAllStockTake: builder.query({
       query: (data) => ({
-        url: `${STOREITEMS_URL}/getallstoreitems`,
+        url: `${URL}/getallstocktake`,
         method: "GET",
         body: data,
       }),
-      providesTags: "store_items",
+      providesTags: ["StockTake"],
     }),
-    createStoreItem: builder.mutation({
+    createStockTake: builder.mutation({
       query: (data) => ({
-        url: `${STOREITEMS_URL}/createstoreitem`,
+        url: `${URL}/createstocktake`,
         method: "POST",
         body: data,
       }),
-      invalidatesTags: "store_items",
+      invalidatesTags: ["StockTake"],
     }),
   }),
 });
 
-export const { useGetAllStoreItemsQuery, useCreateStoreItemMutation } =
+export const { useGetAllStoreRegisterQuery, useRegisterStoreMutation } =
   stockTakeApiSlice;

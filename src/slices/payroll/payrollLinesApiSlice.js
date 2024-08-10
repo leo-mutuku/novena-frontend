@@ -1,41 +1,63 @@
 import { apiSlice } from "../apiSlice";
-const PRODUCTIONHEADER_URL = "/api/v1/payroll/payrollines";
+const PAYROLLLINES_URL = "/api/v1/payroll/payrollines";
 
 export const payrollLinesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    createPayrollLines: builder.mutation({
+    tagTypes: ["Payroll_lines", "Payroll_headers"],
+    validatePayroll: builder.mutation({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/createpayrolllines`,
+        url: `${PAYROLLLINES_URL}/validatepayroll`,
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Payroll_lines", "Payroll_headers"],
+    }),
+    printSinglepaySlip: builder.mutation({
+      query: (data) => ({
+        url: `${PAYROLLLINES_URL}/printsinglepayslip`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Payroll_lines", "Payroll_headers"],
     }),
 
-    getAllProductionHeaders: builder.query({
+    bulkPrintPayslip: builder.mutation({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheaders`,
-        method: "GET",
+        url: `${PAYROLLLINES_URL}/bulkprintpayslip`,
+        method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Payroll_lines", "Payroll_headers"],
     }),
-    getAllProductionHeadersInTransit: builder.query({
+
+    processPayroll: builder.mutation({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheaders`,
-        method: "GET",
+        url: `${PAYROLLLINES_URL}/processpayroll`,
+        method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Payroll_lines", "Payroll_headers"],
     }),
-    getAllProductionHeadersInTransit: builder.query({
-      query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheadersintransit`,
+    getPayrollEntries: builder.query({
+      query: (id) => ({
+        url: `${PAYROLLLINES_URL}/getpayrollentries/${id}`,
         method: "GET",
+      }),
+      providesTags: ["Payroll_lines", "Payroll_headers"],
+    }),
+
+    generatePayroll: builder.mutation({
+      query: (data) => ({
+        url: `${PAYROLLLINES_URL}/generatepayroll`,
+        method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Payroll_lines", "Payroll_headers"],
     }),
-    getAllPostedProductionHeaders: builder.query({
+    getPayrollDetails: builder.query({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallpostedproductionheaders`,
-        method: "GET",
+        url: `${PAYROLLLINES_URL}/getpayrolldetails`,
+        method: "POST",
         body: data,
       }),
     }),
@@ -43,8 +65,10 @@ export const payrollLinesApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useCreateProductionHeaderMutation,
-  useGetAllProductionHeadersQuery,
-  useGetAllProductionHeadersInTransitQuery,
-  useGetAllPostedProductionHeadersQuery,
+  usePrintSinglepaySlipMutation,
+  useGetPayrollEntriesQuery,
+  useValidatePayrollMutation,
+  useProcessPayrollMutation,
+  useGeneratePayrollMutation,
+  useBulkPrintPayslipMutation,
 } = payrollLinesApiSlice;

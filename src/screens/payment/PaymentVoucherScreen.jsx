@@ -1,9 +1,7 @@
 import PageActionComponent from "../../components/PageActionComponent";
 const pagemenus = [
-  { pagename: "All PV", to: "allpvs" },
-
-  { pagename: "Posted", to: "allpostedpv" },
-  { pagename: "Create PV", to: "createpv" },
+  { pagename: "All PV", to: "allpv" },
+  { pagename: "Paid PV", to: "allpaidpv" },
 ];
 export const PaymentVoucherScreen = () => {
   return (

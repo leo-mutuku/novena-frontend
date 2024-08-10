@@ -1,11 +1,11 @@
 import { apiSlice } from "../apiSlice";
-const ACCOUNTENTRIES_URL = "/api/v1/finance/accountentries";
+const URL = "/api/v1/finance/bankaccountentries";
 
 export const bankAccountEntriesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllAccountEntries: builder.query({
+    getAllBankAccountEntries: builder.query({
       query: (data) => ({
-        url: `${ACCOUNTENTRIES_URL}/getallaccountentries`,
+        url: `${URL}/getallbankaccountsentries`,
         method: "GET",
         body: data,
       }),
@@ -13,4 +13,4 @@ export const bankAccountEntriesApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetAllAccountEntriesQuery } = bankAccountEntriesApiSlice;
+export const { useGetAllBankAccountEntriesQuery } = bankAccountEntriesApiSlice;

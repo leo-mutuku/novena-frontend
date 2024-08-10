@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Loader from "../../../components/Loader";
 import { useGetAllPayRollHeadersQuery } from "../../../slices/payroll/payrollHeadersApiSlice";
 import { Table, Button } from "react-bootstrap";
@@ -8,6 +8,9 @@ import { CiEdit } from "react-icons/ci";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
+import { IoMdEye } from "react-icons/io";
+import moment from "moment";
+import DataTable from "../../../components/general/DataTable";
 // import AddDailyPackModal from "./lines/AddDailyPackModal";
 // import DeletePurchaseModal from "./lines/DeletePurchaseModal";
 import TimeDate from "../../../components/TimeDate";
@@ -17,6 +20,7 @@ const PayrollHeadersList = () => {
   const [mode, set_mode] = useState("none");
   const [mode_delete, set_mode_delete] = useState("none");
   const [store_purchase_id, set_store_purchase_id] = useState("");
+  const [tableData, setTableData] = useState([]);
   const handleAdd = (e, id, style) => {
     set_store_purchase_id(parseInt(id));
     set_mode(style);
@@ -27,36 +31,82 @@ const PayrollHeadersList = () => {
   };
   const { data, isLoading } = useGetAllPayRollHeadersQuery();
   const navigate = useNavigate();
-  useEffect(() => {}, [data]);
+  useEffect(() => {
+    if (data?.data) {
+      setTableData(data.data);
+    }
+  }, [data]);
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "#",
+        accessor: (row, index) => index + 1,
+      },
+      {
+        Header: "Payroll no",
+        accessor: "payroll_header_id",
+      },
+
+      {
+        Header: "Created At",
+        accessor: "created_at",
+        Cell: ({ value }) => (
+          <span>{`${moment(value).format("YYYY-MM-DD")} : ${moment(
+            value
+          ).format("HH:mm A")}`}</span>
+        ),
+      },
+
+      {
+        Header: "Staff Count",
+        accessor: "number_of_staff",
+        Cell: ({ row }) => <Link to="#">{row.original.number_of_staff}</Link>,
+      },
+      {
+        Header: "Gross Pay",
+        accessor: "gross_pay",
+      },
+      {
+        Header: "Net pay",
+        accessor: "net_pay",
+      },
+      {
+        Header: "Total Deductions",
+        accessor: "total_deductions",
+      },
+
+      {
+        Header: "Category",
+        accessor: "category_name",
+        Cell: ({ row }) => (
+          <Link
+            to={`/payroll/payrollheader/actions/${row.original.payroll_header_id}`}
+          >
+            {row.original.category_name}
+          </Link>
+        ),
+      },
+    ],
+    []
+  );
 
   return (
     <>
-      <>
-        {/* <div style={{ display: `${mode}` }}>
-          <AddDailyPackModal
-            store_purchase_id={store_purchase_id}
-            set_mode={set_mode}
-          />
-        </div> */}
-        {/* <div style={{ display: `${mode_delete}` }}>
-          <DeletePurchaseModal
-            store_purchase_id={store_purchase_id}
-            set_mode_delete={set_mode_delete}
-          />
-        </div> */}
-      </>
+      <></>
       <p>*** All Payroll Lists ***</p>
+      <DataTable columns={columns} data={tableData} />
 
-      <Table striped style={{ border: "1px solid #ccc" }}>
+      {/* <Table striped style={{ border: "1px solid #ccc" }}>
         <thead>
           <tr>
             <th>#</th>
-            <th>Payroll Number</th>
-            <th>Period</th>
-            <th>Number.of Staff</th>
-            <th>Total Payroll</th>
-            <th>Prepared By</th>
-            <th>Approved By</th>
+            <th>Payroll no</th>
+            <th>Date</th>
+            <th>Staff Count</th>
+            <th>Gross Pay</th>
+            <th>Net Pay</th>
+            <th>Deductions</th>
             <th>Status</th>
             <th>Print</th>
             <th>View</th>
@@ -69,17 +119,17 @@ const PayrollHeadersList = () => {
             <>No data</>
           ) : (
             data?.data?.map((item, index) => (
-              <tr>
+              <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{`${timeDate.date(item.end_date)}`}</td>
+                <td>{item.payroll_header_id}</td>
                 <td style={{ fontSize: "10px" }}>{`${timeDate.date(
                   item.start_date
                 )} - ${timeDate.date(item.end_date)}`}</td>
 
-                <td>{item.total}</td>
-                <td>{item.total_bales}</td>
-                <td>{item.pay_per_bale}</td>
-                <td>{item.total_packing_cost}</td>
+                <td>{item.number_of_staff}</td>
+                <td>{item.gross_pay}</td>
+                <td>{item.net_pay}</td>
+                <td>{item.total_deductions}</td>
                 <td>
                   {item.status === "New" ? (
                     <span style={{ color: "orange" }}>{item.status}</span>
@@ -122,7 +172,7 @@ const PayrollHeadersList = () => {
             ))
           )}
         </tbody>
-      </Table>
+      </Table> */}
     </>
   );
 };

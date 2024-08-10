@@ -1,29 +1,89 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
 import { useGetAllGLAccountsQuery } from "../../../slices/finance/glApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
+import { IoMdEye } from "react-icons/io";
 
 import { CiEdit } from "react-icons/ci";
 import PrintA4A5ExcelButton from "../../../components/PrintA4A5ExcelButton";
+import DataTable from "../../../components/general/DataTable";
+import moment from "moment";
+import axios from "axios";
 
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
 const AccountsList = () => {
+  const [columns_header, set_columns_header] = useState([]);
+  const [columns_body, set_columns_body] = useState([]);
+  const [footer_header, set_footer_header] = useState([]);
+  const [footer_data, set_footer_data] = useState([]);
+  const [tableData, setTableData] = useState([]);
+  const [loadingPdf, setLoadingPdf] = useState(false);
+  const [loadingExcel, setLoadingExcel] = useState(false);
   const { data, isLoading } = useGetAllGLAccountsQuery();
+  useEffect(() => {
+    if (data?.data) {
+      setTableData(data.data);
+    }
+  }, [data]);
   const [title, set_title] = useState({
     report_title: "",
     generated_by: "",
     date: "",
     filename: "",
   });
-  const [columns_header, set_columns_header] = useState([]);
-  const [columns_body, set_columns_body] = useState([]);
-  const [footer_header, set_footer_header] = useState([]);
-  const [footer_data, set_footer_data] = useState([]);
+
+  const handleDownloadPDF = async () => {
+    setLoadingPdf(true);
+    try {
+      const response = await axios({
+        url: `${baseUrlJasper}/all/accounts/pdf`, // Endpoint on your Node.js server
+        method: "GET",
+        responseType: "blob", // Important: responseType 'blob' for binary data
+      });
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "all-accounts-report.pdf");
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
+    } finally {
+      setLoadingPdf(false);
+    }
+  };
+
+  const handleDownloadExcel = async () => {
+    setLoadingExcel(true);
+    try {
+      const response = await axios({
+        url: `${baseUrlJasper}/all/accounts/excel`, // Endpoint on your Node.js server
+        method: "GET",
+        responseType: "blob", // Important: responseType 'blob' for binary data
+      });
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "all-accounts-report.xlsx");
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading Excel:", error);
+    } finally {
+      setLoadingExcel(false);
+    }
+  };
 
   const handlePrintA6 = (e) => {
     set_title({
@@ -66,55 +126,62 @@ const AccountsList = () => {
     doc.save(`${title.filename}.pdf`);
   };
 
+  const columns = useMemo(
+    () => [
+      {
+        Header: "#",
+        accessor: (row, index) => index + 1,
+      },
+      {
+        Header: "GL Name",
+        accessor: "gl_name",
+      },
+
+      {
+        Header: "Created At",
+        accessor: "created_at",
+        Cell: ({ value }) => (
+          <span>{`${moment(value).format("YYYY-MM-DD")} : ${moment(
+            value
+          ).format("HH:mm A")}`}</span>
+        ),
+      },
+
+      {
+        Header: "Gl Number",
+        accessor: "gl_number",
+        // Cell: () => (
+        //   <Link to="#">
+        //     <IoMdEye />
+        //   </Link>
+        // ),
+      },
+      {
+        Header: "Edit",
+        accessor: "edit",
+        Cell: ({ row }) => (
+          <Link to={`/finance/gl/updategl/${row.original.gl_id}`}>
+            <CiEdit />
+          </Link>
+        ),
+      },
+      {
+        Header: "View",
+        accessor: "view",
+        Cell: () => (
+          <Link to="#">
+            <IoMdEye />
+          </Link>
+        ),
+      },
+    ],
+    []
+  );
+
   return (
     <>
       <p>*** All GL ***</p>
-      <Table striped style={{ border: "1px solid #ccc" }}>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Gl Name</th>
-            <th>Gl Number</th>
-            <th>Edit</th>
-            <th>Pdf A4</th>
-          </tr>
-        </thead>
-        <tbody>
-          {isLoading ? (
-            <tr>
-              <td>
-                <Loader />
-              </td>
-            </tr>
-          ) : (
-            data?.data.map((item, index) => (
-              <tr key={item.gl_id}>
-                <td>{index + 1}</td>
-                <td>{item.gl_name}</td>
-                <td>{item.gl_number}</td>
-
-                <td>
-                  <Link to={`/finance/gl/updategl/${parseInt(item.gl_id)}`}>
-                    <CiEdit />
-                  </Link>
-                </td>
-                <td>
-                  <Button
-                    variant="light"
-                    id={item.gl_number}
-                    name={item.gl_name}
-                    className="p-2 bd-highlight"
-                    onClick={handlePrintA6}
-                  >
-                    {<FaPrint />} PDF A4
-                  </Button>
-                </td>
-                <td>{<PrintA4A5ExcelButton />}</td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </Table>
+      <DataTable columns={columns} data={tableData} />
     </>
   );
 };

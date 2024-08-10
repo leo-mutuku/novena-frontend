@@ -27,6 +27,14 @@ export const staffApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Supplier"],
     }),
+    getSupplierBalance: builder.mutation({
+      query: (data) => ({
+        url: `${SUPPLIERS_URL}/getsupplierbalance`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Supplier"],
+    }),
     updateSupplierById: builder.mutation({
       query: ({ id, data }) => ({
         url: `${SUPPLIERS_URL}/updatesupplierbyid/${id}`,
@@ -39,6 +47,7 @@ export const staffApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetSupplierBalanceMutation,
   useGetAllSuppliersQuery,
   useCreateSupplierMutation,
   useGetSupplierByIdQuery,

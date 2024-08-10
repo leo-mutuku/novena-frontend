@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Loader from "../../../components/Loader";
 import { useGetAllPostedProductionHeadersQuery } from "../../../slices/production/productionHeaderApiSlice";
 import { useGetAllPurchaseLinesByHeaderIdQuery } from "../../../slices/purchase/storePurchaseLinesApiSlice";
@@ -8,25 +8,94 @@ import { Link } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa6";
 import { CiEdit } from "react-icons/ci";
 import { BsFileEarmarkPdf } from "react-icons/bs";
+import moment from "moment";
 import { IoMdEye } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import TimeDate from "../../../components/TimeDate";
+import DataTable from "../../../components/general/DataTable";
 // import EditPurchaseModal from "./lines/EditPurchaseModal";
 const AllPostedProductionHeaderList = () => {
   const [edit_mode, set_edit_mode] = useState("none");
   const [purchase_header_id, set_purchase_header_id] = useState("");
+  const [tableData, setTableData] = useState([]);
   const timeDate = new TimeDate();
   const {
     data: posted_production_headers,
     error,
     isLoading,
   } = useGetAllPostedProductionHeadersQuery();
+  useEffect(() => {
+    if (posted_production_headers?.data) {
+      setTableData(posted_production_headers.data);
+    }
+  }, [posted_production_headers]);
 
   const handleEdit = (e, id, mode) => {
     set_edit_mode(mode);
     set_purchase_header_id(parseInt(id));
   };
-  console.log(posted_production_headers?.data);
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "#",
+        accessor: (row, index) => index + 1,
+      },
+      {
+        Header: "Date",
+        accessor: "gl_name",
+      },
+
+      {
+        Header: "Officer",
+        accessor: "created_at",
+        Cell: ({ value }) => (
+          <span>{`${moment(value).format("YYYY-MM-DD")} : ${moment(
+            value
+          ).format("HH:mm A")}`}</span>
+        ),
+      },
+
+      {
+        Header: "Batch no",
+        accessor: "gl_number",
+        // Cell: () => (
+        //   <Link to="#">
+        //     <IoMdEye />
+        //   </Link>
+        // ),
+      },
+      {
+        Header: "Expected",
+        accessor: "view",
+        Cell: () => (
+          <Link to="#">
+            <IoMdEye />
+          </Link>
+        ),
+      },
+      {
+        Header: "Output",
+        accessor: "output",
+        Cell: () => (
+          <Link to="#">
+            <IoMdEye />
+          </Link>
+        ),
+      },
+      { Header: "Variance", accessor: "variance" },
+      {
+        Header: "Input",
+        accessor: "edit",
+        Cell: ({ row }) => (
+          <Link to={`/finance/gl/updategl/${row.original.gl_id}`}>
+            <CiEdit />
+          </Link>
+        ),
+      },
+    ],
+    []
+  );
   return (
     <>
       <p>*** All Posted Production ***</p>
@@ -37,8 +106,9 @@ const AllPostedProductionHeaderList = () => {
           purchase_header_id={purchase_header_id}
         />
       </div> */}
+      <DataTable columns={columns} data={tableData} />
 
-      <Table striped style={{ border: "1px solid #ccc" }}>
+      {/* <Table striped style={{ border: "1px solid #ccc" }}>
         <thead>
           <tr>
             <th>#</th>
@@ -49,6 +119,7 @@ const AllPostedProductionHeaderList = () => {
             <th>Expected</th>
             <th>Output</th>
             <th>Variance</th>
+            <th style={{ fontSize: 12 }}>Cost of Packaging</th>
             <th>Status</th>
             <th>View</th>
           </tr>
@@ -73,6 +144,7 @@ const AllPostedProductionHeaderList = () => {
                 <td>{item.expected_output}</td>
                 <td>{item.actual_output}</td>
                 <td>{item.production_variance}</td>
+                <td>{item.packaging_cost}</td>
 
                 <td>
                   {item.status === "New" ? (
@@ -105,7 +177,7 @@ const AllPostedProductionHeaderList = () => {
             ))
           )}
         </tbody>
-      </Table>
+      </Table> */}
     </>
   );
 };

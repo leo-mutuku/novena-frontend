@@ -1,16 +1,12 @@
-import PageActionComponent from '../../components/PageActionComponent'
-const pagemenus =
-[
-  {pagename:'All Invoices', to:"allorderinvoices"},
-  {pagename:'Create Invoice', to:"createinvoice"},
-]
+import PageActionComponent from "../../components/PageActionComponent";
+const pagemenus = [{ pagename: "All Invoices", to: "allorderinvoices" }];
 
 function OrderInvoiceScreen() {
   return (
     <>
-    <PageActionComponent pagemenus={pagemenus}/>
-     </>
-  )
+      <PageActionComponent pagemenus={pagemenus} />
+    </>
+  );
 }
 
-export default OrderInvoiceScreen
+export default OrderInvoiceScreen;

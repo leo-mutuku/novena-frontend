@@ -1,15 +1,21 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Loader from "../../../components/Loader";
-import { useGetAllPostedSalesOrdersQuery } from "../../../slices/sales/salesOrderHeadersApiSlice";
+import { useGetAllDispatchedOrdersQuery } from "../../../slices/sales/salesOrderHeadersApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { IoMdEye } from "react-icons/io";
 
 import TimeDate from "../../../components/TimeDate";
 import DataTable from "../../../components/general/DataTable";
+import moment from "moment";
+import axios from "axios";
+import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
+import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
 
 const OrderDispatchListHeader = () => {
-  const { data: orders, isLoading } = useGetAllPostedSalesOrdersQuery();
+  const { data: orders, isLoading } = useGetAllDispatchedOrdersQuery();
+  const [loadingPdf, setLoadingPdf] = useState(false);
+  const [loadingExcel, setLoadingExcel] = useState(false);
   let timeDate = new TimeDate();
   const [tableData, setTableData] = useState([]);
   const [mode, set_mode] = useState("none");
@@ -33,19 +39,71 @@ const OrderDispatchListHeader = () => {
   const navigate = useNavigate();
   useEffect(() => {}, [orders]);
 
+  const handleDownloadPDF = async () => {
+    setLoadingPdf(true);
+    try {
+      const response = await axios({
+        url: `${baseUrlJasper}/all/sales/orders/posted/pdf`, // Endpoint on your Node.js server
+        method: "GET",
+        responseType: "blob", // Important: responseType 'blob' for binary data
+      });
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "all-salesorder-posted-report.pdf");
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
+    } finally {
+      setLoadingPdf(false);
+    }
+  };
+
+  const handleDownloadExcel = async () => {
+    setLoadingExcel(true);
+    try {
+      const response = await axios({
+        url: `${baseUrlJasper}/all/sales/orders/posted/excel`, // Endpoint on your Node.js server
+        method: "GET",
+        responseType: "blob", // Important: responseType 'blob' for binary data
+      });
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "all-salesorder-posted-report.xlsx");
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading Excel:", error);
+    } finally {
+      setLoadingExcel(false);
+    }
+  };
+
   const columns = useMemo(
     () => [
+      {
+        Header: "#",
+        accessor: (row, index) => index + 1,
+      },
       {
         Header: "Sale Date",
         accessor: "sales_order_date",
         Cell: ({ value }) => <span>{moment(value).format("YYYY-MM-DD")}</span>,
       },
       {
-        Header: "Sale Type",
+        Header: "Sales Type",
         accessor: "sale_order_type",
       },
       {
-        Header: "Order #",
+        Header: "Order No.",
         accessor: "sales_order_number",
       },
       {
@@ -53,16 +111,16 @@ const OrderDispatchListHeader = () => {
         accessor: "total",
       },
       {
-        Header: "No Of Items",
+        Header: "No. of Items",
         accessor: "pay_per_bale",
       },
       {
-        Header: "Customer Name",
+        Header: "Cust Name",
         accessor: "customer_name",
       },
       {
-        Header: "Sale Person",
-        accessor: "sales_person_number",
+        Header: "Sales .P",
+        accessor: "first_name",
       },
       {
         Header: "Status",
@@ -72,35 +130,24 @@ const OrderDispatchListHeader = () => {
         ),
       },
       {
-        Header: "Add",
-        accessor: "add",
+        Header: "View",
+        accessor: "view",
         Cell: ({ row }) => (
-          <button
-            onClick={(e) =>
-              handleAdd(e, row.original.sales_order_number, "block")
-            }
-            disabled={row.original.status !== "New"}
-          >
-            <IoMdAdd />
-          </button>
-        ),
-      },
-      {
-        Header: "Delete",
-        accessor: "delete",
-        Cell: ({ row }) => (
-          <button
-            onClick={(e) =>
-              handleDelete(e, row.original.store_purchase_number, "block")
-            }
-            disabled={row.original.status !== "New"}
-          >
-            <MdDelete />
-          </button>
+          <span>
+            {row.original.status === "Posted" ? (
+              <Link
+                to={`/sales/orders/postedorderpreview/${row.original.sales_order_number}`}
+              >
+                <IoMdEye />
+              </Link>
+            ) : (
+              "--"
+            )}
+          </span>
         ),
       },
     ],
-    [handleDelete, handleAdd]
+    []
   );
 
   // Function to determine status color...
@@ -122,10 +169,20 @@ const OrderDispatchListHeader = () => {
   }
   return (
     <>
-      <p>*** All Posted Sales Orders ***</p>
-
       <div>
-        <p>*** All Sales Orders ***</p>
+        <p>*** All Dispatch Sales Orders ***</p>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <div style={{ marginLeft: "10px" }}>
+            <button onClick={handleDownloadPDF} disabled={loadingPdf}>
+              {loadingPdf ? <Loader /> : <FaFilePdf />}
+            </button>
+          </div>
+          <div style={{ marginLeft: "10px" }}>
+            <button onClick={handleDownloadExcel} disabled={loadingExcel}>
+              {loadingExcel ? <Loader /> : <FaFileExcel />}
+            </button>
+          </div>
+        </div>
         <DataTable columns={columns} data={tableData} />
       </div>
     </>

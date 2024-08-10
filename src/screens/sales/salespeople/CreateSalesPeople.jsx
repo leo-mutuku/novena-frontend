@@ -15,6 +15,8 @@ function CreateSalesPeople() {
   const [staff_number, set_staff_number] = useState("");
   const [staff_id, set_staff_id] = useState("");
   const [created_by, set_created_by] = useState("");
+  const [balance, setBalance] = useState(0);
+  const [bales, setBales] = useState(0);
 
   const { data: staff } = useGetAllStaffQuery();
   const [CreateSalesPerson] = useCreateSalesPersonMutation();
@@ -37,6 +39,8 @@ function CreateSalesPeople() {
         email,
         phone,
         staff_id,
+        balance,
+        bales,
         created_by,
       }).unwrap();
       if (res.status == "failed") {

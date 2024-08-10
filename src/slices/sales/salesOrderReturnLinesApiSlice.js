@@ -1,24 +1,39 @@
 import { apiSlice } from "../apiSlice";
-const SALESPEOPLE_URL = "/api/v1/sales/salespeople";
+const RETURNORDER_LINE = "/api/v1/sales/salesreturnorderlines";
 
-export const orderinvoiceApiSlice = apiSlice.injectEndpoints({
+export const orderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllSalesPeople: builder.query({
-      query: (data) => ({
-        url: `${SALESPEOPLE_URL}/getallsalespeople`,
+    tagTypes: ["Sales_orderLines"],
+
+    getRurnOrderLineByHeaderId: builder.query({
+      query: (header_id) => ({
+        url: `${RETURNORDER_LINE}/getallsalesorderbylineid`,
         method: "GET",
         body: data,
       }),
+      providesTags: ["Sales_orderLines"],
     }),
-    createSalesPerson: builder.mutation({
+    getSalesLinesByHeaderId: builder.query({
+      query: (sales_order_number) => ({
+        url: `${RETURNORDER_LINE}/getallsalesorderslinesbysalesordernumber/${sales_order_number}`,
+        method: "GET",
+      }),
+      providesTags: ["Sales_orderLines"],
+    }),
+
+    createRurnOrderLine: builder.mutation({
       query: (data) => ({
-        url: `${SALESPEOPLE_URL}/createsalesperson`,
+        url: `${RETURNORDER_LINE}/createreturnorderLine`,
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Sales_orderLines"],
     }),
   }),
 });
 
-export const { useCreateSalesPersonMutation, useGetAllSalesPeopleQuery } =
-  orderinvoiceApiSlice;
+export const {
+  useCreateRurnOrderLineMutation,
+  useGetRurnOrderLineByHeaderIdQuery,
+  useGetSalesLinesByHeaderIdQuery,
+} = orderApiSlice;

@@ -5,7 +5,10 @@ export const sidelinks = [
       { subMenuTitle: "Store Item Register", to: "storeitemregister" },
       { subMenuTitle: "Store Items", to: "storeitems" },
       { subMenuTitle: "Store Items Entries", to: "storeitemsentries" },
-      { subMenuTitle: "Store Items Buffer", to: "storeitemsbuffer" },
+      {
+        subMenuTitle: "Running Inventory Report",
+        to: "runninginventoryreportscreen",
+      },
     ],
   },
   {
@@ -17,10 +20,9 @@ export const sidelinks = [
     subMenus: [{ subMenuTitle: "Stock Take", to: "stocktake" }],
   },
   {
-    menuTitle: "Transfer Order (TO)",
-    subMenus: [{ subMenuTitle: "Transfer Order (TO)", to: "#" }],
+    menuTitle: "Auto Stock Take",
+    subMenus: [{ subMenuTitle: "", to: "autostocktake" }],
   },
-
   {
     menuTitle: "Store Register",
     subMenus: [{ subMenuTitle: "Store Register", to: "storeregister" }],
@@ -28,8 +30,10 @@ export const sidelinks = [
   {
     menuTitle: "Inventory Reports",
     subMenus: [
-      // { subMenuTitle: "Packhouse people", to: "packhousepeople" },
-      // { subMenuTitle: "Reports", to: "#" },
+      { subMenuTitle: "Stock Balances", to: "stockbalances" },
+      { subMenuTitle: "Inventory Register", to: "inventoryentry" },
+      { subMenuTitle: "Inventory Entry ", to: "inventoryregister" },
+      { subMenuTitle: "Inventory Entry ", to: "inventoryregister" },
     ],
   },
 ];

@@ -6,21 +6,23 @@ import { toast } from "react-toastify";
 import Loader from "../../../components/Loader";
 import {
   useGetAllStaffByIdQuery,
-  useUpdateStaffMutation,
+  useDeactivateStaffMutation,
 } from "../../../slices/administration/staffApiSlice";
 import { useGetAllPayrollcategoriesQuery } from "../../../slices/payroll/categoryApiSlice";
 
 function DeleteStaff() {
   const [staff_email, set_staff_email] = useState("");
+  const [staff_id, set_staff_id] = useState("");
   const [national_id, set_national_id] = useState("");
   const [first_name, set_first_name] = useState("");
+
   const [last_name, set_last_name] = useState("");
   const [phone_number, set_phone_number] = useState("");
   const [bank_account_number, set_bank_account_number] = useState("");
   const [payroll_category_code, set_payroll_category_code] = useState(0);
 
-  const [updateStaff, { isError, isSuccess, error: errorUpdate }] =
-    useUpdateStaffMutation();
+  const [deactivateStaff, { isError, isSuccess, error: errorUpdate }] =
+    useDeactivateStaffMutation();
 
   const { id: _new_id } = useParams();
   const id = parseInt(_new_id);
@@ -41,6 +43,7 @@ function DeleteStaff() {
     if (id) {
       if (staff) {
         set_staff_email(staff.data.staff_email);
+        set_staff_id(staff.data.staff_id);
         set_national_id(staff.data.national_id);
         set_first_name(staff.data.first_name);
         set_last_name(staff.data.last_name);
@@ -53,19 +56,10 @@ function DeleteStaff() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(errorUpdate);
+
     try {
-      const result = await updateStaff({
-        id: id,
-        data: {
-          staff_email,
-          national_id,
-          first_name,
-          last_name,
-          phone_number,
-          bank_account_number,
-          payroll_category_code,
-        },
+      const result = await deactivateStaff({
+        id: staff_id,
       }).unwrap();
 
       if (result == "failed") {
@@ -199,7 +193,7 @@ function DeleteStaff() {
           </Col>
         </Row>
         <Button type="submit" variant="danger" className="mt-3">
-          Delete
+          De Activate
         </Button>
 
         {isLoading && <Loader />}

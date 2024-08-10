@@ -27,6 +27,14 @@ export const productSettingApliSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["productsetup"],
     }),
+    deleteProductSetup: builder.mutation({
+      // Delete a product setup by ID
+      query: (id) => ({
+        url: `${PRODUCTSETUP_URL}/deleteProductSetup/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["productsetup"],
+    }),
     updateProductSetup: builder.mutation({
       query: ({ id, data }) => ({
         url: `${PRODUCTSETUP_URL}/updateproductsetup/${id}`,
@@ -43,4 +51,5 @@ export const {
   useCreateProductSetupMutation,
   useGetproductSetupByIdQuery,
   useGetAllproductSetupQuery,
+  useDeleteProductSetupMutation,
 } = productSettingApliSlice;

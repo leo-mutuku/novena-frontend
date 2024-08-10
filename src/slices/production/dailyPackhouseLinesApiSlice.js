@@ -1,43 +1,46 @@
 import { apiSlice } from "../apiSlice";
-const PRODUCTIONHEADER_URL = "/api/v1/production/productionheaders";
+const DAILYPACJHOUSE_URL = "/api/v1/production/dailypackhouselines";
 
 export const dailyPackhouseLinesApiSlice = apiSlice.injectEndpoints({
+  tagTypes: ["dailypackhouselines", "dailypackhouseheader"],
   endpoints: (builder) => ({
-    createProductionHeader: builder.mutation({
+    createDailyPackhouseLine: builder.mutation({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/createproductionheader`,
+        url: `${DAILYPACJHOUSE_URL}/createdailypackhouseline`,
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["dailypackhouselines", "dailypackhouseheader"],
     }),
 
-    getAllProductionHeaders: builder.query({
+    getAllDailyPackhouseLines: builder.query({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheaders`,
+        url: `${DAILYPACJHOUSE_URL}/getallproductionheaders`,
         method: "GET",
         body: data,
       }),
+      providesTags: ["dailypackhouselines", "dailypackhouseheader"],
     }),
-    getAllProductionHeadersInTransit: builder.query({
+    getAllPostedDailyPackhouseLinest: builder.query({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheaders`,
+        url: `${DAILYPACJHOUSE_URL}/getallproductionheaders`,
         method: "GET",
         body: data,
       }),
+      providesTags: ["dailypackhouselines", "dailypackhouseheader"],
     }),
-    getAllProductionHeadersInTransit: builder.query({
+    getAllDailyPackhouseLinesInTransit: builder.query({
       query: (data) => ({
-        url: `${PRODUCTIONHEADER_URL}/getallproductionheadersintransit`,
+        url: `${DAILYPACJHOUSE_URL}/getallproductionheadersintransit`,
         method: "GET",
         body: data,
       }),
+      providesTags: ["dailypackhouselines", "dailypackhouseheader"],
     }),
   }),
 });
 
 export const {
-  useCreateProductionHeaderMutation,
-  useGetAllProductionHeadersQuery,
-  useGetAllProductionHeadersInTransitQuery,
-  useGetAllPostedProductionHeadersQuery,
+  useCreateDailyPackhouseLineMutation,
+  useGetAllDailyPackhouseLinesQuery,
 } = dailyPackhouseLinesApiSlice;

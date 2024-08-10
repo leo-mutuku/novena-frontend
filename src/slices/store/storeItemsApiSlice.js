@@ -19,6 +19,44 @@ export const storeItemsApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Store_items"],
     }),
+    getInventoryEntry: builder.mutation({
+      query: (data) => ({
+        url: `${STOREITEMS_URL}/inventoryentry`,
+        method: "POST",
+        body: data,
+      }),
+      providesTags: ["Store_items"],
+    }),
+    getInventoryRegister: builder.mutation({
+      query: (data) => ({
+        url: `${STOREITEMS_URL}/inventoryregister`,
+        method: "POST",
+        body: data,
+      }),
+      providesTags: ["Store_items"],
+    }),
+    getCurrentStockBalance: builder.mutation({
+      query: (data) => ({
+        url: `${STOREITEMS_URL}/currentstockbalance`,
+        method: "POST",
+        body: data,
+      }),
+      providesTags: ["Store_items"],
+    }),
+    getAllAutoStockTake: builder.query({
+      query: () => ({
+        url: `${STOREITEMS_URL}/getallautostocktake`,
+        method: "GET",
+      }),
+      providesTags: ["Store_items"],
+    }),
+    getAutoStockTakeLinesById: builder.query({
+      query: (id) => ({
+        url: `${STOREITEMS_URL}/getautostocktakelinesbyid/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Store_items"],
+    }),
     createStoreItem: builder.mutation({
       query: (data) => ({
         url: `${STOREITEMS_URL}/createstoreitem`,
@@ -39,8 +77,13 @@ export const storeItemsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetAutoStockTakeLinesByIdQuery,
+  useGetAllAutoStockTakeQuery,
   useGetAllStoreItemsQuery,
   useCreateStoreItemMutation,
   useGetStoreItemByIdQuery,
   useUpdateStoreItemByIdMutation,
+  useGetCurrentStockBalanceMutation,
+  useGetInventoryRegisterMutation,
+  useGetInventoryEntryMutation,
 } = storeItemsApiSlice;

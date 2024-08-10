@@ -39,7 +39,7 @@ const PackagingSetupList = () => {
               <th>Package 2 Name</th>
               <th>Package 2 Store</th>
               <th>Package 2 Restock</th>
-              <th>Edit</th>
+
               <th>Del</th>
             </tr>
           </thead>
@@ -53,14 +53,6 @@ const PackagingSetupList = () => {
                 <td>{item.package_name_two}</td>
                 <td>{item.store_name_two}</td>
                 <td>{item.package_two_restock}</td>
-
-                <td>
-                  <Link
-                    to={`/production/productionsetup/updatepackagingsetup/${item.packaging_setup_id}`}
-                  >
-                    <FaEdit />
-                  </Link>
-                </td>
 
                 <td
                   onClick={() => deletePackagingSetup(item.packaging_setup_id)}

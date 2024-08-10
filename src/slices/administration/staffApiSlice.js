@@ -52,6 +52,13 @@ export const staffApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Staff"],
     }),
+    deactivateStaff: builder.mutation({
+      query: ({ id }) => ({
+        url: `${STAFF_URL}/deactivatestaff/${id}`,
+        method: "PUT",
+      }),
+      invalidatesTags: ["Staff"],
+    }),
   }),
 });
 
@@ -62,4 +69,5 @@ export const {
   useGetAllStaffByIdQuery,
   useGeneralQuery,
   useProductionQuery,
+  useDeactivateStaffMutation,
 } = staffApiSlice;

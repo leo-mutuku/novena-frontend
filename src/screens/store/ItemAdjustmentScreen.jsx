@@ -1,12 +1,20 @@
 import PageActionComponent from "../../components/PageActionComponent";
-const pagemenus = [
-  { pagename: "All stock adjustment", to: "allstockadjustment" },
-  { pagename: "In progress", to: "allstockadjustmentinprogrss" },
-  { pagename: "Posted", to: "allpostedstockadjustment" },
-  { pagename: "New Stock Adjustment", to: "createstockadjustment" },
-];
+import { useSelector } from "react-redux";
+import { useState } from "react";
 
 function ItemAdjustmentScreen() {
+  const role = 9999;
+  const { userInfo } = useSelector((state) => state.auth);
+  const [accessDenied, setAccessDenied] = useState(false);
+  const [roles, setRoles] = useState([]);
+
+  const pagemenus = [
+    { pagename: "All stock adjustment", to: "allstockadjustment" },
+    {
+      pagename: "New Stock Adjustment",
+      to: userInfo.roles.includes(role) ? "createstockadjustment" : "",
+    },
+  ];
   return (
     <>
       <PageActionComponent pagemenus={pagemenus} />

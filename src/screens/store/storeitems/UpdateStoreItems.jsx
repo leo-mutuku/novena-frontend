@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 import { Stack, Button } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import {
   useUpdateStoreItemByIdMutation,
   useGetStoreItemByIdQuery,
@@ -9,6 +10,9 @@ import {
 import { toast } from "react-toastify";
 
 const UpdateStoreItems = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+  console.log(userInfo);
+  const [user, setUser] = useState(userInfo);
   const { id: _new_id } = useParams();
   const id = parseInt(_new_id);
   const [item_quantity, set_item_quantity] = useState(null);
@@ -35,18 +39,22 @@ const UpdateStoreItems = () => {
     }
   }, [id, updateStore]);
   const handleSubmit = async (e) => {
-    const res = await updateStore({
-      id: id,
-      data: {
-        item_quantity,
-      },
-    }).unwrap();
-    if (res.status == "failed") {
-      toast.error("Sorry an error occoured");
-    } else {
-      toast.success("Updated successfully");
-      navigate("../allstoreitems");
-    }
+    toast.error(
+      "Sorry, direct editting of inventory not allowed on production, please use the stock adjustment module for audit trail!"
+    );
+
+    // const res = await updateStore({
+    //   id: id,
+    //   data: {
+    //     item_quantity,
+    //   },
+    // }).unwrap();
+    // if (res.status == "failed") {
+    //   toast.error("Sorry an error occoured");
+    // } else {
+    //   toast.success("Updated successfully");
+    //   navigate("../allstoreitems");
+    // }
   };
 
   return (
@@ -102,9 +110,15 @@ const UpdateStoreItems = () => {
         <Col></Col>
         <Col>
           <Stack>
-            <Button onClick={handleSubmit} variant="outlined">
-              Update
-            </Button>
+            {userInfo.user_email == "admin@gmail.com" ||
+            userInfo.user_email == "le.mutuku@gmail.com" ||
+            "cymumu7@gmail.com" ? (
+              <Button onClick={handleSubmit} variant="outlined">
+                Update
+              </Button>
+            ) : (
+              ""
+            )}
           </Stack>
         </Col>
       </Row>

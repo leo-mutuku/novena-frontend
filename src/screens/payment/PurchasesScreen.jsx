@@ -1,8 +1,10 @@
 import PageActionComponent from "../../components/PageActionComponent";
 const pagemenus = [
-  { pagename: "All Purchases Payment", to: "allpurchasepayment" },
+  { pagename: "Bank", to: "bankpurchasepayment" },
+  { pagename: "Cash", to: "cashpurchasepayment" },
 
-  { pagename: "Posted", to: "allpostedpurchasepayment" },
+  { pagename: "All Bank", to: "allbanksupplierpayment" },
+  { pagename: "All Cash", to: "allcashsupplierpayment" },
 ];
 export const PurchasesScreen = () => {
   return (

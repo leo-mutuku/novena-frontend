@@ -5,10 +5,30 @@ import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import { IoAdd } from "react-icons/io5";
-import { useGetAllproductSetupQuery } from "../../../slices/productionsetup/productSettingApliSlice";
+import {
+  useGetAllproductSetupQuery,
+  useDeleteProductSetupMutation,
+} from "../../../slices/productionsetup/productSettingApliSlice";
+import { toast } from "react-toastify";
 
 const ProductionSetupList = () => {
   const { data: productSetup } = useGetAllproductSetupQuery();
+  const [deleteProductSetup] = useDeleteProductSetupMutation();
+
+  const handleDelete = async (id) => {
+    try {
+      const result = await deleteProductSetup(id);
+      if (result.data.success) {
+        toast.success("Product deleted successfully");
+        window.location.reload();
+      }
+    } catch (error) {
+      toast.error(
+        " Sorry it is not you it's is! Product not deleted ask for assistance"
+      );
+    }
+  };
+
   return (
     <>
       <Row>
@@ -29,21 +49,21 @@ const ProductionSetupList = () => {
             <tr>
               <th style={{ width: "40%" }}>Product name</th>
               <th>Product store</th>
-              <th>Edit</th>
+
               <th>Del</th>
             </tr>
           </thead>
           <tbody>
             {productSetup?.data.map((item, index) => (
               <tr key={index}>
-                <td>{item.item_name}</td>
-                <td>{item.store_name}</td>
                 <td>
-                  <Link to={"#"}>
-                    <FaEdit />
-                  </Link>
+                  {item.item_name} - {item.item_code}
                 </td>
-                <td onClick={() => deletePackagingSetup()}>
+                <td>
+                  {item.store_name} - {item.product_code}
+                </td>
+
+                <td onClick={() => handleDelete(item.product_setup_id)}>
                   <Link to={"#"}>
                     <MdDelete />
                   </Link>

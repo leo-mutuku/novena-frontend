@@ -2,16 +2,12 @@ export const sidelinks = [
   {
     menuTitle: "Payment",
     subMenus: [
-      { subMenuTitle: "Purchases", to: "purchases" },
+      { subMenuTitle: "Pay Supplier", to: "purchases" },
       { subMenuTitle: "Requisitions", to: "requsitions" },
       { subMenuTitle: "Payment Voucher", to: "paymentvoucher" },
-    ],
-  },
-  {
-    menuTitle: "Payment Reports",
-    subMenus: [
-      // { subMenuTitle: "Packhouse people", to: "packhousepeople" },
-      // { subMenuTitle: "Reports", to: "#" },
+      { subMenuTitle: "Salary Journal", to: "salaryjournal" },
+      { subMenuTitle: "Reports", to: "paymentreports" },
+      { subMenuTitle: "Supplier Report", to: "suppliersreport" },
     ],
   },
 ];

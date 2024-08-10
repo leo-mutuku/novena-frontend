@@ -35,6 +35,14 @@ export const itemregisterApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Registered_items"],
     }),
+    getAllSoldItems: builder.query({
+      query: (data) => ({
+        url: `${ITEMREG_URL}/getallsolditems`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Registered_items"],
+    }),
 
     createItem: builder.mutation({
       query: (data) => ({
@@ -70,4 +78,5 @@ export const {
   useGetAllPackagingMaterialQuery,
   useUpdateRegisteredItemMutation,
   useGetRegisteredItemByIdQuery,
+  useGetAllSoldItemsQuery,
 } = itemregisterApiSlice;

@@ -2,6 +2,7 @@ import { apiSlice } from "../apiSlice";
 const DAILYPACKHOUSEHEADER_URL = "/api/v1/production/dailypackhouseheaders";
 
 export const dailyPackhouseHeadersApiSlice = apiSlice.injectEndpoints({
+  tagTypes: ["dailypackhouseheader", "dailypackhouselines"],
   endpoints: (builder) => ({
     createDailyProductionHeader: builder.mutation({
       query: (data) => ({
@@ -9,6 +10,15 @@ export const dailyPackhouseHeadersApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["dailypackhouseheader", "dailypackhouselines"],
+    }),
+    generalDailyPackbypacktype: builder.mutation({
+      query: (data) => ({
+        url: `${DAILYPACKHOUSEHEADER_URL}/generaldailypackbypacktype`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["dailypackhouseheader", "dailypackhouselines"],
     }),
 
     getAllDailyPackHouseHeaders: builder.query({
@@ -17,6 +27,7 @@ export const dailyPackhouseHeadersApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
+      providesTags: ["dailypackhouseheader", "dailypackhouselines"],
     }),
     getAllProductionHeadersInTransit: builder.query({
       query: (data) => ({
@@ -24,6 +35,7 @@ export const dailyPackhouseHeadersApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
+      providesTags: ["dailypackhouseheader", "dailypackhouselines"],
     }),
     getAllProductionHeadersInTransit: builder.query({
       query: (data) => ({
@@ -31,11 +43,13 @@ export const dailyPackhouseHeadersApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
+      providesTags: ["dailypackhouseheader", "dailypackhouselines"],
     }),
   }),
 });
 
 export const {
   useCreateDailyProductionHeaderMutation,
+  useGeneralDailyPackbypacktypeMutation,
   useGetAllDailyPackHouseHeadersQuery,
 } = dailyPackhouseHeadersApiSlice;

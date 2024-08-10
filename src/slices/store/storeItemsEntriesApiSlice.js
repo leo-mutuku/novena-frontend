@@ -20,7 +20,18 @@ export const storeItemsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["STOREITEMENTRIES"],
     }),
+    getRunningInventory: builder.mutation({
+      query: (data) => ({
+        url: `${STOREITEMENTRIES_URL}/getrunninginventory`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["STOREITEMENTRIES"],
+    }),
   }),
 });
 
-export const { useGetAllStoreItemEntriesQuery } = storeItemsApiSlice;
+export const {
+  useGetAllStoreItemEntriesQuery,
+  useGetRunningInventoryMutation,
+} = storeItemsApiSlice;

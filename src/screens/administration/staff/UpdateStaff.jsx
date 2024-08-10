@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
+import { Divider, Chip } from "@mui/material";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -12,6 +13,8 @@ import { useGetAllPayrollcategoriesQuery } from "../../../slices/payroll/categor
 
 function UpdateStaff() {
   const [staff_email, set_staff_email] = useState("");
+  const [biweekly, set_biweeekly] = useState("");
+  const [monthly, set_monthly] = useState("");
   const [national_id, set_national_id] = useState("");
   const [first_name, set_first_name] = useState("");
   const [last_name, set_last_name] = useState("");
@@ -41,6 +44,8 @@ function UpdateStaff() {
     if (id) {
       if (staff) {
         set_staff_email(staff.data.staff_email);
+        set_monthly(staff.data.monthly);
+        set_biweeekly(staff.data.biweekly);
         set_national_id(staff.data.national_id);
         set_first_name(staff.data.first_name);
         set_last_name(staff.data.last_name);
@@ -65,6 +70,8 @@ function UpdateStaff() {
           phone_number,
           bank_account_number,
           payroll_category_code,
+          biweekly,
+          monthly,
         },
       }).unwrap();
 
@@ -90,7 +97,7 @@ function UpdateStaff() {
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="staff_email">
-              <Form.Label>staff_email</Form.Label>
+              <Form.Label>Email</Form.Label>
               <Form.Control
                 type="text"
                 required
@@ -103,11 +110,11 @@ function UpdateStaff() {
           <Col>
             {/* */}
             <Form.Group className="my-2" controlId="national_id">
-              <Form.Label>national_id</Form.Label>
+              <Form.Label>National ID</Form.Label>
               <Form.Control
                 type="text"
                 required
-                placeholder="national_id"
+                placeholder="National ID"
                 value={national_id}
                 onChange={(e) => set_national_id(e.target.value)}
               ></Form.Control>
@@ -168,6 +175,12 @@ function UpdateStaff() {
             </Form.Group>
           </Col>
         </Row>
+        <br></br>
+        <Row>
+          <Divider>
+            <Chip label="Human Resource" size="small" />
+          </Divider>
+        </Row>
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="payroll_category">
@@ -187,6 +200,38 @@ function UpdateStaff() {
                     {item.category_name}
                   </option>
                 ))}
+              </Form.Select>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="my-2" controlId="bank_account_number">
+              <Form.Label>Bi Weekly</Form.Label>
+              <Form.Select
+                type="number"
+                required
+                placeholder="Bank Account Number"
+                value={biweekly}
+                onChange={(e) => set_biweeekly(e.target.value)}
+              >
+                <option value={null}>Select</option>
+                <option value={1}>Yes</option>
+                <option value={0}>No</option>
+              </Form.Select>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="my-2" controlId="bank_account_number">
+              <Form.Label>Monthly</Form.Label>
+              <Form.Select
+                type="number"
+                required
+                placeholder="Bank Account Number"
+                value={monthly}
+                onChange={(e) => set_monthly(e.target.value)}
+              >
+                <option value={null}>Select</option>
+                <option value={1}>Yes</option>
+                <option value={0}>No</option>
               </Form.Select>
             </Form.Group>
           </Col>

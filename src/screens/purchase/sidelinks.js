@@ -1,17 +1,31 @@
 export const sidelinks = [
   {
-    menuTitle: "Store Purchase",
-    subMenus: [{ subMenuTitle: "Store Purchase", to: "storepurchase" }],
-  },
-  {
-    menuTitle: "Store Requsition",
-    subMenus: [{ subMenuTitle: "Store Requsition", to: "storerequisition" }],
-  },
-  {
-    menuTitle: "Puechase Reports",
+    menuTitle: "Suppliers",
     subMenus: [
-      // { subMenuTitle: "Packhouse people", to: "packhousepeople" },
-      // { subMenuTitle: "Reports", to: "#" },
+      { subMenuTitle: "Suppliers", to: "suppliers" },
+      { subMenuTitle: "Supplers Reports", to: "supplierreports" },
+      { subMenuTitle: "Suppliers Maize Reports", to: "suppliermaizereports" },
     ],
   },
+  {
+    menuTitle: "Purchase Requisition",
+    subMenus: [
+      { subMenuTitle: "Purchase requsition", to: "storepurchase" },
+      { subMenuTitle: "Reports", to: "storepurcharsereports" },
+    ],
+  },
+  // {
+  //   menuTitle: "Purchase order",
+  //   subMenus: [
+  //     { subMenuTitle: " Purchase order", to: "storerequisition" },
+  //     { subMenuTitle: "Reports", to: "storerequisitionreport" },
+  //   ],
+  // },
+  // {
+  //   menuTitle: "Purchase Reports",
+  //   subMenus: [
+  //     // { subMenuTitle: "Packhouse people", to: "packhousepeople" },
+  //     // { subMenuTitle: "Reports", to: "#" },
+  //   ],
+  // },
 ];

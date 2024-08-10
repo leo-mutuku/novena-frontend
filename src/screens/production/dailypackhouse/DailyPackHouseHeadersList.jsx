@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Loader from "../../../components/Loader";
 import { useGetAllDailyPackHouseHeadersQuery } from "../../../slices/production/dailyPackhouseHeadersApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { FaRegFileExcel } from "react-icons/fa6";
+import moment from "moment";
 import { CiEdit } from "react-icons/ci";
+import { IoIosAdd } from "react-icons/io";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import AddDailyPackModal from "./lines/AddDailyPackModal";
+import DataTable from "../../../components/general/DataTable";
 // import DeletePurchaseModal from "./lines/DeletePurchaseModal";
 import TimeDate from "../../../components/TimeDate";
+import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
 
 const DailyPackHouseHeadersList = () => {
+  const [tableData, setTableData] = useState([]);
   let timeDate = new TimeDate();
   const [mode, set_mode] = useState("none");
   const [batch_no, set_batch_no] = useState("");
@@ -28,9 +32,99 @@ const DailyPackHouseHeadersList = () => {
 
     set_mode_delete(style);
   };
-  const { data, isLoading } = useGetAllDailyPackHouseHeadersQuery();
+  const { data: productionData, isLoading } =
+    useGetAllDailyPackHouseHeadersQuery();
+
+  console.log(productionData);
+  useEffect(() => {
+    if (productionData?.data) {
+      setTableData(productionData.data);
+    }
+  }, [productionData]);
   const navigate = useNavigate();
-  useEffect(() => {}, [data]);
+
+  console.log(productionData);
+  const handleEdit = () => {};
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "New":
+        return "orange";
+      case "In Transit":
+        return "blue";
+      case "Posted":
+        return "green";
+      default:
+        return "inherit";
+    }
+  };
+
+  const handleDownloadPDF = () => {};
+  const handleDownloadExcel = () => {};
+  const columns = useMemo(
+    () => [
+      {
+        Header: "#",
+        accessor: (row, index) => index + 1,
+      },
+      {
+        Header: "Batch no#",
+        accessor: "batch_no",
+      },
+      {
+        Header: "Pack Date #",
+        accessor: "pack_date",
+        Cell: ({ value }) => <span>{moment(value).format("YYYY-MM-DD")}</span>,
+      },
+
+      {
+        Header: "Weight In KG",
+        accessor: "total_in_nity_kg",
+      },
+      {
+        Header: "Number Packed",
+        accessor: "number_packed",
+        Cell: ({ row }) => <Link to="#">{row.original.number_packed}</Link>,
+      },
+      {
+        Header: "Total Cost",
+        accessor: "total_cost",
+      },
+      {
+        Header: "Item Name",
+        accessor: "item_name",
+      },
+      {
+        Header: "Pack Type",
+        accessor: "pack_type",
+      },
+
+      {
+        Header: "Status",
+        accessor: "status",
+        Cell: ({ value }) => (
+          <span style={{ color: getStatusColor(value) }}>{value}</span>
+        ),
+      },
+      {
+        Header: "add",
+        accessor: "add",
+        Cell: ({ row }) => (
+          <Link
+            to={
+              row.original.status == "Posted"
+                ? "#"
+                : `/production/dailypackhouse/postdailypackhouse/${row.original.daily_packhouse_header_id}`
+            }
+          >
+            {" "}
+            {row.original.status == "Posted" ? "-" : <IoIosAdd />}
+          </Link>
+        ),
+      },
+    ],
+    [handleEdit, getStatusColor]
+  );
 
   return (
     <>
@@ -49,87 +143,25 @@ const DailyPackHouseHeadersList = () => {
           />
         </div> */}
       </>
-      <p>*** Daily Pack house ***</p>
 
-      <Table striped style={{ border: "1px solid #ccc" }}>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Pack Date</th>
-            <th>Batch no.</th>
-            <th>1 KG Bales</th>
-            <th>1/2 KG Bales</th>
-            <th>Total (90 Kg)</th>
-            <th>Created By</th>
-            <th>Status</th>
-            <th>Add</th>
-            <th>Revert</th>
-          </tr>
-        </thead>
-        <tbody>
-          {isLoading ? (
-            <Loader />
-          ) : data?.data[0] === null ? (
-            <>No data</>
-          ) : (
-            data?.data?.map((item, index) => (
-              <tr>
-                <td>{index + 1}</td>
-                <td>{`${timeDate.date(item.pack_date)}`}</td>
-                <td>{item.batch_no}</td>
-
-                <td>{item.total}</td>
-                <td>{item.total_bales}</td>
-                <td>{item.total_bales}</td>
-                <td>{item.total_packing_cost}</td>
-                <td>
-                  {item.status === "New" ? (
-                    <span style={{ color: "orange" }}>{item.status}</span>
-                  ) : item.status === "In Transit" ? (
-                    <span style={{ color: "blue" }}>{item.status}</span>
-                  ) : item.status === "Posted" ? (
-                    <span style={{ color: "green" }}>{item.status}</span>
-                  ) : (
-                    item.status
-                  )}
-                </td>
-
-                <td>
-                  {item.status === "New" ? (
-                    <Link to={`#`}>
-                      <IoMdAdd
-                        onClick={(e) =>
-                          handleAdd(
-                            e,
-                            item.daily_packhouse_id,
-                            item.batch_no,
-                            "block"
-                          )
-                        }
-                      />
-                    </Link>
-                  ) : (
-                    "--"
-                  )}
-                </td>
-                <td>
-                  {item.status === "New" ? (
-                    <Link to={`#`}>
-                      <MdDelete
-                        onClick={(e) =>
-                          handleDelete(e, item.store_purchase_number, "block")
-                        }
-                      />
-                    </Link>
-                  ) : (
-                    "--"
-                  )}
-                </td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </Table>
+      <>
+        <div>
+          <p>*** Daily Pack house ***</p>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <div style={{ marginLeft: "10px" }}>
+              <button onClick={handleDownloadPDF} disabled={"#"}>
+                <FaFilePdf />
+              </button>
+            </div>
+            <div style={{ marginLeft: "10px" }}>
+              <button onClick={handleDownloadExcel} disabled={"#"}>
+                <FaFileExcel />
+              </button>
+            </div>
+          </div>
+          <DataTable columns={columns} data={tableData} />
+        </div>
+      </>
     </>
   );
 };

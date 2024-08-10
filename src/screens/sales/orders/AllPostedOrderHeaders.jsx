@@ -36,7 +36,7 @@ const AllPostedOrderHeaders = () => {
       setTableData(orders.data);
     }
   }, [orders]);
-  console.log(JSON.stringify(tableData));
+
   const columns = useMemo(
     () => [
       {
@@ -63,7 +63,7 @@ const AllPostedOrderHeaders = () => {
       },
       {
         Header: "No. of Items",
-        accessor: "pay_per_bale",
+        accessor: "number_of_items",
       },
       {
         Header: "Cust Name",

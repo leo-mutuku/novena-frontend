@@ -3,35 +3,26 @@ export const sidelinks = [
     menuTitle: "Sales Oders",
     subMenus: [
       { subMenuTitle: "Orders", to: "orders" },
+      { subMenuTitle: "Receipts", to: "orderreceipts" },
+      { subMenuTitle: "Delivery", to: "orderdispatch" },
+      { subMenuTitle: "Invoice", to: "orderinvoice" },
       { subMenuTitle: "Return Order", to: "returnorder" },
-      { subMenuTitle: "Order Dispatch", to: "orderdispatch" },
-      { subMenuTitle: "Order Invoice", to: "orderinvoice" },
-      { subMenuTitle: "Order Clearing", to: "orderposting" },
-      // { subMenuTitle: "Order Receipt", to: "orderreceipt" },
-      { subMenuTitle: "GRN", to: "#" },
-      { subMenuTitle: "Reports", to: "#" },
+      { subMenuTitle: "Sales Expense", to: "salesexpense" },
+
+      { subMenuTitle: "Ledger Entry", to: "#" },
+
+      // { subMenuTitle: "Detailed Item Report", to: "#" },
     ],
   },
   {
     menuTitle: "Sales People",
     subMenus: [
-      { subMenuTitle: "SalesPeople", to: "salespeople" },
-      { subMenuTitle: "Reports", to: "#" },
-    ],
-  },
-  {
-    menuTitle: "Customers",
-    subMenus: [{ subMenuTitle: "Customer's statement", to: "#" }],
-  },
-  {
-    menuTitle: "Institutions ",
-    subMenus: [{ subMenuTitle: "Institution's Statement", to: "#" }],
-  },
-  {
-    menuTitle: "Sales Reports",
-    subMenus: [
-      // { subMenuTitle: "Packhouse people", to: "packhousepeople" },
-      // { subMenuTitle: "Reports", to: "#" },
+      { subMenuTitle: "Sales People", to: "salespeople" },
+      { subMenuTitle: "Loading List", to: "loadinglist" },
+      // { subMenuTitle: "Statement", to: "statement" },
+      { subMenuTitle: "SP Sales Report", to: "salespeoplereport" },
+      { subMenuTitle: "Detailed SP Order Report", to: "detailedsporderreport" },
+      // { subMenuTitle: "Detailed SP Return Report", to: "#" },
     ],
   },
 ];

@@ -12,7 +12,15 @@ export const bulkSmsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["bulksms"],
     }),
+    smsBalance: builder.mutation({
+      query: (data) => ({
+        url: `${STAFF_URL}/smsbalance`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["bulksms"],
+    }),
   }),
 });
 
-export const { useBulkySMSMutation } = bulkSmsApiSlice;
+export const { useBulkySMSMutation, useSmsBalanceMutation } = bulkSmsApiSlice;

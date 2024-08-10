@@ -12,6 +12,14 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Sales_order"],
     }),
+    getAllDispatchedOrders: builder.query({
+      query: (data) => ({
+        url: `${SALESORDERHEADER_URL}/getalldispatchedorders`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Sales_order"],
+    }),
     getAllSalesOrderHeaders: builder.query({
       query: (data) => ({
         url: `${SALESORDERHEADER_URL}/getallsalesordersheaders`,
@@ -23,6 +31,14 @@ export const orderApiSlice = apiSlice.injectEndpoints({
     getAllSalesOrdersInTransit: builder.query({
       query: (data) => ({
         url: `${SALESORDERHEADER_URL}/getallsalesordersheadersintransit`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Sales_order"],
+    }),
+    getAllDailySales: builder.query({
+      query: (data) => ({
+        url: `${SALESORDERHEADER_URL}/getalldailysales`,
         method: "GET",
         body: data,
       }),
@@ -60,10 +76,21 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Sales_order"],
     }),
+    cancelOrder: builder.mutation({
+      query: (data) => ({
+        url: `${SALESORDERHEADER_URL}/cancelorder`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Sales_order"],
+    }),
   }),
 });
 
 export const {
+  useGetAllDailySalesQuery,
+  useCancelOrderMutation,
+  useGetAllDispatchedOrdersQuery,
   useCreateSalesOrderHeaderMutation,
   useGetAllSalesOrderHeadersQuery,
   useGetSalesOrderHeaderByIdQuery,

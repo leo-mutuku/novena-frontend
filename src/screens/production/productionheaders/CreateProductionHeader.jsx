@@ -21,7 +21,6 @@ function CreateProductionHeader() {
     useState("");
   const [production_officer_last_name, set_production_officer_last_name] =
     useState("");
-  console.log(store_code);
 
   const [ProductionHeader, { isLoading }] = useCreateProductionHeaderMutation();
   const { data: staff } = useGetAllStaffQuery();
@@ -50,7 +49,7 @@ function CreateProductionHeader() {
         production_officer_first_name,
         production_officer_last_name,
       }).unwrap();
-      console.log(res);
+
       if (res.status == "failed") {
         toast.error(res.message);
       } else {
@@ -84,7 +83,7 @@ function CreateProductionHeader() {
         return a.first_name;
       }
     });
-    alert(x[0].first_name);
+
     set_production_officer(e.target.value);
     set_production_officer_first_name(x[0].first_name);
     set_production_officer_last_name(x[0].last_name);
@@ -106,10 +105,13 @@ function CreateProductionHeader() {
               <Form.Label>Input</Form.Label>
               <Form.Control
                 type="number"
+                step="any"
                 required
                 placeholder="production_input"
-                value={production_input}
-                onChange={(e) => set_production_input(parseInt(e.target.value))}
+                defaultValue={production_input}
+                onChange={(e) =>
+                  set_production_input(parseFloat(e.target.value))
+                }
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -118,10 +120,13 @@ function CreateProductionHeader() {
               <Form.Label>Expected Output</Form.Label>
               <Form.Control
                 type="number"
+                step="any"
                 required
                 placeholder="Expected Output"
-                value={expected_output}
-                onChange={(e) => set_expected_output(parseInt(e.target.value))}
+                defaultValue={expected_output}
+                onChange={(e) =>
+                  set_expected_output(parseFloat(e.target.value))
+                }
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -194,14 +199,16 @@ function CreateProductionHeader() {
                 onChange={(e) => set_store_code(parseInt(e.target.value))}
               >
                 <option value={""}>Store</option>
-                {store?.data.map((item, index) => (
-                  <>
-                    <option
-                      key={index}
-                      value={item.store_code}
-                    >{`${item.store_code} | ${item.store_name}`}</option>
-                  </>
-                ))}
+                {store?.data
+                  .filter((item) => item.store_name == "Raw Material Store")
+                  .map((item, index) => (
+                    <>
+                      <option
+                        key={index}
+                        value={item.store_code}
+                      >{`${item.store_code} | ${item.store_name}`}</option>
+                    </>
+                  ))}
               </Form.Select>
             </Form.Group>
           </Col>
