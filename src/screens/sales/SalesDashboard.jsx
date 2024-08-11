@@ -1,6 +1,16 @@
 import React from "react";
-import { Grid } from "@mui/material";
-import { Card, Container } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
+
+import {
+  Button,
+  Card,
+  Container,
+  Grid,
+  Box,
+  Typography,
+  Divider,
+  Stack,
+} from "@mui/material";
 import { useGetAllDailySalesQuery } from "../../slices/sales/salesOrderHeadersApiSlice";
 import {
   PieChart,
@@ -15,6 +25,9 @@ import {
   YAxis,
   CartesianGrid,
 } from "recharts";
+import SalesCard from "../../components/dashboard/SalesCard";
+import { IoIosCart, IoIosPricetag } from "react-icons/io";
+import { GrMoney } from "react-icons/gr";
 
 // Colors for each section of the pie
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -50,6 +63,127 @@ const SalesDashboard = () => {
   return (
     <>
       <Grid container gap={3} sx={{ marginTop: "20px" }}>
+        <Grid
+          item
+          sx={{
+            flex: { xs: "1 0 15rem", md: "1 0 15rem" },
+            height: { xs: "5rem", md: "5rem" },
+            background: "transparent",
+            border: "1px solid #E2EEFE",
+            borderRadius: "10px",
+          }}
+        >
+          <Grid flexDirection={"row"} sx={{ padding: "5px" }}>
+            <IoIosCart
+              size={20}
+              style={{
+                padding: "2px",
+                color: "white",
+                background: "#443dfb",
+                borderRadius: "10px",
+              }}
+            />{" "}
+            <span variant="h6">Total Sales</span>
+          </Grid>
+          <Divider sx={{ margin: "3px" }} />
+          <Stack>
+            <Row style={{ padding: "5px" }}>
+              <Col>
+                <p>Ksh. 23084773.</p>
+              </Col>
+              <Col xs={4} style={{ fontSize: "9px" }}>
+                <p style={{ margin: "-3px 0px" }}>25%</p>
+                <p>This Week</p>
+              </Col>
+            </Row>
+          </Stack>
+          <Stack></Stack>
+        </Grid>
+        <Grid
+          item
+          sx={{
+            flex: { xs: "1 0 15rem", md: "1 0 15rem" },
+            height: { xs: "5rem", md: "5rem" },
+            background: "transparent",
+            border: "1px solid #E2EEFE",
+            borderRadius: "10px",
+          }}
+        >
+          <Grid flexDirection={"row"} sx={{ padding: "5px" }}>
+            <GrMoney
+              size={20}
+              style={{
+                padding: "2px",
+                color: "white",
+                background: "#2e9ofa",
+                borderRadius: "10px",
+              }}
+            />{" "}
+            <span variant="h6">Total Revenue</span>
+          </Grid>
+          <Divider sx={{ margin: "3px" }} />
+          <Stack>
+            <Row style={{ padding: "5px" }}>
+              <Col>
+                <p>Ksh. 23084773.</p>
+              </Col>
+              <Col xs={4} style={{ fontSize: "9px" }}>
+                <p style={{ margin: "-3px 0px" }}>25%</p>
+                <p>This Week</p>
+              </Col>
+            </Row>
+          </Stack>
+          <Stack></Stack>
+        </Grid>
+        <Grid
+          item
+          sx={{
+            flex: { xs: "1 0 15rem", md: "1 0 15rem" },
+            height: { xs: "5rem", md: "5rem" },
+            background: "transparent",
+            border: "1px solid #E2EEFE",
+            borderRadius: "10px",
+          }}
+        >
+          <Grid flexDirection={"row"} sx={{ padding: "5px" }}>
+            <IoIosCart
+              size={20}
+              style={{
+                padding: "2px",
+                color: "white",
+                background: "#8f8fba",
+                borderRadius: "10px",
+              }}
+            />{" "}
+            <span variant="h6">Total Sales</span>
+          </Grid>
+          <Divider sx={{ margin: "3px" }} />
+          <Stack>
+            <Row style={{ padding: "5px" }}>
+              <Col>
+                <p>Ksh. 23084773.</p>
+              </Col>
+              <Col xs={4} style={{ fontSize: "9px" }}>
+                <p style={{ margin: "-3px 0px" }}>25%</p>
+                <p>Last 1 Week</p>
+              </Col>
+            </Row>
+          </Stack>
+          <Stack></Stack>
+        </Grid>
+
+        <Grid
+          item
+          sx={{
+            flex: { xs: "1 0 25rem", md: "1 0 25rem" },
+            height: { xs: "40rem", md: "40rem" },
+            background: "transparent",
+            border: "1px solid #E2EEFE",
+            borderRadius: "10px",
+          }}
+        >
+          <SalesCard />
+        </Grid>
         <Grid
           item
           sx={{
