@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Table } from "react-bootstrap";
 
 import {
   Button,
@@ -10,7 +10,11 @@ import {
   Typography,
   Divider,
   Stack,
+  Chip,
+  Alert,
 } from "@mui/material";
+import FaceIcon from "@mui/icons-material/Face";
+import CheckIcon from "@mui/icons-material/Check";
 import { useGetAllDailySalesQuery } from "../../slices/sales/salesOrderHeadersApiSlice";
 import {
   PieChart,
@@ -28,6 +32,8 @@ import {
 import SalesCard from "../../components/dashboard/SalesCard";
 import { IoIosCart, IoIosPricetag } from "react-icons/io";
 import { GrMoney } from "react-icons/gr";
+import { MdAttachMoney } from "react-icons/md";
+import { FcDebt } from "react-icons/fc";
 
 // Colors for each section of the pie
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -113,13 +119,13 @@ const SalesDashboard = () => {
             <GrMoney
               size={20}
               style={{
-                padding: "2px",
+                padding: "4px",
                 color: "white",
-                background: "#2e9ofa",
+                background: "lightgreen",
                 borderRadius: "10px",
               }}
             />{" "}
-            <span variant="h6">Total Revenue</span>
+            <span variant="h6">Total Payments</span>
           </Grid>
           <Divider sx={{ margin: "3px" }} />
           <Stack>
@@ -146,7 +152,7 @@ const SalesDashboard = () => {
           }}
         >
           <Grid flexDirection={"row"} sx={{ padding: "5px" }}>
-            <IoIosCart
+            <FcDebt
               size={20}
               style={{
                 padding: "2px",
@@ -155,7 +161,7 @@ const SalesDashboard = () => {
                 borderRadius: "10px",
               }}
             />{" "}
-            <span variant="h6">Total Sales</span>
+            <span variant="h6">Total Receivable</span>
           </Grid>
           <Divider sx={{ margin: "3px" }} />
           <Stack>
@@ -165,14 +171,14 @@ const SalesDashboard = () => {
               </Col>
               <Col xs={4} style={{ fontSize: "9px" }}>
                 <p style={{ margin: "-3px 0px" }}>25%</p>
-                <p>Last 1 Week</p>
+                <p>This Week</p>
               </Col>
             </Row>
           </Stack>
           <Stack></Stack>
         </Grid>
 
-        <Grid
+        {/* <Grid
           item
           sx={{
             flex: { xs: "1 0 25rem", md: "1 0 25rem" },
@@ -183,141 +189,106 @@ const SalesDashboard = () => {
           }}
         >
           <SalesCard />
-        </Grid>
+        </Grid> */}
         <Grid
           item
           sx={{
-            flex: { xs: "1 0 20rem", md: "1 0 20rem" },
-            height: { xs: "20rem", md: "20rem" },
-            background: "#E7EEFE",
+            flex: { xs: "1 0 35rem", md: "1 0 35rem" },
+            height: { xs: "13rem", md: "13rem" },
           }}
         >
-          <p
-            style={{
-              position: "absolute",
-              padding: "10px",
-              fontWeight: "bold",
-              fontSize: "14px",
-            }}
-          >
-            Daily Total Sales
-          </p>
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : (
-            <ResponsiveContainer
-              width="100%"
-              height={400}
-              style={{ marginTop: -40, backgroundPositionX: "center" }}
-            >
-              <PieChart>
-                <Pie
-                  data={datay}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
-                  fill="#8884d8"
-                  paddingAngle={0}
-                  dataKey="value"
-                >
-                  {datay.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
-          )}
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Table>
+              <thead>
+                <tr>
+                  <th>Name.</th>
+                  <th>T. Sales</th>
+                  <th>T. Payment.</th>
+                  <th>T. Receivables.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Sales .P</td>
+                  <td>Ksh. 28937846</td>
+                  <td>Ksh. 28937846</td>
+                  <td>Ksh. 28937846</td>
+                </tr>
+                <tr>
+                  <td>Customers</td>
+                  <td>Ksh. 28937846</td>
+                  <td>Ksh. 28937846</td>
+                  <td>Ksh. 28937846</td>
+                </tr>
+                <tr>
+                  <td>Institutions</td>
+                  <td>Ksh. 28937846</td>
+                  <td>Ksh. 28937846</td>
+                  <td>Ksh. 28937846</td>
+                </tr>
+              </tbody>
+            </Table>
+          </Stack>
         </Grid>
         <Grid
           item
           sx={{
-            flex: { xs: "1 0 20rem", md: "1 0 20rem" },
-            height: { xs: "20rem", md: "20rem" },
+            flex: { xs: "1 0 10rem", md: "1 0 10rem" },
+            height: { xs: "13rem", md: "13rem" },
             background: "#E7EEFE",
+          }}
+        ></Grid>
+
+        <Grid
+          item
+          sx={{
+            flex: { xs: "1 0 50rem", md: "1 0 50rem" },
+            height: { xs: "20rem", md: "20rem" },
           }}
         >
-          <p
-            style={{
-              position: "absolute",
-              padding: "10px",
-              fontWeight: "bold",
-              fontSize: "14px",
-            }}
-          >
-            Weekly Sales Comparison
-          </p>
-          <ResponsiveContainer
-            width="100%"
-            height={250}
-            style={{ marginTop: 40, marginLeft: -10 }}
-          >
-            <LineChart
-              width={500}
-              height={250}
-              data={datax}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert
+              severity="success"
+              action={
+                <Button color="inherit" size="small">
+                  23876
+                </Button>
+              }
             >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="day" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="lastWeekSales"
-                stroke="#8884d8"
-                activeDot={{ r: 8 }}
-              />
-              <Line
-                type="monotone"
-                dataKey="currentWeekSales"
-                stroke="#82ca9d"
-              />
-            </LineChart>
-          </ResponsiveContainer>
+              ROSA CORN G1 101
+            </Alert>
+            <Alert
+              severity="success"
+              action={
+                <Button color="inherit" size="small">
+                  23876
+                </Button>
+              }
+            >
+              ROSA CORN G1 1KG BALE 101
+            </Alert>
+            <Alert
+              severity="success"
+              action={
+                <Button color="inherit" size="small">
+                  23876
+                </Button>
+              }
+            >
+              ROSA CORN G1 101
+            </Alert>
+            <Alert
+              severity="success"
+              action={
+                <Button color="inherit" size="small">
+                  23876
+                </Button>
+              }
+            >
+              EMAS 1KG BALE 102
+            </Alert>
+          </Stack>
         </Grid>
-        <Grid
-          item
-          sx={{
-            flex: { xs: "1 0 20rem", md: "1 0 20rem" },
-            height: { xs: "20rem", md: "20rem" },
-            background: "#E7EEFE",
-          }}
-        ></Grid>
-        <Grid
-          item
-          sx={{
-            flex: { xs: "1 0 20rem", md: "1 0 20rem" },
-            height: { xs: "20rem", md: "20rem" },
-            background: "#E7EEFE",
-          }}
-        ></Grid>
-        <Grid
-          item
-          sx={{
-            flex: { xs: "1 0 20rem", md: "1 0 20rem" },
-            height: { xs: "20rem", md: "20rem" },
-            background: "#E7EEFE",
-          }}
-        ></Grid>
-        <Grid
-          item
-          sx={{
-            flex: { xs: "1 0 20rem", md: "1 0 20rem" },
-            height: { xs: "20rem", md: "20rem" },
-            background: "#E7EEFE",
-          }}
-        ></Grid>
       </Grid>
       <div className=" py-4">
         <Container className="d-flex justify-content-center">

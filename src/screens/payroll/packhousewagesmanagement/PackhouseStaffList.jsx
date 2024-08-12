@@ -51,17 +51,23 @@ const PackhouseStaffList = () => {
   });
 
   const handleCalculateWage = async () => {
-    if (!start_date || !end_date) {
-      toast.error("Please select start and end date");
-      return;
-    }
-    const payload = {
-      start_date: start_date,
-      end_date: end_date,
-    };
-    const response = await calculateWage(payload);
-    if (response?.data?.data) {
-      set_columns_header(response?.data?.data?.columns_header);
+    try {
+      if (!start_date || !end_date) {
+        toast.error("Please select start and end date");
+        return;
+      }
+      const payload = {
+        start_date: start_date,
+        end_date: end_date,
+      };
+      const response = await calculateWage(payload).unwrap();
+      if (response.status == "success") {
+        toast.success("Wages updated successfully");
+      } else {
+        toast.error("Sorry an error occurred please try again");
+      }
+    } catch (error) {
+      toast.error(error?.data.message || error.message || "An error occurred");
     }
   };
 

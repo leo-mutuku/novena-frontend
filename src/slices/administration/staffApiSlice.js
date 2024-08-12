@@ -59,10 +59,19 @@ export const staffApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Staff"],
     }),
+    getAllBiweeklyStaff: builder.query({
+      query: (data) => ({
+        url: `${STAFF_URL}/getallbiweeklystaff`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Staff"],
+    }),
   }),
 });
 
 export const {
+  useGetAllBiweeklyStaffQuery,
   useGetAllStaffQuery,
   useCreateStaffMutation,
   useUpdateStaffMutation,

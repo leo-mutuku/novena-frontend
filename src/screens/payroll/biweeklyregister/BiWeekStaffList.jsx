@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
-import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
+import { useGetAllBiweeklyStaffQuery } from "../../../slices/administration/staffApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
 import { MdAddTask } from "react-icons/md";
@@ -30,7 +30,7 @@ const BiWeekStaffList = () => {
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
-  const { data, isLoading } = useGetAllStaffQuery();
+  const { data, isLoading } = useGetAllBiweeklyStaffQuery();
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);
@@ -155,11 +155,11 @@ const BiWeekStaffList = () => {
         accessor: "staff_number",
       },
       {
-        Header: "Advance",
-        accessor: "advance",
+        Header: "Days",
+        accessor: "days_attended",
       },
 
-      { Header: "Deduction %", accessor: "advance_deduction_ration" },
+      { Header: "Rate", accessor: "fixed_rate" },
       {
         Header: "Vadidate",
         accessor: "advance_validated",
