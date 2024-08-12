@@ -9,7 +9,7 @@ import { MdAddTask, MdEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
 import { IoMdEye } from "react-icons/io";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Form } from "react-bootstrap";
 
 import { MdAdd, MdMonetizationOn } from "react-icons/md";
 import PrintA4A5ExcelButton from "../../../components/PrintA4A5ExcelButton";
@@ -213,8 +213,8 @@ const BiWeekStaffList = () => {
               type="date"
               required
               placeholder="Start"
-              value={rate_per_day}
-              onChange={(e) => set_rate_per_day(e.target.value)}
+              value={""}
+              onChange={""}
             ></Form.Control>
           </Form.Group>
         </Col>
@@ -225,8 +225,8 @@ const BiWeekStaffList = () => {
               type="date"
               required
               placeholder="End"
-              value={rate_per_day}
-              onChange={(e) => set_rate_per_day(e.target.value)}
+              value={""}
+              onChange={""}
             ></Form.Control>
           </Form.Group>
         </Col>
