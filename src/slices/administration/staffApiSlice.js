@@ -44,6 +44,14 @@ export const staffApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Staff"],
     }),
+    updateStaffBiWeekly: builder.mutation({
+      query: (data) => ({
+        url: `${STAFF_URL}/updatestaffbiweekly`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Staff"],
+    }),
     updateStaff: builder.mutation({
       query: ({ id, data }) => ({
         url: `${STAFF_URL}/updatestaffbyid/${id}`,
@@ -71,6 +79,7 @@ export const staffApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useUpdateStaffBiWeeklyMutation,
   useGetAllBiweeklyStaffQuery,
   useGetAllStaffQuery,
   useCreateStaffMutation,

@@ -1,7 +1,11 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetAllStaffByIdQuery } from "../../../slices/administration/staffApiSlice";
+import {
+  useGetAllStaffByIdQuery,
+  useUpdateStaffBiWeeklyMutation,
+} from "../../../slices/administration/staffApiSlice";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const EditBiweeklyRegister = () => {
   const { id } = useParams();
@@ -16,11 +20,25 @@ const EditBiweeklyRegister = () => {
     }
   }, [id, staffSuccess, staff?.data]);
 
-  console.log(staff?.data.days_attended);
+  const [updateStaff] = useUpdateStaffBiWeeklyMutation();
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate("/payroll/biweeklyregister");
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const res = await updateStaff({
+        staff_id: id,
+        days_attended: no_of_days,
+        fixed_rate: rate_per_day,
+      }).unwrap();
+      if (res.status === "success") {
+        toast.success("Staff biweekly updated successfully");
+        navigate("../biweeklystaffregister");
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (error) {
+      toast.error(error?.data?.message);
+    }
   };
 
   return (
