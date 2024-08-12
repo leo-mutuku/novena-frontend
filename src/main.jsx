@@ -351,6 +351,7 @@ import AutoStockTakeLines from "./screens/store/autostocktake/AutoStockTakeLines
 import ViewPayrollHeader from "./screens/payroll/payrollheader/viewpayrollheader.jsx";
 import ProductionCertificate from "./screens/production/productionheaders/ProductionCertificate.jsx";
 import EditLimit from "./screens/sales/salespeople/EditLimit.jsx";
+import EditBiweeklyRegister from "./screens/payroll/biweeklyregister/EditBiweeklyRegister.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -483,6 +484,10 @@ const router = createHashRouter(
           </Route>
           <Route path="biweeklyregister" element={<BiWeeklyRegisterScreen />}>
             <Route path="biweeklystaffregister" element={<BiWeekStaffList />} />
+            <Route
+              path="editbiweeklyregister/:id"
+              element={<EditBiweeklyRegister />}
+            />
           </Route>
           <Route path="packhousewage" element={<PackHouseWageScreen />}>
             <Route path="staffsetlist" element={<PackhouseStaffList />} />

@@ -4,7 +4,7 @@ import Loader from "../../../components/Loader";
 import { useGetAllBiweeklyStaffQuery } from "../../../slices/administration/staffApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
-import { MdAddTask } from "react-icons/md";
+import { MdAddTask, MdEdit } from "react-icons/md";
 
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
@@ -160,37 +160,37 @@ const BiWeekStaffList = () => {
       },
 
       { Header: "Rate", accessor: "fixed_rate" },
-      {
-        Header: "Vadidate",
-        accessor: "advance_validated",
-        Cell: ({ row }) => (
-          <>
-            {row.original.status !== "Generated" ? (
-              <Link
-                to={`/payroll/advancemanagement/newadvance/${row.original.staff_number}`}
-              >
-                <Button variant="outline-primary">
-                  <MdAddTask />
-                </Button>
-              </Link>
-            ) : (
-              <p>{row.original.status}</p>
-            )}
-          </>
-        ),
-      },
+      // {
+      //   Header: "Vadidate",
+      //   accessor: "advance_validated",
+      //   Cell: ({ row }) => (
+      //     <>
+      //       {row.original.status !== "Generated" ? (
+      //         <Link
+      //           to={`/payroll/advancemanagement/newadvance/${row.original.staff_number}`}
+      //         >
+      //           <Button variant="outline-primary">
+      //             <MdAddTask />
+      //           </Button>
+      //         </Link>
+      //       ) : (
+      //         <p>{row.original.status}</p>
+      //       )}
+      //     </>
+      //   ),
+      // },
 
       {
-        Header: "New",
-        accessor: "New",
+        Header: "Edit",
+        accessor: "Edit",
         Cell: ({ row }) => (
           <>
             {row.original.status !== "Generated" ? (
               <Link
-                to={`/payroll/advancemanagement/newadvance/${row.original.staff_number}`}
+                to={`/payroll/biweeklyregister/editbiweeklyregister/${row.original.staff_number}`}
               >
                 <Button variant="outline-primary">
-                  <MdAdd />
+                  <MdEdit />
                 </Button>
               </Link>
             ) : (
