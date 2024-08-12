@@ -9,7 +9,7 @@ import { MdAddTask } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
 import { IoMdEye } from "react-icons/io";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Form } from "react-bootstrap";
 
 import { MdAdd, MdMonetizationOn } from "react-icons/md";
 import PrintA4A5ExcelButton from "../../../components/PrintA4A5ExcelButton";
@@ -206,6 +206,30 @@ const SalesStaffList = () => {
   return (
     <>
       <Row>
+        <Col>
+          <Form.Group className="my-2" controlId="account_number">
+            <Form.Label>Start Date</Form.Label>
+            <Form.Control
+              type="date"
+              required
+              placeholder="Start"
+              value={""}
+              onChange={""}
+            ></Form.Control>
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group className="my-2" controlId="account_number">
+            <Form.Label>End Date</Form.Label>
+            <Form.Control
+              type="date"
+              required
+              placeholder="End"
+              value={""}
+              onChange={""}
+            ></Form.Control>
+          </Form.Group>
+        </Col>
         <Col>
           <p>*** Sales staff List*** </p>
         </Col>
