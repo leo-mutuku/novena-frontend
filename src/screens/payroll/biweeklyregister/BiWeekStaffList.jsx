@@ -207,6 +207,30 @@ const BiWeekStaffList = () => {
     <>
       <Row>
         <Col>
+          <Form.Group className="my-2" controlId="account_number">
+            <Form.Label>Start Date</Form.Label>
+            <Form.Control
+              type="date"
+              required
+              placeholder="Start"
+              value={rate_per_day}
+              onChange={(e) => set_rate_per_day(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group className="my-2" controlId="account_number">
+            <Form.Label>End Date</Form.Label>
+            <Form.Control
+              type="date"
+              required
+              placeholder="End"
+              value={rate_per_day}
+              onChange={(e) => set_rate_per_day(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+        </Col>
+        <Col>
           <p>*** Bi-Week Staff List*** </p>
         </Col>
         <Col xs={3}>
