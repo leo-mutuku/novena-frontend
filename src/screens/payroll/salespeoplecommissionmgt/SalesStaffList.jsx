@@ -207,8 +207,12 @@ const SalesStaffList = () => {
     <>
       <Row>
         <Col>
+          <p>*** Sales staff List*** </p>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
           <Form.Group className="my-2" controlId="account_number">
-            <Form.Label>Start Date</Form.Label>
             <Form.Control
               type="date"
               required
@@ -220,7 +224,6 @@ const SalesStaffList = () => {
         </Col>
         <Col>
           <Form.Group className="my-2" controlId="account_number">
-            <Form.Label>End Date</Form.Label>
             <Form.Control
               type="date"
               required
@@ -230,11 +233,9 @@ const SalesStaffList = () => {
             ></Form.Control>
           </Form.Group>
         </Col>
-        <Col>
-          <p>*** Sales staff List*** </p>
-        </Col>
+
         <Col xs={4}>
-          <Button>Validate Months Bales Entries</Button>
+          <Button>Validate Bales Entries</Button>
         </Col>
       </Row>
       <DataTable columns={columns} data={tableData} />

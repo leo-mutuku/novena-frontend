@@ -206,9 +206,11 @@ const BiWeekStaffList = () => {
   return (
     <>
       <Row>
+        <p>*** Bi-Week Staff List*** </p>
+      </Row>
+      <Row>
         <Col>
           <Form.Group className="my-2" controlId="account_number">
-            <Form.Label>Start Date</Form.Label>
             <Form.Control
               type="date"
               required
@@ -220,7 +222,6 @@ const BiWeekStaffList = () => {
         </Col>
         <Col>
           <Form.Group className="my-2" controlId="account_number">
-            <Form.Label>End Date</Form.Label>
             <Form.Control
               type="date"
               required
@@ -230,9 +231,7 @@ const BiWeekStaffList = () => {
             ></Form.Control>
           </Form.Group>
         </Col>
-        <Col>
-          <p>*** Bi-Week Staff List*** </p>
-        </Col>
+
         <Col xs={3}>
           <Button>Validate BiWeekly Register</Button>
         </Col>
