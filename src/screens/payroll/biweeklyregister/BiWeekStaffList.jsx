@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
-import { useGetAllBiweeklyStaffQuery } from "../../../slices/administration/staffApiSlice";
+import {
+  useGetAllBiweeklyStaffQuery,
+  useValidateStaffBiWeeklyRegisterMutation,
+} from "../../../slices/administration/staffApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
 import { MdAddTask, MdEdit } from "react-icons/md";
@@ -19,6 +22,7 @@ import axios from "axios";
 
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { toast } from "react-toastify";
 
 const BiWeekStaffList = () => {
   const [paying_account_type, set_paying_account_type] = useState("");
@@ -31,6 +35,9 @@ const BiWeekStaffList = () => {
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
   const { data, isLoading } = useGetAllBiweeklyStaffQuery();
+  const [start_date, set_start_date] = useState("");
+  const [end_date, set_end_date] = useState("");
+  const [validateSatff] = useValidateStaffBiWeeklyRegisterMutation();
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);
@@ -44,6 +51,22 @@ const BiWeekStaffList = () => {
     date: "",
     filename: "",
   });
+
+  const hanldeValidateStaff = async () => {
+    try {
+      const res = await validateSatff({
+        start_date,
+        end_date,
+      }).unwrap();
+      if (res.status == "success") {
+        toast.success("Validated successfully");
+      } else {
+        toast.error("An error occured");
+      }
+    } catch (error) {
+      toast.error(error?.data.messages || "An error occured");
+    }
+  };
 
   const handleDownloadPDF = async () => {
     setLoadingPdf(true);
@@ -215,8 +238,8 @@ const BiWeekStaffList = () => {
               type="date"
               required
               placeholder="Start"
-              value={""}
-              onChange={""}
+              value={start_date}
+              onChange={(e) => set_start_date(e.target.value)}
             ></Form.Control>
           </Form.Group>
         </Col>
@@ -226,14 +249,16 @@ const BiWeekStaffList = () => {
               type="date"
               required
               placeholder="End"
-              value={""}
-              onChange={""}
+              value={end_date}
+              onChange={(e) => set_end_date(e.target.value)}
             ></Form.Control>
           </Form.Group>
         </Col>
 
         <Col xs={3}>
-          <Button>Validate BiWeekly Register</Button>
+          <Button onClick={hanldeValidateStaff}>
+            Validate BiWeekly Register
+          </Button>
         </Col>
       </Row>
       <DataTable columns={columns} data={tableData} />
