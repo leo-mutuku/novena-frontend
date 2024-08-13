@@ -136,7 +136,7 @@ const OrderDispatchListHeader = () => {
           <span>
             {row.original.status === "Posted" ? (
               <Link
-                to={`/sales/orders/postedorderpreview/${row.original.sales_order_number}`}
+                to={`/sales/orderdispatch/deliverynote/${row.original.sales_order_number}`}
               >
                 <IoMdEye />
               </Link>

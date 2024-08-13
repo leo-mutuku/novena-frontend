@@ -352,6 +352,8 @@ import ViewPayrollHeader from "./screens/payroll/payrollheader/viewpayrollheader
 import ProductionCertificate from "./screens/production/productionheaders/ProductionCertificate.jsx";
 import EditLimit from "./screens/sales/salespeople/EditLimit.jsx";
 import EditBiweeklyRegister from "./screens/payroll/biweeklyregister/EditBiweeklyRegister.jsx";
+import ViewOrderInvoice from "./screens/sales/orderinvoice/ViewOrderInvoice.jsx";
+import DeliveryNote from "./screens/sales/orderdispatch/DeliveryNote.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -902,6 +904,7 @@ const router = createHashRouter(
               element={<CreateOrderDispatch />}
             />
             <Route path="dispatchedorders" element={<OrderDispatchList />} />
+            <Route path="deliverynote/:id" element={<DeliveryNote />} />
           </Route>
           <Route path="salesreport" element={<SalesReportScreen />}></Route>
           <Route
@@ -917,7 +920,12 @@ const router = createHashRouter(
             <Route index element={<OrderInvoiceList />} />
             <Route path="createinvoice" element={<CreateOrderInvoce />} />
             <Route path="allorderinvoices" element={<OrderInvoiceList />} />
+            <Route
+              path="orderinvoicepreview/:id"
+              element={<ViewOrderInvoice />}
+            />
           </Route>
+
           <Route path="orderreceipts" element={<OrderReceiptScreen />}>
             <Route path="bankreceiptslist" element={<BankReceipts />} />
             <Route path="cashreceiptslist" element={<CashReceiptList />} />

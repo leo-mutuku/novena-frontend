@@ -18,73 +18,6 @@ import html2canvas from "html2canvas";
 import { RoundedCorner } from "@mui/icons-material";
 
 // Sample component to be printed
-const PrintComponent = React.forwardRef((props, ref) => (
-  <div ref={ref} style={{ padding: 20, border: "1px solid black" }}>
-    <div>
-      <h3 style={{ textAlign: "center" }}>INVOICE</h3>
-      <p
-        style={{ textAlign: "center", marginBottom: "-5px", marginTop: "-5px" }}
-      >
-        Novena Maize Miller LTD
-      </p>
-      <p style={{ textAlign: "center", marginTop: "-5px" }}>
-        Dealers in All Types of Animal Feeds , Maize Mill
-      </p>
-    </div>
-
-    <div
-      style={{
-        border: "1px solid black",
-        padding: "8px",
-      }}
-    >
-      <Row>
-        <Col></Col>
-        <Col xs={3}>
-          <p>Date:{`08/08/2024`}</p>
-          <p>Del No: 10301</p>
-        </Col>
-      </Row>
-    </div>
-
-    <table style={{ width: "100%", borderCollapse: "collapse" }}>
-      <thead></thead>
-      <tbody>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product B
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product C
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
-        </tr>
-
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product A
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>100</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product B
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>200</td>
-        </tr>
-        <tr>
-          <td style={{ border: "1px solid black", padding: "8px" }}>
-            Product C
-          </td>
-          <td style={{ border: "1px solid black", padding: "8px" }}>150</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-));
 
 const OrderInvoiceList = () => {
   const { data: OrderInvoices, isLoading } = useGetAllDispatchedOrdersQuery();
@@ -215,7 +148,7 @@ const OrderInvoiceList = () => {
           <span>
             {row.original.status === "Posted" ? (
               <Link
-                to={`/sales/orders/postedorderpreview/${row.original.sales_order_number}`}
+                to={`/sales/orderinvoice/orderinvoicepreview/${row.original.sales_order_number}`}
               >
                 <IoMdEye />
               </Link>
@@ -233,14 +166,6 @@ const OrderInvoiceList = () => {
     <>
       <div>
         <p>*** All Posted Sales Orders ***</p>
-        <div>
-          <ReactToPrint
-            trigger={() => <button>Print this out!</button>}
-            content={() => componentRef.current}
-          />
-          <button onClick={handlePrint}>Save as PDF</button>
-          <PrintComponent ref={componentRef} />
-        </div>
 
         <DataTable columns={columns} data={tableData} />
       </div>
