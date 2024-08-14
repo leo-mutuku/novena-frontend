@@ -80,8 +80,7 @@ const Invoice = forwardRef(({ header, body, footer }, ref) => {
               fontWeight: "900",
             }}
           >
-            DELIVERY NO # {header.delivery_number}
-            {header.order_number}
+            INVOICE NUMBER# {header.invoice_number}
           </p>
         )}
       </div>
@@ -214,8 +213,16 @@ const Invoice = forwardRef(({ header, body, footer }, ref) => {
       {footer && (
         <>
           <div style={{ marginTop: "10px", textAlign: "center" }}>
-            <p style={{ textDecoration: "italic", fontSize: "12px" }}>
-              {footer}
+            <p style={{ fontSize: "12px" }}>
+              <br />
+              <b style={{}}>
+                ** Invoices are due within one month. Failure to pay within this
+                period will incur a 10% interest charge**
+              </b>
+
+              <p style={{ fontSize: "10px", fontStyle: "italic" }}>
+                Terms & Conditions apply
+              </p>
             </p>
           </div>
         </>
