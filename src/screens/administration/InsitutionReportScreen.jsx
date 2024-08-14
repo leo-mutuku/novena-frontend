@@ -113,13 +113,20 @@ const InsitituionReportScreen = () => {
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="role_name">
-              <Form.Control
+              <Form.Select
                 type="number"
                 required
                 placeholder="Enter Institution ID"
                 value={supplier_number}
                 onChange={(e) => set_supplier_number(parseInt(e.target.value))}
-              ></Form.Control>
+              >
+                <option value="">Select Institution</option>
+                {suppliers?.data?.map((a) => (
+                  <option key={a.institution_id} value={a.institution_id}>
+                    {a.institution_name}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
           <Col>
