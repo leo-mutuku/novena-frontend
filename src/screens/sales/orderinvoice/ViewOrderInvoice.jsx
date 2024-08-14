@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import DeliveryNoteComponent from "../../../components/print/DeliveryNoteComponent";
+
 import { useGetSalesLinesByHeaderIdQuery } from "../../../slices/sales/salesOrderLinesApiSlice";
 import PrintButton from "../../../components/print/PrintButton";
 import TimeDate from "../../../components/TimeDate";
+import Invoice from "../../../components/print/InvoiceComponent";
 const ViewOrderInvoice = () => {
   const timeDate = new TimeDate();
   const { id } = useParams();
@@ -13,7 +14,7 @@ const ViewOrderInvoice = () => {
   console.log(order);
   const componentRef = React.useRef();
   const [headers, setHeaders] = useState({
-    title: "DELIVERY NOTE",
+    title: "INVOICE",
     subTitle: "Novena Maize Miller LTD",
     description: "Dealers in: All types of cereals, Animal feeds",
     address: "P.O Box 238, Meru, Kenya",
@@ -30,7 +31,12 @@ const ViewOrderInvoice = () => {
     expected: 0,
     variance: 0,
   });
-  const [columns, setColumns] = useState(["Qty", "Description"]);
+  const [columns, setColumns] = useState([
+    "Qty",
+    "Description",
+    "Kshs.",
+    "cts.",
+  ]);
   const [rows, setRows] = useState([
     ["Product B", "200"],
     ["Product C", "150"],
@@ -46,13 +52,13 @@ const ViewOrderInvoice = () => {
     ["Product B", "200"],
     ["Product C", "150"],
   ]);
-  const [footer, setFooter] = useState(
-    "Receive the above goods in good order and condition"
-  );
+  const [footer, setFooter] = useState("Accounts are due on demand");
   useEffect(() => {
     if (order?.data) {
       // const { res1 } = order.data.order_header.entry_date;
       const { res2 } = order.data.order;
+
+      alert(JSON.stringify(order.data.order));
 
       setHeaders((prevHeaders) => ({
         ...prevHeaders,
@@ -66,13 +72,20 @@ const ViewOrderInvoice = () => {
         // expected: res1.expected_output,
         // variance: res1.production_variance,
       }));
-      setColumns(["Qty ", "Description"]);
+      setColumns(["Description", "Qty ", "@", "Kshs."]);
       const updatedRows = order.data.order.map((item) => [
-        item.quantity,
         item.item_name,
+        item.quantity,
+        item.cost_per_item,
+        item.total,
       ]);
       setRows(updatedRows);
-      // setColumns1(["Product ", "Output"]);
+      setColumns1([
+        " ",
+        "",
+        "Total Kshs.",
+        order.data.order_header.grand_total,
+      ]);
       // const updatedRows1 = res3.map((item) => [
       //   item.item_name,
       //   item.number_packed,
@@ -94,7 +107,7 @@ const ViewOrderInvoice = () => {
   };
   return (
     <div>
-      <DeliveryNoteComponent ref={componentRef} {...documentData} />
+      <Invoice ref={componentRef} {...documentData} />
       <PrintButton componentRef={componentRef} />
     </div>
   );

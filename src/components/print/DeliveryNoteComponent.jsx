@@ -80,7 +80,7 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
               fontWeight: "900",
             }}
           >
-            INVOICE NO # {header.invoice_number} - L.P.O. NO #{" "}
+            INVOICE NO # {header.invoice_number}
             {header.order_number}
           </p>
         )}
