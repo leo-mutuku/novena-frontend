@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import DeliveryNoteComponent from "../../../components/print/DeliveryNoteComponent";
+import { useGetSalesLinesByHeaderIdQuery } from "../../../slices/sales/salesOrderLinesApiSlice";
 import PrintButton from "../../../components/print/PrintButton";
+import TimeDate from "../../../components/TimeDate";
 const DeliveryNote = () => {
+  const timeDate = new TimeDate();
   const { id } = useParams();
+  const { data: order } = useGetSalesLinesByHeaderIdQuery(id);
+  console.log(order);
   const componentRef = React.useRef();
   const [headers, setHeaders] = useState({
     title: "DELIVERY NOTE",
@@ -44,6 +49,39 @@ const DeliveryNote = () => {
   const [footer, setFooter] = useState(
     "Receive the above goods in good order and condition"
   );
+  useEffect(() => {
+    if (order?.data) {
+      // const { res1 } = order.data.order_header.entry_date;
+      const { res2 } = order.data.order;
+
+      setHeaders((prevHeaders) => ({
+        ...prevHeaders,
+        // date: order.data.order_header.entry_date,
+        customer: order.data.order_header.customer,
+        date: `${timeDate.date(order.data.order_header.sales_order_date)}`,
+        // deliveryNumber: res1.production_batch_no,
+        // batch_number: res1.batch_number,
+        // input: res1.production_input,
+        // output: res1.actual_output,
+        // expected: res1.expected_output,
+        // variance: res1.production_variance,
+      }));
+      setColumns(["Qty ", "Description"]);
+      const updatedRows = order.data.order.map((item) => [
+        item.quantity,
+        item.item_name,
+      ]);
+      setRows(updatedRows);
+      // setColumns1(["Product ", "Output"]);
+      // const updatedRows1 = res3.map((item) => [
+      //   item.item_name,
+      //   item.number_packed,
+      // ]);
+      // setRows1(updatedRows1);
+      // Update footer or any other data if needed
+      // setFooter("Your custom footer");
+    }
+  }, [order]);
   const documentData = {
     header: headers,
     body: {

@@ -68,7 +68,7 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
           <p
             style={{ textAlign: "center", marginTop: "-5px", fontSize: "12px" }}
           >
-            {header.address} {header.date}
+            {header.address} | {header.pin} | {header.phone}
           </p>
         )}
         {header.address && (
@@ -111,8 +111,16 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
               <Col>
                 {header.invoice_number && (
                   <>
-                    <p style={{ textDecoration: "underline" }}>
+                    <p
+                      style={{
+                        textDecoration: "underline",
+                        marginBottom: "-3px",
+                      }}
+                    >
                       Del No.:&nbsp; &nbsp; &nbsp;{header.delivery_number}{" "}
+                    </p>
+                    <p style={{ marginBottom: "-5px", marginTop: "-5px" }}>
+                      Date.:&nbsp; &nbsp; &nbsp;{header.date}{" "}
                     </p>
                   </>
                 )}
@@ -128,29 +136,31 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
       >
         <thead>
           <tr>
-            {body.columns.map((col, index) => (
-              <th
-                key={index}
-                style={{ border: "1px solid black", padding: "8px" }}
-              >
-                {col}
-              </th>
-            ))}
+            {body.rows.length &&
+              body.columns?.map((col, index) => (
+                <th
+                  key={index}
+                  style={{ border: "1px solid black", padding: "8px" }}
+                >
+                  {col}
+                </th>
+              ))}
           </tr>
         </thead>
         <tbody>
-          {body.rows.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {row.map((cell, cellIndex) => (
-                <td
-                  key={cellIndex}
-                  style={{ border: "1px solid black", padding: "8px" }}
-                >
-                  {cell}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {body.rows.length &&
+            body.rows?.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {row.map((cell, cellIndex) => (
+                  <td
+                    key={cellIndex}
+                    style={{ border: "1px solid black", padding: "8px" }}
+                  >
+                    {cell}
+                  </td>
+                ))}
+              </tr>
+            ))}
         </tbody>
       </table>
       <br />
