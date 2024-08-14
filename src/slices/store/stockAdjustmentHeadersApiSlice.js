@@ -12,6 +12,13 @@ export const stockAdjustmentHeaders = apiSlice.injectEndpoints({
       }),
       providesTags: ["stockAdjustmentHeaders"],
     }),
+    getAllStockAdjustmentHeaders: builder.query({
+      query: () => ({
+        url: `${STOCKADJUSTMENTAPI_URL}/getallstockadjustmentHeaders`,
+        method: "GET",
+      }),
+      providesTags: ["stockAdjustmentHeaders"],
+    }),
     createStockAdjustmentHeader: builder.mutation({
       query: (data) => ({
         url: `${STOCKADJUSTMENTAPI_URL}/createstockadjustmentheader`,
@@ -24,6 +31,7 @@ export const stockAdjustmentHeaders = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetAllStockAdjustmentHeadersQuery,
   useGetAllregisteredItemsQuery,
   useCreateStockAdjustmentHeaderMutation,
 } = stockAdjustmentHeaders;
