@@ -112,23 +112,25 @@ const CustomerReportScreen = () => {
       <div style={{ marginBottom: "2px", paddingTop: "10px" }}>
         <Row>
           <Col>
-            <Autocomplete
-              fullWidth
-              disablePortal
-              id="combo-box-demo"
-              options={customers?.data}
-              getOptionLabel={(option) => option.full_name}
-              renderInput={(full_name) => (
-                <TextField {...full_name} label="Customers" />
-              )}
-              inputValue={customers.full_name}
-              onInputChange={(event, newInputValue) =>
-                handleCustomer(event, newInputValue)
-              }
-              isOptionEqualToValue={(option, value) =>
-                option.full_name === value.full_name
-              }
-            />
+            {customers?.data?.length > 0 && (
+              <Autocomplete
+                fullWidth
+                disablePortal
+                id="combo-box-demo"
+                options={customers?.data}
+                getOptionLabel={(option) => option.full_name}
+                renderInput={(full_name) => (
+                  <TextField {...full_name} label="Customers" />
+                )}
+                inputValue={customers.full_name}
+                onInputChange={(event, newInputValue) =>
+                  handleCustomer(event, newInputValue)
+                }
+                isOptionEqualToValue={(option, value) =>
+                  option.full_name === value.full_name
+                }
+              />
+            )}
           </Col>
           <Col>
             <Form.Group className="my-2" controlId="role_name">
