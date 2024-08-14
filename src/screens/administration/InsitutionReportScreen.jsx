@@ -41,6 +41,17 @@ const InsitituionReportScreen = () => {
       toast.error("No data found");
     }
   };
+  const handleInstitution = (e) => {
+    let x = institutions?.data?.filter((a) => {
+      if (a.institution_id == e.target.value) {
+        return a.institution_id;
+      }
+    });
+    set_customer_name(x[0].institution_name);
+    set_institution_id(x[0].institution_id);
+    set_phone_number(x[0].institution_phone_number);
+    set_customer_id("null");
+  };
 
   const handleDownloadCSV = () => {
     if (getData && getData.length > 0) {

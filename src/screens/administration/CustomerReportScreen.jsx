@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from "react";
-import { useGetSupplierStorePurchaseReportMutation } from "../../slices/purchase/storePurchaseHeadersApiSlice";
+
+import { Autocomplete, TextField } from "@mui/material";
 import {
   useGetAllCustomersQuery,
   useCustomerStatementMutation,
@@ -40,6 +41,15 @@ const CustomerReportScreen = () => {
     } else {
       toast.error("No data found");
     }
+  };
+  const handleCustomer = (_, newInputValue) => {
+    let x = customers?.data?.filter((a) => {
+      if (a.full_name == newInputValue) {
+        return a.customer_id;
+      }
+    });
+
+    set_supplier_number(x[0].customer_id);
   };
 
   const handleDownloadCSV = () => {
@@ -102,15 +112,23 @@ const CustomerReportScreen = () => {
       <div style={{ marginBottom: "2px", paddingTop: "10px" }}>
         <Row>
           <Col>
-            <Form.Group className="my-2" controlId="role_name">
-              <Form.Control
-                type="number"
-                required
-                placeholder="Enter Customer ID"
-                value={supplier_number}
-                onChange={(e) => set_supplier_number(parseInt(e.target.value))}
-              ></Form.Control>
-            </Form.Group>
+            <Autocomplete
+              fullWidth
+              disablePortal
+              id="combo-box-demo"
+              options={customers?.data}
+              getOptionLabel={(option) => option.full_name}
+              renderInput={(full_name) => (
+                <TextField {...full_name} label="Customers" />
+              )}
+              inputValue={customers.full_name}
+              onInputChange={(event, newInputValue) =>
+                handleCustomer(event, newInputValue)
+              }
+              isOptionEqualToValue={(option, value) =>
+                option.full_name === value.full_name
+              }
+            />
           </Col>
           <Col>
             <Form.Group className="my-2" controlId="role_name">
