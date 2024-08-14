@@ -58,8 +58,6 @@ const ViewOrderInvoice = () => {
       // const { res1 } = order.data.order_header.entry_date;
       const { res2 } = order.data.order;
 
-      alert(JSON.stringify(order.data.order));
-
       setHeaders((prevHeaders) => ({
         ...prevHeaders,
         // date: order.data.order_header.entry_date,

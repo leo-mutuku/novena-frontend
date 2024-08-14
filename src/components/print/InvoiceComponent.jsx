@@ -80,7 +80,7 @@ const Invoice = forwardRef(({ header, body, footer }, ref) => {
               fontWeight: "900",
             }}
           >
-            INVOICE NUMBER# {header.invoice_number}
+            DELIVERY NUMBER# {header.delivery_number}
           </p>
         )}
       </div>
@@ -116,7 +116,7 @@ const Invoice = forwardRef(({ header, body, footer }, ref) => {
                         marginBottom: "-3px",
                       }}
                     >
-                      Del No.:&nbsp; &nbsp; &nbsp;{header.delivery_number}{" "}
+                      INVOICE NO.:&nbsp; &nbsp; &nbsp;{header.invoice_number}{" "}
                     </p>
                     <p style={{ marginBottom: "-5px", marginTop: "-5px" }}>
                       Date.:&nbsp; &nbsp; &nbsp;{header.date}{" "}
