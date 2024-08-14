@@ -1,181 +1,129 @@
 import React, { forwardRef } from "react";
 import { Row, Col } from "react-bootstrap";
-import { Divider, Chip } from "@mui/material";
 
 const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
   return (
     <div
       ref={ref}
       style={{
-        padding: 20,
-        border: "1px solid black",
-        position: "relative",
+        width: "120mm", // Custom width, narrower than half A4 in portrait
+        minHeight: "130mm", // Half height of A4
+        // border: "1px solid black", // Border removed
+        boxSizing: "border-box",
+        padding: "3px",
+        margin: "0 auto", // Center the content horizontally
+        position: "relative", // Relative positioning for positioning the content
       }}
     >
       <style>
         {`
         @page {
-          margin: 20mm 15mm;
-          counter-reset: page 1;
+          size: auto;
+          margin: 0;
         }
 
-        .page-footer {
-          position: fixed;
-          bottom: 0;
-          width: 100%;
-          text-align: center;
-          font-size: 12px;
-          color: grey;
+        body {
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start; /* Align content to the top */
+          align-items: center;
         }
 
-        .page-footer::after {
-          content: "Page " counter(page);
-        }
+        @media print {
+          body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+          }
 
-        @media screen {
-          .page-footer {
-            display: none;
+          .page {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Align content to the top */
+            align-items: center;
+            margin: auto;
+            padding-top: 10mm; /* Adjust this value if needed */
           }
         }
         `}
       </style>
 
-      <div>
-        <h3 style={{ textAlign: "center" }}>{header.title}</h3>
+      <div
+        style={{
+          textAlign: "center",
+          marginBottom: "3px",
+          marginTop: "9px",
+        }}
+      >
+        <h3 style={{ fontSize: "12px", fontWeight: "bold" }}>{header.title}</h3>
         {header.subTitle && (
-          <p
-            style={{
-              textAlign: "center",
-              marginBottom: "-5px",
-              marginTop: "-5px",
-            }}
-          >
+          <p style={{ fontSize: "11px", marginTop: "-10px" }}>
             {header.subTitle}
           </p>
         )}
         {header.description && (
-          <p
-            style={{
-              textAlign: "center",
-              marginTop: "-5px",
-              marginBottom: "2px",
-            }}
-          >
+          <p style={{ fontSize: "11px", marginTop: "-15px" }}>
             {header.description}
           </p>
         )}
         {header.address && (
-          <p
-            style={{ textAlign: "center", marginTop: "-5px", fontSize: "12px" }}
-          >
+          <p style={{ fontSize: "11px", marginTop: "-15px" }}>
             {header.address} | {header.pin} | {header.phone}
           </p>
         )}
-        {header.address && (
+        {header.invoice_number && (
           <p
             style={{
-              textAlign: "center",
-              marginTop: "-5px",
-              fontSize: "12px",
-              fontWeight: "900",
+              fontSize: "11px",
+              marginTop: "-15px",
+              fontWeight: "bold",
             }}
           >
             INVOICE NO # {header.invoice_number}
-            {header.order_number}
           </p>
         )}
       </div>
-      {/* <Divider textAlign="left">
-        <Chip label="Production Summary" size="small" />
-      </Divider> */}
-      <div
-        style={{
-          border: "1px solid black",
-          padding: "8px",
-          marginTop: "10px",
-        }}
-      >
+
+      <div style={{ marginBottom: "3px" }}>
         <Row>
           <Col>
-            <Row>
-              <Col>
-                {header.invoice_number && (
-                  <>
-                    <p style={{ textDecoration: "underline" }}>
-                      M/S.:&nbsp; &nbsp; &nbsp;{header.customer}{" "}
-                    </p>
-                  </>
-                )}
-              </Col>
-
-              <Col>
-                {header.invoice_number && (
-                  <>
-                    <p
-                      style={{
-                        textDecoration: "underline",
-                        marginBottom: "-3px",
-                      }}
-                    >
-                      Del No.:&nbsp; &nbsp; &nbsp;{header.delivery_number}{" "}
-                    </p>
-                    <p style={{ marginBottom: "-5px", marginTop: "-5px" }}>
-                      Date.:&nbsp; &nbsp; &nbsp;{header.date}{" "}
-                    </p>
-                  </>
-                )}
-              </Col>
-            </Row>
+            {header.customer && (
+              <p style={{ textDecoration: "underline", fontSize: "11px" }}>
+                M/S.:&nbsp; &nbsp; &nbsp;{header.customer}
+              </p>
+            )}
+          </Col>
+          <Col>
+            {header.delivery_number && (
+              <>
+                <p style={{ textDecoration: "underline", fontSize: "11px" }}>
+                  Del No.:&nbsp; &nbsp; &nbsp;{header.delivery_number}
+                </p>
+                <p style={{ fontSize: "11px" }}>
+                  Date.:&nbsp; &nbsp; &nbsp;{header.date}
+                </p>
+              </>
+            )}
           </Col>
         </Row>
       </div>
-      <br />
-      <Divider textAlign="left">{/* <Chip label="" size="small" /> */}</Divider>
+
       <table
-        style={{ width: "100%", borderCollapse: "collapse", marginTop: "10px" }}
+        style={{
+          fontSize: "11px",
+          width: "100%",
+          borderCollapse: "collapse",
+          marginTop: "3px",
+        }}
       >
         <thead>
           <tr>
-            {body.rows.length &&
-              body.columns?.map((col, index) => (
-                <th
-                  key={index}
-                  style={{ border: "1px solid black", padding: "8px" }}
-                >
-                  {col}
-                </th>
-              ))}
-          </tr>
-        </thead>
-        <tbody>
-          {body.rows.length &&
-            body.rows?.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {row.map((cell, cellIndex) => (
-                  <td
-                    key={cellIndex}
-                    style={{ border: "1px solid black", padding: "8px" }}
-                  >
-                    {cell}
-                  </td>
-                ))}
-              </tr>
-            ))}
-        </tbody>
-      </table>
-      <br />
-      {/* <Divider textAlign="left">
-        <Chip label="Pack House" size="small" />
-      </Divider> */}
-      {/* <table
-        style={{ width: "100%", borderCollapse: "collapse", marginTop: "10px" }}
-      >
-        <thead>
-          <tr>
-            {body.columns1?.map((col, index) => (
+            {body.columns?.map((col, index) => (
               <th
                 key={index}
-                style={{ border: "1px solid black", padding: "8px" }}
+                style={{ border: "1px solid black", padding: "5px" }}
               >
                 {col}
               </th>
@@ -183,12 +131,12 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
           </tr>
         </thead>
         <tbody>
-          {body.rows1?.map((row, rowIndex) => (
+          {body.rows?.map((row, rowIndex) => (
             <tr key={rowIndex}>
               {row.map((cell, cellIndex) => (
                 <td
                   key={cellIndex}
-                  style={{ border: "1px solid black", padding: "8px" }}
+                  style={{ border: "1px solid black", padding: "5px" }}
                 >
                   {cell}
                 </td>
@@ -196,30 +144,28 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
             </tr>
           ))}
         </tbody>
-      </table> */}
+      </table>
 
       {footer && (
-        <>
-          <div style={{ marginTop: "10px", textAlign: "center" }}>
-            <p style={{ textDecoration: "italic", fontSize: "12px" }}>
-              {footer}
-            </p>
-            <Row>
-              <Col>
-                <div>
-                  <p>Received by .........................................</p>
-                </div>
-              </Col>
-              <Col>
-                <div>Signature ..........................................</div>
-                <spn>Official Rubber stamp</spn>
-              </Col>
-            </Row>
-          </div>
-        </>
+        <div style={{ textAlign: "center", marginTop: "10px" }}>
+          <p style={{ fontSize: "11px", fontStyle: "italic" }}>{footer}</p>
+          <Row>
+            <Col>
+              <p style={{ fontSize: "11px" }}>
+                Received by .........................................
+              </p>
+            </Col>
+            <Col>
+              <p style={{ fontSize: "11px" }}>
+                Signature ..........................................
+              </p>
+              <span style={{ fontSize: "11px", marginTop: "-10px" }}>
+                Official Rubber stamp
+              </span>
+            </Col>
+          </Row>
+        </div>
       )}
-
-      <div className="page-footer" />
     </div>
   );
 });

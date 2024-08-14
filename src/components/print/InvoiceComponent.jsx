@@ -176,39 +176,7 @@ const Invoice = forwardRef(({ header, body, footer }, ref) => {
         </thead>
       </table>
       <br />
-      {/* <Divider textAlign="left">
-        <Chip label="Pack House" size="small" />
-      </Divider> */}
-      {/* <table
-        style={{ width: "100%", borderCollapse: "collapse", marginTop: "10px" }}
-      >
-        <thead>
-          <tr>
-            {body.columns1?.map((col, index) => (
-              <th
-                key={index}
-                style={{ border: "1px solid black", padding: "8px" }}
-              >
-                {col}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {body.rows1?.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {row.map((cell, cellIndex) => (
-                <td
-                  key={cellIndex}
-                  style={{ border: "1px solid black", padding: "8px" }}
-                >
-                  {cell}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
+
 
       {footer && (
         <>
