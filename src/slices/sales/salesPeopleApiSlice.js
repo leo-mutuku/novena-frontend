@@ -12,6 +12,21 @@ export const salesPeopleApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Sales_people"],
     }),
+    getProductBaletSetups: builder.query({
+      query: (data) => ({
+        url: `${SALESPEOPLE_URL}/getproductbalesetups`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Sales_people"],
+    }),
+    getProductBaletSetup: builder.query({
+      query: (itemadjustment) => ({
+        url: `${SALESPEOPLE_URL}/getproductbalesetup/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Sales_people"],
+    }),
     salesPeopleStatement: builder.mutation({
       query: (data) => ({
         url: `${SALESPEOPLE_URL}/salespeoplestatement`,
@@ -68,10 +83,30 @@ export const salesPeopleApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Sales_people"],
     }),
+    createProductBaletSetup: builder.mutation({
+      query: (data) => ({
+        url: `${SALESPEOPLE_URL}/createproductbalesetup`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Sales_people"],
+    }),
+    editProductBaletSetup: builder.mutation({
+      query: (data) => ({
+        url: `${SALESPEOPLE_URL}/editproductbalesetup`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Sales_people"],
+    }),
   }),
 });
 
 export const {
+  useEditProductBaletSetupMutation,
+  useGetProductBaletSetupsQuery,
+  useGetProductBaletSetupQuery,
+  useCreateProductBaletSetupMutation,
   useLoadReportPrintMutation,
   useLoadReportDataMutation,
   useSalesPeopleStatementMutation,
