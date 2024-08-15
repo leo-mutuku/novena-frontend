@@ -88,7 +88,10 @@ const ItemTrackingReport = () => {
       { Header: "Item.", accessor: "item_code" },
       { Header: "_in", accessor: "_in" },
       { Header: "_out", accessor: "_out" },
-      { Header: "Quantity Adj", accessor: "adjustment_value" },
+      { Header: "_initial", accessor: "_initial" },
+      { Header: "_balance", accessor: "_balance" },
+      { Header: "Reason", accessor: "reason" },
+      { Header: "By", accessor: "by" },
     ],
     []
   );
