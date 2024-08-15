@@ -854,7 +854,6 @@ const router = createHashRouter(
         <Route path="sales" element={<SalesScreen />}>
           <Route index element={<SalesDashboard />} />
           <Route path="orders" element={<OrdersScreen />}>
-            <Route index element={<Orderlist />} />
             <Route path="CreateOrder" element={<CreateOrder />} />
             <Route path="allorders" element={<Orderlist />} />
 
