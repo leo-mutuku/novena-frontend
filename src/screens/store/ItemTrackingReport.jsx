@@ -22,8 +22,8 @@ const ItemTrackingReport = () => {
     useItemTrackingMutation();
 
   const loaddata = async () => {
-    if (!report_name || !start_date || !end_date) {
-      toast.error("Please select report name, start and end date");
+    if (!item_code || !start_date || !end_date) {
+      toast.error("Please select item_code, start and end date");
       return;
     }
     const data = await setData({
