@@ -26,6 +26,7 @@ const ItemTrackingReport = () => {
       toast.error("Please select item_code, start and end date");
       return;
     }
+    alert(item_code);
     const data = await setData({
       item_code: item_code,
       start_date,
@@ -83,10 +84,10 @@ const ItemTrackingReport = () => {
         Header: "#",
         accessor: (row, index) => index + 1,
       },
-      { Header: "Date", accessor: "to_char" },
-      { Header: "Ref. No.", accessor: "source_document_id" },
-      { Header: "Item Code", accessor: "item_code" },
-      { Header: "Item Name", accessor: "item_name" },
+      { Header: "Date", accessor: "entry_date" },
+      { Header: "Item.", accessor: "item_code" },
+      { Header: "_in", accessor: "_in" },
+      { Header: "_out", accessor: "_out" },
       { Header: "Quantity Adj", accessor: "adjustment_value" },
     ],
     []
@@ -107,7 +108,7 @@ const ItemTrackingReport = () => {
               >
                 <option value="">Select Report</option>
                 {finalData?.data?.map((item) => (
-                  <option value={item.store_ite_id} key={item.store_item_id}>
+                  <option value={item.item_code} key={item.item_code}>
                     {item.item_name}
                   </option>
                 ))}
