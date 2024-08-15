@@ -33,7 +33,7 @@ export const sidelinks = [
       { subMenuTitle: "Stock Balances", to: "stockbalances" },
       { subMenuTitle: "Inventory Register", to: "inventoryentry" },
       { subMenuTitle: "Inventory Entry ", to: "inventoryregister" },
-      { subMenuTitle: "Item Tracking ", to: "inventoryregister" },
+      { subMenuTitle: "Item Tracking ", to: "itemtracking" },
     ],
   },
 ];

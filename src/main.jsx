@@ -354,6 +354,7 @@ import EditLimit from "./screens/sales/salespeople/EditLimit.jsx";
 import EditBiweeklyRegister from "./screens/payroll/biweeklyregister/EditBiweeklyRegister.jsx";
 import ViewOrderInvoice from "./screens/sales/orderinvoice/ViewOrderInvoice.jsx";
 import DeliveryNote from "./screens/sales/orderdispatch/DeliveryNote.jsx";
+import ItemTrackingReport from "./screens/store/ItemTrackingReport.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -795,6 +796,7 @@ const router = createHashRouter(
             path="inventoryregister"
             element={<InventoryRegisterReportScreen />}
           ></Route>
+          <Route path="itemtracking" element={<ItemTrackingReport />}></Route>
           <Route
             path="inventoryentry"
             element={<InventoryEntryReportScreen />}

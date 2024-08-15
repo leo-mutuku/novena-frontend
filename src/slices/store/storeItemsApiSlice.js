@@ -81,10 +81,19 @@ export const storeItemsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Store_items"],
     }),
+    itemTracking: builder.mutation({
+      query: (data) => ({
+        url: `${STOREITEMS_URL}/itemtracking`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Store_items"],
+    }),
   }),
 });
 
 export const {
+  useItemTrackingMutation,
   useFinalAndByProductQuery,
   useGetAutoStockTakeLinesByIdQuery,
   useGetAllAutoStockTakeQuery,
