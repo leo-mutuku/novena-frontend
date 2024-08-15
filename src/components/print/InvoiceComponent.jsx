@@ -177,7 +177,6 @@ const Invoice = forwardRef(({ header, body, footer }, ref) => {
       </table>
       <br />
 
-
       {footer && (
         <>
           <div style={{ marginTop: "10px", textAlign: "center" }}>

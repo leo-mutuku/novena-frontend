@@ -12,6 +12,14 @@ export const storeItemsApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Store_items"],
     }),
+    finalAndByProduct: builder.query({
+      query: (data) => ({
+        url: `${STOREITEMS_URL}/finalandbyproduct`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Store_items"],
+    }),
     getStoreItemById: builder.query({
       query: (id) => ({
         url: `${STOREITEMS_URL}/getstoreitembyid/${id}`,
@@ -77,6 +85,7 @@ export const storeItemsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useFinalAndByProductQuery,
   useGetAutoStockTakeLinesByIdQuery,
   useGetAllAutoStockTakeQuery,
   useGetAllStoreItemsQuery,
