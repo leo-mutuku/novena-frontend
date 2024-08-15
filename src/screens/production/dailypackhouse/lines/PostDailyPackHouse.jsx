@@ -22,6 +22,7 @@ const PostDailyPackHouse = () => {
   const [full_name, set_full_name] = useState(null);
   const [balance, set_balance] = useState(0);
   const [daily_pack_list, set_daily_pack_list] = useState([]);
+  const [total, set_total] = useState(0);
   const { data: pack_house_people } = useGetAllPackHousePeopleQuery();
 
   const [CraeteDailyPack, { error: createdailypackError, isLoading }] =
@@ -54,6 +55,7 @@ const PostDailyPackHouse = () => {
         ...daily_pack_list,
         { staff_id, quantity, full_name, balance },
       ]);
+      set_total(total + parseFloat(quantity));
     } else {
       alert("Please fill all the fields");
     }
@@ -76,6 +78,8 @@ const PostDailyPackHouse = () => {
   const handleDelete = (index) => {
     let x = daily_pack_list?.filter((item, i) => i !== index);
     set_daily_pack_list(x);
+
+    set_total(total - parseFloat(daily_pack_list[index].quantity));
   };
 
   return (
@@ -116,14 +120,29 @@ const PostDailyPackHouse = () => {
             </Form.Group>
           </Col>
         </Row>
-        <Button
-          type="submit"
-          variant="primary"
-          className="mt-3"
-          onClick={handleAdd}
-        >
-          Add
-        </Button>
+        <Row>
+          <Col>
+            <Button
+              type="submit"
+              variant="primary"
+              className="mt-3"
+              onClick={handleAdd}
+            >
+              Add
+            </Button>
+          </Col>
+          <Col>
+            {total > 0 && (
+              <Button
+                style={{ marginTop: "10px", color: "white" }}
+                variant="info"
+              >
+                {" Total : "}
+                {total > 0 ? total : null}
+              </Button>
+            )}
+          </Col>
+        </Row>
         {/* {isLoading && <Loader />} */}
         {daily_pack_list.length > 0 && (
           <div className="mt-3">
