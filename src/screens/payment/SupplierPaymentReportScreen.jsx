@@ -73,6 +73,9 @@ const SupplierPaymentReportScreen = () => {
         Header: "Purchase Date",
         accessor: "purchase_date",
       },
+      { Header: "Credit", accessor: "credit" },
+      { Header: "Debit", accessor: "debit" },
+
       { Header: "Total Cost", accessor: "total_cost" },
     ],
     []
@@ -84,12 +87,16 @@ const SupplierPaymentReportScreen = () => {
         Header: "#",
         accessor: (row, index) => index + 1,
       },
-      { Header: "Purchase date", accessor: "purchase_date" },
+      {
+        Header: "Date",
+        accessor: "entry_date",
+        Cell: ({ value }) => moment(value).format("DD-MM-YYYY"),
+      },
 
-      { Header: "Item Name", accessor: "item_name" },
-      { Header: "@", accessor: "item_cost" },
-      { Header: "Quantity", accessor: "quantity" },
-      { Header: "Total ", accessor: "total_cost" },
+      { Header: "Desc", accessor: "description" },
+      { Header: "Credit", accessor: "credit" },
+      { Header: "Debit", accessor: "debit" },
+      { Header: "Balance ", accessor: "balance" },
     ],
     []
   );

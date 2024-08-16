@@ -292,7 +292,7 @@ import BankPv from "./screens/payment/payments/paymentvouchers/BankPV.jsx";
 import CashPv from "./screens/payment/payments/paymentvouchers/CashPV.jsx";
 import AllPV from "./screens/payment/payments/paymentvouchers/AllPV.jsx";
 import PaymentReportScreen from "./screens/payment/PaymentReportScreen.jsx";
-import SupplierPaymentReportScreen from "./screens/administration/SupplierReportScreen.jsx";
+import SupplierPaymentReportScreen from "./screens/payment/SupplierPaymentReportScreen.jsx";
 
 import SalesReportScreen from "./screens/sales/SalesReportScreen.jsx";
 import SalesPeopleScreen from "./screens/sales/SalesPeopleScreen.jsx";
