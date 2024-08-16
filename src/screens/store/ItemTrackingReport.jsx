@@ -8,8 +8,10 @@ import moment from "moment";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import Papa from "papaparse";
 import { toast } from "react-toastify";
+import TimeDate from "../../components/TimeDate";
 
 const ItemTrackingReport = () => {
+  const timeDate = new TimeDate();
   const [report_name, set_report_name] = React.useState("");
   const [item_code, set_item_code] = React.useState("");
   const [start_date, set_start_date] = React.useState("");
@@ -84,11 +86,19 @@ const ItemTrackingReport = () => {
         Header: "#",
         accessor: (row, index) => index + 1,
       },
-      { Header: "Date", accessor: "entry_date" },
-      { Header: "Item.", accessor: "item_code" },
+      {
+        Header: "Date",
+        accessor: "entry_date",
+        Cell: ({ row }) => (
+          <>
+            {timeDate.date(row.original.entry_date)} :{" "}
+            {timeDate.time(row.original.entry_date)}{" "}
+          </>
+        ),
+      },
+
       { Header: "_in", accessor: "_in" },
       { Header: "_out", accessor: "_out" },
-      { Header: "_initial", accessor: "_initial" },
       { Header: "_balance", accessor: "_balance" },
       { Header: "Reason", accessor: "reason" },
       { Header: "By", accessor: "by" },
