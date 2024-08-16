@@ -355,6 +355,9 @@ import EditBiweeklyRegister from "./screens/payroll/biweeklyregister/EditBiweekl
 import ViewOrderInvoice from "./screens/sales/orderinvoice/ViewOrderInvoice.jsx";
 import DeliveryNote from "./screens/sales/orderdispatch/DeliveryNote.jsx";
 import ItemTrackingReport from "./screens/store/ItemTrackingReport.jsx";
+import CustomerStatement from "./screens/administration/customers/CustomerStatement.jsx";
+import InstitutionStatement from "./screens/administration/insititutions/InstitutionStatement.jsx";
+import SupplierStatement from "./screens/payment/payments/purchases/SupplierStatement.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -382,6 +385,7 @@ const router = createHashRouter(
             <Route path="createinstitution" element={<CreateInstition />} />
             <Route path="allinstitution" element={<Institutionlist />} />
             <Route path="update/:id" element={<UpdateInstitution />} />
+            <Route path="statement/:id" element={<InstitutionStatement />} />
           </Route>
           <Route path="suppliers" element={<SuppliersScreen />}>
             <Route index element={<SupplierList />} />
@@ -424,6 +428,7 @@ const router = createHashRouter(
             <Route path="createcustomer" element={<CreateCustomer />} />
             <Route path="allcustomers" element={<CustomerList />} />
             <Route path="update/:id" element={<UpdateCustomer />} />
+            <Route path="statement/:id" element={<CustomerStatement />} />
           </Route>
           <Route path="roles" element={<RolesScreen />}>
             <Route path="createrole" element={<CreateRole />} />
@@ -515,6 +520,7 @@ const router = createHashRouter(
           <Route path="purchases" element={<PurchasesScreen />}>
             <Route path="bankpurchasepayment" element={<BankSupplier />} />
             <Route path="cashpurchasepayment" element={<CashSupplier />} />
+            <Route path="statement/:id" element={<SupplierStatement />} />
             <Route
               path="allpurchasepurchasepayemnt"
               element={<AllSuppliersPayments />}

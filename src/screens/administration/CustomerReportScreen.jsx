@@ -8,6 +8,7 @@ import {
 import DataTable from "../../components/general/DataTable";
 import moment from "moment";
 import { Button, Form, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Papa from "papaparse";
 import { toast } from "react-toastify";
 
@@ -176,17 +177,21 @@ const CustomerReportScreen = () => {
       {getData && getData.length > 0 ? (
         <>
           <Row>
-            <Col xs={3}>
+            <Col xs={6}>
               <Button
                 variant="primary"
                 type="button"
                 onClick={handleDownloadCSV}
               >
-                Download Report
-              </Button>
-            </Col>
-            <Col>
-              {" "}
+                Excel Report
+              </Button>{" "}
+              &nbsp; &nbsp;
+              <Link to={`../customers/statement/${supplier_number}`}>
+                <Button variant="primary" type="button">
+                  Statement
+                </Button>
+              </Link>
+              &nbsp; &nbsp;
               <Button
                 variant="secondary"
                 type="button"
@@ -195,6 +200,8 @@ const CustomerReportScreen = () => {
                 Clear filter
               </Button>
             </Col>
+
+            <Col> </Col>
           </Row>
           <br></br>
           <Row>
