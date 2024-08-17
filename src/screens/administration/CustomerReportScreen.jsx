@@ -119,7 +119,7 @@ const CustomerReportScreen = () => {
     const statementData = {
       balancebf:
         parseFloat(getData[0]?.balance) +
-        (parseFloat(getData[0]?.credit) - parseFloat(getData[0]?.debit)),
+        (parseFloat(getData[0]?.debit) - parseFloat(getData[0]?.credit)),
       netb: parseFloat(getData[lastIndex]?.balance),
 
       // Add other relevant data here
