@@ -2,14 +2,14 @@ import React, { forwardRef } from "react";
 import { Row, Col } from "react-bootstrap";
 import { Divider, Chip } from "@mui/material";
 
-const Statement = forwardRef(({ header, body, footer }, ref) => {
+const Statement = forwardRef(({ header1, header2, sumarry, body }, ref) => {
   return (
     <div ref={ref}>
       <style>
         {`
           @page {
             size: A4;
-            margin: 20mm;
+            margin: 15mm;
           }
 
           body {
@@ -17,7 +17,7 @@ const Statement = forwardRef(({ header, body, footer }, ref) => {
           }
 
           .page-content {
-            padding: 20px;
+            padding: 20;
             position: relative;
             margin: 0.5rem;
           }
@@ -40,7 +40,7 @@ const Statement = forwardRef(({ header, body, footer }, ref) => {
         <Row>
           <Col>
             <div>
-              {header.title && <p>{header.title}</p>}
+              {header1.title && <p>{header1?.title}</p>}
               <p
                 style={{
                   textAlign: "left",
@@ -48,14 +48,16 @@ const Statement = forwardRef(({ header, body, footer }, ref) => {
                   marginTop: "-5px",
                 }}
               >
-                For the period of {header?.from} to {header?.to}
+                {header1?.period}
               </p>
-              <p>Customer name</p>
+              <p>
+                {header1?.type} : {header1.name}{" "}
+              </p>
             </div>
           </Col>
           <Col>
             <div>
-              {header.date && (
+              {header2?.date && (
                 <p
                   style={{
                     textAlign: "right",
@@ -63,10 +65,10 @@ const Statement = forwardRef(({ header, body, footer }, ref) => {
                     marginTop: "-5px",
                   }}
                 >
-                  Date: {header.date}
+                  Date: {header2.date}
                 </p>
               )}
-              {header.subTitle && (
+              {header2.subTitle && (
                 <p
                   style={{
                     textAlign: "right",
@@ -74,10 +76,10 @@ const Statement = forwardRef(({ header, body, footer }, ref) => {
                     marginTop: "-5px",
                   }}
                 >
-                  {header.subTitle}
+                  {header2?.subTitle}
                 </p>
               )}
-              {header.description && (
+              {header2?.description && (
                 <p
                   style={{
                     textAlign: "right",
@@ -85,10 +87,10 @@ const Statement = forwardRef(({ header, body, footer }, ref) => {
                     marginBottom: "2px",
                   }}
                 >
-                  {header.description}
+                  {header2?.description}
                 </p>
               )}
-              {header.address && (
+              {header2?.address && (
                 <p
                   style={{
                     textAlign: "right",
@@ -96,20 +98,7 @@ const Statement = forwardRef(({ header, body, footer }, ref) => {
                     fontSize: "12px",
                   }}
                 >
-                  {header.address} {header.date}
-                </p>
-              )}
-              {header.address && (
-                <p
-                  style={{
-                    textAlign: "right",
-                    marginTop: "-5px",
-                    fontSize: "12px",
-                    fontWeight: "900",
-                  }}
-                >
-                  BATCH NO # {header.batch_number} - PROD NO #{" "}
-                  {header.prod_number}
+                  {header2?.address}
                 </p>
               )}
             </div>
@@ -130,24 +119,20 @@ const Statement = forwardRef(({ header, body, footer }, ref) => {
             <Col>
               <Row>
                 <Col>
-                  <p>Net Balance(Ksh)&nbsp; &nbsp; &nbsp;</p>
+                  <p>{sumarry?.type}&nbsp; &nbsp; &nbsp;</p>
                 </Col>
               </Row>
             </Col>
             <Col>
               <Row>
-                <Col>
-                  {header.variance && (
-                    <p>VARIANCE:&nbsp; &nbsp; &nbsp; {header.variance} </p>
-                  )}
-                </Col>
+                <Col>{sumarry?.name && <p> {sumarry?.name} </p>}</Col>
               </Row>
             </Col>
           </Row>
         </div>
         <br />
         <Divider textAlign="left">
-          <Chip label="Details" size="small" />
+          <Chip label="Detailed" size="small" />
         </Divider>
         <table
           style={{

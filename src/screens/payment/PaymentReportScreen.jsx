@@ -6,6 +6,7 @@ import moment from "moment";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import Papa from "papaparse";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const PaymentReportScreen = () => {
   const [report_name, set_report_name] = React.useState("");
@@ -160,17 +161,21 @@ const PaymentReportScreen = () => {
       {getData && getData.length > 0 ? (
         <>
           <Row>
-            <Col xs={3}>
+            <Col xs={6}>
               <Button
                 variant="primary"
                 type="button"
                 onClick={handleDownloadCSV}
               >
                 Download Report
-              </Button>
-            </Col>
-            <Col>
-              {" "}
+              </Button>{" "}
+              &nbsp; &nbsp;
+              <Link to={`../purchases/statement/${supplier_number}`}>
+                <Button variant="primary" type="button">
+                  Statement
+                </Button>{" "}
+              </Link>{" "}
+              &nbsp; &nbsp;
               <Button
                 variant="secondary"
                 type="button"
@@ -179,6 +184,7 @@ const PaymentReportScreen = () => {
                 Clear filter
               </Button>
             </Col>
+            <Col> </Col>
           </Row>
           <br></br>
           <Row>

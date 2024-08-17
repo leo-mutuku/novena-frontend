@@ -134,7 +134,7 @@ const SupplierMaizeReports = () => {
       {getData && getData.length > 0 ? (
         <>
           <Row>
-            <Col xs={3}>
+            <Col xs={6}>
               <Button
                 variant="primary"
                 type="button"
@@ -142,9 +142,7 @@ const SupplierMaizeReports = () => {
               >
                 Download Report
               </Button>
-            </Col>
-            <Col>
-              {" "}
+              &nbsp; &nbsp;
               <Button
                 variant="secondary"
                 type="button"
@@ -153,6 +151,7 @@ const SupplierMaizeReports = () => {
                 Clear filter
               </Button>
             </Col>
+            <Col> </Col>
           </Row>
           <br></br>
           <Row>

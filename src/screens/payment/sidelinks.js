@@ -6,8 +6,8 @@ export const sidelinks = [
       { subMenuTitle: "Requisitions", to: "requsitions" },
       { subMenuTitle: "Payment Voucher", to: "paymentvoucher" },
       { subMenuTitle: "Salary Journal", to: "salaryjournal" },
-      { subMenuTitle: "Reports", to: "paymentreports" },
-      { subMenuTitle: "Supplier Report", to: "suppliersreport" },
+      { subMenuTitle: "Supplier Report", to: "paymentreports" },
+      { subMenuTitle: "Supplier Statement", to: "suppliersreport" },
     ],
   },
 ];

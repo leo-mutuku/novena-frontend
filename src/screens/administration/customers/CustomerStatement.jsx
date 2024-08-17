@@ -16,18 +16,22 @@ import { useParams } from "react-router-dom";
 const CustomerStatement = () => {
   const { id } = useParams();
   const componentRef = React.useRef();
-  const [headers, setHeaders] = useState({
+  const [headers1, setHeaders1] = useState({
+    title: "CUSTOMER STATEMENT",
+    period: "From 01/01/2024 to 31/12/2024",
+    type: "Customer",
+    name: "John Doe",
+  });
+  const [headers2, setHeaders2] = useState({
+    date: "08/08/2024",
     title: "PRODUCTION REPORT",
     subTitle: "Novena Maize Miller LTD",
     description: "Dealers in: All types of cereals, Animal feeds",
     address: "P.O Box 238, Meru, Kenya",
-    date: "08/08/2024",
-    batch_number: "",
-    deliveryNumber: "10301",
-    input: 0,
-    output: 0,
-    expected: 0,
-    variance: 0,
+  });
+  const [sumarry, setSumarry] = useState({
+    type: "Net Balance(Kshs.)",
+    name: "KES 100,000",
   });
   const [columns, setColumns] = useState([
     "Date ",
@@ -69,104 +73,27 @@ const CustomerStatement = () => {
     ["Product B", "200 long long text text texts", "50", "60", "8000"],
     ["Product B", "200 long long text text texts", "50", "60", "8000"],
     ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
   ]);
-  const [columns1, setColumns1] = useState(["Product", "Quantity"]);
-  const [rows1, setRows1] = useState([
-    ["Product B", "200"],
-    ["Product C", "150"],
-    ["Product A", "100"],
-    ["Product B", "200"],
-    ["Product C", "150"],
-  ]);
-  const [footer, setFooter] = useState(
-    "Your Satisfaction is our number one priority!"
-  );
 
-  const { data: productionReport } = useProductionCertificateQuery(id);
-  console.log(JSON.stringify(productionReport?.data));
+  const { data: reportName } = useProductionCertificateQuery(id);
+  console.log(JSON.stringify(reportName?.data));
 
   const documentData = {
-    header: headers,
+    header1: headers1,
+    header2: headers2,
+    sumarry: sumarry,
     body: {
       columns: columns,
       rows: rows,
-      columns1: columns1,
-      rows1: rows1,
     },
-    footer: footer,
   };
   useEffect(() => {
-    if (productionReport?.data) {
-      const { res1, res2, res3 } = productionReport.data;
+    if (reportName?.data) {
+      const { res2 } = reportName.data;
 
-      setHeaders((prevHeaders) => ({
+      setHeaders1((prevHeaders) => ({
         ...prevHeaders,
-        date: res1.production_date,
-        deliveryNumber: res1.production_batch_no,
-        batch_number: res1.batch_number,
-        input: res1.production_input,
-        output: res1.actual_output,
-        expected: res1.expected_output,
-        variance: res1.production_variance,
+        date: "iiuuu",
       }));
 
       setColumns(["Date ", "Description", "Debit", "Credit", "Balance(Ksh)"]);
@@ -176,17 +103,11 @@ const CustomerStatement = () => {
         item.product_output,
       ]);
       setRows(updatedRows);
-      setColumns1(["Product ", "Output"]);
-      const updatedRows1 = res3.map((item) => [
-        item.item_name,
-        item.number_packed,
-      ]);
-      setRows1(updatedRows1);
 
       // Update footer or any other data if needed
       // setFooter("Your custom footer");
     }
-  }, [productionReport]);
+  }, [reportName]);
 
   return (
     <div>

@@ -160,7 +160,7 @@ const SupplierPaymentReportScreen = () => {
       {getData && getData.length > 0 ? (
         <>
           <Row>
-            <Col xs={3}>
+            <Col xs={6}>
               <Button
                 variant="primary"
                 type="button"
@@ -168,9 +168,7 @@ const SupplierPaymentReportScreen = () => {
               >
                 Download Report
               </Button>
-            </Col>
-            <Col>
-              {" "}
+              &nbsp; &nbsp;
               <Button
                 variant="secondary"
                 type="button"
@@ -179,6 +177,7 @@ const SupplierPaymentReportScreen = () => {
                 Clear filter
               </Button>
             </Col>
+            <Col> </Col>
           </Row>
           <br></br>
           <Row>

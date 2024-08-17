@@ -3,7 +3,7 @@ export const sidelinks = [
     menuTitle: "Suppliers",
     subMenus: [
       { subMenuTitle: "Suppliers", to: "suppliers" },
-      { subMenuTitle: "Supplers Reports", to: "supplierreports" },
+      // { subMenuTitle: "Supplers Reports", to: "supplierreports" },
       { subMenuTitle: "Suppliers Maize Reports", to: "suppliermaizereports" },
     ],
   },
@@ -11,7 +11,7 @@ export const sidelinks = [
     menuTitle: "Purchase Requisition",
     subMenus: [
       { subMenuTitle: "Purchase requsition", to: "storepurchase" },
-      { subMenuTitle: "Reports", to: "storepurcharsereports" },
+      { subMenuTitle: "Daily Purchases Report", to: "storepurcharsereports" },
     ],
   },
   // {

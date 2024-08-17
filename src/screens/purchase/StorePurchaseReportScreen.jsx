@@ -139,17 +139,15 @@ const StorePurchaseReportScreen = () => {
       {getData && getData.length > 0 ? (
         <>
           <Row>
-            <Col xs={3}>
+            <Col xs={6}>
               <Button
                 variant="primary"
                 type="button"
                 onClick={handleDownloadCSV}
               >
                 Download Report
-              </Button>
-            </Col>
-            <Col>
-              {" "}
+              </Button>{" "}
+              &nbsp; &nbsp;
               <Button
                 variant="secondary"
                 type="button"
@@ -158,6 +156,7 @@ const StorePurchaseReportScreen = () => {
                 Clear filter
               </Button>
             </Col>
+            <Col> </Col>
           </Row>
           <br></br>
           <Row>
