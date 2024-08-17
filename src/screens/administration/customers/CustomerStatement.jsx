@@ -24,7 +24,7 @@ const CustomerStatement = () => {
   const componentRef = React.useRef();
   const [headers1, setHeaders1] = useState({
     title: "CUSTOMER STATEMENT",
-    period: "From 01/01/2024 to 31/12/2024",
+    period: `FROM ${statementData?.period}`,
     type: "Customer",
     name: "John Doe",
   });

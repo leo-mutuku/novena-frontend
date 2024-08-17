@@ -123,7 +123,7 @@ const CustomerReportScreen = () => {
       netb: parseFloat(getData[lastIndex]?.balance),
 
       // Add other relevant data here
-      period: "01/01/2024 - 31/12/2024",
+      period: `${start_date} - ${end_date}`,
       // Add other relevant data here
     };
 
