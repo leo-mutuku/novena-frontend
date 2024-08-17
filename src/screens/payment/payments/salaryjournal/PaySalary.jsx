@@ -59,6 +59,7 @@ const PaySalary = () => {
   };
 
   const [total, set_total] = useState(0);
+  const [test, set_test] = useState(0);
 
   useEffect(() => {
     if (requisition?.data) {
