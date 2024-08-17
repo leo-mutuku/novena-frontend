@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useGetRequisitionLineByIdQuery } from "../../../../slices/payment/requisitionLineApiSlice";
 import { useMakePaymentMutation } from "../../../../slices/payment/requisitionHeaderApiSlice";
+import { useGetPayrollEntriesQuery } from "../../../../slices/payroll/payrollLinesApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../../slices/finance/bankAccountsApiSlice";
+import { usePaysalaryMutation } from "../../../../slices/payroll/payrollHeadersApiSlice";
+
 import { useGetAllCashAccountsQuery } from "../../../../slices/finance/cashAccountApiSlice";
 import { Table, Row, Col, Button, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
@@ -18,24 +21,40 @@ const PaySalary = () => {
   const [cash, set_cash] = useState("");
 
   const { data: requisition } = useGetRequisitionLineByIdQuery(id);
-  const [postRequisition] = useMakePaymentMutation();
+
   const { data: bankAccounts } = useGetAllBankAccountsQuery();
   const { data: cashAccounts } = useGetAllCashAccountsQuery();
+  const { data: payrollEntries } = useGetPayrollEntriesQuery(id);
+  const [paysalary] = usePaysalaryMutation();
   const handlepostRequisition = async () => {
     try {
-      const res = await postRequisition({
+      //check fields not empty
+      if (!paying_account_type) {
+        toast.error("Please Select Account Type");
+        return;
+      }
+      if (paying_account_type == "bank" && !bank) {
+        toast.error("Please Select Bank");
+        return;
+      }
+      if (paying_account_type == "cash" && !cash) {
+        toast.error("Please Select Cash");
+        return;
+      }
+      const res = await paysalary({
+        id,
         paying_account_type,
         bank,
         cash,
       }).unwrap();
       if (res.status == "success") {
-        toast.success("Requisition Posted Successfully");
-        navigate("../allpostedrequisition");
+        toast.success("Paid Successfully");
+        navigate("../allpaidsalaryjournals");
       } else {
-        toast.error(res.message || "Requisition Not Posted");
+        toast.error(res.message || "Error Not Posted");
       }
     } catch (error) {
-      toast.error(error.data?.message || "Requisition Not Posted");
+      toast.error(error.data?.message || "Error Not Posted");
     }
   };
 
@@ -51,10 +70,17 @@ const PaySalary = () => {
 
   return (
     <>
-      <span>
-        {" "}
-        ** Requisition Number {id} ** Total {total}
-      </span>
+      <span> ** Payroll Number {id} **</span>
+      <Row>
+        <Col></Col>
+
+        <Col xs={3}>
+          <Button variant="danger">Reject</Button> &nbsp;
+          <Button onClick={handlepostRequisition} variant="success">
+            Pay
+          </Button>
+        </Col>
+      </Row>
       <Row>
         <Col>
           {" "}
@@ -99,7 +125,7 @@ const PaySalary = () => {
                 type="text"
                 placeholder="Description"
                 value={cash}
-                onChange={(e) => set_name(e.target.value)}
+                onChange={(e) => set_cash(e.target.value)}
               >
                 <option value="">Select</option>
                 {cashAccounts?.data.map((item, index) => (
@@ -112,39 +138,57 @@ const PaySalary = () => {
           )}
         </Col>
       </Row>
-      <hr></hr>
-      <Table striped hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th> Name</th>
-            <th>Qty</th>
-            <th>@</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {requisition?.data.map((item, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{item.item_name}</td>
-              <td>{item.quantity}</td>
-              <td>{item.unit_price}</td>
-              <td>{item.amount}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-      <Row>
-        <Col></Col>
 
-        <Col xs={3}>
-          <Button variant="danger">Reject</Button> &nbsp;
-          <Button onClick={handlepostRequisition} variant="success">
-            Pay
-          </Button>
-        </Col>
-      </Row>
+      <hr></hr>
+      {payrollEntries?.data && (
+        <Table striped hover>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th> Staff</th>
+              <th>Gross</th>
+              <th>Deductions</th>
+              <th>Net Pay</th>
+            </tr>
+          </thead>
+          <tbody>
+            {payrollEntries?.data.map((item, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>
+                  {item.first_name} {item.last_name}
+                </td>
+                <td>{item.gross_pay}</td>
+                <td>{item.total_deductions}</td>
+                <td>{item.net_pay}</td>
+              </tr>
+            ))}
+          </tbody>
+          <thead>
+            <tr>
+              <th>{payrollEntries?.data.length}</th>
+              <th> Total</th>
+              <th>
+                {payrollEntries?.data?.reduce((total, entry) => {
+                  return total + parseFloat(entry.gross_pay);
+                }, 0)}
+              </th>
+              <th>
+                {" "}
+                {payrollEntries?.data?.reduce((total, entry) => {
+                  return total + parseFloat(entry.total_deductions);
+                }, 0)}{" "}
+              </th>
+              <th>
+                {" "}
+                {payrollEntries?.data?.reduce((total, entry) => {
+                  return total + parseFloat(entry.net_pay);
+                }, 0)}{" "}
+              </th>
+            </tr>
+          </thead>
+        </Table>
+      )}
     </>
   );
 };

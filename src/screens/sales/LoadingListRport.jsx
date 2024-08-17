@@ -166,16 +166,15 @@ const LoadingListRport = () => {
       {getData && getData.length > 0 ? (
         <>
           <Row>
-            <Col xs={3}>
+            <Col xs={9}>
               <Button
                 variant="primary"
                 type="button"
                 onClick={handleDownloadCSV}
               >
                 Download Report
-              </Button>
-            </Col>
-            <Col xs={2}>
+              </Button>{" "}
+              &nbsp; &nbsp;
               <Button
                 variant="secondary"
                 type="button"
@@ -183,10 +182,7 @@ const LoadingListRport = () => {
               >
                 Clear filter
               </Button>
-            </Col>
-
-            <Col xs={1}>
-              {" "}
+              &nbsp; &nbsp;
               <Button
                 variant="secondary"
                 type="button"
@@ -195,6 +191,9 @@ const LoadingListRport = () => {
                 POS
               </Button>
             </Col>
+            <Col xs={2}></Col>
+
+            <Col xs={1}> </Col>
           </Row>
           <br></br>
           <Row>

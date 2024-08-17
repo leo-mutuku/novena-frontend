@@ -12,6 +12,14 @@ export const payrollHeadersApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Payroll_headers", "Payroll_lines"],
     }),
+    paysalary: builder.mutation({
+      query: (data) => ({
+        url: `${PAYROLLHEADER_URL}/paysalary`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Payroll_headers", "Payroll_lines"],
+    }),
 
     getAllPayRollHeaders: builder.query({
       query: (data) => ({
@@ -107,6 +115,7 @@ export const payrollHeadersApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  usePaysalaryMutation,
   useCreatePayrollheaderMutation,
   useGetAllPayRollHeadersQuery,
   useGetPayrollHeaderGeneralCategoryQuery,

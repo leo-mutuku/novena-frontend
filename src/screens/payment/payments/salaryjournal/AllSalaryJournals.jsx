@@ -29,6 +29,7 @@ const AllSalaryJournals = () => {
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
   const { data, isLoading } = useGetGeneratedPayrollHeadersQuery();
+
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);
@@ -180,7 +181,7 @@ const AllSalaryJournals = () => {
           <>
             {row.original.status === "Generated" ? (
               <Link
-                to={`/payment/salaryjournal/paysalary/${row.original.payrolll_header_id}`}
+                to={`/payment/salaryjournal/paysalary/${row.original.payroll_header_id}`}
               >
                 <Button variant="outline-success">
                   <MdMonetizationOn />
