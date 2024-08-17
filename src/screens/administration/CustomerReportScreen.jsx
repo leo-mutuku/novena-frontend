@@ -11,8 +11,10 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Papa from "papaparse";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const CustomerReportScreen = () => {
+  const navigate = useNavigate();
   const [report_name, set_report_name] = React.useState("");
   const [supplier_number, set_supplier_number] = React.useState(null);
   const [supplier_name, set_supplier_name] = React.useState("");
@@ -20,6 +22,7 @@ const CustomerReportScreen = () => {
   const [start_date, set_start_date] = React.useState("");
   const [end_date, set_end_date] = React.useState("");
   const [getData, setGetData] = React.useState([]);
+
   const [supplier_filter, set_supplier_filter] = React.useState("");
   const [product_filter, set_product_filter] = React.useState("");
   const [setData, { isLoading, isSuccess, isError }] =
@@ -108,6 +111,27 @@ const CustomerReportScreen = () => {
     []
   );
 
+  // statementData
+
+  const handleStatementLink = (e) => {
+    const supplier_number = 12345;
+    const lastIndex = getData.length - 1; // Example supplier number
+    const statementData = {
+      balancebf:
+        parseFloat(getData[0]?.balance) +
+        (parseFloat(getData[0]?.credit) - parseFloat(getData[0]?.debit)),
+      netb: parseFloat(getData[lastIndex]?.balance),
+
+      // Add other relevant data here
+      period: "01/01/2024 - 31/12/2024",
+      // Add other relevant data here
+    };
+
+    navigate(`../customers/statement/${supplier_number}`, {
+      state: { statementData },
+    });
+  };
+
   return (
     <>
       <div style={{ marginBottom: "2px", paddingTop: "10px" }}>
@@ -186,11 +210,13 @@ const CustomerReportScreen = () => {
                 Excel Report
               </Button>{" "}
               &nbsp; &nbsp;
-              <Link to={`../customers/statement/${supplier_number}`}>
-                <Button variant="primary" type="button">
-                  Statement
-                </Button>
-              </Link>
+              <Button
+                variant="primary"
+                type="button"
+                onClick={handleStatementLink}
+              >
+                Statement
+              </Button>
               &nbsp; &nbsp;
               <Button
                 variant="secondary"

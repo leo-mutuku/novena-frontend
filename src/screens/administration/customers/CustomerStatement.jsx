@@ -12,8 +12,14 @@ import {
   useProductionCertificateQuery,
 } from "../../../slices/production/productionHeaderApiSlice";
 import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const CustomerStatement = () => {
+  const location = useLocation();
+  const { statementData } = location.state || {}; // Destructure the passed state
+
+  console.log("Received data:", statementData); // Use console.log for easier debugging
+
   const { id } = useParams();
   const componentRef = React.useRef();
   const [headers1, setHeaders1] = useState({
@@ -30,8 +36,8 @@ const CustomerStatement = () => {
     address: "P.O Box 238, Meru, Kenya",
   });
   const [sumarry, setSumarry] = useState({
-    type: "Net Balance(Kshs.)",
-    name: "KES 100,000",
+    type: `Balance BF: ${statementData?.balancebf}`,
+    name: `Net Balance(Kshs.) : ${statementData?.netb}`,
   });
   const [columns, setColumns] = useState([
     "Date ",
@@ -41,36 +47,6 @@ const CustomerStatement = () => {
     "Balance",
   ]);
   const [rows, setRows] = useState([
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
     ["Product B", "200 long long text text texts", "50", "60", "8000"],
     ["Product B", "200 long long text text texts", "50", "60", "8000"],
   ]);
@@ -87,6 +63,7 @@ const CustomerStatement = () => {
       rows: rows,
     },
   };
+
   useEffect(() => {
     if (reportName?.data) {
       const { res2 } = reportName.data;
@@ -95,7 +72,10 @@ const CustomerStatement = () => {
         ...prevHeaders,
         date: "iiuuu",
       }));
-
+      setSumarry((prev) => ({
+        ...prev,
+        name: ` KES: ${statementData.netb}`,
+      }));
       setColumns(["Date ", "Description", "Debit", "Credit", "Balance(Ksh)"]);
 
       const updatedRows = res2.map((item) => [
