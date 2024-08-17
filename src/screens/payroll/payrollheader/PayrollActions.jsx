@@ -5,7 +5,10 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { useGetAllPayrollHeadersByIdQuery } from "../../../slices/payroll/payrollHeadersApiSlice";
+import {
+  useGetAllPayrollHeadersByIdQuery,
+  useRejectSalaryMutation,
+} from "../../../slices/payroll/payrollHeadersApiSlice";
 import {
   useValidatePayrollMutation,
   useProcessPayrollMutation,
@@ -23,6 +26,8 @@ const PayrollActions = () => {
   const id = parseInt(_new_id);
 
   const { data: parollHeader } = useGetAllPayrollHeadersByIdQuery(id);
+  const [rejectSalary, { error: rejectSalaryError }] =
+    useRejectSalaryMutation();
   const [validatePayroll, { error: validatePayrollError }] =
     useValidatePayrollMutation();
   const [processPayroll, { error: processPayrollError }] =
@@ -104,6 +109,21 @@ const PayrollActions = () => {
     }
   };
 
+  const handleRejectPayroll = async (e) => {
+    try {
+      const res = await rejectSalary({ id: id }).unwrap();
+      if (res.status === "success") {
+        toast.success("Payroll rejected successfully");
+      } else {
+        toast.error("Payroll rejection failed");
+      }
+    } catch (err) {
+      toast.error(
+        err?.data?.message || "An error occurred while rejecting payroll "
+      );
+    }
+  };
+
   return (
     <>
       <Row>
@@ -146,6 +166,9 @@ const PayrollActions = () => {
         <Col>
           <Stack spacing={2} direction="row">
             {/* <Button variant="outlined">PAY</Button> */}
+            <Button variant="outlined" onClick={handleRejectPayroll}>
+              Reject
+            </Button>
             <Link to={`../viewpayrollheader/${id}`}>
               <Button variant="outlined">View</Button>
             </Link>
