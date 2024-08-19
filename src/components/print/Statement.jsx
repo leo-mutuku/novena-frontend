@@ -13,7 +13,7 @@ const Statement = forwardRef(({ header1, header2, sumarry, body }, ref) => {
           }
 
           body {
-            margin: 0;
+            margin: 25mm , 10mm;
           }
 
           .page-content {

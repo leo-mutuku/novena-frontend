@@ -71,7 +71,7 @@ const CustomerReportScreen = () => {
     });
 
     set_supplier_number(x[0].customer_id);
-    setCustomer(x[0].customer_outlet_name);
+    setCustomer(x[0].full_name);
     alert(customer);
   };
 
