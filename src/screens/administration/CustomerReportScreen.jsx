@@ -5,6 +5,7 @@ import {
   useGetAllCustomersQuery,
   useCustomerStatementMutation,
 } from "../../slices/administration/customersApiSlice";
+
 import DataTable from "../../components/general/DataTable";
 import moment from "moment";
 import { Button, Form, Row, Col } from "react-bootstrap";
@@ -24,10 +25,26 @@ const CustomerReportScreen = () => {
   const [getData, setGetData] = React.useState([]);
 
   const [supplier_filter, set_supplier_filter] = React.useState("");
+  const [customer, setCustomer] = React.useState("");
   const [product_filter, set_product_filter] = React.useState("");
   const [setData, { isLoading, isSuccess, isError }] =
     useCustomerStatementMutation();
   const { data: customers } = useGetAllCustomersQuery();
+
+  const now = new Date();
+  function formatDateTime(date) {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+    const day = date.getDate().toString().padStart(2, "0");
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const seconds = date.getSeconds().toString().padStart(2, "0");
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+
+  const formattedDateTime = formatDateTime(now);
+  console.log(formattedDateTime); // e.g., "2024-08-18 13:45:30"
 
   const loaddata = async () => {
     if (!supplier_number || !start_date || !end_date) {
@@ -54,7 +71,11 @@ const CustomerReportScreen = () => {
     });
 
     set_supplier_number(x[0].customer_id);
+    setCustomer(x[0].customer_outlet_name);
+    alert(customer);
   };
+
+  console.log(customer, "customer");
 
   const handleDownloadCSV = () => {
     if (getData && getData.length > 0) {
@@ -134,9 +155,12 @@ const CustomerReportScreen = () => {
 
       // Add other relevant data here
       period: `${start_date} - ${end_date}`,
+      customer: customer,
       lines: rows,
       columns: ["Date", "Description", "Debit", "Credit", "Balance(Ksh)"],
       // Add other relevant data here
+
+      date: formattedDateTime,
     };
 
     navigate(`../customers/statement/${supplier_number}`, {

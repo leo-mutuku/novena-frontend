@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import Statement from "../../../components/print/Statement";
 import PrintButton from "../../../components/print/PrintButton";
+import { useGetCustomerByIdQuery } from "../../../slices/administration/customersApiSlice";
 import {
   useGetAllProductionHeadersQuery,
   useProductionCertificateQuery,
@@ -21,28 +22,37 @@ const CustomerStatement = () => {
   console.log("Received data:", statementData); // Use console.log for easier debugging
 
   const { id } = useParams();
+
   const componentRef = React.useRef();
   const [headers1, setHeaders1] = useState({
     title: "CUSTOMER STATEMENT",
     period: `FROM ${statementData?.period}`,
     type: "Customer",
-    name: "John Doe",
+    name: statementData?.customer,
   });
   const [headers2, setHeaders2] = useState({
-    date: "08/08/2024",
+    date: statementData.date,
     title: "PRODUCTION REPORT",
     subTitle: "Novena Maize Miller LTD",
     description: "Dealers in: All types of cereals, Animal feeds",
     address: "P.O Box 238, Meru, Kenya",
   });
   const [sumarry, setSumarry] = useState({
-    type: `Balance BF: ${statementData?.balancebf}`,
-    name: `Net Balance(Kshs.) : ${statementData?.netb}`,
+    entry1: `Balance Brought Forward (BF)`,
+    value1: `KES: ${statementData?.balancebf}`,
+    entry2: `Total Debits (DR)`,
+    value2: `KES: ${statementData?.totald}`,
+    entry3: `Total Credits (CR)`,
+    value3: `KES: ${statementData?.totalc}`,
+
+    entry4: `Net Balance (DR - CR  + BF)`,
+    value4: `KES: ${statementData?.netb}`,
   });
   const [columns, setColumns] = useState(statementData.columns || []);
   const [rows, setRows] = useState(statementData.lines);
 
   const { data: reportName } = useProductionCertificateQuery(id);
+
   console.log(JSON.stringify(reportName?.data));
 
   const documentData = {

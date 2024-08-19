@@ -9,7 +9,7 @@ const Statement = forwardRef(({ header1, header2, sumarry, body }, ref) => {
         {`
           @page {
             size: A4;
-            margin: 15mm;
+            margin: 0mm;
           }
 
           body {
@@ -21,12 +21,27 @@ const Statement = forwardRef(({ header1, header2, sumarry, body }, ref) => {
             position: relative;
             margin: 0.5rem;
           }
-            @media print {
- 
-  .server-footer {
-    display: none !important;
-  }
-}
+
+         
+          @media print {
+            /* Hide the default browser print header and footer */
+            @page {
+              margin: 20mm, 20mm, 20mm , 20mm;
+            }
+
+            body {
+              margin: 0;
+              padding: 0;
+            }
+
+            /* Custom footer with page number */
+            .custom-page-footer {
+              position: fixed;
+              bottom: 0;
+              width: 100%;
+              text-align: center;
+              font-size: 12px;
+            }
 
           @media print {
             .page-break {
@@ -119,13 +134,43 @@ const Statement = forwardRef(({ header1, header2, sumarry, body }, ref) => {
             <Col>
               <Row>
                 <Col>
-                  <p>{sumarry?.type}&nbsp; &nbsp; &nbsp;</p>
+                  <p>{sumarry?.entry1}&nbsp; &nbsp; &nbsp;</p>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <p>{sumarry?.entry2}&nbsp; &nbsp; &nbsp;</p>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <p>{sumarry?.entry3}&nbsp; &nbsp; &nbsp;</p>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <p style={{ fontWeight: "bold" }}>
+                    {sumarry?.entry4}&nbsp; &nbsp; &nbsp;
+                  </p>
                 </Col>
               </Row>
             </Col>
             <Col>
               <Row>
-                <Col>{sumarry?.name && <p> {sumarry?.name} </p>}</Col>
+                <Col>{sumarry?.value1 && <p> {sumarry?.value1} </p>}</Col>
+              </Row>
+              <Row>
+                <Col>{sumarry?.value2 && <p> {sumarry?.value2} </p>}</Col>
+              </Row>
+              <Row>
+                <Col>{sumarry?.value3 && <p> {sumarry?.value3} </p>}</Col>
+              </Row>
+              <Row>
+                <Col>
+                  {sumarry?.value4 && (
+                    <p style={{ fontWeight: "bold" }}> {sumarry?.value4} </p>
+                  )}
+                </Col>
               </Row>
             </Col>
           </Row>
