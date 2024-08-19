@@ -153,6 +153,9 @@ const CustomerReportScreen = () => {
         (parseFloat(getData[0]?.debit) - parseFloat(getData[0]?.credit)),
       netb: parseFloat(getData[lastIndex]?.balance),
 
+      debit: getData.reduce((acc, item) => acc + parseFloat(item.credit), 0),
+      credit: getData.reduce((acc, item) => acc + parseFloat(item.debit), 0),
+
       // Add other relevant data here
       period: `${start_date} - ${end_date}`,
       customer: customer,

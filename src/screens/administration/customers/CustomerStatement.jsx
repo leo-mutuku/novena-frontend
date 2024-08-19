@@ -41,9 +41,9 @@ const CustomerStatement = () => {
     entry1: `Balance Brought Forward (BF)`,
     value1: `KES: ${statementData?.balancebf}`,
     entry2: `Total Debits (DR)`,
-    value2: `KES: ${statementData?.totald}`,
+    value2: `KES: ${statementData?.debit}`,
     entry3: `Total Credits (CR)`,
-    value3: `KES: ${statementData?.totalc}`,
+    value3: `KES: ${statementData?.credit}`,
 
     entry4: `Net Balance (DR - CR  + BF)`,
     value4: `KES: ${statementData?.netb}`,
