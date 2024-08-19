@@ -144,7 +144,7 @@ const Statement = forwardRef(({ header1, header2, sumarry, body }, ref) => {
         >
           <thead>
             <tr>
-              {body.columns.map((col, index) => (
+              {body?.columns?.map((col, index) => (
                 <th
                   key={index}
                   style={{
@@ -159,7 +159,7 @@ const Statement = forwardRef(({ header1, header2, sumarry, body }, ref) => {
             </tr>
           </thead>
           <tbody>
-            {body.rows.map((row, rowIndex) => (
+            {body?.rows?.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {row.map((cell, cellIndex) => (
                   <td

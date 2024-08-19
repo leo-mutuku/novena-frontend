@@ -39,17 +39,8 @@ const CustomerStatement = () => {
     type: `Balance BF: ${statementData?.balancebf}`,
     name: `Net Balance(Kshs.) : ${statementData?.netb}`,
   });
-  const [columns, setColumns] = useState([
-    "Date ",
-    "Description",
-    "Debit",
-    "Credit",
-    "Balance",
-  ]);
-  const [rows, setRows] = useState([
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-    ["Product B", "200 long long text text texts", "50", "60", "8000"],
-  ]);
+  const [columns, setColumns] = useState(statementData.columns || []);
+  const [rows, setRows] = useState(statementData.lines);
 
   const { data: reportName } = useProductionCertificateQuery(id);
   console.log(JSON.stringify(reportName?.data));
@@ -65,29 +56,23 @@ const CustomerStatement = () => {
   };
 
   useEffect(() => {
-    if (reportName?.data) {
+    if (statementData && reportName?.data) {
       const { res2 } = reportName.data;
 
-      setHeaders1((prevHeaders) => ({
-        ...prevHeaders,
-        date: "iiuuu",
-      }));
+      // Assuming 'res2' or similar is used elsewhere; adjust accordingly
+      // setHeaders1((prevHeaders) => ({
+      //   ...prevHeaders,
+      //   date: res2.someDateField, // Example, adjust based on your data structure
+      // }));
+
       setSumarry((prev) => ({
         ...prev,
         name: ` KES: ${statementData.netb}`,
       }));
-      setColumns(["Date ", "Description", "Debit", "Credit", "Balance(Ksh)"]);
 
-      const updatedRows = res2.map((item) => [
-        item.item_name,
-        item.product_output,
-      ]);
-      setRows(updatedRows);
-
-      // Update footer or any other data if needed
-      // setFooter("Your custom footer");
+      setColumns(["Date", "Description", "Debit", "Credit", "Balance(Ksh)"]);
     }
-  }, [reportName]);
+  }, [statementData, reportName?.data]); // Adjust dependencies
 
   return (
     <div>

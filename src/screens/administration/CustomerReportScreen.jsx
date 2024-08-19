@@ -112,6 +112,16 @@ const CustomerReportScreen = () => {
   );
 
   // statementData
+  const rows = [];
+  getData?.map((row) => {
+    rows.push([
+      row.entry_date,
+      row.description,
+      row.credit,
+      row.debit,
+      row.balance,
+    ]);
+  });
 
   const handleStatementLink = (e) => {
     const supplier_number = 12345;
@@ -124,6 +134,8 @@ const CustomerReportScreen = () => {
 
       // Add other relevant data here
       period: `${start_date} - ${end_date}`,
+      lines: rows,
+      columns: ["Date", "Description", "Debit", "Credit", "Balance(Ksh)"],
       // Add other relevant data here
     };
 
