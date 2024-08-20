@@ -130,18 +130,18 @@ const PostDailyPackHouse = () => {
             >
               Add
             </Button>
-          </Col>
-          <Col>
+            &nbsp; &nbsp;
             {total > 0 && (
               <Button
                 style={{ marginTop: "10px", color: "white" }}
-                variant="info"
+                variant="secondary"
               >
                 {" Total : "}
                 {total > 0 ? total : null}
               </Button>
             )}
           </Col>
+          <Col></Col>
         </Row>
         {/* {isLoading && <Loader />} */}
         {daily_pack_list.length > 0 && (
