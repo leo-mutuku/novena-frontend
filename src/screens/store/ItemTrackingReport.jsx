@@ -28,7 +28,7 @@ const ItemTrackingReport = () => {
       toast.error("Please select item_code, start and end date");
       return;
     }
-    alert(item_code);
+
     const data = await setData({
       item_code: item_code,
       start_date,
@@ -162,7 +162,7 @@ const ItemTrackingReport = () => {
       {getData && getData.length > 0 ? (
         <>
           <Row>
-            <Col xs={3}>
+            <Col xs={6}>
               <Button
                 variant="primary"
                 type="button"
@@ -170,9 +170,15 @@ const ItemTrackingReport = () => {
               >
                 Download Report
               </Button>
-            </Col>
-            <Col>
-              {" "}
+              &nbsp; &nbsp;{" "}
+              <Button
+                variant="primary"
+                type="button"
+                onClick={handleClearFilter}
+              >
+                Item Statement
+              </Button>
+              &nbsp; &nbsp;
               <Button
                 variant="secondary"
                 type="button"
@@ -180,7 +186,9 @@ const ItemTrackingReport = () => {
               >
                 Clear filter
               </Button>
+              &nbsp; &nbsp;
             </Col>
+            <Col></Col>
           </Row>
           <br></br>
           <Row>
