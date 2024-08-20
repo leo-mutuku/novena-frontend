@@ -18,6 +18,7 @@ import { Autocomplete, TextField } from "@mui/material";
 
 function CreateBankReceipt() {
   const [bank_id, set_bank_id] = useState("");
+  const [isBank, setIsBank] = useState(true); // true for "bank", false for "mpesa"const [isBank, setIsBank] = useState(true); // true for "bank", false for "mpesa"
   const [staff_id, set_staff_id] = useState("");
   const [institution_id, set_institution_id] = useState("");
   const [customer_id, set_customer_id] = useState("");
@@ -35,13 +36,20 @@ function CreateBankReceipt() {
   const { data: institutions } = useGetAllInstitutionsQuery();
   const { data: customers } = useGetAllCustomersQuery();
   const handleReferenceChange = (e) => {
-    const value = e.target.value;
-    // Regular expression to check for alphanumeric characters
+    const value = e.target.value.toUpperCase(); // Convert input to uppercase
     const alphanumericRegex = /^[a-z0-9]+$/i;
+    const numericRegex = /^\d+$/;
 
-    // Validate and update the state if the value is alphanumeric
-    if (value === "" || alphanumericRegex.test(value)) {
-      set_reference(e.target.value.toUpperCase());
+    if (isBank) {
+      // For bank, input must be numeric and length <= 14
+      if (value === "" || numericRegex.test(value)) {
+        set_reference(value);
+      }
+    } else {
+      // For non-bank, input must be alphanumeric and length === 10
+      if (value === "" || alphanumericRegex.test(value)) {
+        set_reference(value);
+      }
     }
   };
 
@@ -60,9 +68,23 @@ function CreateBankReceipt() {
     navigate();
   }, [navigate]);
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
     try {
+      e.preventDefault();
+
+      if (isBank) {
+        alert("hi");
+        if (reference.length > 15) {
+          toast.error("Bank reference must be less than 15 characters");
+          return;
+        }
+      }
+      if (!isBank) {
+        if (reference.length !== 10) {
+          toast.error("Mpesa reference must be 10 characters");
+          return;
+        }
+      }
+
       const res = await Bankreceipts({
         bank_id,
         staff_id,
@@ -72,6 +94,7 @@ function CreateBankReceipt() {
         sale_order_type,
         amount,
         reference,
+        created_by: user?.user_id,
       }).unwrap();
       if (res.status == "failed") {
         toast.error(err?.data?.message || err.error);
@@ -83,18 +106,18 @@ function CreateBankReceipt() {
       toast.error(err?.data?.message || err.error);
     }
   };
+  // Handler to toggle the payment mode
+  const handleCheckboxChange = () => {
+    setIsBank(!isBank);
+    set_reference("");
+  };
 
   const throttledSubmit = throttle(handleSubmit, 3000);
 
   return (
     <>
       <span>*** Accept Bank Receipts ***</span>
-      <Row>
-        <div>
-          {" "}
-          <hr />
-        </div>
-      </Row>
+
       <Form onSubmit={throttledSubmit}>
         {/* */}
         <Row>
@@ -112,6 +135,21 @@ function CreateBankReceipt() {
                 <option value={"Customer"}>Customer</option>
               </Form.Select>
             </Form.Group>
+          </Col>
+          <Col>
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isBank}
+                  onChange={handleCheckboxChange}
+                />
+                &nbsp; Payment Mode:{" "}
+              </label>
+              <p>
+                {isBank ? "Bank to Bank Transfer & Cheques" : "Mpesa to Bank"}
+              </p>
+            </div>
           </Col>
         </Row>
         <Row>
