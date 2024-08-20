@@ -19,6 +19,7 @@ import { Autocomplete, TextField } from "@mui/material";
 
 function CreateCashReceipts() {
   const { userInfo } = useSelector((state) => state.auth);
+
   const [cash_account_id, set_cash_account_id] = useState("");
   const [staff_id, set_staff_id] = useState("");
   const [institution_id, set_institution_id] = useState("");
@@ -66,7 +67,7 @@ function CreateCashReceipts() {
         amount_in_words,
         sale_order_type,
         amount,
-        created_by,
+        created_by: userInfo?.first_name,
       }).unwrap();
       if (res.status == "failed") {
         toast.error(err?.data?.message || err.error);

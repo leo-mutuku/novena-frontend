@@ -111,6 +111,7 @@ const BankReceipts = () => {
         Header: "Amount",
         accessor: "amount",
       },
+      { Header: "Captured by", accessor: "create_by" },
     ],
     []
   );

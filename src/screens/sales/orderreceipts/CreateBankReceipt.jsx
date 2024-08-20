@@ -15,8 +15,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { CheckBox } from "@mui/icons-material";
 import { Autocomplete, TextField } from "@mui/material";
+import { useSelector } from "react-redux";
 
 function CreateBankReceipt() {
+  const { userInfo } = useSelector((state) => state.auth);
   const [bank_id, set_bank_id] = useState("");
   const [isBank, setIsBank] = useState(true); // true for "bank", false for "mpesa"const [isBank, setIsBank] = useState(true); // true for "bank", false for "mpesa"
   const [staff_id, set_staff_id] = useState("");
@@ -72,7 +74,6 @@ function CreateBankReceipt() {
       e.preventDefault();
 
       if (isBank) {
-        alert("hi");
         if (reference.length > 15) {
           toast.error("Bank reference must be less than 15 characters");
           return;
@@ -94,7 +95,7 @@ function CreateBankReceipt() {
         sale_order_type,
         amount,
         reference,
-        created_by: user?.user_id,
+        created_by: userInfo?.first_name,
       }).unwrap();
       if (res.status == "failed") {
         toast.error(err?.data?.message || err.error);

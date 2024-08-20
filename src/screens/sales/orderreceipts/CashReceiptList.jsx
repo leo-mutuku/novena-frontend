@@ -109,6 +109,7 @@ const CashReceiptList = () => {
         Header: "Amount",
         accessor: "amount",
       },
+      { Header: "Created By", accessor: "create_by" },
     ],
     []
   );
