@@ -144,12 +144,6 @@ const DailyPackHouseHeadersList = () => {
             batch_no={batch_no}
           />
         </div>
-        {/* <div style={{ display: `${mode_delete}` }}>
-          <DeletePurchaseModal
-            store_purchase_id={store_purchase_id}
-            set_mode_delete={set_mode_delete}
-          />
-        </div> */}
       </>
 
       <>
