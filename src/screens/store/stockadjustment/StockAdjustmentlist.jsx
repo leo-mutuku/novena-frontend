@@ -62,6 +62,10 @@ const StockAdjustmentlist = () => {
         accessor: "date",
         Cell: ({ row }) => moment(row.original.created_at).format("DD-MM-YYYY"),
       },
+      {
+        Header: "By",
+        accessor: "created_by",
+      },
     ],
     []
   );
