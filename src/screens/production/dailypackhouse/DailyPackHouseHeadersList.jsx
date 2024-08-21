@@ -5,7 +5,7 @@ import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { CiEdit } from "react-icons/ci";
-import { IoIosAdd } from "react-icons/io";
+import { IoIosAdd, IoIosEye } from "react-icons/io";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { IoMdAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
@@ -102,12 +102,10 @@ const DailyPackHouseHeadersList = () => {
       {
         Header: "Status",
         accessor: "status",
-        Cell: ({ value }) => (
-          <span style={{ color: getStatusColor(value) }}>{value}</span>
-        ),
+        Cell: ({ row }) => <span>{row.original.status}</span>,
       },
       {
-        Header: "add",
+        Header: "Action",
         accessor: "add",
         Cell: ({ row }) => (
           <Link
@@ -118,7 +116,17 @@ const DailyPackHouseHeadersList = () => {
             }
           >
             {" "}
-            {row.original.status == "Posted" ? "-" : <IoIosAdd />}
+            {row.original.status == "Posted" ? (
+              <Button className="success">
+                {" "}
+                <IoIosEye />
+              </Button>
+            ) : (
+              <Button className="primary">
+                {" "}
+                <IoIosAdd />
+              </Button>
+            )}
           </Link>
         ),
       },
