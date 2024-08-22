@@ -66,7 +66,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
 
     navigate();
   }, [userInfo, navigate, purchase_id, products.production_buffer]);
-  const store = [103, 104, 105, 106, 107, 116];
+  const store = [103, 104, 105, 106, 107, 116, 203, 204, 205, 206, 207];
   const by_products = [108, 109, 110];
   const pack_house = [114];
 
