@@ -52,9 +52,7 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
     store_code: 0,
     store_name: "",
   });
-
   const [production_list, set_production_list] = useState([]);
-
   useEffect(() => {
     if (userInfo) {
       set_products({
@@ -63,9 +61,10 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
         purchase_header_id: purchase_id,
       });
     }
-
     navigate();
   }, [userInfo, navigate, purchase_id, products.production_buffer]);
+
+  // create a setup for this
   const store = [103, 104, 105, 106, 107, 116, 203, 204, 205, 206, 207];
   const by_products = [108, 109, 110];
   const pack_house = [114];
