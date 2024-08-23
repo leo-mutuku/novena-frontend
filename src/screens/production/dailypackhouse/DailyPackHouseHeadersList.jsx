@@ -149,18 +149,7 @@ const DailyPackHouseHeadersList = () => {
       <>
         <div>
           <p>*** Daily Pack house ***</p>
-          <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <div style={{ marginLeft: "10px" }}>
-              <button onClick={handleDownloadPDF} disabled={"#"}>
-                <FaFilePdf />
-              </button>
-            </div>
-            <div style={{ marginLeft: "10px" }}>
-              <button onClick={handleDownloadExcel} disabled={"#"}>
-                <FaFileExcel />
-              </button>
-            </div>
-          </div>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}></div>
           <DataTable columns={columns} data={tableData} />
         </div>
       </>

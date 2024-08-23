@@ -133,18 +133,7 @@ const RoleList = () => {
     <>
       <div>
         <p>*** All Accounts ***</p>
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <div style={{ marginLeft: "10px" }}>
-            <button onClick={handleDownloadPDF} disabled={loadingPdf}>
-              {loadingPdf ? <Loader /> : <FaFilePdf />}
-            </button>
-          </div>
-          <div style={{ marginLeft: "10px" }}>
-            <button onClick={handleDownloadExcel} disabled={loadingExcel}>
-              {loadingExcel ? <Loader /> : <FaFileExcel />}
-            </button>
-          </div>
-        </div>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}></div>
         <DataTable columns={columns} data={tableData} />
       </div>
     </>

@@ -180,7 +180,7 @@ const TransferOrderHeadersList = () => {
 
   return (
     <>
-      <p>*** All GL ***</p>
+      <p>*** All transfers ***</p>
       <DataTable columns={columns} data={tableData} />
     </>
   );

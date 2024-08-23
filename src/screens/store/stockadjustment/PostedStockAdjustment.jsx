@@ -180,7 +180,7 @@ const PostedStockAdjustment = () => {
 
   return (
     <>
-      <p>*** All GL ***</p>
+      <p>*** All posted adjustments ***</p>
       <DataTable columns={columns} data={tableData} />
     </>
   );
