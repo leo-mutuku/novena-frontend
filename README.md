@@ -9,14 +9,15 @@ By automating routine tasks and providing insights into key production metrics, 
 
 
 ## Contributors
-[x] Leonard Mutuku - Lead developer, project manager
-[x] Antony Ndung'u - Software Developer
-[x] Jame Kilungya - Software Developer (IOT)
-[x] Tomus Ngenye - Software Developer (Mobile app)
+- [x] Leonard Mutuku - Lead developer, project manager
+- [x] Antony Ndung'u - Software Developer
+- [x] Jame Kilungya - Software Developer (IOT)
+- [x] Tomus Ngenye - Software Developer (Mobile app)
+
 
 ## Tech Stack
-[x] Nodejs And Spring boot
-[x] Reactjs and Flutter
+- [x] Nodejs And Spring boot
+- [x] Reactjs and Flutter
 
 
 ## Features
