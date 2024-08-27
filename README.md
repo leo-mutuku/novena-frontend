@@ -1,4 +1,5 @@
 # NOVENA MILLER ERP VERSION 1.0.5 
++ Release notes <a href="https://github.com/leo-mutuku/novena-frontend/releases/tag/v1.0.5-production>Version 1.0.5 </a>
 In today's competitive manufacturing landscape, efficient production management is crucial for success. 
 Our Production ERP (Enterprise Resource Planning) software is designed to streamline and optimize every aspect of your production process, from raw material procurement to finished goods delivery.
 This powerful tool integrates core business functions, enabling real-time data tracking, better resource allocation, and improved decision-making. 
