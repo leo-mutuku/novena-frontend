@@ -45,7 +45,7 @@ By automating routine tasks and providing insights into key production metrics, 
 
 
 
-- For a full review Reach out to us at [le.mutuku@gmail.com](https://mail.google) or [Whatsapp](https://wa.me/254715073726)
+- For a full review Reach out to us at [le.mutuku@gmail.com](https://mail.google.com/) or [Whatsapp](https://wa.me/254715073726)
 
 
 
