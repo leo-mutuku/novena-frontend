@@ -36,5 +36,9 @@ By automating routine tasks and providing insights into key production metrics, 
 
 
 
+![Production ERP](images/novena-erp.PNG)
+
+![Production ERP](images/novena-erp1.PNG)
+
 
 
