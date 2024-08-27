@@ -1,0 +1,11 @@
+node_modules
+src/slices.apislice.js
+package-lock.json
+
+src/slices/apiSlice.js
+src/slices/authSlice.js
+src/slices/baseURLJasperReports.js
+
+
+src/components/Idle.jsx
+

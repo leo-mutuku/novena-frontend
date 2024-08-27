@@ -1,0 +1,60 @@
+/* DataTable.css */
+
+/* Style for sorted ascending column */
+.sort-asc::after {
+    content: ' ↑';
+    margin-left: 5px;
+  }
+  
+  /* Style for sorted descending column */
+  .sort-desc::after {
+    content: ' ↓';
+    margin-left: 5px;
+  }
+  
+  /* Style for unsorted column */
+  .sortable::after {
+    content: '';
+    float: right;
+    margin-top: 2px;
+  }
+  
+  /* Style for the sorting arrows */
+  .sort-asc::after,
+  .sort-desc::after {
+    color: #000; /* Color of the arrow */
+  }
+  
+  /* Style for the column headers */
+  .table th {
+    position: relative; /* Ensure pseudo-element positioning relative to the header */
+    padding: 10px; /* Ensure the padding is consistent */
+    border: solid 1px #ccc; /* Add border to the header */
+    background-color: #f2f2f2; /* Header background color */
+  }
+  
+  /* Style for the table rows */
+  .table td {
+    padding: 10px;
+    border: solid 1px #ccc;
+  }
+  
+  /* Style for odd table rows */
+  .table tr:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+
+/* Style for odd table rows */
+.table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+  
+  /* Style for even table rows */
+  .table tbody tr:nth-child(even) {
+    background-color: #ffffff;
+  }
+
+  a {
+    text-decoration: none; /* Remove underline */
+  }
+  
