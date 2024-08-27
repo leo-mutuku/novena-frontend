@@ -36,9 +36,17 @@ By automating routine tasks and providing insights into key production metrics, 
 
 
 
++ Production Dashboard
 ![Production ERP](images/novena-erp.PNG)
 
+
++ Modules Dashboard
 ![Production ERP](images/novena-erp1.PNG)
+
+
+
+- For a full review Reach out to us at [mail.google](le.mutuku@gmail.com) or [Whatsapp](https://wa.me/254715073726)
+
 
 
 
