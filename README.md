@@ -19,5 +19,13 @@ By automating routine tasks and providing insights into key production metrics, 
 [x] Reactjs and Flutter
 
 
-## Next Release Version 2.0.0 - 30/10/2024
+## Features
+
+|  #  | Modules              | Description                          
+| --- | -------------------- | ---------------------------------------------------------------
+| 1.  | Finance & Operations | Impliments the core functionalities of finances activities
+| 2.  | Production           | Impliments the manufacturing activities accross the organization
+| 3.  | Sales & Marketing    | impliments sales and marketing, sales people, customers tracking
+| 4.  | Inventory            | Tracks inventory accross all stores, outlets and good intransit
+
 
