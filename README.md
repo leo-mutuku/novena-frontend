@@ -27,6 +27,11 @@ By automating routine tasks and providing insights into key production metrics, 
 | 1.  | Finance & Operations | Impliments the core functionalities of finances activities
 | 2.  | Production           | Impliments the manufacturing activities accross the organization
 | 3.  | Sales & Marketing    | impliments sales and marketing, sales people, customers tracking
-| 4.  | Inventory            | Tracks inventory accross all stores, outlets and good intransit
+| 4.  | Purchase             | Monitor suppliers and internal requisitions
+| 5.  | Payment              | Tracks all payments - Keep clean cash books and form part of crucial financial reports
+| 6.  | Fleet                | Integrated Fllet tarcking - Monitors vehicle expenses as well as movement tracing 
+| 7.  | Admin & Hr           | All Hr and administration operations include ICT
+| 8.  | Payroll              | Process payroll Casuals, Sales people commission, and regular employees
+| 9.  | Inventory            | Tracks each store item in isolation with clear logs on in and out
 
 
