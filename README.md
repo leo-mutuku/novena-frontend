@@ -35,3 +35,6 @@ By automating routine tasks and providing insights into key production metrics, 
 | 9.  | Inventory            | Tracks each store item in isolation with clear logs on in and out
 
 
+
+
+
