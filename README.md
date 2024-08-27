@@ -7,3 +7,17 @@ This powerful tool integrates core business functions, enabling real-time data t
 With features such as inventory management, production scheduling, quality control, sales and marketing, and performance analytics, our ERP software ensures that your production operations are aligned with your business goals.
 By automating routine tasks and providing insights into key production metrics, our Production ERP software helps reduce costs, minimize waste, and enhance overall productivity. Whether you're a small-scale manufacturer or a large enterprise, our solution is tailored to meet your unique production needs, driving efficiency and fostering growth.
 
+
+## Contributors
+[x] Leonard Mutuku - Lead developer, project manager
+[x] Antony Ndung'u - Software Developer
+[x] Jame Kilungya - Software Developer (IOT)
+[x] Tomus Ngenye - Software Developer (Mobile app)
+
+## Tech Stack
+[x] Nodejs And Spring boot
+[x] Reactjs and Flutter
+
+
+## Next Release Version 2.0.0 - 30/10/2024
+
