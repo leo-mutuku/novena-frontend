@@ -43,7 +43,7 @@ const MaizeAdd = ({ set_item_edit_state, items_to_edit }) => {
         toast.success("Maize details added successfully");
         navigate("../allstorepurchasesintransit");
       }
-      navigate("../allstorepurchase");
+      navigate("../allstorepurchasesintransit");
     } catch (error) {
       toast.error("An error occurred");
     }

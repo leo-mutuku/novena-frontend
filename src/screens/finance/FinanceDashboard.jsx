@@ -147,8 +147,6 @@ const FinanceDashboard = () => {
             flex: { xs: "1 0 15rem", md: "1 0 15rem" },
             height: { xs: "5rem", md: "5rem" },
             background: "transparent",
-            border: "1px solid #E2EEFE",
-            borderRadius: "10px",
           }}
         >
           <Grid flexDirection={"row"} sx={{ padding: "5px" }}>
@@ -161,7 +159,6 @@ const FinanceDashboard = () => {
                 borderRadius: "10px",
               }}
             />{" "}
-            <span variant="h6">Net Change</span>
           </Grid>
           <Divider sx={{ margin: "3px" }} />
           <Stack>

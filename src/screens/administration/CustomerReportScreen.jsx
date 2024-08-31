@@ -72,10 +72,12 @@ const CustomerReportScreen = () => {
 
     set_supplier_number(x[0].customer_id);
     setCustomer(x[0].full_name);
-    alert(customer);
+
   };
 
-  console.log(customer, "customer");
+
+  };
+
 
   const handleDownloadCSV = () => {
     if (getData && getData.length > 0) {
