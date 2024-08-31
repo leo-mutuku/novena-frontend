@@ -69,12 +69,6 @@ const InstitutionStaement = () => {
     if (statementData && reportName?.data) {
       const { res2 } = reportName.data;
 
-      // Assuming 'res2' or similar is used elsewhere; adjust accordingly
-      // setHeaders1((prevHeaders) => ({
-      //   ...prevHeaders,
-      //   date: res2.someDateField, // Example, adjust based on your data structure
-      // }));
-
       setSumarry((prev) => ({
         ...prev,
         name: ` KES: ${statementData.netb}`,

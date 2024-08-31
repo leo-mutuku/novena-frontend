@@ -189,37 +189,39 @@ const Statement = forwardRef(({ header1, header2, sumarry, body }, ref) => {
         >
           <thead>
             <tr>
-              {body?.columns?.map((col, index) => (
-                <th
-                  key={index}
-                  style={{
-                    border: "1px solid #ccc",
-                    padding: "4px",
-                    fontSize: "11px",
-                  }}
-                >
-                  {col}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {body?.rows?.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {row.map((cell, cellIndex) => (
-                  <td
-                    key={cellIndex}
+              {body.columns &&
+                body?.columns?.map((col, index) => (
+                  <th
+                    key={index}
                     style={{
                       border: "1px solid #ccc",
                       padding: "4px",
                       fontSize: "11px",
                     }}
                   >
-                    {cell}
-                  </td>
+                    {col}
+                  </th>
                 ))}
-              </tr>
-            ))}
+            </tr>
+          </thead>
+          <tbody>
+            {body.rows &&
+              body?.rows?.map((row, rowIndex) => (
+                <tr key={rowIndex}>
+                  {row.map((cell, cellIndex) => (
+                    <td
+                      key={cellIndex}
+                      style={{
+                        border: "1px solid #ccc",
+                        padding: "4px",
+                        fontSize: "11px",
+                      }}
+                    >
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
+              ))}
           </tbody>
         </table>
         <br />

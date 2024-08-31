@@ -29,7 +29,7 @@ const InsitituionReportScreen = () => {
   const formattedDateTime = formatDateTime(now);
   console.log(formattedDateTime); // e.g., "2024-08-18 13:45:30"
   const [report_name, set_report_name] = React.useState("");
-  const [supplier_number, set_supplier_number] = React.useState(null);
+  const [supplier_number, set_supplier_number] = React.useState(0);
   const [supplier_name, set_supplier_name] = React.useState("");
   const [institution_id, set_institution_id] = React.useState("");
 
@@ -126,10 +126,18 @@ const InsitituionReportScreen = () => {
     []
   );
 
-  const rows = ["tet"];
+  // statementData
+  const rows = [];
+  getData?.map((row) => {
+    rows.push([
+      row.entry_date,
+      row.description,
+      row.credit,
+      row.debit,
+      row.balance,
+    ]);
+  });
   const handleStatementLink = (e) => {
-    alert(institution_name);
-
     const lastIndex = getData.length - 1; // Example supplier number
     const statementData = {
       balancebf:
@@ -150,7 +158,7 @@ const InsitituionReportScreen = () => {
       date: formattedDateTime,
     };
 
-    navigate(`../institutions/statement/${institution_id}`, {
+    navigate(`../institutions/statement/${supplier_number}`, {
       state: { statementData },
     });
   };
