@@ -17,7 +17,6 @@ function CreateSalesPeople() {
   const [created_by, set_created_by] = useState("");
   const [balance, setBalance] = useState(0);
   const [bales, setBales] = useState(0);
-
   const { data: staff } = useGetAllStaffQuery();
   const [CreateSalesPerson] = useCreateSalesPersonMutation();
   const { userInfo } = useSelector((state) => state.auth);
