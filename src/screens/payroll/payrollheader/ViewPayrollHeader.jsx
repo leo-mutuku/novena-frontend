@@ -14,8 +14,7 @@ import { IoMdEye } from "react-icons/io";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import DataTable from "../../../components/general/DataTable";
-// import AddDailyPackModal from "./lines/AddDailyPackModal";
-// import DeletePurchaseModal from "./lines/DeletePurchaseModal";
+
 import TimeDate from "../../../components/TimeDate";
 
 const ViewPayrollHeader = () => {
@@ -46,7 +45,6 @@ const ViewPayrollHeader = () => {
       setTableData(data.data);
     }
   }, [data]);
-
   const columns = useMemo(
     () => [
       {
@@ -67,7 +65,6 @@ const ViewPayrollHeader = () => {
           ).format("HH:mm A")}`}</span>
         ),
       },
-
       {
         Header: "Staff ",
         accessor: "staff",
@@ -87,7 +84,6 @@ const ViewPayrollHeader = () => {
         Header: "Deductions",
         accessor: "total_deductions",
       },
-
       {
         Header: "POS",
         accessor: "pos",
@@ -102,7 +98,6 @@ const ViewPayrollHeader = () => {
     ],
     []
   );
-
   return (
     <>
       <></>

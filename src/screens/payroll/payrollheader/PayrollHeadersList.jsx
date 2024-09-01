@@ -11,8 +11,7 @@ import { MdDelete } from "react-icons/md";
 import { IoMdEye } from "react-icons/io";
 import moment from "moment";
 import DataTable from "../../../components/general/DataTable";
-// import AddDailyPackModal from "./lines/AddDailyPackModal";
-// import DeletePurchaseModal from "./lines/DeletePurchaseModal";
+
 import TimeDate from "../../../components/TimeDate";
 
 const PayrollHeadersList = () => {
@@ -51,11 +50,7 @@ const PayrollHeadersList = () => {
       {
         Header: "Created At",
         accessor: "created_at",
-        Cell: ({ value }) => (
-          <span>{`${moment(value).format("YYYY-MM-DD")} : ${moment(
-            value
-          ).format("HH:mm A")}`}</span>
-        ),
+        Cell: ({ row }) => <>{timeDate.date(row.original.created_at)}</>,
       },
 
       {
