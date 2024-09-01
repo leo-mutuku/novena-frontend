@@ -33,61 +33,6 @@ const CashReceiptList = () => {
       setTableData(orders.data);
     }
   }, [orders]);
-  const handleDelete = (e, id, style) => {
-    set_store_purchase_id(parseInt(id));
-    set_mode_delete(style);
-  };
-
-  const navigate = useNavigate();
-  useEffect(() => {}, [orders]);
-
-  const handleDownloadPDF = async () => {
-    setLoadingPdf(true);
-    try {
-      const response = await axios({
-        url: `${baseUrlJasper}/all/sales/orders/posted/pdf`, // Endpoint on your Node.js server
-        method: "GET",
-        responseType: "blob", // Important: responseType 'blob' for binary data
-      });
-      const blob = new Blob([response.data], { type: "application/pdf" });
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "all-salesorder-posted-report.pdf");
-      document.body.appendChild(link);
-      link.click();
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("Error downloading PDF:", error);
-    } finally {
-      setLoadingPdf(false);
-    }
-  };
-
-  const handleDownloadExcel = async () => {
-    setLoadingExcel(true);
-    try {
-      const response = await axios({
-        url: `${baseUrlJasper}/all/sales/orders/posted/excel`, // Endpoint on your Node.js server
-        method: "GET",
-        responseType: "blob", // Important: responseType 'blob' for binary data
-      });
-      const blob = new Blob([response.data], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      });
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "all-salesorder-posted-report.xlsx");
-      document.body.appendChild(link);
-      link.click();
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("Error downloading Excel:", error);
-    } finally {
-      setLoadingExcel(false);
-    }
-  };
 
   const columns = useMemo(
     () => [
@@ -97,8 +42,10 @@ const CashReceiptList = () => {
       },
       {
         Header: "Date",
-        accessor: "entry_date",
-        Cell: ({ value }) => <span>{moment(value).format("YYYY-MM-DD")}</span>,
+        accessor: "created_at",
+        Cell: ({ value }) => {
+          return moment(value).format("DD/MM/YYYY : HH:mm");
+        },
       },
       {
         Header: "Cash Account",
@@ -135,18 +82,7 @@ const CashReceiptList = () => {
     <>
       <div>
         <p>*** All Sales Cash Receipts ***</p>
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <div style={{ marginLeft: "10px" }}>
-            <button onClick={handleDownloadPDF} disabled={loadingPdf}>
-              {loadingPdf ? <Loader /> : <FaFilePdf />}
-            </button>
-          </div>
-          <div style={{ marginLeft: "10px" }}>
-            <button onClick={handleDownloadExcel} disabled={loadingExcel}>
-              {loadingExcel ? <Loader /> : <FaFileExcel />}
-            </button>
-          </div>
-        </div>
+
         <DataTable columns={columns} data={tableData} />
       </div>
     </>
