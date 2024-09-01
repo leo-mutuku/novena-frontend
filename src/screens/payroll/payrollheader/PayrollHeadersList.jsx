@@ -49,7 +49,7 @@ const PayrollHeadersList = () => {
 
       {
         Header: "Created At",
-        accessor: "created_at",
+        accessor: "end_date",
         Cell: ({ row }) => <>{row.original.created_at}</>,
       },
 
