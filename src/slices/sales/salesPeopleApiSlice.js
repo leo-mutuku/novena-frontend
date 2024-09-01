@@ -99,6 +99,42 @@ export const salesPeopleApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Sales_people"],
     }),
+    getBaleSetups: builder.query({
+      query: (data) => ({
+        url: `${SALESPEOPLE_URL}/getbalesetups`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Sales_people"],
+    }),
+    getBaleSetup: builder.query({
+      query: (id) => ({
+        url: `${SALESPEOPLE_URL}/getbalesetup/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Sales_people"],
+    }),
+    createBaleSetup: builder.mutation({
+      query: (id) => ({
+        url: `${SALESPEOPLE_URL}/createbalesetup`,
+        method: "POST",
+      }),
+      providesTags: ["Sales_people"],
+    }),
+    editBaleSetup: builder.mutation({
+      query: (data) => ({
+        url: `${SALESPEOPLE_URL}/editbalesetup`,
+        method: "POST",
+      }),
+      providesTags: ["Sales_people"],
+    }),
+    deleteBaleSetup: builder.mutation({
+      query: (data) => ({
+        url: `${SALESPEOPLE_URL}/deletebalesetup`,
+        method: "POST",
+      }),
+      providesTags: ["Sales_people"],
+    }),
   }),
 });
 
@@ -115,4 +151,9 @@ export const {
   useDeleteSalesPersonMutation,
   useValidateSalesperSonmakeOrderMutation,
   useEditSalesPersonLimitMutation,
+  useGetBaleSetupsQuery,
+  useGetBaleSetupQuery,
+  useCreateBaleSetupMutation,
+  useEditBaleSetupMutation,
+  useDeleteBaleSetupMutation,
 } = salesPeopleApiSlice;

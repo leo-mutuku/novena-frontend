@@ -22,7 +22,7 @@ export const sidelinks = [
     menuTitle: "Sales People Comm Mgt",
     subMenus: [
       { subMenuTitle: "Sales People Comm", to: "salespeoplecommision" },
-      { subMenuTitle: "Comm Setup", to: "salespeoplecommissionsetup" },
+      { subMenuTitle: "Bale Setup", to: "salespeoplecommissionsetup" },
     ],
   },
   {
