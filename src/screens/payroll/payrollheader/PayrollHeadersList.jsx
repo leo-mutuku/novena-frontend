@@ -50,7 +50,7 @@ const PayrollHeadersList = () => {
       {
         Header: "Created At",
         accessor: "created_at",
-        Cell: ({ row }) => <>{timeDate.date(row.original.created_at)}</>,
+        Cell: ({ row }) => <>{row.original.created_at}</>,
       },
 
       {
