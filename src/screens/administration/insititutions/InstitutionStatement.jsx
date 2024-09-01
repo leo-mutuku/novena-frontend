@@ -27,7 +27,7 @@ const InstitutionStaement = () => {
   const [headers1, setHeaders1] = useState({
     title: "INSTITUTION STATEMENT",
     period: `FROM ${statementData?.period}`,
-    type: "Customer",
+    type: "Institution",
     name: statementData?.customer,
   });
   const [headers2, setHeaders2] = useState({

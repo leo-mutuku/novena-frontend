@@ -30,7 +30,6 @@ const InsitituionReportScreen = () => {
   console.log(formattedDateTime); // e.g., "2024-08-18 13:45:30"
   const [report_name, set_report_name] = React.useState("");
 
-
   const [supplier_number, set_supplier_number] = React.useState(0);
 
   const [supplier_name, set_supplier_name] = React.useState("");
@@ -47,12 +46,12 @@ const InsitituionReportScreen = () => {
   const { data: suppliers } = useGetAllInstitutionsQuery();
 
   const loaddata = async () => {
-    if (!supplier_number || !start_date || !end_date) {
+    if (!institution_id || !start_date || !end_date) {
       toast.error("Please select report name, start and end date");
       return;
     }
     const data = await setData({
-      institution_id: supplier_number,
+      institution_id,
       start_date,
       end_date,
     }).unwrap();
@@ -64,14 +63,14 @@ const InsitituionReportScreen = () => {
     }
   };
   const handleInstitution = (e) => {
-    let x = institutions?.data?.filter((a) => {
-      if (a.institution_id == e.target.value) {
+    let x = suppliers?.data?.filter((a) => {
+      if (a.institution_id == parseInt(e.target.value)) {
         return a.institution_id;
       }
     });
 
     set_institution_id(x[0].institution_id);
-    set_phone_number(x[0].institution_phone_number);
+
     set_instution_name(x[0].institution_name);
   };
 
@@ -141,7 +140,6 @@ const InsitituionReportScreen = () => {
     ]);
   });
   const handleStatementLink = (e) => {
-
     const lastIndex = getData.length - 1; // Example supplier number
     const statementData = {
       balancebf:
@@ -160,10 +158,10 @@ const InsitituionReportScreen = () => {
       // Add other relevant data here
 
       date: formattedDateTime,
+      type: "Institution",
     };
 
-    navigate(`../institutions/statement/${supplier_number}`, {
-
+    navigate(`../institutions/statement/${institution_id}`, {
       state: { statementData },
     });
   };
@@ -178,8 +176,8 @@ const InsitituionReportScreen = () => {
                 type="number"
                 required
                 placeholder="Enter Institution ID"
-                value={supplier_number}
-                onChange={(e) => set_supplier_number(parseInt(e.target.value))}
+                value={institution_id}
+                onChange={handleInstitution}
               >
                 <option value="">Select Institution</option>
                 {suppliers?.data?.map((a) => (
