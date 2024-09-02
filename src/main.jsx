@@ -358,6 +358,7 @@ import ItemTrackingReport from "./screens/store/ItemTrackingReport.jsx";
 import CustomerStatement from "./screens/administration/customers/CustomerStatement.jsx";
 import InstitutionStatement from "./screens/administration/insititutions/InstitutionStatement.jsx";
 import SupplierStatement from "./screens/payment/payments/purchases/SupplierStatement.jsx";
+import FixedRate from "./screens/payroll/salespeoplecommissionmgt/FixedRate.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -505,6 +506,7 @@ const router = createHashRouter(
             element={<SalesPeopleCommisionScreen />}
           >
             <Route path="staffsetlist" element={<SalesStaffList />} />
+            <Route path="fixedrate/:id" element={<FixedRate />} />
           </Route>
           <Route
             path="salespeoplecommissionsetup"

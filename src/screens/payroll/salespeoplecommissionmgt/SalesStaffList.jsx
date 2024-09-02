@@ -4,11 +4,11 @@ import Loader from "../../../components/Loader";
 import { useSalesQuery } from "../../../slices/administration/staffApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
-import { MdAddTask } from "react-icons/md";
+import { MdAddTask, MdEdit } from "react-icons/md";
 
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
-import { IoMdEye } from "react-icons/io";
+import { IoIosMedkit, IoMdEye } from "react-icons/io";
 import { Row, Col, Button, Form } from "react-bootstrap";
 
 import { MdAdd, MdMonetizationOn } from "react-icons/md";
@@ -70,15 +70,15 @@ const SalesStaffList = () => {
       },
 
       {
-        Header: "Update Rate",
+        Header: ` Edit`,
         accessor: "update_rate",
         Cell: ({ row }) => (
           <>
             <Link
-              to={`/payroll/advancemanagement/newadvance/${row.original.staff_number}`}
+              to={`/payroll/salespeoplecommision/fixedrate/${row.original.staff_number}`}
             >
               <Button variant="outline-primary">
-                <MdAddTask />
+                <MdEdit />
               </Button>
             </Link>
           </>
@@ -124,6 +124,12 @@ const SalesStaffList = () => {
         </Col>
       </Row>
       <DataTable columns={columns} data={tableData} />
+      <br></br>
+      <Row>
+        <Col>
+          <Button>Update Payroll </Button>
+        </Col>
+      </Row>
     </>
   );
 };
