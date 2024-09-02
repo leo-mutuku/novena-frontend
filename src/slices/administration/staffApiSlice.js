@@ -83,6 +83,14 @@ export const staffApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Staff"],
     }),
+    sales: builder.query({
+      query: (data) => ({
+        url: `${STAFF_URL}/sales`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["Staff"],
+    }),
   }),
 });
 
@@ -97,4 +105,5 @@ export const {
   useGeneralQuery,
   useProductionQuery,
   useDeactivateStaffMutation,
+  useSalesQuery,
 } = staffApiSlice;
