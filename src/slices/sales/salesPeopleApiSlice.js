@@ -130,9 +130,9 @@ export const salesPeopleApiSlice = apiSlice.injectEndpoints({
       providesTags: ["Sales_people"],
     }),
     deleteBaleSetup: builder.mutation({
-      query: (data) => ({
-        url: `${SALESPEOPLE_URL}/deletebalesetup`,
-        method: "POST",
+      query: (id) => ({
+        url: `${SALESPEOPLE_URL}/deletebalesetup/${id}`,
+        method: "DELETE",
       }),
       providesTags: ["Sales_people"],
     }),
