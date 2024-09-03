@@ -359,6 +359,8 @@ import CustomerStatement from "./screens/administration/customers/CustomerStatem
 import InstitutionStatement from "./screens/administration/insititutions/InstitutionStatement.jsx";
 import SupplierStatement from "./screens/payment/payments/purchases/SupplierStatement.jsx";
 import FixedRate from "./screens/payroll/salespeoplecommissionmgt/FixedRate.jsx";
+import RemoveItem from "./screens/payroll/salespeoplecommissionsetup/RemoveItem.jsx";
+import AddItem from "./screens/payroll/salespeoplecommissionsetup/AddItem.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -513,6 +515,8 @@ const router = createHashRouter(
             element={<SalesPeopleCommissionSetup />}
           >
             <Route path="productbalesetup" element={<ProductslistSetup />} />
+            <Route path="additem" element={<AddItem />} />
+            <Route path="removeitem" element={<RemoveItem />} />
           </Route>
         </Route>
 

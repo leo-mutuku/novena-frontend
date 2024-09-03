@@ -115,9 +115,10 @@ export const salesPeopleApiSlice = apiSlice.injectEndpoints({
       providesTags: ["Sales_people"],
     }),
     createBaleSetup: builder.mutation({
-      query: (id) => ({
+      query: (data) => ({
         url: `${SALESPEOPLE_URL}/createbalesetup`,
         method: "POST",
+        body: data,
       }),
       providesTags: ["Sales_people"],
     }),
