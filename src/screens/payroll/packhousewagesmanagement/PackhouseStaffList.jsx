@@ -191,26 +191,6 @@ const PackhouseStaffList = () => {
         Header: "Advance",
         accessor: "advance",
       },
-
-      {
-        Header: "Calculate",
-        accessor: "advance_validated",
-        Cell: ({ row }) => (
-          <>
-            {row.original.status !== "Generated" ? (
-              <Link
-                to={"#"} //`/payroll/advancemanagement/newadvance/${row.original.staff_number
-              >
-                <Button variant="outline-primary">
-                  <MdAddTask />
-                </Button>
-              </Link>
-            ) : (
-              <p>{row.original.status}</p>
-            )}
-          </>
-        ),
-      },
     ],
     []
   );

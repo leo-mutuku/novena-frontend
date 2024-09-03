@@ -1,36 +1,26 @@
 import React, { useState, useEffect, useMemo } from "react";
-//import { useGetTodosQuery } from './apiSlice';
-import Loader from "../../../components/Loader";
-import { useSalesQuery } from "../../../slices/administration/staffApiSlice";
-import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
-import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
+
+import {
+  useSalesQuery,
+  useValidateBalesMutation,
+} from "../../../slices/administration/staffApiSlice";
+
 import { MdAddTask, MdEdit } from "react-icons/md";
 
 import { Link } from "react-router-dom";
-import { FaPrint } from "react-icons/fa6";
-import { IoIosMedkit, IoMdEye } from "react-icons/io";
+
 import { Row, Col, Button, Form } from "react-bootstrap";
 
-import { MdAdd, MdMonetizationOn } from "react-icons/md";
-import PrintA4A5ExcelButton from "../../../components/PrintA4A5ExcelButton";
 import DataTable from "../../../components/general/DataTable";
-import moment from "moment";
-import axios from "axios";
-
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
+import { toast } from "react-toastify";
 
 const SalesStaffList = () => {
-  const [paying_account_type, set_paying_account_type] = useState("");
-  const [paying_account_id, set_paying_account_id] = useState("");
-  const [columns_header, set_columns_header] = useState([]);
-  const [columns_body, set_columns_body] = useState([]);
-  const [footer_header, set_footer_header] = useState([]);
-  const [footer_data, set_footer_data] = useState([]);
   const [tableData, setTableData] = useState([]);
-  const [loadingPdf, setLoadingPdf] = useState(false);
-  const [loadingExcel, setLoadingExcel] = useState(false);
+  const [start_date, set_start_date] = useState("");
+  const [end_date, set_end_date] = useState("");
   const { data, isLoading } = useSalesQuery();
+  const [validateBales, { isLoading: validateLoading }] =
+    useValidateBalesMutation();
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);
@@ -88,6 +78,19 @@ const SalesStaffList = () => {
     []
   );
 
+  const handleValidateBales = async () => {
+    try {
+      const res = await validateBales({ start_date, end_date });
+      if (res.status === "success") {
+        toast.success(res.message || "Validated ");
+      } else {
+        toast.error(res.message || "Error validating");
+      }
+    } catch (error) {
+      toast.error(error.data.message || "Error validating");
+    }
+  };
+
   return (
     <>
       <Row>
@@ -102,8 +105,8 @@ const SalesStaffList = () => {
               type="date"
               required
               placeholder="Start"
-              value={""}
-              onChange={""}
+              value={start_date}
+              onChange={(e) => set_start_date(e.target.value)}
             ></Form.Control>
           </Form.Group>
         </Col>
@@ -113,14 +116,14 @@ const SalesStaffList = () => {
               type="date"
               required
               placeholder="End"
-              value={""}
-              onChange={""}
+              value={end_date}
+              onChange={(e) => set_end_date(e.target.value)}
             ></Form.Control>
           </Form.Group>
         </Col>
 
         <Col xs={4}>
-          <Button>Validate Bales Entries</Button>
+          <Button onClick={handleValidateBales}>Validate Bales Entries</Button>
         </Col>
       </Row>
       <DataTable columns={columns} data={tableData} />
