@@ -3,6 +3,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import {
   useSalesQuery,
   useValidateBalesMutation,
+  useUpdateSalePeopleSalaryMutation,
 } from "../../../slices/administration/staffApiSlice";
 
 import { MdAddTask, MdEdit } from "react-icons/md";
@@ -21,6 +22,9 @@ const SalesStaffList = () => {
   const { data, isLoading } = useSalesQuery();
   const [validateBales, { isLoading: validateLoading }] =
     useValidateBalesMutation();
+  const [updateSalePeopleSalary, { isLoading: updateLoading }] =
+    useUpdateSalePeopleSalaryMutation();
+
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);
@@ -33,6 +37,19 @@ const SalesStaffList = () => {
     date: "",
     filename: "",
   });
+  const handleUpdateSalePeopleSalary = async () => {
+    try {
+      const res = await updateSalePeopleSalary({}).unwrap();
+
+      if (res?.data.status === "success") {
+        toast.success(res.data.message);
+      } else {
+        toast.success(res.message || "Error validating");
+      }
+    } catch (error) {
+      toast.error(error.data.message || "Error validating");
+    }
+  };
 
   const columns = useMemo(
     () => [
@@ -81,8 +98,9 @@ const SalesStaffList = () => {
   const handleValidateBales = async () => {
     try {
       const res = await validateBales({ start_date, end_date });
-      if (res.status === "success") {
-        toast.success(res.message || "Validated ");
+      console.log(res);
+      if (res?.data.status === "success") {
+        toast.success(res.data.message);
       } else {
         toast.error(res.message || "Error validating");
       }
@@ -130,7 +148,9 @@ const SalesStaffList = () => {
       <br></br>
       <Row>
         <Col>
-          <Button>Update Payroll </Button>
+          <Button onClick={handleUpdateSalePeopleSalary}>
+            Update Payroll{" "}
+          </Button>
         </Col>
       </Row>
     </>
