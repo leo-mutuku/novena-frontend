@@ -38,7 +38,7 @@ const ProductslistSetup = () => {
 
   const removeItem = async (id) => {
     try {
-      const response = await deleteBaleSetup({ id }).unwrap();
+      const response = await deleteBaleSetup(id).unwrap();
       if (response.status === 200) {
         setTableData((prevData) => prevData.filter((item) => item.id !== id));
       }
@@ -66,7 +66,7 @@ const ProductslistSetup = () => {
         Header: "Remove",
         accessor: "remove",
         Cell: (row) => (
-          <Button onClick={() => removeItem(row.row.original.id)}>
+          <Button onClick={() => removeItem(row.row.original.entry_id)}>
             Remove
           </Button>
         ),
