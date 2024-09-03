@@ -1,14 +1,32 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useGetAllStaffByIdQuery } from "../../../slices/administration/staffApiSlice";
+import {
+  useGetAllStaffByIdQuery,
+  useUpdateSalesFixedRateMutation,
+} from "../../../slices/administration/staffApiSlice";
 import { Row, Col, Form, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const FixedRate = () => {
+  const navaigate = useNavigate();
   const { id } = useParams();
   const { data: staff } = useGetAllStaffByIdQuery(id);
+  const [fixedRate] = useUpdateSalesFixedRateMutation();
   const [rate_per_day, set_rate_per_day] = React.useState(0);
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const res = await fixedRate({ id, rate_per_day }).unwrap();
+      if (res.status === "success") {
+        toast.success("Fixed rate updated successfully");
+        Navigate("../staffsetlist");
+      } else {
+        toast.error(res.message || "Sorry an erro occured");
+      }
+    } catch (error) {
+      toast.error(error.data.message || "Sorry an erro occured");
+    }
   };
 
   return (
@@ -29,7 +47,7 @@ const FixedRate = () => {
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="account_number">
-              <Form.Label>Rate per day</Form.Label>
+              <Form.Label>Fixed Rate</Form.Label>
               <Form.Control
                 type="number"
                 required

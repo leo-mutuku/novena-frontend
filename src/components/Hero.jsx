@@ -52,8 +52,15 @@ const Hero = () => {
           </Card>
         </Container>
       </div>
-      <p style={{ textAlign: "center", fontSize: "small" }}>
-        version 1.0.5 - allRights Reserved:{" "}
+      <p
+        style={{
+          textAlign: "center",
+          fontSize: "medium",
+          color: "green",
+          background: "white",
+        }}
+      >
+        version 1.1.10 - Release date:03/09/2024 - allRights Reserved:{" "}
         <a href="#" target="_blank">
           www.mogulafric.co.ke
         </a>
