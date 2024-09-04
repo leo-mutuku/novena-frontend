@@ -58,7 +58,6 @@ const SupplierPaymentReportScreen = () => {
   const handleDownloadCSV = () => {
     if (getData && getData.length > 0) {
       const csv = Papa.unparse(getData);
-      console.log(csv, "csv");
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -127,6 +126,7 @@ const SupplierPaymentReportScreen = () => {
       row.balance,
     ]);
   });
+
   const handleStatementLink = (e) => {
     const lastIndex = getData.length - 1; // Example supplier number
     const statementData = {
@@ -154,6 +154,18 @@ const SupplierPaymentReportScreen = () => {
     });
   };
 
+  const handleSupplier = (e) => {
+    let x = suppliers?.data?.filter((a) => {
+      if (a.supplier_id == parseInt(e.target.value)) {
+        return a.supplier_id;
+      }
+    });
+
+    set_supplier_number(x[0].supplier_number);
+
+    set_supplier_name(x[0].supplier_name);
+  };
+
   return (
     <>
       <div style={{ marginBottom: "2px", paddingTop: "10px" }}>
@@ -165,7 +177,7 @@ const SupplierPaymentReportScreen = () => {
                 required
                 placeholder="Select Report"
                 value={supplier_number}
-                onChange={(e) => set_supplier_number(e.target.value)}
+                onChange={handleSupplier}
               >
                 <option value="">Select Supplier</option>
                 {suppliers?.data.map((item, key) => (

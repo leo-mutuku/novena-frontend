@@ -24,10 +24,10 @@ const SupplierStatement = () => {
     title: "SUPPLIER STATEMENT",
     period: `FROM ${statementData?.period}`,
     type: "Supplier",
-    name: supplier?.data.supplier_name,
+    name: statementData.customer,
   });
   const [headers2, setHeaders2] = useState({
-    date: statementData.date,
+    date: statementData?.date,
     title: "PRODUCTION REPORT",
     subTitle: "Novena Maize Miller LTD",
     description: "Dealers in: All types of cereals, Animal feeds",
@@ -44,8 +44,8 @@ const SupplierStatement = () => {
     entry4: `Net Balance (DR - CR  + BF)`,
     value4: `KES: ${statementData?.netb}`,
   });
-  const [columns, setColumns] = useState(statementData.columns || []);
-  const [rows, setRows] = useState(statementData.lines);
+  const [columns, setColumns] = useState(statementData?.columns || []);
+  const [rows, setRows] = useState(statementData?.lines);
 
   const documentData = {
     header1: headers1,

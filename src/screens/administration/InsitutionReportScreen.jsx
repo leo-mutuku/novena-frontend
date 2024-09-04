@@ -27,7 +27,7 @@ const InsitituionReportScreen = () => {
   }
 
   const formattedDateTime = formatDateTime(now);
-  console.log(formattedDateTime); // e.g., "2024-08-18 13:45:30"
+
   const [report_name, set_report_name] = React.useState("");
 
   const [supplier_number, set_supplier_number] = React.useState(0);
@@ -139,6 +139,8 @@ const InsitituionReportScreen = () => {
       row.balance,
     ]);
   });
+
+  console.log(formattedDateTime);
   const handleStatementLink = (e) => {
     const lastIndex = getData.length - 1; // Example supplier number
     const statementData = {
