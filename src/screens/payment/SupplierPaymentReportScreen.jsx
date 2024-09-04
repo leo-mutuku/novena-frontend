@@ -7,8 +7,10 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import Papa from "papaparse";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SupplierPaymentReportScreen = () => {
+  const navigate = useNavigate();
   const [report_name, set_report_name] = React.useState("");
   const [supplier_number, set_supplier_number] = React.useState(null);
   const [supplier_name, set_supplier_name] = React.useState("");
@@ -39,6 +41,19 @@ const SupplierPaymentReportScreen = () => {
       toast.error("No data found");
     }
   };
+  const now = new Date();
+  function formatDateTime(date) {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+    const day = date.getDate().toString().padStart(2, "0");
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const seconds = date.getSeconds().toString().padStart(2, "0");
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+
+  const formattedDateTime = formatDateTime(now);
 
   const handleDownloadCSV = () => {
     if (getData && getData.length > 0) {
@@ -101,6 +116,43 @@ const SupplierPaymentReportScreen = () => {
     ],
     []
   );
+  // statementData
+  const rows = [];
+  getData?.map((row) => {
+    rows.push([
+      row.entry_date,
+      row.description,
+      row.credit,
+      row.debit,
+      row.balance,
+    ]);
+  });
+  const handleStatementLink = (e) => {
+    const lastIndex = getData.length - 1; // Example supplier number
+    const statementData = {
+      balancebf:
+        parseFloat(getData[0]?.balance) +
+        (parseFloat(getData[0]?.debit) - parseFloat(getData[0]?.credit)),
+      netb: parseFloat(getData[lastIndex]?.balance),
+
+      debit: getData.reduce((acc, item) => acc + parseFloat(item.credit), 0),
+      credit: getData.reduce((acc, item) => acc + parseFloat(item.debit), 0),
+
+      // Add other relevant data here
+      period: `${start_date} - ${end_date}`,
+      customer: supplier_name,
+      lines: rows,
+      columns: ["Date", "Description", "Debit", "Credit", "Balance(Ksh)"],
+      // Add other relevant data here
+
+      date: formattedDateTime,
+      type: "Supplier",
+    };
+
+    navigate(`../purchases/statement/${supplier_number}`, {
+      state: { statementData },
+    });
+  };
 
   return (
     <>
@@ -177,11 +229,13 @@ const SupplierPaymentReportScreen = () => {
                 Excel Report
               </Button>{" "}
               &nbsp; &nbsp;
-              <Link to={`../purchases/statement/${supplier_number}`}>
-                <Button variant="primary" type="button">
-                  Statement
-                </Button>{" "}
-              </Link>
+              <Button
+                variant="primary"
+                type="button"
+                onClick={handleStatementLink}
+              >
+                Statement
+              </Button>{" "}
               &nbsp; &nbsp;
               <Button
                 variant="secondary"
