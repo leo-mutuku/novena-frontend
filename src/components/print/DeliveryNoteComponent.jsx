@@ -8,11 +8,13 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
       style={{
         width: "120mm", // Custom width, narrower than half A4 in portrait
         minHeight: "130mm", // Half height of A4
-        // border: "1px solid black", // Border removed
         boxSizing: "border-box",
         padding: "3px",
         margin: "0 auto", // Center the content horizontally
         position: "relative", // Relative positioning for positioning the content
+        fontFamily: "'Courier New', Courier, monospace", // Use Courier New for dot matrix printers
+        fontWeight: "bold", // Make text bold
+        letterSpacing: "0px", // No extra letter spacing for a clean appearance
       }}
     >
       <style>
@@ -29,7 +31,6 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
           justify-content: flex-start; /* Align content to the top */
           align-items: center;
         }
-
 
         @media print {
           body, html {
@@ -56,23 +57,27 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
           textAlign: "center",
           marginBottom: "3px",
           marginTop: "15px",
-          fontFamily: "'Courier New', Courier, monospace", // Use a monospaced font for dot matrix printers
-          letterSpacing: "2px", // Add letter spacing to spread out the characters
         }}
       >
         <h3 style={{ fontSize: "16px", fontWeight: "bold" }}>{header.title}</h3>
         {header.subTitle && (
-          <p style={{ fontSize: "14px", marginTop: "-10px" }}>
+          <p
+            style={{ fontSize: "14px", marginTop: "-10px", fontWeight: "bold" }}
+          >
             {header.subTitle}
           </p>
         )}
         {header.description && (
-          <p style={{ fontSize: "14px", marginTop: "-10px" }}>
+          <p
+            style={{ fontSize: "14px", marginTop: "-10px", fontWeight: "bold" }}
+          >
             {header.description}
           </p>
         )}
         {header.address && (
-          <p style={{ fontSize: "14px", marginTop: "-10px" }}>
+          <p
+            style={{ fontSize: "14px", marginTop: "-10px", fontWeight: "bold" }}
+          >
             {header.address} | {header.pin} | {header.phone}
           </p>
         )}
@@ -89,17 +94,17 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
         )}
       </div>
 
-      <div
-        style={{
-          marginBottom: "3px",
-          fontFamily: "'Courier New', Courier, monospace",
-          letterSpacing: "2px",
-        }}
-      >
+      <div style={{ marginBottom: "3px" }}>
         <Row>
           <Col>
             {header.customer && (
-              <p style={{ textDecoration: "underline", fontSize: "12px" }}>
+              <p
+                style={{
+                  textDecoration: "underline",
+                  fontSize: "12px",
+                  fontWeight: "bold",
+                }}
+              >
                 M/S.:&nbsp;&nbsp;&nbsp;{header.customer}
               </p>
             )}
@@ -107,10 +112,16 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
           <Col>
             {header.delivery_number && (
               <>
-                <p style={{ textDecoration: "underline", fontSize: "12px" }}>
+                <p
+                  style={{
+                    textDecoration: "underline",
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                  }}
+                >
                   Del No.:&nbsp;&nbsp;&nbsp;{header.delivery_number}
                 </p>
-                <p style={{ fontSize: "12px" }}>
+                <p style={{ fontSize: "12px", fontWeight: "bold" }}>
                   Date.:&nbsp;&nbsp;&nbsp;{header.date}
                 </p>
               </>
@@ -121,8 +132,6 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
 
       <table
         style={{
-          fontFamily: "'Courier New', Courier, monospace",
-          letterSpacing: "2px",
           fontSize: "12px",
           width: "100%",
           borderCollapse: "collapse",
@@ -137,8 +146,7 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
                 style={{
                   border: "1px solid black",
                   padding: "5px",
-                  fontFamily: "'Courier New', Courier, monospace",
-                  letterSpacing: "2px",
+                  fontWeight: "bold",
                 }}
               >
                 {col}
@@ -155,8 +163,7 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
                   style={{
                     border: "1px solid black",
                     padding: "5px",
-                    fontFamily: "'Courier New', Courier, monospace",
-                    letterSpacing: "2px",
+                    fontWeight: "bold",
                   }}
                 >
                   {cell}
@@ -169,18 +176,32 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
 
       {footer && (
         <div style={{ textAlign: "center", marginTop: "10px" }}>
-          <p style={{ fontSize: "12px", fontStyle: "italic" }}>{footer}</p>
+          <p
+            style={{
+              fontSize: "12px",
+              fontStyle: "italic",
+              fontWeight: "bold",
+            }}
+          >
+            {footer}
+          </p>
           <Row>
             <Col>
-              <p style={{ fontSize: "12px" }}>
+              <p style={{ fontSize: "12px", fontWeight: "bold" }}>
                 Received by .........................................
               </p>
             </Col>
             <Col>
-              <p style={{ fontSize: "12px" }}>
+              <p style={{ fontSize: "12px", fontWeight: "bold" }}>
                 Signature ..........................................
               </p>
-              <span style={{ fontSize: "12px", marginTop: "-10px" }}>
+              <span
+                style={{
+                  fontSize: "12px",
+                  marginTop: "-10px",
+                  fontWeight: "bold",
+                }}
+              >
                 Official Rubber stamp
               </span>
             </Col>
