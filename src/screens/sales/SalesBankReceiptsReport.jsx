@@ -92,14 +92,12 @@ const SalesBankReceiptsReport = () => {
         Header: "#",
         accessor: (row, index) => index + 1,
       },
-      { Header: "Entry date", accessor: "date" },
+      { Header: "Date", accessor: "created_at" },
 
-      { Header: "SO #", accessor: "sales_order_number" },
-      { Header: "Product", accessor: "item_name" },
-      { Header: "Quantity", accessor: "quantity" },
-      { Header: "@", accessor: "cost_per_item" },
-      { Header: "Created By", accessor: "created_by" },
-      { Header: "Total", accessor: "total" },
+      { Header: "Bank", accessor: "bank_name" },
+      { Header: "SP", accessor: "first_name" },
+      { Header: "Amount", accessor: "amount" },
+      { Header: "Ref", accessor: "reference" },
     ],
     []
   );
@@ -189,17 +187,15 @@ const SalesBankReceiptsReport = () => {
       {getData && getData.length > 0 ? (
         <>
           <Row>
-            <Col xs={3}>
+            <Col xs={8}>
               <Button
                 variant="primary"
                 type="button"
                 onClick={handleDownloadCSV}
               >
-                Download Report
+                Bank Receipt Statement
               </Button>
-            </Col>
-            <Col>
-              {" "}
+              &nbsp;&nbsp;
               <Button
                 variant="secondary"
                 type="button"
@@ -208,6 +204,7 @@ const SalesBankReceiptsReport = () => {
                 Clear filter
               </Button>
             </Col>
+            <Col> </Col>
           </Row>
           <br></br>
           <Row>
