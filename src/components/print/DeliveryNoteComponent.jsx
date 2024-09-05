@@ -30,6 +30,7 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
           align-items: center;
         }
 
+
         @media print {
           body, html {
             width: 100%;
@@ -54,29 +55,31 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
         style={{
           textAlign: "center",
           marginBottom: "3px",
-          marginTop: "9px",
+          marginTop: "15px",
+          fontFamily: "'Courier New', Courier, monospace", // Use a monospaced font for dot matrix printers
+          letterSpacing: "2px", // Add letter spacing to spread out the characters
         }}
       >
-        <h3 style={{ fontSize: "12px", fontWeight: "bold" }}>{header.title}</h3>
+        <h3 style={{ fontSize: "16px", fontWeight: "bold" }}>{header.title}</h3>
         {header.subTitle && (
-          <p style={{ fontSize: "11px", marginTop: "-10px" }}>
+          <p style={{ fontSize: "14px", marginTop: "-10px" }}>
             {header.subTitle}
           </p>
         )}
         {header.description && (
-          <p style={{ fontSize: "11px", marginTop: "-15px" }}>
+          <p style={{ fontSize: "14px", marginTop: "-10px" }}>
             {header.description}
           </p>
         )}
         {header.address && (
-          <p style={{ fontSize: "11px", marginTop: "-15px" }}>
+          <p style={{ fontSize: "14px", marginTop: "-10px" }}>
             {header.address} | {header.pin} | {header.phone}
           </p>
         )}
         {header.invoice_number && (
           <p
             style={{
-              fontSize: "11px",
+              fontSize: "12px",
               marginTop: "-15px",
               fontWeight: "bold",
             }}
@@ -86,23 +89,29 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
         )}
       </div>
 
-      <div style={{ marginBottom: "3px" }}>
+      <div
+        style={{
+          marginBottom: "3px",
+          fontFamily: "'Courier New', Courier, monospace",
+          letterSpacing: "2px",
+        }}
+      >
         <Row>
           <Col>
             {header.customer && (
-              <p style={{ textDecoration: "underline", fontSize: "11px" }}>
-                M/S.:&nbsp; &nbsp; &nbsp;{header.customer}
+              <p style={{ textDecoration: "underline", fontSize: "12px" }}>
+                M/S.:&nbsp;&nbsp;&nbsp;{header.customer}
               </p>
             )}
           </Col>
           <Col>
             {header.delivery_number && (
               <>
-                <p style={{ textDecoration: "underline", fontSize: "11px" }}>
-                  Del No.:&nbsp; &nbsp; &nbsp;{header.delivery_number}
+                <p style={{ textDecoration: "underline", fontSize: "12px" }}>
+                  Del No.:&nbsp;&nbsp;&nbsp;{header.delivery_number}
                 </p>
-                <p style={{ fontSize: "11px" }}>
-                  Date.:&nbsp; &nbsp; &nbsp;{header.date}
+                <p style={{ fontSize: "12px" }}>
+                  Date.:&nbsp;&nbsp;&nbsp;{header.date}
                 </p>
               </>
             )}
@@ -112,7 +121,9 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
 
       <table
         style={{
-          fontSize: "11px",
+          fontFamily: "'Courier New', Courier, monospace",
+          letterSpacing: "2px",
+          fontSize: "12px",
           width: "100%",
           borderCollapse: "collapse",
           marginTop: "3px",
@@ -123,7 +134,12 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
             {body.columns?.map((col, index) => (
               <th
                 key={index}
-                style={{ border: "1px solid black", padding: "5px" }}
+                style={{
+                  border: "1px solid black",
+                  padding: "5px",
+                  fontFamily: "'Courier New', Courier, monospace",
+                  letterSpacing: "2px",
+                }}
               >
                 {col}
               </th>
@@ -136,7 +152,12 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
               {row.map((cell, cellIndex) => (
                 <td
                   key={cellIndex}
-                  style={{ border: "1px solid black", padding: "5px" }}
+                  style={{
+                    border: "1px solid black",
+                    padding: "5px",
+                    fontFamily: "'Courier New', Courier, monospace",
+                    letterSpacing: "2px",
+                  }}
                 >
                   {cell}
                 </td>
@@ -148,18 +169,18 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
 
       {footer && (
         <div style={{ textAlign: "center", marginTop: "10px" }}>
-          <p style={{ fontSize: "11px", fontStyle: "italic" }}>{footer}</p>
+          <p style={{ fontSize: "12px", fontStyle: "italic" }}>{footer}</p>
           <Row>
             <Col>
-              <p style={{ fontSize: "11px" }}>
+              <p style={{ fontSize: "12px" }}>
                 Received by .........................................
               </p>
             </Col>
             <Col>
-              <p style={{ fontSize: "11px" }}>
+              <p style={{ fontSize: "12px" }}>
                 Signature ..........................................
               </p>
-              <span style={{ fontSize: "11px", marginTop: "-10px" }}>
+              <span style={{ fontSize: "12px", marginTop: "-10px" }}>
                 Official Rubber stamp
               </span>
             </Col>
