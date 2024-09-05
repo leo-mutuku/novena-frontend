@@ -1,6 +1,9 @@
 import React, { useEffect, useMemo } from "react";
 import { useDetailedSPOrderReportMutation } from "../../slices/sales/salesOrderLinesApiSlice";
-import { useGetAllBankAccountsQuery } from "../../slices/finance/bankAccountsApiSlice";
+import {
+  useGetAllBankAccountsQuery,
+  useSalesBankReceiptReportMutation,
+} from "../../slices/finance/bankAccountsApiSlice";
 
 import {
   useSalesPeopleStatementMutation,
@@ -26,11 +29,13 @@ const SalesBankReceiptsReport = () => {
   const [supplier_filter, set_supplier_filter] = React.useState("");
   const [product_filter, set_product_filter] = React.useState("");
   const [bank, set_bank] = React.useState("");
+  const [] = useDetailedSPOrderReportMutation();
   const [setData, { isLoading, isSuccess, isError }] =
-    useDetailedSPOrderReportMutation();
+    useSalesBankReceiptReportMutation();
+  const { data: bankAccounts } = useGetAllBankAccountsQuery();
 
   const loaddata = async () => {
-    if (!staff_id || !start_date || !end_date) {
+    if (!staff_id || !start_date || !end_date || !bank) {
       toast.error("Please select sales person, start and end date");
       return;
     }
@@ -38,6 +43,7 @@ const SalesBankReceiptsReport = () => {
       staff_id,
       start_date,
       end_date,
+      bank,
     }).unwrap();
 
     if (data?.data?.length) {
@@ -101,8 +107,6 @@ const SalesBankReceiptsReport = () => {
     ],
     []
   );
-
-  const { data: bankAccounts } = useGetAllBankAccountsQuery();
 
   return (
     <>
