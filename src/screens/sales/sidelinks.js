@@ -19,7 +19,10 @@ export const sidelinks = [
     subMenus: [
       { subMenuTitle: "Sales People", to: "salespeople" },
       { subMenuTitle: "Loading List", to: "loadinglist" },
-      // { subMenuTitle: "Statement", to: "statement" },
+      {
+        subMenuTitle: "Sales bank Receipt Reports",
+        to: "salesbankreceiptreport",
+      },
       { subMenuTitle: "SP Sales Report", to: "salespeoplereport" },
       { subMenuTitle: "Detailed SP Order Report", to: "detailedsporderreport" },
       // { subMenuTitle: "Detailed SP Return Report", to: "#" },
