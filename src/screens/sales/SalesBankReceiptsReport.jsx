@@ -35,21 +35,25 @@ const SalesBankReceiptsReport = () => {
   const { data: bankAccounts } = useGetAllBankAccountsQuery();
 
   const loaddata = async () => {
-    if (!staff_id || !start_date || !end_date || !bank) {
-      toast.error("Please select sales person, start and end date");
-      return;
-    }
-    const data = await setData({
-      staff_id,
-      start_date,
-      end_date,
-      bank,
-    }).unwrap();
+    try {
+      if (!staff_id || !start_date || !end_date || !bank) {
+        toast.error("Please select sales person, start and end date");
+        return;
+      }
+      const res = await setData({
+        staff_id,
+        start_date,
+        end_date,
+        bank,
+      }).unwrap();
 
-    if (data?.data?.length) {
-      setGetData(data?.data);
-    } else {
-      toast.error("No data found");
+      if (res?.status === "success") {
+        setGetData(res?.data);
+      } else {
+        toast.error("No data found");
+      }
+    } catch (error) {
+      toast.error(error?.data?.message);
     }
   };
 
