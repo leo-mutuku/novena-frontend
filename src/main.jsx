@@ -361,6 +361,7 @@ import SupplierStatement from "./screens/payment/payments/purchases/SupplierStat
 import FixedRate from "./screens/payroll/salespeoplecommissionmgt/FixedRate.jsx";
 import RemoveItem from "./screens/payroll/salespeoplecommissionsetup/RemoveItem.jsx";
 import AddItem from "./screens/payroll/salespeoplecommissionsetup/AddItem.jsx";
+import SalesBankReceiptsReport from "./screens/sales/SalesBankReceiptsReport.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -923,6 +924,10 @@ const router = createHashRouter(
           <Route
             path="detailedsporderreport"
             element={<DetailedSPOrderReport />}
+          ></Route>
+          <Route
+            path="salesbankreceiptreport"
+            element={<SalesBankReceiptsReport />}
           ></Route>
           <Route
             path="salespeoplereport"
