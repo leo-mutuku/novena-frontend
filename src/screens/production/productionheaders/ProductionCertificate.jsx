@@ -50,7 +50,6 @@ const ProductionCertificate = () => {
   );
 
   const { data: productionReport } = useProductionCertificateQuery(id);
-  console.log(JSON.stringify(productionReport?.data));
 
   const documentData = {
     header: headers,

@@ -16,8 +16,11 @@ import { Row, Col, Form } from "react-bootstrap";
 
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import CashFlowAnalysisComp from "../../../components/print/CashFlowAnalysisComp";
+import PrintButton from "../../../components/print/PrintButton";
 
 const CostOfProductionList = () => {
+  const componentRef = React.useRef();
   const [columns_header, set_columns_header] = useState([]);
   const [columns_body, set_columns_body] = useState([]);
   const [footer_header, set_footer_header] = useState([]);
@@ -40,146 +43,57 @@ const CostOfProductionList = () => {
     filename: "",
   });
 
-  const handleDownloadPDF = async () => {
-    setLoadingPdf(true);
-    try {
-      const response = await axios({
-        url: `${baseUrlJasper}/all/accounts/pdf`, // Endpoint on your Node.js server
-        method: "GET",
-        responseType: "blob", // Important: responseType 'blob' for binary data
-      });
-      const blob = new Blob([response.data], { type: "application/pdf" });
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "all-accounts-report.pdf");
-      document.body.appendChild(link);
-      link.click();
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("Error downloading PDF:", error);
-    } finally {
-      setLoadingPdf(false);
-    }
-  };
+  const [headers, setHeaders] = useState({
+    title: "COST OF PRODUCTION ",
+    subTitle: "Novena Maize Miller LTD",
+    description: "Dealers in: All types of cereals, Animal feeds",
+    address: "P.O Box 238, Meru, Kenya",
+    start: "08/08/2024",
+    end: "08/08/2024",
+    batch_number: "",
+    deliveryNumber: "10301",
+    input: 0,
+    output: 0,
+    expected: 0,
+    variance: 0,
+  });
+  const [columns, setColumns] = useState(["Product", "Quantity"]);
+  const [rows, setRows] = useState([
+    ["Product B", "200"],
+    ["Product C", "150"],
+    ["Product A", "100"],
+    ["Product B", "200"],
+    ["Product C", "150"],
+  ]);
 
-  const handleDownloadExcel = async () => {
-    setLoadingExcel(true);
-    try {
-      const response = await axios({
-        url: `${baseUrlJasper}/all/accounts/excel`, // Endpoint on your Node.js server
-        method: "GET",
-        responseType: "blob", // Important: responseType 'blob' for binary data
-      });
-      const blob = new Blob([response.data], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      });
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "all-accounts-report.xlsx");
-      document.body.appendChild(link);
-      link.click();
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("Error downloading Excel:", error);
-    } finally {
-      setLoadingExcel(false);
-    }
-  };
-
-  const handlePrintA6 = (e) => {
-    set_title({
-      ...title,
-      report_title: `Balance Statement for ${e.target.name} - GL Number ${e.target.id}`,
-    });
-    console.log(title);
-    const doc = new jsPDF("p", "mm", "a4");
-    doc.setLineWidth(2);
-    //head
-    doc.setFontSize(22);
-    doc.setFont("times");
-    doc.text(50, 25, "NOVENA MAIZE MILLERS LTD");
-    doc.setFontSize(14);
-    doc.text(80, 32, "Po Box 238 Meru");
-    doc.setFontSize(12);
-    doc.text(75, 37, `Date : ${title.date}`);
-    autoTable(doc, { html: "#my-table" });
-    autoTable(doc, { html: "#my-table" });
-    autoTable(doc, { html: "#my-table" });
-    autoTable(doc, { html: "#my-table" });
-    autoTable(doc, { html: "#my-table" });
-    doc.setFontSize(10);
-    doc.text(12, 43, `# ${title.report_title}`);
-    doc.text(80, 43, `KRA PIN P63426847C`);
-    doc.text(130, 43, `Generate By: ${title.generated_by}`);
-
-    //body
-    autoTable(doc, {
-      columnStyles: { europe: { halign: "center" } },
-      columns: columns_header,
-      body: columns_body,
-    });
-    //footer
-    autoTable(doc, {
-      columns: footer_header,
-      body: footer_data,
-    });
-
-    doc.save(`${title.filename}.pdf`);
-  };
-
-  const columns = useMemo(
-    () => [
-      {
-        Header: "#",
-        accessor: (row, index) => index + 1,
-      },
-      {
-        Header: "GL Name",
-        accessor: "gl_name",
-      },
-
-      {
-        Header: "Created At",
-        accessor: "created_at",
-        Cell: ({ value }) => (
-          <span>{`${moment(value).format("YYYY-MM-DD")} : ${moment(
-            value
-          ).format("HH:mm A")}`}</span>
-        ),
-      },
-
-      {
-        Header: "Gl Number",
-        accessor: "gl_number",
-        // Cell: () => (
-        //   <Link to="#">
-        //     <IoMdEye />
-        //   </Link>
-        // ),
-      },
-      {
-        Header: "Edit",
-        accessor: "edit",
-        Cell: ({ row }) => (
-          <Link to={`/finance/gl/updategl/${row.original.gl_id}`}>
-            <CiEdit />
-          </Link>
-        ),
-      },
-      {
-        Header: "View",
-        accessor: "view",
-        Cell: () => (
-          <Link to="#">
-            <IoMdEye />
-          </Link>
-        ),
-      },
-    ],
-    []
+  const [columns1, setColumns1] = useState(["Product", "Quantity"]);
+  const [rows1, setRows1] = useState([
+    ["Product B", "200"],
+    ["Product C", "150"],
+    ["Product A", "100"],
+    ["Product B", "200"],
+    ["Product C", "150"],
+  ]);
+  const [footer, setFooter] = useState(
+    "Your Satisfaction is our number one priority!"
   );
+
+  const body = {
+    columns: columns,
+    rows: rows,
+    columns1: columns1,
+    rows1: rows1,
+  };
+  const documentData = {
+    header: headers,
+    body: {
+      columns: columns,
+      rows: rows,
+      columns1: columns1,
+      rows1: rows1,
+    },
+    footer: footer,
+  };
 
   return (
     <>
@@ -218,7 +132,8 @@ const CostOfProductionList = () => {
           </Col>
         </Row>
       </div>
-      <DataTable columns={columns} data={tableData} />
+      <PrintButton componentRef={componentRef} {...documentData} />
+      <CashFlowAnalysisComp header={headers} body={body} footer={footer} />
     </>
   );
 };
