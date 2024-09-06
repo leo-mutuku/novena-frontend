@@ -27,6 +27,22 @@ export const accountsApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Account"],
     }),
+    cashflowAnalysis: builder.mutation({
+      query: (data) => ({
+        url: `${ACCOUNTS_URL}/cashflowanalysis`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Account"],
+    }),
+    salesIncome: builder.mutation({
+      query: (data) => ({
+        url: `${ACCOUNTS_URL}/salesincome`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Account"],
+    }),
     createAccount: builder.mutation({
       query: (data) => ({
         url: `${ACCOUNTS_URL}/createaccount`,
@@ -52,4 +68,6 @@ export const {
   useCreateAccountMutation,
   useUpdateAccountByIdMutation,
   useGetAccountByIdQuery,
+  useSalesIncomeMutation,
+  useCashflowAnalysisMutation,
 } = accountsApiSlice;

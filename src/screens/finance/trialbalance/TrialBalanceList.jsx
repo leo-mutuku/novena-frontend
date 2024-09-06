@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { useSalesIncomeMutation } from "../../../slices/finance/accountsApiSlice";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
 import { useGetAllGLAccountsQuery } from "../../../slices/finance/glApiSlice";
@@ -16,8 +17,9 @@ import { Row, Col, Form } from "react-bootstrap";
 
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import CashFlowAnalysisComp from "../../../components/print/CashFlowAnalysisComp";
+import SalesIncomeComp from "../../../components/print/SalesIncomeComp";
 import PrintButton from "../../../components/print/PrintButton";
+import { toast } from "react-toastify";
 
 const TrialBalanceList = () => {
   const componentRef = React.useRef();
@@ -29,6 +31,8 @@ const TrialBalanceList = () => {
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
   const { data, isLoading } = useGetAllGLAccountsQuery();
+  const [getSalesIncome, { isLoading: isSalesIncomeLoading }] =
+    useSalesIncomeMutation();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   useEffect(() => {
@@ -95,6 +99,21 @@ const TrialBalanceList = () => {
     footer: footer,
   };
 
+  const handLoadBtn = async () => {
+    try {
+      const response = await getSalesIncome({
+        startDate: startDate,
+        endDate: endDate,
+      });
+
+      if (response?.status == "success") {
+      } else {
+      }
+    } catch (error) {
+      toast.error(error.data.message || "Something went wrong");
+    }
+  };
+
   return (
     <>
       <div>
@@ -125,7 +144,7 @@ const TrialBalanceList = () => {
             <Button
               style={{ marginTop: "10px" }}
               variant="primary"
-              onClick={""}
+              onClick={handLoadBtn}
             >
               Load
             </Button>
@@ -133,7 +152,7 @@ const TrialBalanceList = () => {
         </Row>
       </div>
       <PrintButton componentRef={componentRef} {...documentData} />
-      <CashFlowAnalysisComp header={headers} body={body} footer={footer} />
+      <SalesIncomeComp header={headers} body={body} footer={footer} />
     </>
   );
 };

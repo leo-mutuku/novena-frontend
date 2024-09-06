@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { useCashflowAnalysisMutation } from "../../../slices/finance/accountsApiSlice";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
 import { useGetAllGLAccountsQuery } from "../../../slices/finance/glApiSlice";
@@ -18,6 +19,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import CashFlowAnalysisComp from "../../../components/print/CashFlowAnalysisComp";
 import PrintButton from "../../../components/print/PrintButton";
+import { toast } from "react-toastify";
 
 const CashFlowList = () => {
   const componentRef = React.useRef();
@@ -29,6 +31,9 @@ const CashFlowList = () => {
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
   const { data, isLoading } = useGetAllGLAccountsQuery();
+  const [cashflowAnalysis, { isLoading: isCashflowAnalysisLoading }] =
+    useCashflowAnalysisMutation();
+
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   useEffect(() => {
@@ -94,6 +99,19 @@ const CashFlowList = () => {
     },
     footer: footer,
   };
+  const handleLoad = async () => {
+    if (!startDate || !endDate) {
+      toast.error("Please select start and end dates");
+      return;
+    }
+
+    const res = await cashflowAnalysis({ startDate, endDate }).unwrap();
+    if (res?.status === "success") {
+      toast.success(res.message);
+    } else {
+      toast.error(res.message);
+    }
+  };
 
   return (
     <>
@@ -125,7 +143,7 @@ const CashFlowList = () => {
             <Button
               style={{ marginTop: "10px" }}
               variant="primary"
-              onClick={""}
+              onClick={handleLoad}
             >
               Load
             </Button>
