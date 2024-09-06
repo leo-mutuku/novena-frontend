@@ -126,7 +126,7 @@ const Statement = forwardRef(({ header1, header2, sumarry, body }, ref) => {
         <div
           style={{
             border: "1px solid #ccc",
-            padding: "16px 8px 8px 8px",
+            padding: "14px 8px 8px 8px",
             marginTop: "10px",
           }}
         >
@@ -195,8 +195,9 @@ const Statement = forwardRef(({ header1, header2, sumarry, body }, ref) => {
                     key={index}
                     style={{
                       border: "1px solid #ccc",
-                      padding: "4px",
-                      fontSize: "11px",
+                      padding: "8px",
+                      fontSize: "16px",
+                      fontWeight: "bold",
                     }}
                   >
                     {col}
@@ -213,8 +214,8 @@ const Statement = forwardRef(({ header1, header2, sumarry, body }, ref) => {
                       key={cellIndex}
                       style={{
                         border: "1px solid #ccc",
-                        padding: "4px",
-                        fontSize: "11px",
+                        padding: "8px",
+                        fontSize: "16px",
                       }}
                     >
                       {cell}

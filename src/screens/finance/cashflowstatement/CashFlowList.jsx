@@ -12,6 +12,7 @@ import PrintA4A5ExcelButton from "../../../components/PrintA4A5ExcelButton";
 import DataTable from "../../../components/general/DataTable";
 import moment from "moment";
 import axios from "axios";
+import { Row, Col, Form } from "react-bootstrap";
 
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
@@ -25,6 +26,8 @@ const CashFlowList = () => {
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
   const { data, isLoading } = useGetAllGLAccountsQuery();
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);
@@ -150,11 +153,6 @@ const CashFlowList = () => {
       {
         Header: "Gl Number",
         accessor: "gl_number",
-        // Cell: () => (
-        //   <Link to="#">
-        //     <IoMdEye />
-        //   </Link>
-        // ),
       },
       {
         Header: "Edit",
@@ -180,7 +178,41 @@ const CashFlowList = () => {
 
   return (
     <>
-      <p>*** All GL ***</p>
+      <div>
+        <Row>
+          <Col>
+            <Form.Group className="my-2" controlId="cash_account_id">
+              <Form.Control
+                type="date"
+                required
+                placeholder="cash_account_id"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="my-2" controlId="cash_account_id">
+              <Form.Control
+                type="date"
+                required
+                placeholder="cash_account_id"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+          <Col xs={2}>
+            <Button
+              style={{ marginTop: "10px" }}
+              variant="primary"
+              onClick={""}
+            >
+              Load
+            </Button>
+          </Col>
+        </Row>
+      </div>
       <DataTable columns={columns} data={tableData} />
     </>
   );

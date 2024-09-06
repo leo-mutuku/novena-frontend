@@ -52,12 +52,12 @@ export const sidelinks = [
   {
     menuTitle: "Financial Reports",
     subMenus: [
-      { subMenuTitle: "Trial Balance", to: "trialbalance" },
-      { subMenuTitle: "Profit & Loss Statement", to: "profitandlossstatement" },
-      { subMenuTitle: "Balance Sheet", to: "balancesheet" },
       { subMenuTitle: "Cash Flow Analysis", to: "cashflowanalysis" },
       { subMenuTitle: "Cost of Production", to: "costofproduction" },
       { subMenuTitle: "Income Statement", to: "incomestatement" },
+      { subMenuTitle: "Sales income", to: "trialbalance" },
+      // { subMenuTitle: "Profit & Loss Statement", to: "profitandlossstatement" },
+      // { subMenuTitle: "Balance Sheet", to: "balancesheet" },
     ],
   },
 ];

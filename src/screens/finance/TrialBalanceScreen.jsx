@@ -1,5 +1,5 @@
 import PageActionComponent from "../../components/PageActionComponent";
-const pagemenus = [{ pagename: "TB", to: "alltb" }];
+const pagemenus = [{ pagename: "Sales Income", to: "alltb" }];
 
 function TrialBalanceScreen() {
   return (

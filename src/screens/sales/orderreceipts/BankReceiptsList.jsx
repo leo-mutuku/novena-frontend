@@ -11,6 +11,7 @@ import moment from "moment";
 import axios from "axios";
 import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
 import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
+import { GrRevert } from "react-icons/gr";
 
 const BankReceipts = () => {
   const { data: orders, isLoading } = useGetAllSalesBankReceptsQuery();
@@ -63,6 +64,10 @@ const BankReceipts = () => {
     }
   };
 
+  const handleReverse = () => {
+    alert("reverse login here");
+  };
+
   const handleDownloadExcel = async () => {
     setLoadingExcel(true);
     try {
@@ -112,6 +117,15 @@ const BankReceipts = () => {
         accessor: "amount",
       },
       { Header: "Captured by", accessor: "create_by" },
+      {
+        Header: "Reverse",
+        accessor: "reverse",
+        Cell: ({ row }) => (
+          <Button onClick={() => handleReverse(row.original.id)}>
+            <GrRevert />
+          </Button>
+        ),
+      },
     ],
     []
   );

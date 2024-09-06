@@ -15,6 +15,7 @@ import axios from "axios";
 
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { Row, Col, Form } from "react-bootstrap";
 
 const IncomeStatementList = () => {
   const [columns_header, set_columns_header] = useState([]);
@@ -25,6 +26,8 @@ const IncomeStatementList = () => {
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
   const { data, isLoading } = useGetAllGLAccountsQuery();
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);
@@ -180,7 +183,41 @@ const IncomeStatementList = () => {
 
   return (
     <>
-      <p>*** All GL ***</p>
+      <div>
+        <Row>
+          <Col>
+            <Form.Group className="my-2" controlId="cash_account_id">
+              <Form.Control
+                type="date"
+                required
+                placeholder="cash_account_id"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="my-2" controlId="cash_account_id">
+              <Form.Control
+                type="date"
+                required
+                placeholder="cash_account_id"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+          <Col xs={2}>
+            <Button
+              style={{ marginTop: "10px" }}
+              variant="primary"
+              onClick={""}
+            >
+              Load
+            </Button>
+          </Col>
+        </Row>
+      </div>
       <DataTable columns={columns} data={tableData} />
     </>
   );
