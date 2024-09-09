@@ -4,6 +4,8 @@ import {
   useGetAllBankAccountsQuery,
   useSalesBankReceiptReportMutation,
 } from "../../slices/finance/bankAccountsApiSlice";
+import { BsFileEarmarkExcel } from "react-icons/bs";
+import { FaRegFilePdf } from "react-icons/fa";
 
 import {
   useSalesPeopleStatementMutation,
@@ -48,7 +50,11 @@ const SalesBankReceiptsReport = () => {
       }).unwrap();
 
       if (res?.status === "success") {
-        setGetData(res?.data);
+        if (res?.data?.length > 0) {
+          setGetData(res?.data);
+        } else {
+          toast.error("No data found");
+        }
       } else {
         toast.error("No data found");
       }
@@ -111,6 +117,24 @@ const SalesBankReceiptsReport = () => {
     ],
     []
   );
+
+  const handlePdfDwnld = async () => {
+    toast.success(
+      "Sorry this function will be updated shortly, in the meantime please refer to the excel format"
+    );
+    // const toastId = toast.loading("Generating PDF...");
+
+    // Introduce a delay of 5 seconds
+    // setTimeout(() => {
+    //   toast.update(toastId, {
+    //     render:
+    //       "Sorry the pdf function will be updated shortly, in the meantime please refer to the excel format.",
+    //     type: "error",
+    //     isLoading: false,
+    //     autoClose: 500, // Automatically close the toast after 5 seconds
+    //   });
+    // }, 5000);
+  };
 
   return (
     <>
@@ -196,12 +220,12 @@ const SalesBankReceiptsReport = () => {
         <>
           <Row>
             <Col xs={8}>
-              <Button
-                variant="primary"
-                type="button"
-                onClick={handleDownloadCSV}
-              >
-                Bank Receipt Statement
+              <Button variant="info" type="button" onClick={handleDownloadCSV}>
+                Bank Receipt Statement <BsFileEarmarkExcel />
+              </Button>
+              &nbsp;&nbsp;
+              <Button variant="danger" type="button" onClick={handlePdfDwnld}>
+                Bank Receipt Statement <FaRegFilePdf />
               </Button>
               &nbsp;&nbsp;
               <Button
