@@ -71,7 +71,7 @@ const SalesBankReceiptsReport = () => {
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", `Detailed_sales_person_report.csv`);
+      link.setAttribute("download", `Banks Receipts Statement.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
