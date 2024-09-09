@@ -98,11 +98,8 @@ const SalesIncomeComp = forwardRef(({ header, body, footer }, ref) => {
           <Col>
             <Row>
               <Col>
-                {header?.input && (
-                  <p>PRODUCTION INPUT:&nbsp; &nbsp; &nbsp;{header?.input} </p>
-                )}
-                {header?.expected && (
-                  <p>EXPECTED OUTPUT:&nbsp; &nbsp; &nbsp;{header?.expected} </p>
+                {header?.total_sales && (
+                  <p>T.Sales:&nbsp; &nbsp; &nbsp;{header?.total_sales} </p>
                 )}
               </Col>
             </Row>
@@ -110,11 +107,17 @@ const SalesIncomeComp = forwardRef(({ header, body, footer }, ref) => {
           <Col>
             <Row>
               <Col>
-                {header?.output && (
-                  <p>OUTPUT:&nbsp; &nbsp; &nbsp;{header?.output}</p>
+                {header?.total_return && (
+                  <p>T.Returns:&nbsp; &nbsp; &nbsp; {header?.total_return} </p>
                 )}
-                {header?.variance && (
-                  <p>VARIANCE:&nbsp; &nbsp; &nbsp; {header?.variance} </p>
+              </Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>
+                {!header?.variance && (
+                  <p>N.Sales:&nbsp; &nbsp; &nbsp; {header?.variance} </p>
                 )}
               </Col>
             </Row>
@@ -123,7 +126,7 @@ const SalesIncomeComp = forwardRef(({ header, body, footer }, ref) => {
       </div>
       <br />
       <Divider textAlign="left">
-        <Chip label="Details" size="small" />
+        <Chip label="Sales" size="small" />
       </Divider>
       <table
         style={{ width: "100%", borderCollapse: "collapse", marginTop: "10px" }}
@@ -156,6 +159,39 @@ const SalesIncomeComp = forwardRef(({ header, body, footer }, ref) => {
         </tbody>
       </table>
       <br />
+      <Divider textAlign="left">
+        <Chip label="Returns" size="small" />
+      </Divider>
+      <table
+        style={{ width: "100%", borderCollapse: "collapse", marginTop: "10px" }}
+      >
+        <thead>
+          <tr>
+            {body?.columns.map((col, index) => (
+              <th
+                key={index}
+                style={{ border: "1px solid black", padding: "8px" }}
+              >
+                {col}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {body?.rows.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {row.map((cell, cellIndex) => (
+                <td
+                  key={cellIndex}
+                  style={{ border: "1px solid black", padding: "8px" }}
+                >
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
       {footer && (
         <div style={{ marginTop: "10px", textAlign: "center" }}>

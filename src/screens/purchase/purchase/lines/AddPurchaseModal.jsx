@@ -235,11 +235,16 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
                         >
                           {" "}
                           <option>Item</option>
-                          {item_register?.data?.map((item, index) => (
-                            <option value={item.item_code} key={index}>
-                              {item.item_code} | {item.item_name}
-                            </option>
-                          ))}
+                          {item_register?.data
+                            ?.filter(
+                              (item) =>
+                                item.item_code < 100 || item.item_code > 300
+                            )
+                            .map((item, index) => (
+                              <option value={item.item_code} key={index}>
+                                {item.item_code} | {item.item_name}
+                              </option>
+                            ))}
                         </Form.Select>
                       </Form.Group>
                     </Col>

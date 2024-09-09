@@ -52,10 +52,13 @@ const TrialBalanceList = () => {
     subTitle: "Novena Maize Miller LTD",
     description: "Dealers in: All types of cereals, Animal feeds",
     address: "P.O Box 238, Meru, Kenya",
-    start: "08/08/2024",
-    end: "08/08/2024",
+    start: startDate,
+    end: endDate,
     batch_number: "",
     deliveryNumber: "10301",
+    total_sales: 0,
+    total_return: 0,
+    net_sales: 0,
     input: 0,
     output: 0,
     expected: 0,
@@ -104,9 +107,18 @@ const TrialBalanceList = () => {
       const response = await getSalesIncome({
         startDate: startDate,
         endDate: endDate,
-      });
+      }).unwrap();
 
       if (response?.status == "success") {
+        alert(JSON.stringify(response?.data));
+        setHeaders({
+          ...headers,
+          start: startDate,
+          end: endDate,
+          total_sales: response?.data?.sales_total,
+          total_return: response?.data?.returns_total,
+          net_sales: response?.data?.net_total,
+        });
       } else {
       }
     } catch (error) {
