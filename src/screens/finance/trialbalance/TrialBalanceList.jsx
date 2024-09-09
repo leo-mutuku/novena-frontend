@@ -65,22 +65,10 @@ const TrialBalanceList = () => {
     variance: 0,
   });
   const [columns, setColumns] = useState(["Product", "Code", "Qty", "Amt"]);
-  const [rows, setRows] = useState([
-    ["Product B", "200"],
-    ["Product C", "150"],
-    ["Product A", "100"],
-    ["Product B", "200"],
-    ["Product C", "150"],
-  ]);
+  const [rows, setRows] = useState([]);
 
   const [columns1, setColumns1] = useState(["Product", "Code", "Qty", "Amt"]);
-  const [rows1, setRows1] = useState([
-    ["Product B", "200"],
-    ["Product C", "150"],
-    ["Product A", "100"],
-    ["Product B", "200"],
-    ["Product C", "150"],
-  ]);
+  const [rows1, setRows1] = useState([]);
   const [footer, setFooter] = useState(
     "Your Satisfaction is our number one priority!"
   );
@@ -191,8 +179,13 @@ const TrialBalanceList = () => {
           </Col>
         </Row>
       </div>
-      <PrintButton componentRef={componentRef} {...documentData} />
-      <SalesIncomeComp header={headers} body={body} footer={footer} />
+      {tableData && (
+        <>
+          {" "}
+          <PrintButton componentRef={componentRef} {...documentData} />
+          <SalesIncomeComp header={headers} body={body} footer={footer} />
+        </>
+      )}
     </>
   );
 };
