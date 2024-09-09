@@ -64,7 +64,7 @@ const TrialBalanceList = () => {
     expected: 0,
     variance: 0,
   });
-  const [columns, setColumns] = useState(["Product", "Quantity"]);
+  const [columns, setColumns] = useState(["Product", "Code", "Qty", "Amt"]);
   const [rows, setRows] = useState([
     ["Product B", "200"],
     ["Product C", "150"],
@@ -73,7 +73,7 @@ const TrialBalanceList = () => {
     ["Product C", "150"],
   ]);
 
-  const [columns1, setColumns1] = useState(["Product", "Quantity"]);
+  const [columns1, setColumns1] = useState(["Product", "Code", "Qty", "Amt"]);
   const [rows1, setRows1] = useState([
     ["Product B", "200"],
     ["Product C", "150"],
@@ -110,7 +110,6 @@ const TrialBalanceList = () => {
       }).unwrap();
 
       if (response?.status == "success") {
-        alert(JSON.stringify(response?.data));
         setHeaders({
           ...headers,
           start: startDate,
@@ -119,12 +118,41 @@ const TrialBalanceList = () => {
           total_return: response?.data?.returns_total,
           net_sales: response?.data?.net_total,
         });
+        setRows(
+          response?.data?.sales?.map((item) => [
+            item?.item_name,
+            item.item_code,
+            item?.quantity,
+            item?.total_cost,
+          ])
+        );
+        setRows1(
+          response?.data?.returns?.map((item) => [
+            item?.item_name,
+            item.item_code,
+            item?.quantity,
+            item?.total_cost,
+          ])
+        );
       } else {
       }
     } catch (error) {
       toast.error(error.data.message || "Something went wrong");
     }
   };
+
+  // useEffect(() => {
+  //   // setRows(
+  //   //   tableData.sales?.map((item) => [
+  //   //     item?.item_name,
+  //   //     item?.quanity,
+  //   //     item?.total_cost,
+  //   //   ])
+  //   // );
+  //   // setRows1(
+  //   //   response?.data?.returns?.map((item) => [item?.product_name, item?.qty])
+  //   // );
+  // }, [tableData]);
 
   return (
     <>

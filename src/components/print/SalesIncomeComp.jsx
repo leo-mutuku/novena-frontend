@@ -99,7 +99,7 @@ const SalesIncomeComp = forwardRef(({ header, body, footer }, ref) => {
             <Row>
               <Col>
                 {header?.total_sales && (
-                  <p>T.Sales:&nbsp; &nbsp; &nbsp;{header?.total_sales} </p>
+                  <p>Gross Sales:&nbsp; &nbsp; &nbsp;{header?.total_sales} </p>
                 )}
               </Col>
             </Row>
@@ -108,7 +108,7 @@ const SalesIncomeComp = forwardRef(({ header, body, footer }, ref) => {
             <Row>
               <Col>
                 {header?.total_return && (
-                  <p>T.Returns:&nbsp; &nbsp; &nbsp; {header?.total_return} </p>
+                  <p>Returns:&nbsp; &nbsp; &nbsp; {header?.total_return} </p>
                 )}
               </Col>
             </Row>
@@ -116,8 +116,8 @@ const SalesIncomeComp = forwardRef(({ header, body, footer }, ref) => {
           <Col>
             <Row>
               <Col>
-                {!header?.variance && (
-                  <p>N.Sales:&nbsp; &nbsp; &nbsp; {header?.variance} </p>
+                {header?.net_sales && (
+                  <p>Net Sales:&nbsp; &nbsp; &nbsp; {header?.net_sales} </p>
                 )}
               </Col>
             </Row>
@@ -178,7 +178,7 @@ const SalesIncomeComp = forwardRef(({ header, body, footer }, ref) => {
           </tr>
         </thead>
         <tbody>
-          {body?.rows.map((row, rowIndex) => (
+          {body?.rows1.map((row, rowIndex) => (
             <tr key={rowIndex}>
               {row.map((cell, cellIndex) => (
                 <td
