@@ -77,13 +77,7 @@ const CashFlowList = () => {
     "Outflow",
     "NetFlow",
   ]);
-  const [rows1, setRows1] = useState([
-    ["Product B", "200"],
-    ["Product C", "150"],
-    ["Product A", "100"],
-    ["Product B", "200"],
-    ["Product C", "150"],
-  ]);
+  const [rows1, setRows1] = useState([]);
   const [footer, setFooter] = useState(
     "Your Satisfaction is our number one priority!"
   );
