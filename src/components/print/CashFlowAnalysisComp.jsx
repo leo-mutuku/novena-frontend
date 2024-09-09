@@ -98,23 +98,15 @@ const CashFlowAnalysisComp = forwardRef(({ header, body, footer }, ref) => {
           <Col>
             <Row>
               <Col>
-                {header?.input && (
-                  <p>PRODUCTION INPUT:&nbsp; &nbsp; &nbsp;{header?.input} </p>
-                )}
-                {header?.expected && (
-                  <p>EXPECTED OUTPUT:&nbsp; &nbsp; &nbsp;{header?.expected} </p>
-                )}
+                {header?.cash_flow && <p>Cash Flow &nbsp; &nbsp; &nbsp;</p>}
               </Col>
             </Row>
           </Col>
           <Col>
             <Row>
               <Col>
-                {header?.output && (
-                  <p>OUTPUT:&nbsp; &nbsp; &nbsp;{header?.output}</p>
-                )}
-                {header?.variance && (
-                  <p>VARIANCE:&nbsp; &nbsp; &nbsp; {header?.variance} </p>
+                {header?.cash_flow && (
+                  <p>Kshs. :&nbsp; &nbsp; &nbsp; {header?.cash_flow} </p>
                 )}
               </Col>
             </Row>
@@ -123,7 +115,7 @@ const CashFlowAnalysisComp = forwardRef(({ header, body, footer }, ref) => {
       </div>
       <br />
       <Divider textAlign="left">
-        <Chip label="Details" size="small" />
+        <Chip label="Banks" size="small" />
       </Divider>
       <table
         style={{ width: "100%", borderCollapse: "collapse", marginTop: "10px" }}
@@ -156,6 +148,39 @@ const CashFlowAnalysisComp = forwardRef(({ header, body, footer }, ref) => {
         </tbody>
       </table>
       <br />
+      <Divider textAlign="left">
+        <Chip label="Cash Accounts" size="small" />
+      </Divider>
+      <table
+        style={{ width: "100%", borderCollapse: "collapse", marginTop: "10px" }}
+      >
+        <thead>
+          <tr>
+            {body?.columns1.map((col, index) => (
+              <th
+                key={index}
+                style={{ border: "1px solid black", padding: "8px" }}
+              >
+                {col}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {body?.rows1.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {row.map((cell, cellIndex) => (
+                <td
+                  key={cellIndex}
+                  style={{ border: "1px solid black", padding: "8px" }}
+                >
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
       {footer && (
         <div style={{ marginTop: "10px", textAlign: "center" }}>

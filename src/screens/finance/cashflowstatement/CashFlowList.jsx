@@ -53,25 +53,30 @@ const CashFlowList = () => {
     subTitle: "Novena Maize Miller LTD",
     description: "Dealers in: All types of cereals, Animal feeds",
     address: "P.O Box 238, Meru, Kenya",
-    start: "08/08/2024",
-    end: "08/08/2024",
+    start: startDate,
+    end: endDate,
     batch_number: "",
+    cash_flow: "",
     deliveryNumber: "10301",
     input: 0,
     output: 0,
     expected: 0,
     variance: 0,
   });
-  const [columns, setColumns] = useState(["Product", "Quantity"]);
-  const [rows, setRows] = useState([
-    ["Product B", "200"],
-    ["Product C", "150"],
-    ["Product A", "100"],
-    ["Product B", "200"],
-    ["Product C", "150"],
+  const [columns, setColumns] = useState([
+    "Bank",
+    "Inflow",
+    "Outflow",
+    "NetFlow",
   ]);
+  const [rows, setRows] = useState([]);
 
-  const [columns1, setColumns1] = useState(["Product", "Quantity"]);
+  const [columns1, setColumns1] = useState([
+    "Cash Accounts",
+    "Inflow",
+    "Outflow",
+    "NetFlow",
+  ]);
   const [rows1, setRows1] = useState([
     ["Product B", "200"],
     ["Product C", "150"],
@@ -107,9 +112,30 @@ const CashFlowList = () => {
 
     const res = await cashflowAnalysis({ startDate, endDate }).unwrap();
     if (res?.status === "success") {
-      toast.success(res.message);
+      setHeaders({
+        ...headers,
+        start: startDate,
+        end: endDate,
+        cash_flow: res.data?.total,
+      });
+      setRows(
+        res.data.banks.map((item) => [
+          item.bank_name,
+          item.inflow,
+          item.outflow,
+          item.netflow,
+        ])
+      );
+      setRows1(
+        res.data.cash.map((item) => [
+          item.cash_account_name,
+          item.inflow,
+          item.outflow,
+          item.netflow,
+        ])
+      );
     } else {
-      toast.error(res.message);
+      toast.error(res.data.message);
     }
   };
 
