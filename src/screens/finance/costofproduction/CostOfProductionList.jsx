@@ -16,7 +16,7 @@ import { Row, Col, Form } from "react-bootstrap";
 
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import CashFlowAnalysisComp from "../../../components/print/CashFlowAnalysisComp";
+import CostOfProductionReport from "../../../components/print/CostOfProductionReport";
 import PrintButton from "../../../components/print/PrintButton";
 
 const CostOfProductionList = () => {
@@ -48,8 +48,8 @@ const CostOfProductionList = () => {
     subTitle: "Novena Maize Miller LTD",
     description: "Dealers in: All types of cereals, Animal feeds",
     address: "P.O Box 238, Meru, Kenya",
-    start: "08/08/2024",
-    end: "08/08/2024",
+    start: startDate,
+    end: endDate,
     batch_number: "",
     deliveryNumber: "10301",
     input: 0,
@@ -57,7 +57,34 @@ const CostOfProductionList = () => {
     expected: 0,
     variance: 0,
   });
+  const [a, seta] = useState({
+    name: `Opening Stock of Raw Materials (a))`,
+    value: 0,
+    type: `add`,
+  });
+  const [b, setb] = useState({
+    name: `Purchases of Raw Materials (b))`,
+    value: 0,
+    type: `add`,
+  });
+  const [c, setc] = useState({
+    name: `Carriage inwards of raw materials (c)`,
+    value: 0,
+    type: `add`,
+  });
+  const [d, setd] = useState({
+    name: `Return outward of raw materials (d)`,
+    value: 0,
+    type: `less`,
+  });
+  const [e, sete] = useState({
+    name: `Cost of raw material purchased for usage`,
+    value: 0,
+    type: `add`,
+  });
+
   const [columns, setColumns] = useState(["Product", "Quantity"]);
+
   const [rows, setRows] = useState([
     ["Product B", "200"],
     ["Product C", "150"],
@@ -133,7 +160,16 @@ const CostOfProductionList = () => {
         </Row>
       </div>
       <PrintButton componentRef={componentRef} {...documentData} />
-      <CashFlowAnalysisComp header={headers} body={body} footer={footer} />
+      <CostOfProductionReport
+        header={headers}
+        body={body}
+        a={a}
+        b={b}
+        c={c}
+        d={d}
+        e={e}
+        footer={footer}
+      />
     </>
   );
 };

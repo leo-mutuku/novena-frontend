@@ -12,6 +12,7 @@ import { GiWallet } from "react-icons/gi";
 import { RiSecurePaymentFill } from "react-icons/ri";
 import SalesProduction from "../components/graph/SalesProduction";
 import Grid from "@mui/material/Grid";
+import { GrTechnology } from "react-icons/gr";
 
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -63,6 +64,7 @@ const SecuredHomeComponent = () => {
       Icon: RiSecurePaymentFill,
       role: 9999,
     },
+    { module_name: "ICT", to: "/ict", Icon: GrTechnology, role: 9999 },
   ];
 
   return (
