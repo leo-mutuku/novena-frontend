@@ -362,6 +362,8 @@ import FixedRate from "./screens/payroll/salespeoplecommissionmgt/FixedRate.jsx"
 import RemoveItem from "./screens/payroll/salespeoplecommissionsetup/RemoveItem.jsx";
 import AddItem from "./screens/payroll/salespeoplecommissionsetup/AddItem.jsx";
 import SalesBankReceiptsReport from "./screens/sales/SalesBankReceiptsReport.jsx";
+import IctScreen from "./screens/ict/IctScreen.jsx";
+import BioMetricScreen from "./screens/ict/BioMetricScreen.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -1110,6 +1112,13 @@ const router = createHashRouter(
             <Route path="incomestatement" element={<IncomeStatementList />} />
           </Route>
         </Route>
+      </Route>
+
+      {/*ict*/}
+      <Route path="ict" element={IctScreen}>
+        <Route path="biometric" element={<BioMetricScreen />}></Route>
+        <Route path="bankreco" element={<BioMetricScreen />}></Route>
+        <Route path="mobileapp" element={<BioMetricScreen />}></Route>
       </Route>
     </Route>
   )

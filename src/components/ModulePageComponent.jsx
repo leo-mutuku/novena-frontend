@@ -2,6 +2,7 @@ import { Container, Accordion, Row, Col, Button } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
 
 function ModulePageComponent(props) {
+  alert("");
   return (
     <Container>
       <Row>
