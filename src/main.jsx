@@ -865,6 +865,37 @@ const router = createHashRouter(
 
             <Route path="allstorerequisitions" element={<RequisitionList />} />
           </Route>
+          <Route path="requsitions" element={<RequisitionsScreen />}>
+            <Route
+              path="createpaymentrequisition"
+              element={<NewRequisition />}
+            />
+            <Route
+              path="allpaymentrequisitions"
+              element={<RequisitionList />}
+            />
+            <Route
+              path="allpostedrequisitions"
+              element={<Allpostedrequisitions />}
+            />
+            <Route
+              path="addrequisitionlines/:id"
+              element={<AddRequisitionLines />}
+            />
+            <Route path="postrequisition/:id" element={<PostRequisition />} />
+            <Route
+              path="viewrequisition/:id"
+              element={<ViewPostedRequisition />}
+            />
+            <Route
+              path="allrequisitioninprogress"
+              element={<AllRequisitionsInProgress />}
+            />
+            <Route
+              path="allpostedrequisition"
+              element={<AllPostedRequisitions />}
+            />
+          </Route>
         </Route>
 
         {/* sales routes */}

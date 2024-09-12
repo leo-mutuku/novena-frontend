@@ -14,13 +14,10 @@ export const sidelinks = [
       { subMenuTitle: "Daily Purchases Report", to: "storepurcharsereports" },
     ],
   },
-  // {
-  //   menuTitle: "Purchase order",
-  //   subMenus: [
-  //     { subMenuTitle: " Purchase order", to: "storerequisition" },
-  //     { subMenuTitle: "Reports", to: "storerequisitionreport" },
-  //   ],
-  // },
+  {
+    menuTitle: "General Requisition",
+    subMenus: [{ subMenuTitle: " Requisitions", to: "requsitions" }],
+  },
   // {
   //   menuTitle: "Purchase Reports",
   //   subMenus: [
