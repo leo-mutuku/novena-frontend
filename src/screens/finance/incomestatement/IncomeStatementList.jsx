@@ -16,7 +16,7 @@ import { Row, Col, Form } from "react-bootstrap";
 
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import CashFlowAnalysisComp from "../../../components/print/CashFlowAnalysisComp";
+import IncomeStatementComp from "../../../components/print/IncomeStatementComp";
 import PrintButton from "../../../components/print/PrintButton";
 
 const IncomeStatementList = () => {
@@ -95,6 +95,107 @@ const IncomeStatementList = () => {
     footer: footer,
   };
 
+  const [a, setA] = useState({
+    name: `Total sales (a)`,
+    value: 0,
+    type: `add`,
+  });
+  const [b, setB] = useState({
+    name: `Cost of goods return (b)`,
+    value: 0,
+    type: `less`,
+  });
+  const [c, setC] = useState({
+    name: ` Opening stock of finished goods (c)`,
+    value: 0,
+    type: `add`,
+  });
+  const [d, setD] = useState({
+    name: `Cost of production (d)`,
+    value: 0,
+    type: `add`,
+  });
+  const [e, setE] = useState({
+    name: `Closing stock of finished goods (e)`,
+    value: 0,
+    type: `add`,
+  });
+  const [f, setF] = useState({
+    name: `Gross profit (f)`,
+    value: 0,
+    type: `add`,
+  });
+  const [g, setG] = useState({
+    name: `Wifi + airtime (g)`,
+    value: 0,
+    type: `add`,
+  });
+  const [h, setH] = useState({
+    name: `Security services (h)`,
+    value: 0,
+    type: `add`,
+  });
+  const [i, setI] = useState({
+    name: `Kitchen expenses (i)`,
+    value: 0,
+    type: `add`,
+  });
+  const [j, setJ] = useState({
+    name: `General salaries (j)`,
+    value: 0,
+    type: `add`,
+  });
+  const [k, setK] = useState({
+    name: `Other expense (k) `,
+    value: 0,
+    type: `add`,
+  });
+  const [l, setL] = useState({
+    name: `Misllineous (l)`,
+    value: 0,
+    type: `add`,
+  });
+  const [m, setM] = useState({
+    name: `Water bill (m)`,
+    value: 0,
+    type: `add`,
+  });
+  const [n, setN] = useState({
+    name: `Administration expenses`,
+    value: 0,
+    type: `add`,
+  });
+  const [o, setO] = useState({
+    name: `Fuel `,
+    value: 0,
+    type: `add`,
+  });
+  const [p, setP] = useState({
+    name: `Services (p)`,
+    value: 0,
+    type: `add`,
+  });
+  const [q, setQ] = useState({
+    name: ` spares (q)`,
+    value: 0,
+    type: `add`,
+  });
+  const [r, setR] = useState({
+    name: `Sales and distribution expenses (r)`,
+    value: 0,
+    type: `add`,
+  });
+  const [s, setS] = useState({
+    name: `Financial charges  (s)`,
+    value: 0,
+    type: `add`,
+  });
+  const [t, setT] = useState({
+    name: `Net Profit / Loss (t)`,
+    value: 0,
+    type: `add`,
+  });
+
   return (
     <>
       <div>
@@ -133,7 +234,31 @@ const IncomeStatementList = () => {
         </Row>
       </div>
       <PrintButton componentRef={componentRef} {...documentData} />
-      <CashFlowAnalysisComp header={headers} body={body} footer={footer} />
+      <IncomeStatementComp
+        header={headers}
+        body={body}
+        footer={footer}
+        a={a}
+        b={b}
+        c={c}
+        d={d}
+        e={e}
+        f={f}
+        g={g}
+        h={h}
+        i={i}
+        j={j}
+        k={k}
+        l={l}
+        m={m}
+        n={n}
+        o={o}
+        p={p}
+        q={q}
+        r={r}
+        s={s}
+        t={t}
+      />
     </>
   );
 };
