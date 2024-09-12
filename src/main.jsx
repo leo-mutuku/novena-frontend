@@ -1006,6 +1006,10 @@ const router = createHashRouter(
             <Route path="createrun" element={<CreateRun />} />
           </Route>
         </Route>
+        {/*ict*/}
+        <Route path="ict" element={IctScreen}>
+          <Route path="biometric" element={<BioMetricScreen />}></Route>
+        </Route>
 
         {/* finance routes */}
         <Route path="finance" element={<FinanceScreen />}>
@@ -1112,13 +1116,6 @@ const router = createHashRouter(
             <Route path="incomestatement" element={<IncomeStatementList />} />
           </Route>
         </Route>
-      </Route>
-
-      {/*ict*/}
-      <Route path="ict" element={IctScreen}>
-        <Route path="biometric" element={<BioMetricScreen />}></Route>
-        <Route path="bankreco" element={<BioMetricScreen />}></Route>
-        <Route path="mobileapp" element={<BioMetricScreen />}></Route>
       </Route>
     </Route>
   )

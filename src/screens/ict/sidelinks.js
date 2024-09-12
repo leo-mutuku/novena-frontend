@@ -2,8 +2,8 @@ export const sidelinks = [
   {
     menuTitle: "BioMetric",
     subMenus: [
-      //   { subMenuTitle: "Institutions", to: "institutions", role: 6000 },
-      //   { subMenuTitle: "Reports", to: "institutionreports", role: 6000 },
+      { subMenuTitle: "Institutions", to: "institutions", role: 6000 },
+      { subMenuTitle: "Reports", to: "institutionreports", role: 6000 },
     ],
   },
 

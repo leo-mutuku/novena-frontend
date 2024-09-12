@@ -1,20 +1,25 @@
 import { Container, Accordion, Row, Col, Button } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
 
-function ModulePageComponent(props) {
-  alert("");
+function ModulePageComponent({ sidelinks, page_title }) {
+  if (!Array.isArray(sidelinks)) {
+    // Prevent errors if sidelinks is not an array
+    console.error("Invalid sidelinks: should be an array.");
+    return null;
+  }
+
   return (
     <Container>
       <Row>
         <Col xs={3}>
           <>
             <div className="text-right">
-              <span className="text-right">{props.page_title}</span>
+              <span className="text-right">{page_title}</span>
             </div>
             <Accordion>
-              {props.sidelinks.map((sidelink) => (
+              {sidelinks.map((sidelink) => (
                 <Accordion.Item
-                  key={sidelink.menuTitle}
+                  key={sidelink.menuTitle} // Ensure this is unique
                   eventKey={sidelink.menuTitle}
                 >
                   <Accordion.Header>{sidelink.menuTitle}</Accordion.Header>
@@ -40,4 +45,5 @@ function ModulePageComponent(props) {
     </Container>
   );
 }
+
 export default ModulePageComponent;

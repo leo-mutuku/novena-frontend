@@ -82,6 +82,57 @@ const CostOfProductionList = () => {
     value: 0,
     type: `add`,
   });
+  const [f, setf] = useState({
+    name: `Closing stock of raw materials (f)`,
+    value: 0,
+    type: `less`,
+  });
+  const [g, setg] = useState({
+    name: `Cost of raw matrial consumed (g)`,
+    value: 0,
+    type: `add`,
+  });
+  const [h, seth] = useState({
+    name: `Direct wages (h)`,
+    value: 0,
+    type: `add`,
+  });
+  const [i, seti] = useState({
+    name: `Opening stock of packaging material (i)`,
+    value: 0,
+    type: `add`,
+  });
+  const [j, setj] = useState({
+    name: `Purchases of packaging material (j)`,
+    value: 0,
+    type: `add`,
+  });
+
+  const [k, setk] = useState({
+    name: `Closing stock of packaging material (k)`,
+    value: 0,
+    type: `add`,
+  });
+  const [l, setl] = useState({
+    name: `PRIME COST(l)`,
+    value: 0,
+    type: `add`,
+  });
+  const [m, setm] = useState({
+    name: `Electricity (m)`,
+    value: 0,
+    type: `less`,
+  });
+  const [n, setn] = useState({
+    name: `Rent of factoryr (n)`,
+    value: 0,
+    type: `less`,
+  });
+  const [o, seto] = useState({
+    name: `COST OF PRODUCING GOODS (o)`,
+    value: 0,
+    type: `less`,
+  });
 
   const [columns, setColumns] = useState(["Product", "Quantity"]);
 
@@ -168,6 +219,16 @@ const CostOfProductionList = () => {
         c={c}
         d={d}
         e={e}
+        f={f}
+        g={g}
+        h={h}
+        i={i}
+        j={j}
+        k={k}
+        l={l}
+        m={m}
+        n={n}
+        o={o}
         footer={footer}
       />
     </>

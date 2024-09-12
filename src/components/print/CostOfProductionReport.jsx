@@ -1,9 +1,12 @@
 import React, { forwardRef } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Table } from "react-bootstrap";
 import { Divider, Chip } from "@mui/material";
 
 const CostOfProductionReport = forwardRef(
-  ({ header1, header2, sumarry, body, a, b, c, d, e, f }, ref) => {
+  (
+    { header1, header2, summary, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o },
+    ref
+  ) => {
     return (
       <div ref={ref}>
         <style>
@@ -14,18 +17,16 @@ const CostOfProductionReport = forwardRef(
           }
 
           body {
-            margin: 25mm , 10mm;
+            margin: 25mm, 10mm;
           }
 
           .page-content {
-            padding: 20;
+            padding: 20px;
             position: relative;
             margin: 0.5rem;
           }
 
-         
           @media print {
-            /* Hide the default browser print header and footer */
             @page {
               margin: 20mm, 20mm, 20mm , 20mm;
             }
@@ -35,7 +36,6 @@ const CostOfProductionReport = forwardRef(
               padding: 0;
             }
 
-            /* Custom footer with page number */
             .custom-page-footer {
               position: fixed;
               bottom: 0;
@@ -44,13 +44,13 @@ const CostOfProductionReport = forwardRef(
               font-size: 12px;
             }
 
-          @media print {
             .page-break {
               page-break-before: always;
             }
           }
         `}
         </style>
+
         <div className="page-footer" />
         <div className="page-content">
           <Row>
@@ -67,7 +67,7 @@ const CostOfProductionReport = forwardRef(
                   {header1?.period}
                 </p>
                 <p>
-                  {header1?.type} : {header1?.name}{" "}
+                  {header1?.type} : {header1?.name}
                 </p>
               </div>
             </Col>
@@ -124,56 +124,85 @@ const CostOfProductionReport = forwardRef(
           <Divider textAlign="left">
             <Chip label="Summary" size="small" />
           </Divider>
+
           <div
             style={{
               border: "1px solid #ccc",
-              padding: "14px 8px 8px 8px",
+              padding: "10px 4px 4px 4px",
               marginTop: "10px",
             }}
           >
             <Row>
-              <Col>
-                <Row>
-                  <Col>
-                    <p>{a?.name && <>{a.name}</>}</p>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <p>{b?.name && <>{b.name}</>}</p>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <p>{c?.name && <>{c.name}</>}</p>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <p style={{ fontWeight: "bold" }}>
-                      {d?.name && <>{d.name}</>}
-                    </p>
-                  </Col>
-                </Row>
-              </Col>
-              <Col>
-                <Row>
-                  <Col>{sumarry?.value1 && <p> {sumarry?.value1} </p>}</Col>
-                </Row>
-                <Row>
-                  <Col>{sumarry?.value2 && <p> {sumarry?.value2} </p>}</Col>
-                </Row>
-                <Row>
-                  <Col>{sumarry?.value3 && <p> {sumarry?.value3} </p>}</Col>
-                </Row>
-                <Row>
-                  <Col>
-                    {sumarry?.value4 && (
-                      <p style={{ fontWeight: "bold" }}> {sumarry?.value4} </p>
-                    )}
-                  </Col>
-                </Row>
-              </Col>
+              <Table size="sm" striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Particulars</th>
+                    <th>Kshs.</th>
+                  </tr>
+                  <tr>
+                    <th>{a?.name}</th>
+                    <th>{a?.value}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>{b?.name}</th>
+                    <th>{b?.value}</th>
+                  </tr>
+                  <tr>
+                    <th>{c?.name}</th>
+                    <th>{c?.value}</th>
+                  </tr>
+                  <tr>
+                    <th>{d?.name}</th>
+                    <th>{d?.value}</th>
+                  </tr>
+                  <tr>
+                    <th>{e?.name}</th>
+                    <th>{e?.value}</th>
+                  </tr>
+                  <tr>
+                    <th>{f?.name}</th>
+                    <th>{f?.value}</th>
+                  </tr>
+                  <tr>
+                    <th>{g?.name}</th>
+                    <th>{g?.value}</th>
+                  </tr>
+                  <tr>
+                    <th>{h?.name}</th>
+                    <th>{h?.value}</th>
+                  </tr>
+                  <tr>
+                    <th>{i?.name}</th>
+                    <th>{i?.value}</th>
+                  </tr>
+                  <tr>
+                    <th>{j?.name}</th>
+                    <th>{j?.value}</th>
+                  </tr>
+                  <tr>
+                    <th>{k?.name}</th>
+                    <th>{k?.value}</th>
+                  </tr>
+                  <tr>
+                    <th>{l?.name}</th>
+                    <th>{l?.value}</th>
+                  </tr>
+                  <tr>
+                    <th>{m?.name}</th>
+                    <th>{m?.value}</th>
+                  </tr>
+                  <tr>
+                    <th>{n?.name}</th>
+                    <th>{n?.value}</th>
+                  </tr>
+                  <tr>
+                    <th>{o?.name}</th>
+                    <th>{o?.value}</th>
+                  </tr>
+                </tbody>
+              </Table>
             </Row>
           </div>
 
