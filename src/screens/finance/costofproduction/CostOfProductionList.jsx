@@ -124,7 +124,7 @@ const CostOfProductionList = () => {
     type: `less`,
   });
   const [n, setn] = useState({
-    name: `Rent of factoryr (n)`,
+    name: `Rent of factor (n)`,
     value: 0,
     type: `less`,
   });
