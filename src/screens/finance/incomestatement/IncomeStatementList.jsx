@@ -196,6 +196,7 @@ const IncomeStatementList = () => {
     type: `add`,
   });
 
+  const handleLoadBTN = () => {};
   return (
     <>
       <div>
@@ -226,7 +227,7 @@ const IncomeStatementList = () => {
             <Button
               style={{ marginTop: "10px" }}
               variant="primary"
-              onClick={""}
+              onClick={handleLoadBTN}
             >
               Load
             </Button>

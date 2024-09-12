@@ -43,6 +43,14 @@ export const accountsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Account"],
     }),
+    costofProductionReport: builder.mutation({
+      query: (data) => ({
+        url: `${ACCOUNTS_URL}/costofproductionreport`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Account"],
+    }),
     createAccount: builder.mutation({
       query: (data) => ({
         url: `${ACCOUNTS_URL}/createaccount`,
@@ -63,6 +71,7 @@ export const accountsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useCostofProductionReportMutation,
   useGetCombinedExpenseAccountsQuery,
   useGetAllAccountsQuery,
   useCreateAccountMutation,

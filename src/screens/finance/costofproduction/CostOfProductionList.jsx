@@ -18,6 +18,8 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import CostOfProductionReport from "../../../components/print/CostOfProductionReport";
 import PrintButton from "../../../components/print/PrintButton";
+import { useCostofProductionReportMutation } from "../../../slices/finance/accountsApiSlice";
+import { toast } from "react-toastify";
 
 const CostOfProductionList = () => {
   const componentRef = React.useRef();
@@ -31,6 +33,8 @@ const CostOfProductionList = () => {
   const { data, isLoading } = useGetAllGLAccountsQuery();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [costofProductionReport, { isLoading: isLoadingReport }] =
+    useCostofProductionReportMutation();
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);
@@ -173,6 +177,32 @@ const CostOfProductionList = () => {
     footer: footer,
   };
 
+  const handleLoadBTN = async () => {
+    try {
+      if (!startDate || !endDate) {
+        toast.error("Please select start and end date");
+        return;
+      }
+      const res = await costofProductionReport({
+        startDate: startDate,
+        endDate: endDate,
+      });
+      console.log(res);
+      if (res) {
+        seta({
+          name: `Opening Stock of Raw Materials (a))`,
+          value: res.openingStockOfRawMaterials,
+          type: `add`,
+        });
+        setb({
+          name: `Purchases of Raw Materials (b))`,
+        });
+      }
+    } catch (error) {
+      toast.error(error.data.message || "Error occurred while loading data");
+    }
+  };
+
   return (
     <>
       <div>
@@ -203,7 +233,7 @@ const CostOfProductionList = () => {
             <Button
               style={{ marginTop: "10px" }}
               variant="primary"
-              onClick={""}
+              onClick={handleLoadBTN}
             >
               Load
             </Button>
