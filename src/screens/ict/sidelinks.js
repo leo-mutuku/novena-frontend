@@ -2,19 +2,26 @@ export const sidelinks = [
   {
     menuTitle: "BioMetric",
     subMenus: [
-      { subMenuTitle: "Institutions", to: "institutions", role: 6000 },
-      { subMenuTitle: "Reports", to: "institutionreports", role: 6000 },
+      { subMenuTitle: "Daily Attendance", to: "#", role: 6000 },
+      { subMenuTitle: "Allowed Absence", to: "#", role: 6000 },
     ],
   },
 
   {
     menuTitle: "Bank Reconcialtion",
-    subMenus: [{ subMenuTitle: "Staff", to: "staff", role: 6000 }],
+    subMenus: [
+      { subMenuTitle: "Period & Bank", to: "#", role: 6000 },
+      { subMenuTitle: "Upload Bank Statement", to: "#", role: 6000 },
+    ],
   },
 
   {
     menuTitle: "Mobile App",
-    subMenus: [{ subMenuTitle: "Users", to: "users", role: 9999 }],
+    subMenus: [
+      { subMenuTitle: "User ID", to: "#", role: 9999 },
+      { subMenuTitle: "Daily Monitor", to: "#", role: 9999 },
+      { subMenuTitle: "Revoke Access", to: "#", role: 9999 },
+    ],
   },
 
   // {

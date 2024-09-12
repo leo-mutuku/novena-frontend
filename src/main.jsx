@@ -1038,7 +1038,7 @@ const router = createHashRouter(
           </Route>
         </Route>
         {/*ict*/}
-        <Route path="ict" element={IctScreen}>
+        <Route path="ict" element={<IctScreen />}>
           <Route path="biometric" element={<BioMetricScreen />}></Route>
         </Route>
 
