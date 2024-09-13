@@ -98,7 +98,18 @@ const CashFlowAnalysisComp = forwardRef(({ header, body, footer }, ref) => {
           <Col>
             <Row>
               <Col>
-                {header?.cash_flow && <p>Cash Flow &nbsp; &nbsp; &nbsp;</p>}
+                {header?.inflow && (
+                  <p>Inflow &nbsp; &nbsp; &nbsp; {header?.inflow} </p>
+                )}
+              </Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>
+                {header?.outflow && (
+                  <p> Outflow &nbsp; &nbsp; &nbsp; {header?.outflow} </p>
+                )}
               </Col>
             </Row>
           </Col>
@@ -106,7 +117,7 @@ const CashFlowAnalysisComp = forwardRef(({ header, body, footer }, ref) => {
             <Row>
               <Col>
                 {header?.cash_flow && (
-                  <p>Kshs. :&nbsp; &nbsp; &nbsp; {header?.cash_flow} </p>
+                  <p>Net Flow:&nbsp; &nbsp; &nbsp; {header?.cash_flow} </p>
                 )}
               </Col>
             </Row>

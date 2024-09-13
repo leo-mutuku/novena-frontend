@@ -56,6 +56,8 @@ const CashFlowList = () => {
     start: startDate,
     end: endDate,
     batch_number: "",
+    inflow: "",
+    outflow: "",
     cash_flow: "",
     deliveryNumber: "10301",
     input: 0,
@@ -110,6 +112,8 @@ const CashFlowList = () => {
         ...headers,
         start: startDate,
         end: endDate,
+        inflow: res.data?.total_outflow,
+        outflow: res.data?.total_inflow,
         cash_flow: res.data?.total,
       });
       setRows(

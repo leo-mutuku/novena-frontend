@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Loader from "../../../components/Loader";
 import { useGetAllSalesBankReceptsQuery } from "../../../slices/finance/bankAccountsApiSlice";
+import { useReverseBankReceiptMutation } from "../../../slices/finance/bankAccountsApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { IoMdEye } from "react-icons/io";
@@ -12,9 +13,15 @@ import axios from "axios";
 import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
 import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
 import { GrRevert } from "react-icons/gr";
+import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
 
 const BankReceipts = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+  const su = 9999;
+  let isAdmin = userInfo.roles.includes(su) ? true : false;
   const { data: orders, isLoading } = useGetAllSalesBankReceptsQuery();
+  const [reverseBankReceipt] = useReverseBankReceiptMutation();
 
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
@@ -33,6 +40,7 @@ const BankReceipts = () => {
       setTableData(orders.data);
     }
   }, [orders]);
+
   const handleDelete = (e, id, style) => {
     set_store_purchase_id(parseInt(id));
     set_mode_delete(style);
@@ -64,8 +72,20 @@ const BankReceipts = () => {
     }
   };
 
-  const handleReverse = () => {
-    alert("reverse login here");
+  const handleReverse = async (entry_id) => {
+    try {
+      const res = await reverseBankReceipt({
+        id: entry_id,
+        create_by: userInfo?.first_name,
+      }).unwrap();
+      if (res.status === "success") {
+        toast.success("Receipt reversed successfully");
+      } else {
+        toast.error("Failed to reverse receipt");
+      }
+    } catch (error) {
+      toast.error(error?.data?.message || "An error occurred");
+    }
   };
 
   const handleDownloadExcel = async () => {
@@ -104,6 +124,7 @@ const BankReceipts = () => {
         accessor: "entry_date",
         Cell: ({ value }) => <span>{moment(value).format("YYYY-MM-DD")}</span>,
       },
+      { Header: "Rpt No", accessor: "entry_id" },
       {
         Header: "Bank",
         accessor: "bank_name",
@@ -116,15 +137,23 @@ const BankReceipts = () => {
         Header: "Amount",
         accessor: "amount",
       },
-      { Header: "Captured by", accessor: "create_by" },
+      { Header: "Bearer", accessor: "own" },
+      { Header: "by", accessor: "create_by" },
       {
         Header: "Reverse",
         accessor: "reverse",
-        Cell: ({ row }) => (
-          <Button onClick={() => handleReverse(row.original.id)}>
-            <GrRevert />
-          </Button>
-        ),
+        Cell: ({ row }) => {
+          const isReversed = row.original.reference.endsWith("-R"); // Check if the reference ends with '-R'
+
+          return (
+            <Button
+              onClick={() => handleReverse(row.original.entry_id)}
+              disabled={isReversed || !isAdmin} // Disable button if reference ends with '-R'
+            >
+              <GrRevert />
+            </Button>
+          );
+        },
       },
     ],
     []
