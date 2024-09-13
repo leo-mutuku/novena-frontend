@@ -54,7 +54,7 @@ const PurchaseList = () => {
             <th style={{ position: "initial" }}>Purchase no </th>
             <th style={{ position: "initial" }}>Purchase date</th>
             <th style={{ position: "initial" }}>Prepared by</th>
-            <th style={{ position: "initial" }}>Aproved by</th>
+
             <th style={{ position: "initial" }}>Total cost</th>
             <th style={{ position: "initial" }}>Status</th>
             <th style={{ position: "initial" }}>Add</th>
@@ -76,7 +76,7 @@ const PurchaseList = () => {
                 )}`}</td>
 
                 <td>{item.prepared_by}</td>
-                <td>{item.approved_by}</td>
+
                 <td>{item.total_cost}</td>
                 <td>
                   {item.status === "New" ? (

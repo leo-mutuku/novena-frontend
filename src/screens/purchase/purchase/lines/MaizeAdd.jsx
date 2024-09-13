@@ -36,16 +36,19 @@ const MaizeAdd = ({ set_item_edit_state, items_to_edit }) => {
         aflotoxin_level: aflotoxin,
         prepared_by: created_by,
       }).unwrap();
-      if (res.status === "failed") {
-        toast.error("An error occurred");
-        navigate("../allstorepurchasesintransit");
-      } else {
+      if (res.status === "status") {
         toast.success("Maize details added successfully");
         navigate("../allstorepurchasesintransit");
+        set_item_edit_state("none");
+      } else {
+        toast.error(res.message || "An error occurred");
+        navigate("../allstorepurchasesintransit");
+        set_item_edit_state("none");
       }
       navigate("../allstorepurchasesintransit");
     } catch (error) {
-      toast.error("An error occurred");
+      toast.error(error?.data?.message || "An error occurred");
+      set_item_edit_state("none");
     }
   };
   return (

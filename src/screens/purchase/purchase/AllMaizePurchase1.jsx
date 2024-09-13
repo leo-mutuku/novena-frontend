@@ -134,11 +134,7 @@ const AllMaizePurchase = () => {
         accessor: "prepared_by",
         style: { position: "initial" },
       },
-      {
-        Header: "Approved by",
-        accessor: "approved_by",
-        style: { position: "initial" },
-      },
+
       {
         Header: "Total cost",
         accessor: "total_cost",

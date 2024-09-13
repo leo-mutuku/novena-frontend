@@ -30,7 +30,7 @@ const AllPostedStorePurchases = () => {
             <th style={{ position: "initial" }}>Purchase no </th>
             <th style={{ position: "initial" }}>Purchase date</th>
             <th style={{ position: "initial" }}>Prepared by</th>
-            <th style={{ position: "initial" }}>Aproved by</th>
+
             <th style={{ position: "initial" }}>Total cost</th>
             <th style={{ position: "initial" }}>Status</th>
             <th style={{ position: "initial" }}>View</th>
@@ -51,7 +51,7 @@ const AllPostedStorePurchases = () => {
                 )}`}</td>
 
                 <td>{item.prepared_by}</td>
-                <td>{item.approved_by}</td>
+
                 <td>{item.total_cost}</td>
                 <td>
                   {item.status === "New" ? (
