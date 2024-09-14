@@ -107,11 +107,11 @@ const AttendanceReport = () => {
         Header: "#",
         accessor: (row, index) => index + 1,
       },
-      { Header: "Date", accessor: "entry_date" },
+ 
       { Header: "First name", accessor: "first_name" },
       { Header: "Last Name", accessor: "last_name" },
-      { Header: "Nat", accessor: "credit" },
-      { Header: "Balance ", accessor: "balance" },
+      { Header: "National ID", accessor: "staff_code" },
+      { Header: "Days Count ", accessor: "days" },
     ],
     []
   );
