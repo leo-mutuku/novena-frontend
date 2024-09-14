@@ -238,7 +238,10 @@ function AddPurchaseModal({ purchase_data, store_purchase_id, set_mode }) {
                           {item_register?.data
                             ?.filter(
                               (item) =>
-                                item.item_code < 100 || item.item_code > 300
+                                (item.item_code < 100 ||
+                                  item.item_code > 300) &&
+                                item.item_code !== 314 &&
+                                item.item_code !== 315
                             )
                             .map((item, index) => (
                               <option value={item.item_code} key={index}>
