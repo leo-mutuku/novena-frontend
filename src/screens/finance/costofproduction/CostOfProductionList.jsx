@@ -186,17 +186,25 @@ const CostOfProductionList = () => {
       const res = await costofProductionReport({
         startDate: startDate,
         endDate: endDate,
-      });
-      console.log(res);
-      if (res) {
-        seta({
-          name: `Opening Stock of Raw Materials (a))`,
-          value: res.openingStockOfRawMaterials,
-          type: `add`,
-        });
-        setb({
-          name: `Purchases of Raw Materials (b))`,
-        });
+      }).unwrap();
+
+      if (res.status == "success") {
+        seta({ ...a, value: res.data.a.value });
+        setb({ ...b, value: res.data.b.value });
+        setc({ ...c, value: res.data.c.value });
+        setd({ ...d, value: res.data.d.value });
+        sete({ ...e, value: res.data.e.value });
+        setf({ ...f, value: res.data.f.value });
+        setg({ ...g, value: res.data.g.value });
+        seth({ ...h, value: res.data.h.value });
+        seti({ ...i, value: res.data.i.value });
+        setj({ ...j, value: res.data.j.value });
+        setk({ ...k, value: res.data.k.value });
+        setl({ ...l, value: res.data.l.value });
+        setm({ ...m, value: res.data.m.value });
+        setn({ ...n, value: res.data.n.value });
+      } else {
+        alert("error");
       }
     } catch (error) {
       toast.error(error.data.message || "Error occurred while loading data");
