@@ -363,7 +363,13 @@ import RemoveItem from "./screens/payroll/salespeoplecommissionsetup/RemoveItem.
 import AddItem from "./screens/payroll/salespeoplecommissionsetup/AddItem.jsx";
 import SalesBankReceiptsReport from "./screens/sales/SalesBankReceiptsReport.jsx";
 import IctScreen from "./screens/ict/IctScreen.jsx";
-import BioMetricScreen from "./screens/ict/BioMetricScreen.jsx";
+
+import AllAllowedAbsence from "./screens/ict/biometric/AllAllowedAbsence.jsx";
+
+import CancelAttance from "./screens/ict/biometric/CancelAttance.jsx";
+
+import DailyAttendance from "./screens/ict/biometric/DailyAttendance.jsx";
+import AttendanceReport from "./screens/ict/biometric/AttendanceReport.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -1039,7 +1045,10 @@ const router = createHashRouter(
         </Route>
         {/*ict*/}
         <Route path="ict" element={<IctScreen />}>
-          <Route path="biometric" element={<BioMetricScreen />}></Route>
+          <Route path="dailyattance" element={<DailyAttendance />}></Route>
+          <Route path="attendancereport" element={<AttendanceReport />}></Route>
+          <Route path="allowedabsence" element={<AllAllowedAbsence />}></Route>
+          <Route path="cancelledattendance" element={<CancelAttance />}></Route>
         </Route>
 
         {/* finance routes */}

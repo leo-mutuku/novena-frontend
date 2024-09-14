@@ -2,10 +2,14 @@ export const sidelinks = [
   {
     menuTitle: "BioMetric",
     subMenus: [
-      { subMenuTitle: "Daily Attendance", to: "#", role: 9000 },
-      { subMenuTitle: "Attendance Report", to: "#", role: 9000 },
-      { subMenuTitle: "Allowed Absence", to: "#", role: 9000 },
-      { subMenuTitle: "Cancelled Attendance", to: "#", role: 9000 },
+      { subMenuTitle: "Daily Attendance", to: "dailyattance", role: 9000 },
+      { subMenuTitle: "Attendance Report", to: "attendancereport", role: 9000 },
+      { subMenuTitle: "Allowed Absence", to: "allowedabsence", role: 9000 },
+      {
+        subMenuTitle: "Cancelled Attendance",
+        to: "cancelledattendance",
+        role: 9000,
+      },
     ],
   },
 
