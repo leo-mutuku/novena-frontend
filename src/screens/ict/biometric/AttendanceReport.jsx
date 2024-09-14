@@ -1,9 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 
-import {
-  useGetAllInstitutionsQuery,
-  useInstitutionStatementMutation,
-} from "../../../slices/administration/institutionsApiSlice";
+import { useAttandanceReportMutation } from "../../../slices/ict/biometricApislice";
 import DataTable from "../../../components/general/DataTable";
 import moment from "moment";
 import { Button, Form, Row, Col } from "react-bootstrap";
@@ -42,36 +39,27 @@ const AttendanceReport = () => {
   const [supplier_filter, set_supplier_filter] = React.useState("");
   const [product_filter, set_product_filter] = React.useState("");
   const [setData, { isLoading, isSuccess, isError }] =
-    useInstitutionStatementMutation();
-  const { data: suppliers } = useGetAllInstitutionsQuery();
+    useAttandanceReportMutation();
 
   const loaddata = async () => {
-    if (!institution_id || !start_date || !end_date) {
-      toast.error("Please select report name, start and end date");
-      return;
-    }
-    const data = await setData({
-      institution_id,
-      start_date,
-      end_date,
-    }).unwrap();
-
-    if (data?.data?.length) {
-      setGetData(data?.data);
-    } else {
-      toast.error("No data found");
-    }
-  };
-  const handleInstitution = (e) => {
-    let x = suppliers?.data?.filter((a) => {
-      if (a.institution_id == parseInt(e.target.value)) {
-        return a.institution_id;
+    try {
+      if (!start_date || !end_date) {
+        toast.error("Please select  start and end date");
+        return;
       }
-    });
+      const data = await setData({
+        start_date,
+        end_date,
+      }).unwrap();
 
-    set_institution_id(x[0].institution_id);
-
-    set_instution_name(x[0].institution_name);
+      if (data?.data?.length) {
+        setGetData(data?.data);
+      } else {
+        toast.error("No data found");
+      }
+    } catch (error) {
+      toast.error(error?.data?.message);
+    }
   };
 
   const handleDownloadCSV = () => {
@@ -172,24 +160,7 @@ const AttendanceReport = () => {
     <>
       <div style={{ marginBottom: "2px", paddingTop: "10px" }}>
         <Row>
-          <Col>
-            <Form.Group className="my-2" controlId="role_name">
-              <Form.Select
-                type="number"
-                required
-                placeholder="Enter Institution ID"
-                value={institution_id}
-                onChange={handleInstitution}
-              >
-                <option value="">Select Institution</option>
-                {suppliers?.data?.map((a) => (
-                  <option key={a.institution_id} value={a.institution_id}>
-                    {a.institution_name}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.Group>
-          </Col>
+          <Col></Col>
           <Col>
             <Form.Group className="my-2" controlId="role_name">
               <Form.Control

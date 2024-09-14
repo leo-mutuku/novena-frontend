@@ -24,4 +24,5 @@ export const biometricApliSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useDailyAttendance, attandanceReport } = biometricApliSlice;
+export const { useDailyAttendanceMutation, useAttandanceReportMutation } =
+  biometricApliSlice;
