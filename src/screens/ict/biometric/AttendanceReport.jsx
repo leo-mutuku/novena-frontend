@@ -108,9 +108,9 @@ const AttendanceReport = () => {
         accessor: (row, index) => index + 1,
       },
       { Header: "Date", accessor: "entry_date" },
-      { Header: "Desc", accessor: "description" },
-      { Header: "Debit", accessor: "debit" },
-      { Header: "Credit", accessor: "credit" },
+      { Header: "First name", accessor: "first_name" },
+      { Header: "Last Name", accessor: "last_name" },
+      { Header: "Nat", accessor: "credit" },
       { Header: "Balance ", accessor: "balance" },
     ],
     []
