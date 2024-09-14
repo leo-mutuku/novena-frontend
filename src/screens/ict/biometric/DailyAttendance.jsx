@@ -66,7 +66,7 @@ const DailyAttendance = () => {
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", `supplier_report.csv`);
+      link.setAttribute("download", `Daily Attendance.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -103,11 +103,12 @@ const DailyAttendance = () => {
         Header: "#",
         accessor: (row, index) => index + 1,
       },
-      { Header: "Date", accessor: "entry_date" },
-      { Header: "Desc", accessor: "description" },
-      { Header: "Debit", accessor: "debit" },
-      { Header: "Credit", accessor: "credit" },
-      { Header: "Balance ", accessor: "balance" },
+      { Header: "First Name", accessor: "first_name" },
+      { Header: "Last Name", accessor: "last_name" },
+      { Header: "National ID", accessor: "staff_code" },
+      { Header: "Date ", accessor: "date" },
+      {Header:"Time", accessor:"time"},
+   
     ],
     []
   );
@@ -193,7 +194,7 @@ const DailyAttendance = () => {
               <Button
                 variant="primary"
                 type="button"
-                onClick={handleStatementLink}
+                onClick={"#"}
               >
                 Statement
               </Button>
