@@ -107,7 +107,7 @@ const AttendanceReport = () => {
         Header: "#",
         accessor: (row, index) => index + 1,
       },
- 
+
       { Header: "First name", accessor: "first_name" },
       { Header: "Last Name", accessor: "last_name" },
       { Header: "National ID", accessor: "staff_code" },
@@ -204,11 +204,7 @@ const AttendanceReport = () => {
                 Excel Report
               </Button>{" "}
               &nbsp; &nbsp;
-              <Button
-                variant="primary"
-                type="button"
-                onClick={handleStatementLink}
-              >
+              <Button variant="primary" type="button" onClick={"#"}>
                 Statement
               </Button>
               &nbsp; &nbsp;

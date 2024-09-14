@@ -48,16 +48,27 @@ const PayrollHeadersList = () => {
       },
 
       {
-        Header: "Created At",
-        accessor: "created_at",
-        Cell: ({ row }) => <>{timeDate.date(row.original.created_at)}</>,
+        Header: "Start Date",
+        accessor: "start_date",
+        Cell: ({ row }) => <>{timeDate.date(row.original.start_date)}</>,
+      },
+      {
+        Header: "End Date",
+        accessor: "end_date",
+        Cell: ({ row }) => <>{timeDate.date(row.original.end_date)}</>,
+      },
+      {
+        Header: "Category",
+        accessor: "category_name",
+        Cell: ({ row }) => (
+          <Link
+            to={`/payroll/payrollheader/actions/${row.original.payroll_header_id}`}
+          >
+            {row.original.category_name}
+          </Link>
+        ),
       },
 
-      {
-        Header: "Staff Count",
-        accessor: "number_of_staff",
-        Cell: ({ row }) => <Link to="#">{row.original.number_of_staff}</Link>,
-      },
       {
         Header: "Gross Pay",
         accessor: "gross_pay",
@@ -74,17 +85,6 @@ const PayrollHeadersList = () => {
       {
         Header: "Status",
         accessor: "status",
-      },
-      {
-        Header: "Category",
-        accessor: "category_name",
-        Cell: ({ row }) => (
-          <Link
-            to={`/payroll/payrollheader/actions/${row.original.payroll_header_id}`}
-          >
-            {row.original.category_name}
-          </Link>
-        ),
       },
     ],
     []

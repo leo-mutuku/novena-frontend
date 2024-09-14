@@ -57,13 +57,19 @@ const ViewPayrollHeader = () => {
       },
 
       {
-        Header: "Created At",
-        accessor: "created_at",
-        Cell: ({ value }) => (
-          <span>{`${moment(value).format("YYYY-MM-DD")} : ${moment(
-            value
-          ).format("HH:mm A")}`}</span>
-        ),
+        Header: "Payroll no",
+        accessor: "payroll_header_id",
+      },
+
+      {
+        Header: "Start Date",
+        accessor: "start_date",
+        Cell: ({ row }) => <>{timeDate.date(row.original.created_at)}</>,
+      },
+      {
+        Header: "End Date",
+        accessor: "end_date",
+        Cell: ({ row }) => <>{timeDate.date(row.original.created_at)}</>,
       },
       {
         Header: "Staff ",
