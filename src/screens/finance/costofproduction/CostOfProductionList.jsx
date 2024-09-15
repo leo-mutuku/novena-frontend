@@ -203,6 +203,7 @@ const CostOfProductionList = () => {
         setl({ ...l, value: res.data.l.value });
         setm({ ...m, value: res.data.m.value });
         setn({ ...n, value: res.data.n.value });
+        seto({ ...o, value: res.data.o.value });
       } else {
         alert("error");
       }

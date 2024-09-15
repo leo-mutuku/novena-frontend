@@ -370,6 +370,10 @@ import CancelAttance from "./screens/ict/biometric/CancelAttance.jsx";
 
 import DailyAttendance from "./screens/ict/biometric/DailyAttendance.jsx";
 import AttendanceReport from "./screens/ict/biometric/AttendanceReport.jsx";
+import Validate from "./screens/ict/bankrecon/Validate.jsx";
+import UploadBankStatement from "./screens/ict/bankrecon/UploadBankStatement.jsx";
+import Reconcile from "./screens/ict/bankrecon/Reconcile.jsx";
+import BankPeriod from "./screens/ict/bankrecon/BankPeriod.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -1049,6 +1053,13 @@ const router = createHashRouter(
           <Route path="attendancereport" element={<AttendanceReport />}></Route>
           <Route path="allowedabsence" element={<AllAllowedAbsence />}></Route>
           <Route path="cancelledattendance" element={<CancelAttance />}></Route>
+          <Route path="validate" element={<Validate />}></Route>
+          <Route
+            path="uploadbankstatement"
+            element={<UploadBankStatement />}
+          ></Route>
+          <Route path="reconcile" element={<Reconcile />}></Route>
+          <Route path="bankperiod" element={<BankPeriod />}></Route>
         </Route>
 
         {/* finance routes */}

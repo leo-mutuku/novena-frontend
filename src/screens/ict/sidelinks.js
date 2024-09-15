@@ -16,10 +16,14 @@ export const sidelinks = [
   {
     menuTitle: "Bank Reconcialtion",
     subMenus: [
-      { subMenuTitle: "Period & Bank", to: "#", role: 9000 },
-      { subMenuTitle: "Upload Bank Statement", to: "#", role: 9000 },
-      { subMenuTitle: "Compare & Match", to: "#", role: 9000 },
-      { subMenuTitle: "Pull Unreconciled", to: "#", role: 9000 },
+      { subMenuTitle: "Bank & Period ", to: "bankperiod", role: 9000 },
+      {
+        subMenuTitle: "Upload Bank Statement",
+        to: "uploadbankstatement",
+        role: 9000,
+      },
+      { subMenuTitle: "Validate", to: "validate", role: 9000 },
+      { subMenuTitle: "Reconcile", to: "reconcile", role: 9000 },
     ],
   },
 
