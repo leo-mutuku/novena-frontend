@@ -5,15 +5,12 @@ export const sidelinks = [
       { subMenuTitle: "Drivers", to: "drivers" },
       { subMenuTitle: "Routes", to: "routes" },
       { subMenuTitle: "Vehicles", to: "vehicles" },
-      { subMenuTitle: "Maintenance", to: "maintanance" },
+      { subMenuTitle: "Repair & Maint", to: "maintanance" },
+      { subMenuTitle: "Fuel Expense", to: "fuelexpense" },
+      { subMenuTitle: "Mialage", to: "mileage" },
       { subMenuTitle: "Runs", to: "runs" },
-    ],
-  },
-  {
-    menuTitle: "Fleet Reports",
-    subMenus: [
-      // { subMenuTitle: "Packhouse people", to: "packhousepeople" },
-      // { subMenuTitle: "Reports", to: "#" },
+      { subMenuTitle: "Trip Sheet", to: "tripsheet" },
+      { subMenuTitle: "Vendors", to: "vendors" },
     ],
   },
 ];
