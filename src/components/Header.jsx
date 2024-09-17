@@ -58,7 +58,7 @@ const Header = () => {
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
-              <FaHome size={25} /> &nbsp;NOVENA MAIZE MILLER LTD
+              <FaHome /> &nbsp;NOVENA
             </Navbar.Brand>
           </LinkContainer>
           <Idle />
