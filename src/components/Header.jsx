@@ -1,15 +1,18 @@
+// Import FaEnvelope
 // import { Navbar, Nav, Container, NavDropdown, Badge } from 'react-bootstrap';
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
-import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
+
 import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../slices/administration/usersApiSlice";
 import { useSmsBalanceMutation } from "../slices/administration/bulkSmsApiSlice";
 import { logout } from "../slices/authSlice";
-import { FaHome } from "react-icons/fa";
+
 import Idle from "../components/Idle";
 import { useEffect, useState } from "react";
+import { FaSignInAlt, FaSignOutAlt, FaHome, FaEnvelope } from "react-icons/fa";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -20,6 +23,7 @@ const Header = () => {
   const [logoutApiCall] = useLogoutMutation();
   const [smsBalance] = useSmsBalanceMutation();
   const [credit, set_credit] = useState(null);
+
   useEffect(() => {
     if (!userInfo) {
     } else {
@@ -35,6 +39,7 @@ const Header = () => {
       fetchSMSBalance();
     }
   }, [userInfo]);
+  const admin_role = userInfo?.roles.includes(9999);
 
   const logoutHandler = async () => {
     try {
@@ -57,22 +62,22 @@ const Header = () => {
             </Navbar.Brand>
           </LinkContainer>
           <Idle />
-          {/* {userInfo ? (
-            <div
-              style={{ color: "green", textAlign: "center", marginLeft: "20%" }}
-            >
-              Credit : sms. {credit}
-            </div>
-          ) : (
-            ""
-          )} */}
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
               {userInfo ? (
                 <>
-                  <NavDropdown title={userInfo.user_email} id="username">
+                  <NavDropdown
+                    title={
+                      <>
+                        &nbsp;{admin_role ? `${credit} SMS` : ``} &nbsp; &nbsp;
+                        <FaEnvelope /> &nbsp; &nbsp;
+                        <ManageAccountsIcon />
+                      </>
+                    }
+                    id="username"
+                  >
                     <LinkContainer to="/profile">
                       <NavDropdown.Item>Profile</NavDropdown.Item>
                     </LinkContainer>
