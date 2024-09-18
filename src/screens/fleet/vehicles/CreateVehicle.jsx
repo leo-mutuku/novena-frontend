@@ -85,7 +85,7 @@ function CreateVehicle() {
             <Form.Group className="my-2" controlId="year">
               <Form.Label>Year of Manufacture</Form.Label>
               <Form.Control
-                type="text"
+                type="number"
                 required
                 placeholder="Year of Manufacture"
                 value={year}

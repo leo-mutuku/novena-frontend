@@ -374,6 +374,10 @@ import Validate from "./screens/ict/bankrecon/Validate.jsx";
 import UploadBankStatement from "./screens/ict/bankrecon/UploadBankStatement.jsx";
 import Reconcile from "./screens/ict/bankrecon/Reconcile.jsx";
 import BankPeriod from "./screens/ict/bankrecon/BankPeriod.jsx";
+import FuelExpenseScreen from "./screens/fleet/FuelExpenseScreen.jsx";
+import MialageScreen from "./screens/fleet/MialageScreen.jsx";
+import TripSheetScreen from "./screens/fleet/TripsheetScreen.jsx";
+import VendorsScreen from "./screens/fleet/VendorsScreen.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -1046,6 +1050,10 @@ const router = createHashRouter(
             <Route path="update/:id" element={<EditRuns />} />
             <Route path="createrun" element={<CreateRun />} />
           </Route>
+          <Route path="fuelexpense" element={<FuelExpenseScreen />}></Route>
+          <Route path="mileage" element={<MialageScreen />}></Route>
+          <Route path="tripsheet" element={<TripSheetScreen />}></Route>
+          <Route path="vendors" element={<VendorsScreen />}></Route>
         </Route>
         {/*ict*/}
         <Route path="ict" element={<IctScreen />}>

@@ -77,18 +77,7 @@ const DriversList = () => {
   return (
     <>
       <p>*** All Drivers ***</p>
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <div style={{ marginLeft: "10px" }}>
-          <button onClick={handleDownloadPDF} disabled={loadingPdf}>
-            {loadingPdf ? <Loader /> : <FaFilePdf />}
-          </button>
-        </div>
-        <div style={{ marginLeft: "10px" }}>
-          <button onClick={handleDownloadExcel} disabled={loadingExcel}>
-            {loadingExcel ? <Loader /> : <FaFileExcel />}
-          </button>
-        </div>
-      </div>
+
       <DriverDataTable />
     </>
   );
