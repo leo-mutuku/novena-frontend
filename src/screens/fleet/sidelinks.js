@@ -8,7 +8,7 @@ export const sidelinks = [
       { subMenuTitle: "Repair & Maint", to: "maintanance" },
       { subMenuTitle: "Fuel Expense", to: "fuelexpense" },
       { subMenuTitle: "Mialage", to: "mileage" },
-      { subMenuTitle: "Runs", to: "runs" },
+      { subMenuTitle: "Daily Runs", to: "runs" },
       { subMenuTitle: "Trip Sheet", to: "tripsheet" },
       { subMenuTitle: "Vendors", to: "vendors" },
     ],

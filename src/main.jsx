@@ -378,6 +378,10 @@ import FuelExpenseScreen from "./screens/fleet/FuelExpenseScreen.jsx";
 import MialageScreen from "./screens/fleet/MialageScreen.jsx";
 import TripSheetScreen from "./screens/fleet/TripsheetScreen.jsx";
 import VendorsScreen from "./screens/fleet/VendorsScreen.jsx";
+import AllFuelExpenses from "./screens/fleet/fuelexpense.jsx/AllFuelExpenses.jsx";
+import NexFuelExpense from "./screens/fleet/fuelexpense.jsx/NexFuelExpense.jsx";
+import AllMialage from "./screens/fleet/mialage/AllMialage.jsx";
+import NewMialage from "./screens/fleet/mialage/NewMialage.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -1050,8 +1054,14 @@ const router = createHashRouter(
             <Route path="update/:id" element={<EditRuns />} />
             <Route path="createrun" element={<CreateRun />} />
           </Route>
-          <Route path="fuelexpense" element={<FuelExpenseScreen />}></Route>
-          <Route path="mileage" element={<MialageScreen />}></Route>
+          <Route path="fuelexpense" element={<FuelExpenseScreen />}>
+            <Route path="takemialage" element={<AllFuelExpenses />} />
+            <Route path="allfuelexpenses" element={<NexFuelExpense />} />
+          </Route>
+          <Route path="mileage" element={<MialageScreen />}>
+            <Route path="newmileage" element={<NewMialage />} />
+            <Route path="mialagehistory" element={<AllMialage />} />
+          </Route>
           <Route path="tripsheet" element={<TripSheetScreen />}></Route>
           <Route path="vendors" element={<VendorsScreen />}></Route>
         </Route>
