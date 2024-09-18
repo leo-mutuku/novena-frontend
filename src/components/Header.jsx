@@ -13,6 +13,8 @@ import Idle from "../components/Idle";
 import { useEffect, useState } from "react";
 import { FaSignInAlt, FaSignOutAlt, FaHome, FaEnvelope } from "react-icons/fa";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import { FaUserEdit } from "react-icons/fa";
+import { AiOutlineLogout } from "react-icons/ai";
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -72,17 +74,28 @@ const Header = () => {
                     title={
                       <>
                         &nbsp;{admin_role ? `${credit} SMS` : ``} &nbsp; &nbsp;
-                        <FaEnvelope /> &nbsp; &nbsp;
+                        <FaEnvelope style={{ color: "white" }} />
+                        &nbsp;&nbsp;
                         <ManageAccountsIcon />
                       </>
                     }
                     id="username"
                   >
                     <LinkContainer to="/profile">
-                      <NavDropdown.Item>Profile</NavDropdown.Item>
+                      <NavDropdown.Item>
+                        <FaUserEdit style={{ color: "#0d6efd" }} />
+                        &nbsp; Profile
+                      </NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="">
+                      <NavDropdown.Item>
+                        <FaEnvelope style={{ color: "#0d6efd" }} /> &nbsp;
+                        Notifications
+                      </NavDropdown.Item>
                     </LinkContainer>
                     <NavDropdown.Item onClick={logoutHandler}>
-                      Logout
+                      <AiOutlineLogout style={{ color: "#0d6efd" }} />{" "}
+                      &nbsp;Logout
                     </NavDropdown.Item>
                   </NavDropdown>
                 </>
