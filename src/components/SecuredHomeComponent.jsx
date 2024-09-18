@@ -217,7 +217,7 @@ const SecuredHomeComponent = () => {
                 {" "}
                 &copy; 2024 : All rights reserved: Novena Maize Miller ltd ***{" "}
               </p>
-              <p>ROSA CORN&trade;</p>
+              <p style={{ color: "red" }}>MOGULAFRIC&trade;</p>
             </div>
           </Card>
         </Container>
