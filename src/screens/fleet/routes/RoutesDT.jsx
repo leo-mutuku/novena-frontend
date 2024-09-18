@@ -7,6 +7,8 @@ import {
   useGetAllRoutesQuery,
 } from "../../../slices/fleet/routesApiSlice";
 import DataTable from "../../../components/general/DataTable";
+import { IoIosMedkit, IoMdEye } from "react-icons/io";
+import { MdDelete, MdEdit } from "react-icons/md";
 
 const RoutesDT = () => {
   const { data: routes, isLoading } = useGetAllRoutesQuery();
@@ -60,7 +62,16 @@ const RoutesDT = () => {
         accessor: "edit",
         Cell: ({ row }) => (
           <Link to={`/fleet/routes/update/${row.original.route_id}`}>
-            <button className="btn btn-edit">Edit</button>
+            <MdEdit />
+          </Link>
+        ),
+      },
+      {
+        Header: "View ",
+        accessor: "View",
+        Cell: ({ row }) => (
+          <Link to={`/fleet/routes/view/${row.original.route_id}`}>
+            <IoMdEye />
           </Link>
         ),
       },
@@ -68,8 +79,8 @@ const RoutesDT = () => {
         Header: "Delete",
         accessor: "delete",
         Cell: ({ row }) => (
-          <button onClick={() => handleDelete(row.original.route_id)}>
-            Delete
+          <button className="primary">
+            <MdDelete onClick={() => handleDelete(row.original.route_id)} />
           </button>
         ),
       },
