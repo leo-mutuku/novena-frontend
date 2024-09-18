@@ -1,7 +1,7 @@
 import PageActionComponent from "../../components/PageActionComponent";
 const pagemenus = [
-  { pagename: "All vehicles", to: "allvehicles" },
-  { pagename: "Create Vehicle", to: "createvehicle" },
+  { pagename: "Take Mialage", to: "takemialage" },
+  { pagename: "Mialage History", to: "mialagehistory" },
 ];
 function MialageScreen() {
   return (

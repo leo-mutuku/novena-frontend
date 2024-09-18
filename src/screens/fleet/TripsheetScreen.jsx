@@ -1,7 +1,7 @@
 import PageActionComponent from "../../components/PageActionComponent";
 const pagemenus = [
-  { pagename: "All vehicles", to: "allvehicles" },
-  { pagename: "Create Vehicle", to: "createvehicle" },
+  { pagename: "Vehicle Trip Summary", to: "#" },
+  { pagename: "Vehicle Trip Details", to: "#" },
 ];
 function TripSheetScreen() {
   return (

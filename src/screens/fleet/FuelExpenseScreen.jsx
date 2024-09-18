@@ -1,7 +1,7 @@
 import PageActionComponent from "../../components/PageActionComponent";
 const pagemenus = [
-  { pagename: "All vehicles", to: "allvehicles" },
-  { pagename: "Create Vehicle", to: "createvehicle" },
+  { pagename: "New Expense", to: "newfuelexpense" },
+  { pagename: "All Fuel Expenses", to: "allfuelexpenses" },
 ];
 function FuelExpenseScreen() {
   return (
