@@ -11,6 +11,7 @@ import moment from "moment";
 import axios from "axios";
 import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
 import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
+import { GrRevert } from "react-icons/gr";
 
 const CashReceiptList = () => {
   const { data: orders, isLoading } = useGetAllSalesCashReceptsQuery();
@@ -34,6 +35,13 @@ const CashReceiptList = () => {
     }
   }, [orders]);
 
+  const handleReverse = async () => {
+    const response = await axios.get(
+      `${baseUrlJasper}/api/reverse_cash_receipt/${store_purchase_id}`
+    );
+    console.log(response);
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -55,7 +63,20 @@ const CashReceiptList = () => {
       },
       { Header: "SP", accessor: "related_name" },
       { Header: "Created By", accessor: "create_by" },
+      {
+        Header: "Reverse",
+        accessor: "reserve",
+        Cell: ({ row }) => (
+          <Button
+            variant="outline-primary"
+            onClick={handleReverse(row.original.entry_id)}
+          >
+            <GrRevert />
+          </Button>
+        ),
+      },
     ],
+
     []
   );
 
