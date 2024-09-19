@@ -15,13 +15,10 @@ export const sidelinks = [
     menuTitle: "Stock Adjustment Form",
     subMenus: [{ subMenuTitle: "Stock Adjustment Form", to: "itemadjustment" }],
   },
-  {
-    menuTitle: "Stock Take",
-    subMenus: [{ subMenuTitle: "Stock Take", to: "stocktake" }],
-  },
+
   {
     menuTitle: "Auto Stock Take",
-    subMenus: [{ subMenuTitle: "", to: "autostocktake" }],
+    subMenus: [{ subMenuTitle: "Auto Stock Take", to: "autostocktake" }],
   },
   {
     menuTitle: "Store Register",
