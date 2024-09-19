@@ -80,6 +80,22 @@ function CreateCashReceipts() {
       toast.error(err?.data?.message || err.error);
     }
   };
+  function handleAmountChange(e) {
+    let value = e.target.value;
+
+    // If value contains a negative sign, return early
+    if (value.includes("-")) {
+      return;
+    }
+
+    // Allow only digits and one optional decimal point
+    if (/^\d*\.?\d*$/.test(value)) {
+      set_amount(value); // Update the amount state with the formatted value
+      // Assuming you have a function or method to update the amount
+      // e.g., updateAmount(parseFloat(value) || 0);
+      console.log(parseFloat(value) || 0); // Replace this with your actual update logic
+    }
+  }
 
   return (
     <>
@@ -206,7 +222,14 @@ function CreateCashReceipts() {
                 type="number"
                 placeholder="Amount"
                 value={amount}
-                onChange={(e) => set_amount(parseFloat(e.target.value))}
+                onChange={(e) => {
+                  let value = e.target.value;
+
+                  // Only allow digits and one optional decimal point, no negative sign
+                  if (/^\d*\.?\d*$/.test(value)) {
+                    set_amount(parseFloat(value)); // Set the amount or default to 0 if input is empty
+                  }
+                }}
               ></Form.Control>
             </Form.Group>
           </Col>

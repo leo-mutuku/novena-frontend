@@ -42,20 +42,18 @@ const CashReceiptList = () => {
       },
       {
         Header: "Date",
-        accessor: "created_at",
-        Cell: ({ value }) => {
-          return moment(value).format("DD/MM/YYYY : HH:mm");
-        },
+        accessor: "formatted_created_at",
       },
       {
         Header: "Cash Account",
-        accessor: "cash_account_id",
+        accessor: "cash_account_name",
       },
 
       {
         Header: "Amount",
         accessor: "amount",
       },
+      { Header: "SP", accessor: "related_name" },
       { Header: "Created By", accessor: "create_by" },
     ],
     []
