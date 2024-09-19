@@ -79,7 +79,10 @@ const AllPostedReturnOrders = () => {
               <Link
                 to={`/sales/returnorder/returnorderview/${row.original.header_id}`}
               >
-                <IoMdEye />
+                <Button variant="outline-primary">
+                  {" "}
+                  <IoMdEye />
+                </Button>
               </Link>
             ) : (
               "--"

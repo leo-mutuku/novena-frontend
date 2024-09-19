@@ -106,14 +106,15 @@ const OrderInvoiceList = () => {
         accessor: (row, index) => index + 1,
       },
       {
+        Header: "Customer",
+        accessor: "customer_name",
+      },
+      {
         Header: "Sale Date",
         accessor: "sales_order_date",
         Cell: ({ value }) => <span>{moment(value).format("YYYY-MM-DD")}</span>,
       },
-      {
-        Header: "Sales Type",
-        accessor: "sale_order_type",
-      },
+
       {
         Header: "Order No.",
         accessor: "sales_order_number",
@@ -122,18 +123,7 @@ const OrderInvoiceList = () => {
         Header: "Total",
         accessor: "total",
       },
-      {
-        Header: "No. of Items",
-        accessor: "pay_per_bale",
-      },
-      {
-        Header: "Cust Name",
-        accessor: "customer_name",
-      },
-      {
-        Header: "Sales .P",
-        accessor: "first_name",
-      },
+
       {
         Header: "Status",
         accessor: "status",
@@ -142,7 +132,7 @@ const OrderInvoiceList = () => {
         ),
       },
       {
-        Header: "View",
+        Header: "PDF",
         accessor: "view",
         Cell: ({ row }) => (
           <span>
@@ -150,7 +140,10 @@ const OrderInvoiceList = () => {
               <Link
                 to={`/sales/orderinvoice/orderinvoicepreview/${row.original.sales_order_number}`}
               >
-                <IoMdEye />
+                <Button variant="outline-primary">
+                  {" "}
+                  <IoMdEye />
+                </Button>
               </Link>
             ) : (
               "--"
