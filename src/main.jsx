@@ -382,6 +382,10 @@ import AllFuelExpenses from "./screens/fleet/fuelexpense.jsx/AllFuelExpenses.jsx
 import NexFuelExpense from "./screens/fleet/fuelexpense.jsx/NexFuelExpense.jsx";
 import AllMialage from "./screens/fleet/mialage/AllMialage.jsx";
 import NewMialage from "./screens/fleet/mialage/NewMialage.jsx";
+import AllVendors from "./screens/fleet/vendors/AllVendors.jsx";
+import NewVendor from "./screens/fleet/vendors/NewVendor.jsx";
+import VehicleTripSummary from "./screens/fleet/tripsheet/VehicleTripSummary.jsx";
+import VehicleTripDetails from "./screens/fleet/tripsheet/VehicleTripDetails.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -1055,15 +1059,22 @@ const router = createHashRouter(
             <Route path="createrun" element={<CreateRun />} />
           </Route>
           <Route path="fuelexpense" element={<FuelExpenseScreen />}>
-            <Route path="takemialage" element={<AllFuelExpenses />} />
-            <Route path="allfuelexpenses" element={<NexFuelExpense />} />
+            <Route path="allfuelexpenses" element={<AllFuelExpenses />} />
+            <Route path="newfuelexpense" element={<NexFuelExpense />} />
           </Route>
           <Route path="mileage" element={<MialageScreen />}>
-            <Route path="newmileage" element={<NewMialage />} />
+            <Route path="takemialage" element={<NewMialage />} />
             <Route path="mialagehistory" element={<AllMialage />} />
           </Route>
-          <Route path="tripsheet" element={<TripSheetScreen />}></Route>
-          <Route path="vendors" element={<VendorsScreen />}></Route>
+          <Route path="tripsheet" element={<TripSheetScreen />}>
+            <Route path="vehicletripsummary" element={<VehicleTripSummary />} />
+
+            <Route path="vehicletripdetails" element={<VehicleTripDetails />} />
+          </Route>
+          <Route path="vendors" element={<VendorsScreen />}>
+            <Route path="allvendors" element={<AllVendors />} />
+            <Route path="newvendor" element={<NewVendor />} />
+          </Route>
         </Route>
         {/*ict*/}
         <Route path="ict" element={<IctScreen />}>

@@ -1,6 +1,6 @@
 import PageActionComponent from "../../components/PageActionComponent";
 const pagemenus = [
-  { pagename: "New Vendor", to: "allvendors" },
+  { pagename: "New Vendor", to: "newvendor" },
   { pagename: "All Vendors", to: "allvendors" },
 ];
 function VendorsScreen() {
