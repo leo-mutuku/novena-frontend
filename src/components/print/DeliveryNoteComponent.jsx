@@ -6,22 +6,23 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
     <div
       ref={ref}
       style={{
-        width: "120mm", // Custom width, narrower than half A4 in portrait
-        minHeight: "130mm", // Half height of A4
+        width: "148mm", // A5 width
+        height: "210mm", // A5 height
         boxSizing: "border-box",
-        padding: "3px",
-        margin: "0 auto", // Center the content horizontally
-        position: "relative", // Relative positioning for positioning the content
-        fontFamily: "'Courier New', Courier, monospace", // Use Courier New for dot matrix printers
-        fontWeight: "bold", // Make text bold
-        letterSpacing: "0px", // No extra letter spacing for a clean appearance
+        padding: "10mm", // Padding to ensure content is well-positioned within the page
+        margin: "0 auto",
+        position: "relative",
+        fontFamily: "'Courier New', Courier, monospace",
+        fontWeight: "bold",
+        letterSpacing: "0px",
+        overflow: "hidden", // Prevent overflow
       }}
     >
       <style>
         {`
         @page {
-          size: auto;
-          margin: 0;
+          size: A5 portrait;
+          margin: 0; /* No margins */
         }
 
         body {
@@ -43,10 +44,10 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
           .page {
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Align content to the top */
+            justify-content: flex-start;
             align-items: center;
             margin: auto;
-            padding-top: 10mm; /* Adjust this value if needed */
+            padding: 10mm; /* Adjust if necessary */
           }
         }
         `}
@@ -55,28 +56,27 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
       <div
         style={{
           textAlign: "center",
-          marginBottom: "3px",
-          marginTop: "15px",
+          marginBottom: "10px",
         }}
       >
         <h3 style={{ fontSize: "16px", fontWeight: "bold" }}>{header.title}</h3>
         {header.subTitle && (
           <p
-            style={{ fontSize: "14px", marginTop: "-10px", fontWeight: "bold" }}
+            style={{ fontSize: "14px", marginTop: "-5px", fontWeight: "bold" }}
           >
             {header.subTitle}
           </p>
         )}
         {header.description && (
           <p
-            style={{ fontSize: "14px", marginTop: "-10px", fontWeight: "bold" }}
+            style={{ fontSize: "14px", marginTop: "-5px", fontWeight: "bold" }}
           >
             {header.description}
           </p>
         )}
         {header.address && (
           <p
-            style={{ fontSize: "14px", marginTop: "-10px", fontWeight: "bold" }}
+            style={{ fontSize: "14px", marginTop: "-5px", fontWeight: "bold" }}
           >
             {header.address} | {header.pin} | {header.phone}
           </p>
@@ -85,7 +85,7 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
           <p
             style={{
               fontSize: "12px",
-              marginTop: "-15px",
+              marginTop: "-10px",
               fontWeight: "bold",
             }}
           >
@@ -94,7 +94,7 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
         )}
       </div>
 
-      <div style={{ marginBottom: "3px" }}>
+      <div style={{ marginBottom: "10px" }}>
         <Row>
           <Col>
             {header.customer && (
@@ -135,7 +135,7 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
           fontSize: "12px",
           width: "100%",
           borderCollapse: "collapse",
-          marginTop: "3px",
+          marginTop: "10px",
         }}
       >
         <thead>
@@ -193,7 +193,7 @@ const DeliveryNote = forwardRef(({ header, body, footer }, ref) => {
             </Col>
             <Col>
               <p style={{ fontSize: "12px", fontWeight: "bold" }}>
-                Signature ..........................................
+                Signature ...........................................
               </p>
               <span
                 style={{
