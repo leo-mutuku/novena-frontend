@@ -24,7 +24,7 @@ const AllOrderHeadersInTransit = () => {
   };
   return (
     <>
-      <p>*** All Store Purchases In Transit ***</p>
+      <p>*** All Sales Orders In Transit ***</p>
       <div style={{ display: `${edit_mode}` }}>
         <EditOrderLines
           set_edit_mode={set_edit_mode}
@@ -38,12 +38,11 @@ const AllOrderHeadersInTransit = () => {
           <tr>
             <th style={{ position: "initial" }}>#</th>
             <th style={{ position: "initial" }}>Sale Date</th>
-            <th style={{ position: "initial" }}>Sales Type</th>
+
             <th style={{ position: "initial" }}>Order No.</th>
-            <th style={{ position: "initial" }}>Total</th>
-            <th style={{ position: "initial" }}>No. of Items</th>
-            <th style={{ position: "initial" }}>Cust Name</th>
-            <th style={{ position: "initial" }}>Sales .P</th>
+
+            <th style={{ position: "initial" }}>Customer</th>
+            <th style={{ position: "initial" }}>SP</th>
             <th style={{ position: "initial" }}>Status</th>
             <th style={{ position: "initial" }}>Edit</th>
           </tr>
@@ -60,11 +59,9 @@ const AllOrderHeadersInTransit = () => {
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{`${timeDate.date(item.sales_order_date)}`}</td>
-                <td>{item.sale_order_type}</td>
 
                 <td>{item.sales_order_number}</td>
-                <td>{item.total}</td>
-                <td>{item.pay_per_bale}</td>
+
                 <td>{item.customer_name}</td>
                 <td>{item.first_name}</td>
                 <td>

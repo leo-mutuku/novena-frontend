@@ -90,12 +90,12 @@ const OrderHeaderList = () => {
             <tr style={{ position: "static" }}>
               <th style={{ position: "initial" }}>#</th>
               <th style={{ position: "initial" }}>Sale Date</th>
-              <th style={{ position: "initial" }}>Sales Type</th>
+
               <th style={{ position: "initial" }}>Order No.</th>
               <th style={{ position: "initial" }}>Total</th>
               <th style={{ position: "initial" }}>No. of Items</th>
-              <th style={{ position: "initial" }}>Cust Name</th>
-              <th style={{ position: "initial" }}>Sales .P</th>
+              <th style={{ position: "initial" }}>Customer</th>
+              <th style={{ position: "initial" }}>SP</th>
               <th style={{ position: "initial" }}>Status</th>
               <th style={{ position: "initial" }}>Add</th>
               <th style={{ position: "initial" }}>Del</th>
@@ -115,7 +115,6 @@ const OrderHeaderList = () => {
                 <tr>
                   <td>{index + 1}</td>
                   <td>{`${timeDate.date(item.sales_order_date)}`}</td>
-                  <td>{item.sale_order_type}</td>
 
                   <td>{item.sales_order_number}</td>
                   <td>{item.total}</td>

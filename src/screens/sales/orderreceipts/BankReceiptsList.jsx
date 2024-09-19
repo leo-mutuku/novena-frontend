@@ -147,6 +147,7 @@ const BankReceipts = () => {
 
           return (
             <Button
+              variant={isReversed ? "outline-danger" : "outline-primary"}
               onClick={() => handleReverse(row.original.entry_id)}
               disabled={isReversed || !isAdmin} // Disable button if reference ends with '-R'
             >

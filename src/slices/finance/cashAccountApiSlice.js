@@ -46,6 +46,15 @@ export const cashAccountsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["cashaccounts"],
     }),
+    reverseCashSalesOrderReceipt: builder.mutation({
+      query: (data) => ({
+        url: `${URL}/reversecashsalesorderreceipt`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["cashaccounts"],
+    }),
+
     createCashSupplierPayment: builder.mutation({
       query: (data) => ({
         url: `${URL}/createcashsupplierpayment`,
@@ -74,6 +83,7 @@ export const cashAccountsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useReverseCashSalesOrderReceiptMutation,
   useUpdateCashAccountBalanceMutation,
   useGetAllSalesCashReceptsQuery,
   useCreateCashSupplierPaymentMutation,

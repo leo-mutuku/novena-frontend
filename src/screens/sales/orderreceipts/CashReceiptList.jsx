@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Loader from "../../../components/Loader";
 import { useGetAllSalesCashReceptsQuery } from "../../../slices/finance/cashAccountApiSlice";
+import { useReverseCashSalesOrderReceiptMutation } from "../../../slices/finance/cashAccountApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { IoMdEye } from "react-icons/io";
@@ -12,9 +13,16 @@ import axios from "axios";
 import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
 import { FaRegFileExcel, FaFilePdf, FaFileExcel } from "react-icons/fa";
 import { GrRevert } from "react-icons/gr";
+import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
 
 const CashReceiptList = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+  const su = 9999;
+  let isAdmin = userInfo.roles.includes(su) ? true : false;
   const { data: orders, isLoading } = useGetAllSalesCashReceptsQuery();
+  const [reverseCashSalesOrderReceipt] =
+    useReverseCashSalesOrderReceiptMutation();
 
   console.log(orders?.data);
   const [loadingPdf, setLoadingPdf] = useState(false);
@@ -35,11 +43,17 @@ const CashReceiptList = () => {
     }
   }, [orders]);
 
-  const handleReverse = async () => {
-    const response = await axios.get(
-      `${baseUrlJasper}/api/reverse_cash_receipt/${store_purchase_id}`
-    );
-    console.log(response);
+  const handleReverse = async (e) => {
+    try {
+      const res = await reverseCashSalesOrderReceipt({ id: e }).unwrap();
+      if (res.status === "success") {
+        toast.success(res.message);
+      } else {
+        toast.error(res.message);
+      }
+    } catch (error) {
+      toast.error(error?.data.message);
+    }
   };
 
   const columns = useMemo(
@@ -66,14 +80,19 @@ const CashReceiptList = () => {
       {
         Header: "Reverse",
         accessor: "reserve",
-        Cell: ({ row }) => (
-          <Button
-            variant="outline-primary"
-            onClick={handleReverse(row.original.entry_id)}
-          >
-            <GrRevert />
-          </Button>
-        ),
+        Cell: ({ row }) => {
+          const isReversed = row.original.amount.startsWith("-");
+
+          return (
+            <Button
+              variant={isReversed ? "outline-danger" : "outline-primary"}
+              onClick={() => handleReverse(row.original.entry_id)}
+              disabled={isReversed || !isAdmin} // Disable button if reference ends with '-R'
+            >
+              <GrRevert />
+            </Button>
+          );
+        },
       },
     ],
 
