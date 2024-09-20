@@ -1,71 +1,44 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import Loader from "../../../components/Loader";
+import { useCreateVendorMutation } from "../../../slices/fleet/vendorApiSlice";
+import { useGetAllItemRegisterQuery } from "../../../slices/store/itemregisterApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useGetAllVehiclesQuery } from "../../../slices/fleet/vehicleApiSlice";
-import { useAddMaintenanceMutation } from "../../../slices/fleet/maintenanceApiSlice";
-import moment from "moment";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 function CreateMaintenanceList() {
-  const [maintenance_date, setMaintenanceDate] = useState("");
-  const [maintenance_type, setMaintenanceType] = useState("");
-  const [description, setDescription] = useState("");
-  const [cost, setCost] = useState();
-  const [vehicle_id, setVehicleId] = useState();
-  const { data: vehicles } = useGetAllVehiclesQuery();
+  const [vendor_email, set_vendor_email] = useState("null@null");
+  const [vendor_name, set_vendor_name] = useState("");
+  const [vendor_phone_number, set_vendor_phone_number] = useState("");
+  const [vendor_location, set_vendor_location] = useState("");
+  const [balance, set_balance] = useState("");
 
-  const [addMaintenance, { isLoading }] = useAddMaintenanceMutation();
+  const [createvendor, { isLoading }] = useCreateVendorMutation();
+  const { data: suppliers } = useGetAllItemRegisterQuery();
   const navigate = useNavigate();
-
-  //date picker
-  const handleChange = (value) => {
-    setMaintenanceDate(value);
-  };
-
-  const handleVehicle = (e) => {
-    let x = vehicles?.data?.filter((a) => {
-      if (a.vehicle_id == e.target.value) {
-        return a.registration_number;
-      }
-    });
-    setVehicleId(x[0].vehicle_id);
-  };
-
+  useEffect(() => {
+    navigate();
+  }, [navigate]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Assuming your date is received as a string from react-datepicker
-    const dateStringFromPicker = maintenance_date;
-
-    // Parse the ISO string to moment object
-    const parsedDate = moment(dateStringFromPicker);
-
-    // Get the date part in YYYY-MM-DD format
-    const formattedDate = parsedDate.format("YYYY-MM-DD");
 
     try {
-      const res = await addMaintenance({
-        vehicle_id,
-        maintenance_type,
-        description,
-        cost,
-        maintenance_date: formattedDate,
+      const res = await createvendor({
+        vendor_email,
+        vendor_name,
+        vendor_phone_number,
+        vendor_location,
+        balance,
       }).unwrap();
-      if (res.status === "failed") {
-        toast.error(res.message);
-      } else {
-        toast.success(res.message);
-        navigate("../allmaintenance");
-      }
+
+      navigate("../allvendors");
+      toast.success("vendor created successfully");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
   };
   return (
     <>
-      <span>*** Add Vehicle Maintenance ***</span>
+      <span>*** Create Vendor ***</span>
       <Row>
         <div>
           {" "}
@@ -77,87 +50,77 @@ function CreateMaintenanceList() {
 
         <Row>
           <Col>
-            <Form.Group className="my-2" controlId="vehicle_id">
-              <Form.Label>Vehicle Name</Form.Label>
-              <Form.Select
-                type="text"
-                required
-                value={vehicle_id}
-                onChange={handleVehicle}
-              >
-                <option value="">Select Vehicle Name</option>
-                {vehicles?.data?.map((item) => (
-                  <option key={item.vehicle_id} value={item.vehicle_id}>
-                    {item.registration_number}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.Group>
-          </Col>
-          <Col>
-            {/* */}
-            <Form.Group className="my-2" controlId="description">
-              <Form.Label>Description</Form.Label>
+            <Form.Group className="my-2" controlId="supplier_email">
+              <Form.Label>Vendor Email</Form.Label>
               <Form.Control
-                type="text"
+                type="email"
                 required
-                placeholder="Description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            {/* */}
-            <Form.Group className="my-2" controlId="maintenance_type">
-              <Form.Label>Maintenance Type</Form.Label>
-              <Form.Control
-                type="text"
-                required
-                placeholder="Maintenance Type"
-                value={maintenance_type}
-                onChange={(e) => setMaintenanceType(e.target.value)}
+                placeholder="Vendor Email"
+                value={vendor_email}
+                onChange={(e) => set_vendor_email(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
           <Col>
             {/* */}
-            <Form.Group className="my-2" controlId="cost">
-              <Form.Label>Maintenance Cost</Form.Label>
+            <Form.Group className="my-2" controlId="supplier_name">
+              <Form.Label>Vendor Name</Form.Label>
               <Form.Control
                 type="text"
                 required
-                placeholder="Cost"
-                value={cost}
-                onChange={(e) => setCost(e.target.value)}
+                placeholder="Vendor Name"
+                value={vendor_name}
+                onChange={(e) => set_vendor_name(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
-        </Row>
-        <Row>
-          <Col>
-            {/* */}
-            {/* <DatePicker value={maintenance_date} onChange={handleChange} /> */}
-            <Form.Group className="my-2" controlId="maintenance_date">
-              <Form.Label>Maintenance Date</Form.Label>
-              <DatePicker
-                selected={maintenance_date}
-                onChange={handleChange}
-                dateFormat="yyyy-MM-dd"
-                className="form-control" // Applying Bootstrap's form-control class
-              />
-            </Form.Group>
-          </Col>
-          <Col></Col>
         </Row>
 
+        <Row>
+          <Col>
+            {/* staff_number field */}
+            <Form.Group className="my-2" controlId="vendor_phone_number">
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control
+                required
+                type="number"
+                placeholder="Vendor Phone Number"
+                value={vendor_phone_number}
+                onChange={(e) => set_vendor_phone_number(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="my-2" controlId="supplier_location">
+              <Form.Label>Vendor location</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="vendor location"
+                value={vendor_location}
+                onChange={(e) => set_vendor_location(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+
+          <Col>
+            <Form.Group className="my-2" controlId="balance">
+              <Form.Label>Balance </Form.Label>
+              <Form.Control
+                required
+                type="number"
+                placeholder="Balance "
+                value={balance}
+                onChange={(e) => set_balance(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+        </Row>
         <Button type="submit" variant="primary" className="mt-3">
-          Submit
+          submit
         </Button>
 
-        {isLoading && <Loader />}
+        {/* {isLoading && <Loader />} */}
       </Form>
     </>
   );

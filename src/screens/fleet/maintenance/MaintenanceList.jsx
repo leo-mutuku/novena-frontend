@@ -1,91 +1,81 @@
-import React, { useState } from "react";
-import MaintDT from "./MaintDT";
-import { FaFilePdf, FaFileExcel } from "react-icons/fa";
-import axios from "axios";
-import { baseUrlJasper } from "../../../slices/baseURLJasperReports";
+import React, { useEffect, useMemo, useState } from "react";
 import Loader from "../../../components/Loader";
+import { useGetVendorsQuery } from "../../../slices/fleet/vendorApiSlice";
+import { Link } from "react-router-dom";
+import { CiEdit } from "react-icons/ci";
+import DataTable from "../../../components/general/DataTable";
+
 const MaintenanceList = () => {
-  const [loadingPdf, setLoadingPdf] = useState(false);
-  const [loadingExcel, setLoadingExcel] = useState(false);
+  const { data: vendors, isLoading, isError } = useGetVendorsQuery(); // Added isError
+  const [tableData, setTableData] = useState([]);
 
-  const handleDownloadPDF = async () => {
-    setLoadingPdf(true);
-    try {
-      await axios({
-        url: `${baseUrlJasper}/all/maintenance/pdf`, // Endpoint on your Node.js server
-        method: "GET",
-        responseType: "blob", // Important: responseType 'blob' for binary data
-      }).then((response) => {
-        // Create a blob object from the binary data
-        const blob = new Blob([response.data], { type: "application/pdf" });
-
-        // Create a link element to trigger the download
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", "all-maintenance-report.pdf");
-        document.body.appendChild(link);
-
-        // Trigger the download
-        link.click();
-
-        // Clean up
-        window.URL.revokeObjectURL(url);
-      });
-    } catch (error) {
-      console.log(error.message);
-    } finally {
-      setLoadingPdf(false);
+  useEffect(() => {
+    if (Array.isArray(vendors?.data)) {
+      setTableData(vendors.data);
+    } else {
+      setTableData([]); // Fallback to empty array if not an array
     }
-  };
-  const handleDownloadExcel = async () => {
-    setLoadingExcel(true);
-    try {
-      await axios({
-        url: `${baseUrlJasper}/all/maintenance/excel`, // Endpoint on your Node.js server
-        method: "GET",
-        responseType: "blob", // Important: responseType 'blob' for binary data
-      }).then((response) => {
-        // Create a blob object from the binary data
-        const blob = new Blob([response.data], {
-          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        });
+  }, [vendors]);
 
-        // Create a link element to trigger the download
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", "all-maintenance-report.xlsx");
-        document.body.appendChild(link);
+  const columns = useMemo(
+    () => [
+      {
+        Header: "#",
+        accessor: (row, index) => index + 1,
+      },
+      {
+        Header: "Vendor #",
+        accessor: "vendor_number",
+      },
+      {
+        Header: "Vendor Name",
+        accessor: "vendor_name",
+      },
+      {
+        Header: "Email",
+        accessor: "vendor_email",
+      },
+      {
+        Header: "Contact",
+        accessor: "phone_number",
+      },
+      {
+        Header: "Location",
+        accessor: "vendor_location",
+      },
+      {
+        Header: "Balance",
+        accessor: "balance",
+        Cell: ({ row }) => <Link to={"#"}>{row.original.balance}</Link>,
+      },
+      {
+        Header: "Edit",
+        accessor: "edit",
+        Cell: ({ row }) => (
+          <Link to={`/purchase/suppliers/update/${row.original.vendor_id}`}>
+            <CiEdit />
+          </Link>
+        ),
+      },
+    ],
+    []
+  );
 
-        // Trigger the download
-        link.click();
+  if (isLoading) {
+    return <Loader />;
+  }
 
-        // Clean up
-        window.URL.revokeObjectURL(url);
-      });
-    } catch (error) {
-      console.log(error.message);
-    } finally {
-      setLoadingExcel(false);
-    }
-  };
+  if (isError) {
+    return <p>Error loading vendors.</p>;
+  }
+
   return (
     <>
-      <p>*** All Vehicles Maintenance ***</p>
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <div style={{ marginLeft: "10px" }}>
-          <button onClick={handleDownloadPDF} disabled={loadingPdf}>
-            {loadingPdf ? <Loader /> : <FaFilePdf />}
-          </button>
-        </div>
-        <div style={{ marginLeft: "10px" }}>
-          <button onClick={handleDownloadExcel} disabled={loadingExcel}>
-            {loadingExcel ? <Loader /> : <FaFileExcel />}
-          </button>
-        </div>
+      <div>
+        <p>*** All vendors ***</p>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}></div>
+        <DataTable columns={columns} data={tableData} />
       </div>
-      <MaintDT />
     </>
   );
 };
