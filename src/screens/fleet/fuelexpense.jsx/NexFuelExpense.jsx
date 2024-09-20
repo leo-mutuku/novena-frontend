@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import { useCreateVendorMutation } from "../../../slices/fleet/vendorApiSlice";
+import { useGetVendorsQuery } from "../../../slices/fleet/vendorApiSlice";
+import { useCreateFuelExpenseMutation } from "../../../slices/fleet/fuelExpenseApiSlice";
+
+import { useGetAllVehiclesQuery } from "../../../slices/fleet/vehicleApiSlice";
 import { useGetAllItemRegisterQuery } from "../../../slices/store/itemregisterApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function NexFuelExpense() {
-  const [vendor_email, set_vendor_email] = useState("null@null");
-  const [vendor_name, set_vendor_name] = useState("");
-  const [vendor_phone_number, set_vendor_phone_number] = useState("");
-  const [vendor_location, set_vendor_location] = useState("");
-  const [balance, set_balance] = useState("");
+  const [vendor_id, set_vendor_id] = useState("");
+  const [vehicle_id, set_vehicle_id] = useState("");
+  const [expense_date, set_expense_date] = useState("");
+  const [amount, set_amount] = useState("");
 
-  const [createvendor, { isLoading }] = useCreateVendorMutation();
-  const { data: suppliers } = useGetAllItemRegisterQuery();
+  const [createFuelExpense, { isLoading }] = useCreateFuelExpenseMutation();
+  const { data: vendors } = useGetVendorsQuery();
+  const { data: vehicles } = useGetAllVehiclesQuery();
   const navigate = useNavigate();
   useEffect(() => {
     navigate();
@@ -22,12 +25,11 @@ function NexFuelExpense() {
     e.preventDefault();
 
     try {
-      const res = await createvendor({
-        vendor_email,
-        vendor_name,
-        vendor_phone_number,
-        vendor_location,
-        balance,
+      const res = await createFuelExpense({
+        vendor_id,
+        vehicle_id,
+        expense_date,
+        amount,
       }).unwrap();
 
       navigate("../allvendors");
@@ -51,27 +53,36 @@ function NexFuelExpense() {
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="supplier_email">
-              <Form.Label>Vendor Email</Form.Label>
-              <Form.Control
-                type="email"
+              <Form.Label>Vehicle</Form.Label>
+              <Form.Select
+                type="text"
                 required
-                placeholder="Vendor Email"
-                value={vendor_email}
-                onChange={(e) => set_vendor_email(e.target.value)}
-              ></Form.Control>
+                placeholder="Vendor "
+                value={vehicle_id}
+                onChange={(e) => set_vehicle_id(e.target.value)}
+              >
+                <option value="">Select Vehicle</option>
+                {vehicles?.data.map((vehicle) => (
+                  <option key={vehicle.id} value={vehicle.id}>
+                    {vehicle.registration_number}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
           <Col>
             {/* */}
             <Form.Group className="my-2" controlId="supplier_name">
-              <Form.Label>Vendor Name</Form.Label>
-              <Form.Control
+              <Form.Label>Vendor</Form.Label>
+              <Form.Select
                 type="text"
                 required
-                placeholder="Vendor Name"
-                value={vendor_name}
-                onChange={(e) => set_vendor_name(e.target.value)}
-              ></Form.Control>
+                placeholder="Vendor "
+                value={vendor_id}
+                onChange={(e) => set_vendor_id(e.target.value)}
+              >
+                <option value="">Select Vendor</option>
+              </Form.Select>
             </Form.Group>
           </Col>
         </Row>
@@ -80,38 +91,25 @@ function NexFuelExpense() {
           <Col>
             {/* staff_number field */}
             <Form.Group className="my-2" controlId="vendor_phone_number">
-              <Form.Label>Phone Number</Form.Label>
+              <Form.Label>Expense date</Form.Label>
               <Form.Control
                 required
-                type="number"
+                type="date"
                 placeholder="Vendor Phone Number"
-                value={vendor_phone_number}
-                onChange={(e) => set_vendor_phone_number(e.target.value)}
+                value={expense_date}
+                onChange={(e) => set_expense_date(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
           <Col>
             <Form.Group className="my-2" controlId="supplier_location">
-              <Form.Label>Vendor location</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="vendor location"
-                value={vendor_location}
-                onChange={(e) => set_vendor_location(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-          </Col>
-
-          <Col>
-            <Form.Group className="my-2" controlId="balance">
-              <Form.Label>Balance </Form.Label>
+              <Form.Label>Amount</Form.Label>
               <Form.Control
                 required
                 type="number"
-                placeholder="Balance "
-                value={balance}
-                onChange={(e) => set_balance(e.target.value)}
+                placeholder="amount"
+                value={amount}
+                onChange={(e) => set_amount(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
