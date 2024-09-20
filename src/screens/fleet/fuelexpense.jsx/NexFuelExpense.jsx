@@ -7,8 +7,10 @@ import { useGetAllVehiclesQuery } from "../../../slices/fleet/vehicleApiSlice";
 import { useGetAllItemRegisterQuery } from "../../../slices/store/itemregisterApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 function NexFuelExpense() {
+  const { userInfo } = useSelector((state) => state.auth);
   const [vendor_id, set_vendor_id] = useState("");
   const [vehicle_id, set_vehicle_id] = useState("");
   const [expense_date, set_expense_date] = useState("");
@@ -30,17 +32,22 @@ function NexFuelExpense() {
         vehicle_id,
         expense_date,
         amount,
+        created_by: userInfo.first_name,
       }).unwrap();
 
-      navigate("../allvendors");
-      toast.success("vendor created successfully");
+      if (res.status == "success") {
+        toast.success("vendor created successfully");
+        navigate("../allfuelexpenses");
+      } else {
+        toast.error(res.message);
+      }
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
   };
   return (
     <>
-      <span>*** Create Vendor ***</span>
+      <span>*** Fleet Fuel Expense Entry ***</span>
       <Row>
         <div>
           {" "}
@@ -63,7 +70,7 @@ function NexFuelExpense() {
               >
                 <option value="">Select Vehicle</option>
                 {vehicles?.data.map((vehicle) => (
-                  <option key={vehicle.id} value={vehicle.id}>
+                  <option key={vehicle.vehicle_id} value={vehicle.vehicle_id}>
                     {vehicle.registration_number}
                   </option>
                 ))}
@@ -82,6 +89,11 @@ function NexFuelExpense() {
                 onChange={(e) => set_vendor_id(e.target.value)}
               >
                 <option value="">Select Vendor</option>
+                {vendors?.data.map((vendor) => (
+                  <option key={vendor.vendor_id} value={vendor.vendor_id}>
+                    {vendor.vendor_name}
+                  </option>
+                ))}
               </Form.Select>
             </Form.Group>
           </Col>
