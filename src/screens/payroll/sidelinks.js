@@ -33,6 +33,12 @@ export const sidelinks = [
     menuTitle: "Bi Weekly Register",
     subMenus: [{ subMenuTitle: "Bi Weekly Register", to: "biweeklyregister" }],
   },
+  {
+    menuTitle: "Bi Weekly Biometric",
+    subMenus: [
+      { subMenuTitle: "Bi Weekly Biometric", to: "biweeklybiometric" },
+    ],
+  },
 
   {
     menuTitle: "Payroll Reports",

@@ -209,18 +209,18 @@ const PackhouseStaffList = () => {
           <Form.Group className="my-2" controlId="amount">
             <Form.Control
               required
-              type="date"
-              placeholder="Description"
+              type="datetime-local"
+              placeholder="Select Date and Time"
               value={start_date}
               onChange={(e) => set_start_date(e.target.value)}
-            ></Form.Control>
+            />
           </Form.Group>
         </Col>
         <Col xs={4}>
           <Form.Group className="my-2" controlId="amount">
             <Form.Control
               required
-              type="date"
+              type="datetime-local"
               placeholder="Description"
               value={end_date}
               onChange={(e) => set_end_date(e.target.value)}
