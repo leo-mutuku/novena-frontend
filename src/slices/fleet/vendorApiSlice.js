@@ -15,7 +15,7 @@ export const vehicleApiSlice = apiSlice.injectEndpoints({
       query: (id) => `${VENDORS_URL}/getvendor${id}`,
       providesTags: ["Vendor"],
     }),
-    getvendors: builder.query({
+    getVendors: builder.query({
       query: (data) => ({
         url: `${VENDORS_URL}/getvendors`,
         method: "GET",
