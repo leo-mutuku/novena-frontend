@@ -3,18 +3,26 @@ import autoTable from "jspdf-autotable";
 import TimeDate from "./TimeDate";
 
 export const handlePrintA4 = (payrollHeader, getlistOfStaffId) => {
+  console.log(payrollHeader, getlistOfStaffId);
   const timeDate = new TimeDate();
   const date = timeDate.date(payrollHeader.end_date);
   const startdate = timeDate.date(payrollHeader.start_date);
+  let gross_pay = payrollHeader.gross_pay;
 
   const dataa = getlistOfStaffId;
   const footer_header = [
-    { header: "Total Gross Pay", datakey: "gross_pay" },
-    { header: "Total Net Pay", datakey: "net_pay" },
-    { header: "Total Deductions", datakey: "total_deductions" },
+    { header: "Gross Pay", datakey: gross_pay },
+    { header: "Net Pay", datakey: payrollHeader.net_pay },
+    { header: "Total Deductions", datakey: payrollHeader.total_deductions },
   ];
   let total_gross_pay = payrollHeader.gross_pay;
-  const footer_body = [{ gross_pay: payrollHeader.gross_pay }];
+  const footer_body = [
+    {
+      gross_pay: payrollHeader.gross_pay,
+      net_pay: payrollHeader.net_pay,
+      total_deductions: payrollHeader.total_deductions,
+    },
+  ];
   const doc = new jsPDF("p", "mm", [219, 210]);
 
   doc.setLineWidth(2);
@@ -36,8 +44,9 @@ export const handlePrintA4 = (payrollHeader, getlistOfStaffId) => {
   autoTable(doc, { html: "#my-table" });
   autoTable(doc, { html: "#my-table" });
   doc.setFontSize(10);
-  doc.text(12, 43, `# Payroll`);
+
   doc.text(85, 43, `KRA PIN P63426847C`);
+  doc.text(12, 48, ` Payroll no. - ${payrollHeader.payroll_no}`);
 
   autoTable(doc, {
     theme: "grid",
@@ -59,11 +68,15 @@ export const handlePrintA4 = (payrollHeader, getlistOfStaffId) => {
   autoTable(doc, {
     theme: "grid",
     body: footer_body,
+    columns: [
+      { header: "Gross Pay", dataKey: "gross_pay" },
+      { header: "Net Pay", dataKey: "net_pay" },
+      { header: "Total Deductions", dataKey: "total_deductions" },
+    ],
     theme: "plain",
-    columns: footer_header,
   });
 
   // Sometimes you might have to call the default function on the export (for example in Deno)
 
-  doc.save("payslip.combined.pdf");
+  doc.save(`payroll-${payrollHeader.payroll_no}.pdf`);
 };
