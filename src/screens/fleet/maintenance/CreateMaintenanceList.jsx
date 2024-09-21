@@ -126,6 +126,20 @@ function CreateMaintenanceList() {
             </Form.Group>
           </Col>
         </Row>
+        <Row>
+          <Col>
+            <Form.Group className="my-2" controlId="supplier_location">
+              <Form.Label>Expense Descruption</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="amount"
+                value={amount}
+                onChange={(e) => set_amount(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+        </Row>
         <Button type="submit" variant="primary" className="mt-3">
           submit
         </Button>
