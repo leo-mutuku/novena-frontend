@@ -387,6 +387,7 @@ import NewVendor from "./screens/fleet/vendors/NewVendor.jsx";
 import VehicleTripSummary from "./screens/fleet/tripsheet/VehicleTripSummary.jsx";
 import VehicleTripDetails from "./screens/fleet/tripsheet/VehicleTripDetails.jsx";
 import BiWeeklyBiometricScreen from "./screens/payroll/BiWeeklyBiometricScreen.jsx";
+import BiWeeklyBioStaffList from "./screens/payroll/biweeklybiometric/BiWeeklyBioStaffList.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -526,10 +527,12 @@ const router = createHashRouter(
               element={<EditBiweeklyRegister />}
             />
           </Route>
-          <Route
-            path="biweeklybiometric"
-            element={<BiWeeklyBiometricScreen />}
-          ></Route>
+          <Route path="biweeklybiometric" element={<BiWeeklyBiometricScreen />}>
+            <Route
+              path="biweeklystaffbiometric"
+              element={<BiWeeklyBioStaffList />}
+            />
+          </Route>
           <Route path="packhousewage" element={<PackHouseWageScreen />}>
             <Route path="staffsetlist" element={<PackhouseStaffList />} />
           </Route>
