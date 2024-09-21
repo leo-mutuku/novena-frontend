@@ -162,67 +162,34 @@ function UpdateCancelledAttandance() {
         <br></br>
         <Row>
           <Divider>
-            <Chip label="Human Resource" size="small" />
+            <Chip label="Cancelled Attendance date" size="small" />
           </Divider>
         </Row>
         <Row>
-          <Col>
-            <Form.Group className="my-2" controlId="payroll_category">
-              <Form.Label>Payroll Category</Form.Label>
-              <Form.Select
-                type="number"
-                required
-                placeholder="Payroll Category"
-                value={payroll_category_code}
-                onChange={(e) =>
-                  set_payroll_category_code(parseInt(e.target.value))
-                }
-              >
-                <option value={""}>Select Payroll Category</option>
-                {payroll_category?.data.map((item, key) => (
-                  <option key={key} value={item.category_code}>
-                    {item.category_name}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group className="my-2" controlId="bank_account_number">
-              <Form.Label>Bi Weekly</Form.Label>
-              <Form.Select
-                type="number"
-                required
-                placeholder="Bank Account Number"
-                value={biweekly}
-                onChange={(e) => set_biweeekly(e.target.value)}
-              >
-                <option value={null}>Select</option>
-                <option value={1}>Yes</option>
-                <option value={0}>No</option>
-              </Form.Select>
-            </Form.Group>
-          </Col>
+          <Col></Col>
+          <Col></Col>
           <Col>
             <Form.Group className="my-2" controlId="bank_account_number">
               <Form.Label>Monthly</Form.Label>
-              <Form.Select
-                type="number"
+              <Form.Control
+                type="date"
                 required
-                placeholder="Bank Account Number"
+                placeholder="date"
                 value={monthly}
                 onChange={(e) => set_monthly(e.target.value)}
-              >
-                <option value={null}>Select</option>
-                <option value={1}>Yes</option>
-                <option value={0}>No</option>
-              </Form.Select>
+              ></Form.Control>
             </Form.Group>
           </Col>
         </Row>
-        <Button type="submit" variant="primary" className="mt-3">
-          Update
-        </Button>
+        <Row>
+          <Col></Col>
+          <Col xs={1}>
+            {" "}
+            <Button type="submit" variant="outline-primary" className="mt-3">
+              Sumbit
+            </Button>
+          </Col>
+        </Row>
 
         {isLoading && <Loader />}
       </Form>

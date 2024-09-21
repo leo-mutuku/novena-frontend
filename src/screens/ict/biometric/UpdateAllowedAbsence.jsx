@@ -180,9 +180,15 @@ function UpdateAllowedAbsence() {
             </Form.Group>
           </Col>
         </Row>
-        <Button type="submit" variant="primary" className="mt-3">
-          Update
-        </Button>
+        <Row>
+          <Col></Col>
+          <Col xs={1}>
+            {" "}
+            <Button type="submit" variant="outline-primary" className="mt-3">
+              Sumbit
+            </Button>
+          </Col>
+        </Row>
 
         {isLoading && <Loader />}
       </Form>
