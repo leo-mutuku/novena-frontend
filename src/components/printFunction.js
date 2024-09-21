@@ -1,8 +1,12 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import TimeDate from "./TimeDate";
 
 export const handlePrintA4 = (payrollHeader, getlistOfStaffId) => {
-  const date = ` ${payrollHeader.end_date}`;
+  const timeDate = new TimeDate();
+  const date = timeDate.date(payrollHeader.end_date);
+  const startdate = timeDate.date(payrollHeader.start_date);
+
   const dataa = getlistOfStaffId;
   const footer_header = [
     { header: "Total Gross Pay", datakey: "gross_pay" },
@@ -25,14 +29,14 @@ export const handlePrintA4 = (payrollHeader, getlistOfStaffId) => {
   doc.setFontSize(12);
   doc.text(85, 32, "Po Box 238 Meru");
   doc.setFontSize(12);
-  doc.text(75, 37, `Date : ${date}`);
+  doc.text(75, 37, `Date :${startdate} - ${date} `);
   autoTable(doc, { html: "#my-table" });
   autoTable(doc, { html: "#my-table" });
   autoTable(doc, { html: "#my-table" });
   autoTable(doc, { html: "#my-table" });
   autoTable(doc, { html: "#my-table" });
   doc.setFontSize(10);
-  doc.text(12, 43, `# Payslips`);
+  doc.text(12, 43, `# Payroll`);
   doc.text(85, 43, `KRA PIN P63426847C`);
 
   autoTable(doc, {
