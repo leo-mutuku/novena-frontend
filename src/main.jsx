@@ -388,6 +388,8 @@ import VehicleTripSummary from "./screens/fleet/tripsheet/VehicleTripSummary.jsx
 import VehicleTripDetails from "./screens/fleet/tripsheet/VehicleTripDetails.jsx";
 import BiWeeklyBiometricScreen from "./screens/payroll/BiWeeklyBiometricScreen.jsx";
 import BiWeeklyBioStaffList from "./screens/payroll/biweeklybiometric/BiWeeklyBioStaffList.jsx";
+import UpdateAllowedAbsence from "./screens/ict/biometric/UpdateAllowedAbsence.jsx";
+import UpdateCancelledAttandance from "./screens/ict/biometric/UpdateCancelledAttandance.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -1089,6 +1091,14 @@ const router = createHashRouter(
           <Route path="dailyattance" element={<DailyAttendance />}></Route>
           <Route path="attendancereport" element={<AttendanceReport />}></Route>
           <Route path="allowedabsence" element={<AllAllowedAbsence />}></Route>
+          <Route
+            path="updateallowedabsence/:id"
+            element={<UpdateAllowedAbsence />}
+          />
+          <Route
+            path="updatecancelldattendance"
+            element={<UpdateCancelledAttandance />}
+          />
           <Route path="cancelledattendance" element={<CancelAttance />}></Route>
           <Route path="validate" element={<Validate />}></Route>
           <Route

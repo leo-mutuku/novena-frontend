@@ -122,7 +122,7 @@ const CancelAttance = () => {
         Header: "Mark Out",
         accessor: "edit",
         Cell: ({ row }) => (
-          <Link to={`/administration/staff/update/${row.original.staff_id}`}>
+          <Link to={`../updatecancelldattendance/${row.original.staff_id}`}>
             <Button variant="outline-primary">
               <MdOutlineAlarmOff />
             </Button>

@@ -122,7 +122,7 @@ const AllAllowedAbsence = () => {
         Header: "Mark In",
         accessor: "edit",
         Cell: ({ row }) => (
-          <Link to={`/administration/staff/update/${row.original.staff_id}`}>
+          <Link to={`../updateallowedabsence/${row.original.staff_id}`}>
             <Button variant="outline-primary">
               <MdOutlineAlarmOn />
             </Button>
