@@ -38,8 +38,8 @@ export const vehicleApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useCreateFuelExpenseMutation,
-  useGetFuelExpenseQuery,
-  useUpdateFuelExpenseMutation,
-  useGetFuelExpensesQuery,
+  useCreateRepairExpenseMutation,
+  useGetRepairExpenseQuery,
+  useGetRepairExpensesQuery,
+  useUpdateRepairExpenseMutation,
 } = vehicleApiSlice;

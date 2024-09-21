@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useGetVendorsQuery } from "../../../slices/fleet/vendorApiSlice";
-import { useCreateFuelExpenseMutation } from "../../../slices/fleet/fuelExpenseApiSlice";
+import { useCreateRepairExpenseMutation } from "../../../slices/fleet/repairExpnesApiSlice";
 
 import { useGetAllVehiclesQuery } from "../../../slices/fleet/vehicleApiSlice";
 import { useGetAllItemRegisterQuery } from "../../../slices/store/itemregisterApiSlice";
@@ -15,8 +15,9 @@ function CreateMaintenanceList() {
   const [vehicle_id, set_vehicle_id] = useState("");
   const [expense_date, set_expense_date] = useState("");
   const [amount, set_amount] = useState("");
+  const [description, set_description] = useState("");
 
-  const [createFuelExpense, { isLoading }] = useCreateFuelExpenseMutation();
+  const [createRepairExpense, { isLoading }] = useCreateRepairExpenseMutation();
   const { data: vendors } = useGetVendorsQuery();
   const { data: vehicles } = useGetAllVehiclesQuery();
   const navigate = useNavigate();
@@ -27,17 +28,18 @@ function CreateMaintenanceList() {
     e.preventDefault();
 
     try {
-      const res = await createFuelExpense({
+      const res = await createRepairExpense({
         vendor_id,
         vehicle_id,
         expense_date,
         amount,
         created_by: userInfo.first_name,
+        description,
       }).unwrap();
 
       if (res.status == "success") {
-        toast.success("vendor created successfully");
-        navigate("../allfuelexpenses");
+        toast.success("Expense captured successfully");
+        navigate("../allmaintenance");
       } else {
         toast.error(res.message);
       }
@@ -47,7 +49,7 @@ function CreateMaintenanceList() {
   };
   return (
     <>
-      <span>*** Fleet Repair Expense Entry ***</span>
+      <span>*** Fleet Repair & Maint Expense Entry ***</span>
       <Row>
         <div>
           {" "}
@@ -129,13 +131,13 @@ function CreateMaintenanceList() {
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="supplier_location">
-              <Form.Label>Expense Descruption</Form.Label>
+              <Form.Label>Expense Description</Form.Label>
               <Form.Control
                 required
                 type="text"
-                placeholder="amount"
-                value={amount}
-                onChange={(e) => set_amount(e.target.value)}
+                placeholder="Description"
+                value={description}
+                onChange={(e) => set_description(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>

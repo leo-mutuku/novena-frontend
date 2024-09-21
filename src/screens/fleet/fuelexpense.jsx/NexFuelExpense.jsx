@@ -15,6 +15,7 @@ function NexFuelExpense() {
   const [vehicle_id, set_vehicle_id] = useState("");
   const [expense_date, set_expense_date] = useState("");
   const [amount, set_amount] = useState("");
+  const [description, set_description] = useState("");
 
   const [createFuelExpense, { isLoading }] = useCreateFuelExpenseMutation();
   const { data: vendors } = useGetVendorsQuery();
@@ -33,6 +34,7 @@ function NexFuelExpense() {
         expense_date,
         amount,
         created_by: userInfo.first_name,
+        description,
       }).unwrap();
 
       if (res.status == "success") {
@@ -129,13 +131,13 @@ function NexFuelExpense() {
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="supplier_location">
-              <Form.Label>Expense Descruption</Form.Label>
+              <Form.Label>Expense Description</Form.Label>
               <Form.Control
                 required
                 type="text"
                 placeholder="amount"
-                value={amount}
-                onChange={(e) => set_amount(e.target.value)}
+                value={description}
+                onChange={(e) => set_description(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
