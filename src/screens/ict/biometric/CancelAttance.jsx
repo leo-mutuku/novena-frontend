@@ -140,7 +140,7 @@ const CancelAttance = () => {
   return (
     <>
       <div>
-        <p>*** Allowed Absence ***</p>
+        <p>*** Cancelled Attendance ***</p>
 
         <DataTable columns={columns} data={tableData} />
       </div>

@@ -1096,7 +1096,7 @@ const router = createHashRouter(
             element={<UpdateAllowedAbsence />}
           />
           <Route
-            path="updatecancelldattendance"
+            path="updatecancelldattendance/:id"
             element={<UpdateCancelledAttandance />}
           />
           <Route path="cancelledattendance" element={<CancelAttance />}></Route>
