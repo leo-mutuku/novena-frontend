@@ -42,6 +42,9 @@ export const sidelinks = [
 
   {
     menuTitle: "Payroll Reports",
-    subMenus: [],
+    subMenus: [
+      { subMenuTitle: "Sumary Report", to: "payrollsummaryreport" },
+      { subMenuTitle: "Specific Report", to: "payrollspecificreport" },
+    ],
   },
 ];

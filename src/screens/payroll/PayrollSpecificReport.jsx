@@ -1,55 +1,68 @@
 import React, { useEffect, useMemo } from "react";
-import {
-  useGetAllStoreItemsQuery,
-  useItemTrackingMutation,
-} from "../../slices/store/storeItemsApiSlice";
+import { useGetSupplierBalanceMutation } from "../../slices/administration/suppliersApiSlice";
+import { useGetAllSuppliersQuery } from "../../slices/administration/suppliersApiSlice";
 import DataTable from "../../components/general/DataTable";
 import moment from "moment";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import Papa from "papaparse";
 import { toast } from "react-toastify";
-import TimeDate from "../../components/TimeDate";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const ItemTrackingReport = () => {
-  const timeDate = new TimeDate();
+const PayrollSpecificReport = () => {
+  const navigate = useNavigate();
   const [report_name, set_report_name] = React.useState("");
-  const [item_code, set_item_code] = React.useState("");
+  const [supplier_number, set_supplier_number] = React.useState(null);
+  const [supplier_name, set_supplier_name] = React.useState("");
+
   const [start_date, set_start_date] = React.useState("");
   const [end_date, set_end_date] = React.useState("");
   const [getData, setGetData] = React.useState([]);
   const [supplier_filter, set_supplier_filter] = React.useState("");
   const [product_filter, set_product_filter] = React.useState("");
-  const { data: finalData } = useGetAllStoreItemsQuery();
   const [setData, { isLoading, isSuccess, isError }] =
-    useItemTrackingMutation();
+    useGetSupplierBalanceMutation();
+  const { data: suppliers } = useGetAllSuppliersQuery();
 
   const loaddata = async () => {
-    if (!item_code || !start_date || !end_date) {
-      toast.error("Please select item_code, start and end date");
+    if (!supplier_number || !start_date || !end_date) {
+      toast.error("Please select report name, start and end date");
       return;
     }
-
     const data = await setData({
-      item_code: item_code,
+      supplier_number,
       start_date,
       end_date,
     }).unwrap();
+
     if (data?.data?.length) {
       setGetData(data?.data);
     } else {
       toast.error("No data found");
     }
   };
+  const now = new Date();
+  function formatDateTime(date) {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+    const day = date.getDate().toString().padStart(2, "0");
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const seconds = date.getSeconds().toString().padStart(2, "0");
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+
+  const formattedDateTime = formatDateTime(now);
 
   const handleDownloadCSV = () => {
     if (getData && getData.length > 0) {
       const csv = Papa.unparse(getData);
-      console.log(csv, "csv");
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", `${report_name}.csv`);
+      link.setAttribute("download", `supplier_report.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -75,6 +88,9 @@ const ItemTrackingReport = () => {
         Header: "Purchase Date",
         accessor: "purchase_date",
       },
+      { Header: "Credit", accessor: "credit" },
+      { Header: "Debit", accessor: "debit" },
+
       { Header: "Total Cost", accessor: "total_cost" },
     ],
     []
@@ -89,23 +105,66 @@ const ItemTrackingReport = () => {
       {
         Header: "Date",
         accessor: "entry_date",
-        Cell: ({ row }) => (
-          <>
-            {timeDate.date(row.original.entry_date)} :{" "}
-            {timeDate.time(row.original.entry_date)}{" "}
-          </>
-        ),
+        Cell: ({ value }) => moment(value).format("DD-MM-YYYY"),
       },
 
-      { Header: "_in", accessor: "_in" },
-      { Header: "_out", accessor: "_out" },
-      { Header: "_initial", accessor: "_initial" },
-      { Header: "_balance", accessor: "_balance" },
-      { Header: "Reason", accessor: "reason" },
-      { Header: "By", accessor: "by" },
+      { Header: "Desc", accessor: "description" },
+      { Header: "Credit", accessor: "credit" },
+      { Header: "Debit", accessor: "debit" },
+      { Header: "Balance ", accessor: "balance" },
     ],
     []
   );
+  // statementData
+  const rows = [];
+  getData?.map((row) => {
+    rows.push([
+      row.entry_date,
+      row.description,
+      row.credit,
+      row.debit,
+      row.balance,
+    ]);
+  });
+
+  const handleStatementLink = (e) => {
+    const lastIndex = getData.length - 1; // Example supplier number
+    const statementData = {
+      balancebf:
+        parseFloat(getData[0]?.balance) +
+        (parseFloat(getData[0]?.debit) - parseFloat(getData[0]?.credit)),
+      netb: parseFloat(getData[lastIndex]?.balance),
+
+      debit: getData.reduce((acc, item) => acc + parseFloat(item.credit), 0),
+      credit: getData.reduce((acc, item) => acc + parseFloat(item.debit), 0),
+
+      // Add other relevant data here
+      period: `${start_date} - ${end_date}`,
+      customer: supplier_name,
+      lines: rows,
+      columns: ["Date", "Description", "Debit", "Credit", "Balance(Ksh)"],
+      // Add other relevant data here
+
+      date: formattedDateTime,
+      type: "Supplier",
+    };
+
+    navigate(`../purchases/statement/${supplier_number}`, {
+      state: { statementData },
+    });
+  };
+
+  const handleSupplier = (e) => {
+    let x = suppliers?.data?.filter((a) => {
+      if (a.supplier_id == parseInt(e.target.value)) {
+        return a.supplier_id;
+      }
+    });
+
+    set_supplier_number(x[0].supplier_number);
+
+    set_supplier_name(x[0].supplier_name);
+  };
 
   return (
     <>
@@ -117,13 +176,13 @@ const ItemTrackingReport = () => {
                 type="text"
                 required
                 placeholder="Select Report"
-                value={item_code}
-                onChange={(e) => set_item_code(e.target.value)}
+                value={supplier_number}
+                onChange={handleSupplier}
               >
-                <option value="">Select Report</option>
-                {finalData?.data?.map((item) => (
-                  <option value={item.item_code} key={item.item_code}>
-                    {item.item_name} - {item.item_code}
+                <option value="">Select Supplier</option>
+                {suppliers?.data.map((item, key) => (
+                  <option value={item.supplier_number} key={key}>
+                    {item.supplier_name}
                   </option>
                 ))}
               </Form.Select>
@@ -151,7 +210,17 @@ const ItemTrackingReport = () => {
               ></Form.Control>
             </Form.Group>
           </Col>
-
+          {/* <Col>
+            <Form.Group className="my-2" controlId="role_name">
+              <Form.Control
+                type="text"
+                required
+                placeholder="Role Name"
+                value={"#"}
+                // onChange={(e) => set_role_name(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col> */}
           <Col xs={1} style={{ marginTop: "8px" }}>
             <Button variant="primary" type="button" onClick={loaddata}>
               Load
@@ -169,16 +238,16 @@ const ItemTrackingReport = () => {
                 type="button"
                 onClick={handleDownloadCSV}
               >
-                Download Report
-              </Button>
-              &nbsp; &nbsp;{" "}
+                Excel Report
+              </Button>{" "}
+              &nbsp; &nbsp;
               <Button
                 variant="primary"
                 type="button"
-                onClick={handleClearFilter}
+                onClick={handleStatementLink}
               >
-                Item Statement
-              </Button>
+                Statement
+              </Button>{" "}
               &nbsp; &nbsp;
               <Button
                 variant="secondary"
@@ -187,7 +256,6 @@ const ItemTrackingReport = () => {
               >
                 Clear filter
               </Button>
-              &nbsp; &nbsp;
             </Col>
             <Col></Col>
           </Row>
@@ -210,4 +278,4 @@ const ItemTrackingReport = () => {
   );
 };
 
-export default ItemTrackingReport;
+export default PayrollSpecificReport;

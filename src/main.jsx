@@ -390,6 +390,8 @@ import BiWeeklyBiometricScreen from "./screens/payroll/BiWeeklyBiometricScreen.j
 import BiWeeklyBioStaffList from "./screens/payroll/biweeklybiometric/BiWeeklyBioStaffList.jsx";
 import UpdateAllowedAbsence from "./screens/ict/biometric/UpdateAllowedAbsence.jsx";
 import UpdateCancelledAttandance from "./screens/ict/biometric/UpdateCancelledAttandance.jsx";
+import PayrollSummaryReport from "./screens/payroll/PayrollSummaryReport.jsx";
+import PayrollSpecificReport from "./screens/payroll/PayrollSpecificReport.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -538,6 +540,14 @@ const router = createHashRouter(
           <Route path="packhousewage" element={<PackHouseWageScreen />}>
             <Route path="staffsetlist" element={<PackhouseStaffList />} />
           </Route>
+          <Route
+            path="payrollsummaryreport"
+            element={<PayrollSummaryReport />}
+          ></Route>
+          <Route
+            path="payrollspecificreport"
+            element={<PayrollSpecificReport />}
+          ></Route>
           <Route
             path="salespeoplecommision"
             element={<SalesPeopleCommisionScreen />}
