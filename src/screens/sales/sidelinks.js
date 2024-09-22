@@ -3,7 +3,7 @@ export const sidelinks = [
     menuTitle: "Sales Oders",
     subMenus: [
       { subMenuTitle: "Orders", to: "orders", role: 2000 },
-      { subMenuTitle: "Receipts", to: "orderreceipts", role: 9999 },
+      { subMenuTitle: "Receipts", to: "orderreceipts", role: 2980 },
       { subMenuTitle: "Delivery", to: "orderdispatch", role: 2000 },
       { subMenuTitle: "Invoice", to: "orderinvoice", role: 2000 },
       { subMenuTitle: "Return Order", to: "returnorder", role: 2000 },
