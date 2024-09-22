@@ -2,7 +2,11 @@ export const sidelinks = [
   {
     menuTitle: "Store Items",
     subMenus: [
-      { subMenuTitle: "Store Item Register", to: "storeitemregister" },
+      {
+        subMenuTitle: "Store Item Register",
+        to: "storeitemregister",
+        role: 9999,
+      },
       { subMenuTitle: "Store Items", to: "storeitems" },
       { subMenuTitle: "Store Items Entries", to: "storeitemsentries" },
       {
@@ -19,6 +23,14 @@ export const sidelinks = [
   {
     menuTitle: "Auto Stock Take",
     subMenus: [{ subMenuTitle: "Auto Stock Take", to: "autostocktake" }],
+  },
+  {
+    menuTitle: "Stock Take",
+    subMenus: [{ subMenuTitle: "Stock Take", to: "stocktake" }],
+  },
+  {
+    menuTitle: "Store Issue",
+    subMenus: [{ subMenuTitle: "Store Issue", to: "stocktake" }],
   },
   {
     menuTitle: "Store Register",

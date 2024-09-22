@@ -3,7 +3,7 @@ export const sidelinks = [
     menuTitle: "Production",
     subMenus: [
       { subMenuTitle: "Production", to: "productionheaders" },
-      { subMenuTitle: "Set up", to: "productionsetup" },
+      { subMenuTitle: "Set up", to: "productionsetup", role: 9999 },
       { subMenuTitle: "Reports", to: "productionreport" },
     ],
   },
@@ -18,7 +18,7 @@ export const sidelinks = [
     menuTitle: "Daily Pack house",
     subMenus: [
       { subMenuTitle: "Daily Pack House", to: "dailypackhouse" },
-      { subMenuTitle: "Set up", to: "packhousesetupscreen" },
+      { subMenuTitle: "Set up", to: "packhousesetupscreen", role: 9999 },
       { subMenuTitle: "Reports", to: "DailyPackHouseReportScreen" },
     ],
   },

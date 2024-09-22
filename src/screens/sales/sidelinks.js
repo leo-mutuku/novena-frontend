@@ -2,14 +2,12 @@ export const sidelinks = [
   {
     menuTitle: "Sales Oders",
     subMenus: [
-      { subMenuTitle: "Orders", to: "orders" },
-      { subMenuTitle: "Receipts", to: "orderreceipts" },
-      { subMenuTitle: "Delivery", to: "orderdispatch" },
-      { subMenuTitle: "Invoice", to: "orderinvoice" },
-      { subMenuTitle: "Return Order", to: "returnorder" },
-      { subMenuTitle: "Sales Expense", to: "salesexpense" },
-
-      { subMenuTitle: "Ledger Entry", to: "#" },
+      { subMenuTitle: "Orders", to: "orders", role: 2000 },
+      { subMenuTitle: "Receipts", to: "orderreceipts", role: 9999 },
+      { subMenuTitle: "Delivery", to: "orderdispatch", role: 2000 },
+      { subMenuTitle: "Invoice", to: "orderinvoice", role: 2000 },
+      { subMenuTitle: "Return Order", to: "returnorder", role: 2000 },
+      { subMenuTitle: "Sales Expense", to: "salesexpense", role: 2000 },
 
       // { subMenuTitle: "Detailed Item Report", to: "#" },
     ],
@@ -17,15 +15,19 @@ export const sidelinks = [
   {
     menuTitle: "Sales People",
     subMenus: [
-      { subMenuTitle: "Sales People", to: "salespeople" },
-      { subMenuTitle: "Loading List", to: "loadinglist" },
+      { subMenuTitle: "Sales People", to: "salespeople", role: 2000 },
+      { subMenuTitle: "Loading List", to: "loadinglist", role: 2000 },
       {
         subMenuTitle: "Sales bank Receipt Reports",
+        role: 2000,
         to: "salesbankreceiptreport",
       },
-      { subMenuTitle: "SP Sales Report", to: "salespeoplereport" },
-      { subMenuTitle: "Detailed SP Order Report", to: "detailedsporderreport" },
-      // { subMenuTitle: "Detailed SP Return Report", to: "#" },
+      { subMenuTitle: "SP Sales Report", to: "salespeoplereport", role: 2000 },
+      {
+        subMenuTitle: "Detailed SP Order Report",
+        to: "detailedsporderreport",
+        role: 2000,
+      },
     ],
   },
 ];
