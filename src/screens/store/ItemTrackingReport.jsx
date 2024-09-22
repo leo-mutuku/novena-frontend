@@ -120,7 +120,7 @@ const ItemTrackingReport = () => {
                 value={item_code}
                 onChange={(e) => set_item_code(e.target.value)}
               >
-                <option value="">Select Report</option>
+                <option value="">Select Item</option>
                 {finalData?.data?.map((item) => (
                   <option value={item.item_code} key={item.item_code}>
                     {item.item_name} - {item.item_code}
@@ -132,7 +132,7 @@ const ItemTrackingReport = () => {
           <Col>
             <Form.Group className="my-2" controlId="role_name">
               <Form.Control
-                type="date"
+                type="datetime-local"
                 required
                 placeholder="start_date"
                 value={start_date}
@@ -143,7 +143,7 @@ const ItemTrackingReport = () => {
           <Col>
             <Form.Group className="my-2" controlId="role_name">
               <Form.Control
-                type="date"
+                type="datetime-local"
                 required
                 placeholder="end_date"
                 value={end_date}
