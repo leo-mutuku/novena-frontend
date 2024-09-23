@@ -1,7 +1,7 @@
 import PageActionComponent from "../../components/PageActionComponent";
 const pagemenus = [
   { pagename: "Bulk Group", to: "bulkmessages" },
-  { pagename: "Bulk Custom", to: "bulkcustom" },
+  { pagename: "Single Custom", to: "bulkcustom" },
 ];
 function BulkSMSScreen() {
   return (

@@ -101,6 +101,21 @@ function NewMialage() {
               </Form.Select>
             </Form.Group>
           </Col>
+        </Row>
+        <Row>
+          <Col>
+            {/* staff_number field */}
+            <Form.Group className="my-2" controlId="vendor_phone_number">
+              <Form.Label>Route</Form.Label>
+              <Form.Control
+                required
+                type="date"
+                placeholder="Vendor Phone Number"
+                value={mialage_date}
+                onChange={(e) => set_mialage_date(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
           <Col>
             {/* staff_number field */}
             <Form.Group className="my-2" controlId="vendor_phone_number">
