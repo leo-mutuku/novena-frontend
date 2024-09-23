@@ -16,6 +16,10 @@ const SendToCustom = () => {
         toast.error("Please enter valid mobile number, it should be 10 digits");
         return;
       }
+      if (message.length < 3) {
+        toast.error("Message should be more than 3 characters");
+        return;
+      }
       const res = await sendSingleSMS({
         message,
         mobileNumbers,
