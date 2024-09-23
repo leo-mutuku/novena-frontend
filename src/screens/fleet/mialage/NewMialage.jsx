@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useGetVendorsQuery } from "../../../slices/fleet/vendorApiSlice";
 import { useCreateFuelExpenseMutation } from "../../../slices/fleet/fuelExpenseApiSlice";
-import { useGetAllDriversQuery } from "../../../slices/fleet/driverApislice";
 
 import { useGetAllVehiclesQuery } from "../../../slices/fleet/vehicleApiSlice";
 import { useGetAllItemRegisterQuery } from "../../../slices/store/itemregisterApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { useGetAllDriversQuery } from "../../../slices/fleet/driverApislice";
+import { useGetAllRoutesQuery } from "../../../slices/fleet/routesApiSlice";
+import { useCreateMialageMutation } from "../../../slices/fleet/mialageApiSlice";
 
 function NewMialage() {
   const { userInfo } = useSelector((state) => state.auth);
@@ -17,11 +19,15 @@ function NewMialage() {
   const [mialage_date, set_mialage_date] = useState("");
   const [start_mileage, set_start_mileage] = useState("");
   const [end_mileage, set_end_mileage] = useState("");
-  const [amount, set_amount] = useState("");
+  const [distance, set_distance] = useState("");
+  const [fuel_lts, set_fuel_lts] = useState("");
+  const [route_id, set_route_id] = useState("");
 
   const [createFuelExpense, { isLoading }] = useCreateFuelExpenseMutation();
+  const { data: routes } = useGetAllRoutesQuery();
   const { data: drivers } = useGetAllDriversQuery();
   const { data: vehicles } = useGetAllVehiclesQuery();
+  const [createMialage, { isLoading: loading }] = useCreateMialageMutation();
   const navigate = useNavigate();
   useEffect(() => {
     navigate();
@@ -30,18 +36,21 @@ function NewMialage() {
     e.preventDefault();
 
     try {
-      const res = await createFuelExpense({
+      const res = await createMialage({
         driver_id,
         vehicle_id,
         mialage_date,
         start_mileage,
         end_mileage,
+        fuel_lts,
+        distance,
         created_by: userInfo.first_name,
+        route_id,
       }).unwrap();
 
       if (res.status == "success") {
-        toast.success("vendor created successfully");
-        navigate("../allfuelexpenses");
+        toast.success("Mialage created successfully");
+        navigate("../mialagehistory");
       } else {
         toast.error(res.message);
       }
@@ -107,13 +116,20 @@ function NewMialage() {
             {/* staff_number field */}
             <Form.Group className="my-2" controlId="vendor_phone_number">
               <Form.Label>Route</Form.Label>
-              <Form.Control
+              <Form.Select
                 required
                 type="date"
                 placeholder="Vendor Phone Number"
-                value={mialage_date}
-                onChange={(e) => set_mialage_date(e.target.value)}
-              ></Form.Control>
+                value={route_id}
+                onChange={(e) => set_route_id(e.target.value)}
+              >
+                <option value="">Select route</option>
+                {routes?.data.map((route) => (
+                  <option key={route.route_id} value={route.route_id}>
+                    {route.name}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
           <Col>
@@ -138,9 +154,9 @@ function NewMialage() {
               <Form.Control
                 required
                 type="number"
-                placeholder="amount"
-                value={amount}
-                onChange={(e) => set_amount(e.target.value)}
+                placeholder="Start mialage"
+                value={start_mileage}
+                onChange={(e) => set_start_mileage(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -150,9 +166,9 @@ function NewMialage() {
               <Form.Control
                 required
                 type="number"
-                placeholder="amount"
-                value={amount}
-                onChange={(e) => set_amount(e.target.value)}
+                placeholder="End mialage"
+                value={end_mileage}
+                onChange={(e) => set_end_mileage(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -165,9 +181,9 @@ function NewMialage() {
               <Form.Control
                 required
                 type="number"
-                placeholder="amount"
-                value={amount}
-                onChange={(e) => set_amount(e.target.value)}
+                placeholder="Distance (Km)"
+                value={distance}
+                onChange={(e) => set_distance(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -177,9 +193,9 @@ function NewMialage() {
               <Form.Control
                 required
                 type="number"
-                placeholder="amount"
-                value={amount}
-                onChange={(e) => set_amount(e.target.value)}
+                placeholder="Fuel in lts"
+                value={fuel_lts}
+                onChange={(e) => set_fuel_lts(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>
