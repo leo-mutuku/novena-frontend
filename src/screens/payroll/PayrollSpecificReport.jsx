@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import { useGetSupplierBalanceMutation } from "../../slices/administration/suppliersApiSlice";
-import { useGetAllSuppliersQuery } from "../../slices/administration/suppliersApiSlice";
+import { useGetParollSingleMutation } from "../../slices/payroll/payrollHeadersApiSlice";
+import { useGetAllStaffQuery } from "../../slices/administration/staffApiSlice";
 import DataTable from "../../components/general/DataTable";
 import moment from "moment";
 import { Button, Form, Row, Col } from "react-bootstrap";
@@ -21,8 +22,8 @@ const PayrollSpecificReport = () => {
   const [supplier_filter, set_supplier_filter] = React.useState("");
   const [product_filter, set_product_filter] = React.useState("");
   const [setData, { isLoading, isSuccess, isError }] =
-    useGetSupplierBalanceMutation();
-  const { data: suppliers } = useGetAllSuppliersQuery();
+    useGetParollSingleMutation();
+  const { data: staff } = useGetAllStaffQuery();
 
   const loaddata = async () => {
     if (!supplier_number || !start_date || !end_date) {
@@ -155,15 +156,15 @@ const PayrollSpecificReport = () => {
   };
 
   const handleSupplier = (e) => {
-    let x = suppliers?.data?.filter((a) => {
-      if (a.supplier_id == parseInt(e.target.value)) {
-        return a.supplier_id;
+    let x = staff?.data?.filter((a) => {
+      if (a.staff_id == parseInt(e.target.value)) {
+        return a.staff_id;
       }
     });
 
-    set_supplier_number(x[0].supplier_number);
+    set_supplier_number(x[0].staff_id);
 
-    set_supplier_name(x[0].supplier_name);
+    set_supplier_name(x[0].first_name + " " + x[0].last_name);
   };
 
   return (
@@ -179,10 +180,10 @@ const PayrollSpecificReport = () => {
                 value={supplier_number}
                 onChange={handleSupplier}
               >
-                <option value="">Select Supplier</option>
-                {suppliers?.data.map((item, key) => (
-                  <option value={item.supplier_number} key={key}>
-                    {item.supplier_name}
+                <option value="">Select Staff</option>
+                {staff?.data.map((item, key) => (
+                  <option value={item.staff_id} key={key}>
+                    {item.first_name + " " + item.last_name}
                   </option>
                 ))}
               </Form.Select>

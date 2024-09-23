@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import { useGetSupplierBalanceMutation } from "../../slices/administration/suppliersApiSlice";
-import { useGetAllSuppliersQuery } from "../../slices/administration/suppliersApiSlice";
+import { useGetPayrollSummaryMutation } from "../../slices/payroll/payrollHeadersApiSlice";
+import { useGetAllStaffQuery } from "../../slices/administration/staffApiSlice";
 import DataTable from "../../components/general/DataTable";
 import moment from "moment";
 import { Button, Form, Row, Col } from "react-bootstrap";
@@ -21,16 +22,15 @@ const PayrollSummaryReport = () => {
   const [supplier_filter, set_supplier_filter] = React.useState("");
   const [product_filter, set_product_filter] = React.useState("");
   const [setData, { isLoading, isSuccess, isError }] =
-    useGetSupplierBalanceMutation();
-  const { data: suppliers } = useGetAllSuppliersQuery();
+    useGetPayrollSummaryMutation();
+  const { data: staff } = useGetAllStaffQuery();
 
   const loaddata = async () => {
-    if (!supplier_number || !start_date || !end_date) {
-      toast.error("Please select report name, start and end date");
+    if (!start_date || !end_date) {
+      toast.error("Please select  start and end date");
       return;
     }
     const data = await setData({
-      supplier_number,
       start_date,
       end_date,
     }).unwrap();
@@ -103,15 +103,12 @@ const PayrollSummaryReport = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "Date",
-        accessor: "entry_date",
-        Cell: ({ value }) => moment(value).format("DD-MM-YYYY"),
+        Header: "Category",
+        accessor: "category_name",
       },
-
-      { Header: "Desc", accessor: "description" },
-      { Header: "Credit", accessor: "credit" },
-      { Header: "Debit", accessor: "debit" },
-      { Header: "Balance ", accessor: "balance" },
+      { Header: "Gross", accessor: "total_gross_pay" },
+      { Header: "Net", accessor: "total_net_pay" },
+      { Header: "Deductions", accessor: "total_deductions" },
     ],
     []
   );
@@ -155,39 +152,21 @@ const PayrollSummaryReport = () => {
   };
 
   const handleSupplier = (e) => {
-    let x = suppliers?.data?.filter((a) => {
-      if (a.supplier_id == parseInt(e.target.value)) {
-        return a.supplier_id;
+    let x = staff?.data?.filter((a) => {
+      if (a.staff_id == parseInt(e.target.value)) {
+        return a.staff_id;
       }
     });
 
-    set_supplier_number(x[0].supplier_number);
+    set_supplier_number(x[0].staff_id);
 
-    set_supplier_name(x[0].supplier_name);
+    set_supplier_name(x[0].first_name + " " + x[0].last_name);
   };
 
   return (
     <>
       <div style={{ marginBottom: "2px", paddingTop: "10px" }}>
         <Row>
-          <Col>
-            <Form.Group className="my-2" controlId="role_name">
-              <Form.Select
-                type="text"
-                required
-                placeholder="Select Report"
-                value={supplier_number}
-                onChange={handleSupplier}
-              >
-                <option value="">Select Supplier</option>
-                {suppliers?.data.map((item, key) => (
-                  <option value={item.supplier_number} key={key}>
-                    {item.supplier_name}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.Group>
-          </Col>
           <Col>
             <Form.Group className="my-2" controlId="role_name">
               <Form.Control
