@@ -392,6 +392,9 @@ import UpdateAllowedAbsence from "./screens/ict/biometric/UpdateAllowedAbsence.j
 import UpdateCancelledAttandance from "./screens/ict/biometric/UpdateCancelledAttandance.jsx";
 import PayrollSummaryReport from "./screens/payroll/PayrollSummaryReport.jsx";
 import PayrollSpecificReport from "./screens/payroll/PayrollSpecificReport.jsx";
+import StockIssueScreen from "./screens/store/StockIssueScreen.jsx";
+import AllStoreIssues from "./screens/store/stockissue/AllStoreIssues.jsx";
+import NewStoreIssue from "./screens/store/stockissue/NewStoreIssue.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -790,6 +793,10 @@ const router = createHashRouter(
               element={<StockTakeInProgress />}
             />
             <Route path="allpostedstocktakes" element={<PostedStockTake />} />
+          </Route>
+          <Route path="stockissue" element={<StockIssueScreen />}>
+            <Route path="allstoreissues" element={<AllStoreIssues />} />
+            <Route path="newstoreissue" element={<NewStoreIssue />} />
           </Route>
           <Route path="autostocktake" element={<AutoStockTakeScreen />}>
             <Route path="autostock" element={<AutoStock />} />

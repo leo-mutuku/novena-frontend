@@ -30,7 +30,7 @@ export const sidelinks = [
   },
   {
     menuTitle: "Store Issue",
-    subMenus: [{ subMenuTitle: "Store Issue", to: "stocktake" }],
+    subMenus: [{ subMenuTitle: "Store Issue", to: "stockissue" }],
   },
   {
     menuTitle: "Store Register",
