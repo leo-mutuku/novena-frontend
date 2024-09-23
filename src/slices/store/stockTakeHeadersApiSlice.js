@@ -1,5 +1,5 @@
 import { apiSlice } from "../apiSlice";
-const STOCKTAKEHEADER_URL = "/api/v1/store/storeitems";
+const STOCKTAKEHEADER_URL = "/api/v1/store/stocktakeheaders";
 
 export const stockTakeHeadersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,9 +11,17 @@ export const stockTakeHeadersApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: "store_items",
     }),
-    createStoreItem: builder.mutation({
+    createStockTakeHeader: builder.mutation({
       query: (data) => ({
-        url: `${STOCKTAKEHEADER_URL}/createstoreitem`,
+        url: `${STOCKTAKEHEADER_URL}/createstocktakeheader`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: "store_items",
+    }),
+    validateStore: builder.mutation({
+      query: (data) => ({
+        url: `${STOCKTAKEHEADER_URL}/validatestore`,
         method: "POST",
         body: data,
       }),
@@ -22,5 +30,8 @@ export const stockTakeHeadersApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetAllStoreItemsQuery, useCreateStoreItemMutation } =
-  stockTakeHeadersApiSlice;
+export const {
+  useGetAllStoreItemsQuery,
+  useCreateStockTakeHeaderMutation,
+  useValidateStoreMutation,
+} = stockTakeHeadersApiSlice;
