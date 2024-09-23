@@ -27,6 +27,14 @@ export const stockAdjustmentHeaders = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["stockAdjustmentHeaders"],
     }),
+    createStockIssue: builder.mutation({
+      query: (data) => ({
+        url: `${STOCKADJUSTMENTAPI_URL}/createstockissue`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["stockAdjustmentHeaders"],
+    }),
   }),
 });
 
@@ -34,4 +42,5 @@ export const {
   useGetAllStockAdjustmentHeadersQuery,
   useGetAllregisteredItemsQuery,
   useCreateStockAdjustmentHeaderMutation,
+  useCreateStockIssueMutation,
 } = stockAdjustmentHeaders;
