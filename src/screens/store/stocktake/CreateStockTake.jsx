@@ -161,7 +161,7 @@ function CreateStokTake() {
                 <option value={""}>Select Item name</option>
                 {itemRegisterData?.data.map((item, key) => (
                   <option value={item.item_code} key={key}>
-                    {item.item_name}
+                    {item.item_name} - {item.item_code}
                   </option>
                 ))}
               </Form.Select>
@@ -179,8 +179,8 @@ function CreateStokTake() {
               >
                 <option value="">Select store item</option>
                 {storeItemsData?.data.map((item, key) => (
-                  <option value={item.store_item_id}>
-                    {item.store_name} & {item.item_name}
+                  <option value={item.store_item_id} key={key}>
+                    {item.item_name} - {item.item_code}
                   </option>
                 ))}
               </Form.Select>

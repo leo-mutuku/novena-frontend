@@ -7,6 +7,7 @@ import {
 } from "../../../../slices/finance/cashAccountApiSlice";
 
 import { useGetAllSuppliersQuery } from "../../../../slices/administration/suppliersApiSlice";
+import { useGetVendorsQuery } from "../../../../slices/fleet/vendorApiSlice";
 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -23,7 +24,7 @@ function CashVendor() {
   const [createSuplierCashPayment, { isLoading }] =
     useCreateCashSupplierPaymentMutation();
   const { data: cashAccount } = useGetAllCashAccountsQuery();
-  const { data: suppliers } = useGetAllSuppliersQuery();
+  const { data: suppliers } = useGetVendorsQuery();
 
   const navigate = useNavigate();
   console.log(userInfo);
@@ -56,7 +57,7 @@ function CashVendor() {
 
   return (
     <>
-      <span>*** Supplier Cash Payment ***</span>
+      <span>*** Vendor Cash Payment ***</span>
       <Row>
         <div>
           {" "}
@@ -88,7 +89,7 @@ function CashVendor() {
           </Col>
           <Col>
             <Form.Group className="my-2" controlId="supplier_id">
-              <Form.Label>Suppliers</Form.Label>
+              <Form.Label>Vendor</Form.Label>
               <Form.Select
                 type="number"
                 required
@@ -96,10 +97,10 @@ function CashVendor() {
                 value={supplier_id}
                 onChange={(e) => set_supplier_id(e.target.value)}
               >
-                <option value={""}>Select supplier</option>
+                <option value={""}>Select Vendor</option>
                 {suppliers?.data.map((item, index) => (
-                  <option key={index} value={item.supplier_id}>
-                    {item.supplier_name}
+                  <option key={index} value={item.vendor_id}>
+                    {item.vendor_name}
                   </option>
                 ))}
               </Form.Select>

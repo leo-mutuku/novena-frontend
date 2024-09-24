@@ -59,6 +59,14 @@ export const bankAccountsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Banks"],
     }),
+    createBankVendorPayment: builder.mutation({
+      query: (data) => ({
+        url: `${BANKS_URL}/createbankvendorpayment`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Banks"],
+    }),
     reverseBankReceipt: builder.mutation({
       query: (data) => ({
         url: `${BANKS_URL}/reversebankreceipt`,
@@ -87,6 +95,7 @@ export const bankAccountsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useCreateBankVendorPaymentMutation,
   useReverseBankReceiptMutation,
   useSalesBankReceiptReportMutation,
   useGetAllSalesBankReceptsQuery,

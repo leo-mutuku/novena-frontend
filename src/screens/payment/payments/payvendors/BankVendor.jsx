@@ -4,6 +4,7 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { useCreateBankSupplierPaymentMutation } from "../../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllSuppliersQuery } from "../../../../slices/administration/suppliersApiSlice";
+import { useGetVendorsQuery } from "../../../../slices/fleet/vendorApiSlice";
 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -19,7 +20,7 @@ function BankVendors() {
   const [createSuplierBankPayment, { isLoading }] =
     useCreateBankSupplierPaymentMutation();
   const { data: bankAccounts } = useGetAllBankAccountsQuery();
-  const { data: suppliers } = useGetAllSuppliersQuery();
+  const { data: suppliers } = useGetVendorsQuery();
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -50,7 +51,7 @@ function BankVendors() {
 
   return (
     <>
-      <span>*** Supplier Bank Payment ***</span>
+      <span>*** Vendor Bank Payment ***</span>
       <Row>
         <div>
           {" "}
@@ -82,7 +83,7 @@ function BankVendors() {
           </Col>
           <Col>
             <Form.Group className="my-2" controlId="supplier_id">
-              <Form.Label>Suppliers</Form.Label>
+              <Form.Label>Vendor</Form.Label>
               <Form.Select
                 type="number"
                 required
@@ -90,10 +91,10 @@ function BankVendors() {
                 value={supplier_id}
                 onChange={(e) => set_supplier_id(e.target.value)}
               >
-                <option value={""}>Select supplier</option>
+                <option value={""}>Select vendor</option>
                 {suppliers?.data.map((item, index) => (
-                  <option key={index} value={item.supplier_id}>
-                    {item.supplier_name}
+                  <option key={index} value={item.vendor_id}>
+                    {item.vendor_name}
                   </option>
                 ))}
               </Form.Select>

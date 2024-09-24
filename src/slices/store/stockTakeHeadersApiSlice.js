@@ -3,9 +3,9 @@ const STOCKTAKEHEADER_URL = "/api/v1/store/stocktakeheaders";
 
 export const stockTakeHeadersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllStoreItems: builder.query({
+    getallstocktakeheaders: builder.query({
       query: (data) => ({
-        url: `${STOCKTAKEHEADER_URL}/getallstoreitems`,
+        url: `${STOCKTAKEHEADER_URL}/getallStockTakeHeaders`,
         method: "GET",
         body: data,
       }),
@@ -31,7 +31,7 @@ export const stockTakeHeadersApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useGetAllStoreItemsQuery,
+  useGetallstocktakeheadersQuery,
   useCreateStockTakeHeaderMutation,
   useValidateStoreMutation,
 } = stockTakeHeadersApiSlice;
