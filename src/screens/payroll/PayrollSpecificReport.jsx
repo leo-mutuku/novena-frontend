@@ -9,8 +9,10 @@ import Papa from "papaparse";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import TimeDate from "../../components/TimeDate";
 
 const PayrollSpecificReport = () => {
+  const timeDate = new TimeDate();
   const navigate = useNavigate();
   const [report_name, set_report_name] = React.useState("");
   const [supplier_number, set_supplier_number] = React.useState(null);
@@ -104,15 +106,27 @@ const PayrollSpecificReport = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "Date",
-        accessor: "entry_date",
-        Cell: ({ value }) => moment(value).format("DD-MM-YYYY"),
+        Header: "F Name",
+        accessor: "first_name",
+      },
+      {
+        Header: "L Name",
+        accessor: "last_name",
       },
 
-      { Header: "Desc", accessor: "description" },
-      { Header: "Credit", accessor: "credit" },
-      { Header: "Debit", accessor: "debit" },
-      { Header: "Balance ", accessor: "balance" },
+      {
+        Header: "Start",
+        accessor: "start_date",
+        Cell: ({ row }) => timeDate.date(row.original.start_date),
+      },
+      {
+        Header: "End",
+        accessor: "end_date",
+        Cell: ({ row }) => timeDate.date(row.original.end_date),
+      },
+      { Header: "Gross", accessor: "gross_pay" },
+      { Header: "Net ", accessor: "net_pay" },
+      { Header: "Deductions", accessor: "total_deductions" },
     ],
     []
   );

@@ -395,6 +395,7 @@ import PayrollSpecificReport from "./screens/payroll/PayrollSpecificReport.jsx";
 import StockIssueScreen from "./screens/store/StockIssueScreen.jsx";
 import AllStoreIssues from "./screens/store/stockissue/AllStoreIssues.jsx";
 import NewStoreIssue from "./screens/store/stockissue/NewStoreIssue.jsx";
+import EditBiWeeklyBiometric from "./screens/payroll/biweeklybiometric/EditBiWeeklyBiometric.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -538,6 +539,10 @@ const router = createHashRouter(
             <Route
               path="biweeklystaffbiometric"
               element={<BiWeeklyBioStaffList />}
+            />
+            <Route
+              path="editbiweeklybiometric/:id"
+              element={<EditBiWeeklyBiometric />}
             />
           </Route>
           <Route path="packhousewage" element={<PackHouseWageScreen />}>

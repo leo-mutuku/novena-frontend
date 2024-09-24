@@ -210,7 +210,7 @@ const BiWeeklyBioStaffList = () => {
           <>
             {row.original.status !== "Generated" ? (
               <Link
-                to={`/payroll/biweeklyregister/editbiweeklyregister/${row.original.staff_number}`}
+                to={`/payroll/biweeklybiometric/editbiweeklybiometric/${row.original.staff_number}`}
               >
                 <Button variant="outline-primary">
                   <MdEdit />

@@ -32,7 +32,7 @@ const EditBiWeeklyBiometric = () => {
       }).unwrap();
       if (res.status === "success") {
         toast.success("Staff biweekly updated successfully");
-        navigate("../biweeklystaffregister");
+        navigate("../biweeklystaffbiometric");
       } else {
         toast.error("Something went wrong");
       }
@@ -63,6 +63,7 @@ const EditBiWeeklyBiometric = () => {
               <Form.Control
                 type="number"
                 required
+                disabled
                 placeholder="account_name"
                 value={no_of_days}
                 onChange={(e) => set_no_of_days(e.target.value)}
