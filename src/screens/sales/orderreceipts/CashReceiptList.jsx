@@ -45,7 +45,10 @@ const CashReceiptList = () => {
 
   const handleReverse = async (e) => {
     try {
-      const res = await reverseCashSalesOrderReceipt({ id: e }).unwrap();
+      const res = await reverseCashSalesOrderReceipt({
+        id: e,
+        created_by: userInfo.first_name,
+      }).unwrap();
       if (res.status === "success") {
         toast.success(res.message);
       } else {

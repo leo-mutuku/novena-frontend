@@ -396,6 +396,9 @@ import StockIssueScreen from "./screens/store/StockIssueScreen.jsx";
 import AllStoreIssues from "./screens/store/stockissue/AllStoreIssues.jsx";
 import NewStoreIssue from "./screens/store/stockissue/NewStoreIssue.jsx";
 import EditBiWeeklyBiometric from "./screens/payroll/biweeklybiometric/EditBiWeeklyBiometric.jsx";
+import { PayVendorScreen } from "./screens/payment/PayVendorScreen.jsx";
+import BankVendors from "./screens/payment/payments/payvendors/BankVendor.jsx";
+import CashVendor from "./screens/payment/payments/payvendors/CashVendors.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -628,6 +631,10 @@ const router = createHashRouter(
             path="paymentreports"
             element={<PaymentReportScreen />}
           ></Route>
+          <Route path="payvendors" element={<PayVendorScreen />}>
+            <Route path="vendorbank" element={<BankVendors />} />
+            <Route path="vendorcash" element={<CashVendor />} />
+          </Route>
           <Route path="salaryjournal" element={<SalaryJournalScreen />}>
             <Route path="allsalaryjournals" element={<AllSalaryJournals />} />
             <Route
