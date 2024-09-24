@@ -9,6 +9,7 @@ import {
   useGetAllStaffByIdQuery,
   useUpdateStaffMutation,
 } from "../../../slices/administration/staffApiSlice";
+import { useAllowedAbsenceMutation } from "../../../slices/ict/biometricApislice";
 import { useGetAllPayrollcategoriesQuery } from "../../../slices/payroll/categoryApiSlice";
 import { IoMdClose } from "react-icons/io";
 
@@ -22,9 +23,10 @@ function UpdateAllowedAbsence() {
   const [phone_number, set_phone_number] = useState("");
   const [bank_account_number, set_bank_account_number] = useState("");
   const [payroll_category_code, set_payroll_category_code] = useState(0);
+  const [date, set_date] = useState("");
 
   const [updateStaff, { isError, isSuccess, error: errorUpdate }] =
-    useUpdateStaffMutation();
+    useAllowedAbsenceMutation();
 
   const { id: _new_id } = useParams();
   const id = parseInt(_new_id);
@@ -62,25 +64,15 @@ function UpdateAllowedAbsence() {
     console.log(errorUpdate);
     try {
       const result = await updateStaff({
-        id: id,
-        data: {
-          staff_email,
-          national_id,
-          first_name,
-          last_name,
-          phone_number,
-          bank_account_number,
-          payroll_category_code,
-          biweekly,
-          monthly,
-        },
+        staff_code: national_id,
+        date: date,
       }).unwrap();
 
       if (result == "failed") {
         toast.error(error.message);
       } else {
         toast.success(result.message);
-        navigate("../allstaff");
+        navigate("../allowedabsence");
       }
     } catch (error) {
       toast.error(error.message);
@@ -174,8 +166,8 @@ function UpdateAllowedAbsence() {
                 type="date"
                 required
                 placeholder="Bank Account Number"
-                value={monthly}
-                onChange={(e) => set_monthly(e.target.value)}
+                value={date}
+                onChange={(e) => set_date(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>

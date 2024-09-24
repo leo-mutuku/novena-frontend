@@ -9,6 +9,7 @@ import {
   useGetAllStaffByIdQuery,
   useUpdateStaffMutation,
 } from "../../../slices/administration/staffApiSlice";
+import { useCanclledAttandanceMutation } from "../../../slices/ict/biometricApislice";
 import { useGetAllPayrollcategoriesQuery } from "../../../slices/payroll/categoryApiSlice";
 import { IoMdClose } from "react-icons/io";
 
@@ -22,9 +23,10 @@ function UpdateCancelledAttandance() {
   const [phone_number, set_phone_number] = useState("");
   const [bank_account_number, set_bank_account_number] = useState("");
   const [payroll_category_code, set_payroll_category_code] = useState(0);
+  const [date, set_date] = useState("");
 
   const [updateStaff, { isError, isSuccess, error: errorUpdate }] =
-    useUpdateStaffMutation();
+    useCanclledAttandanceMutation();
 
   const { id: _new_id } = useParams();
   const id = parseInt(_new_id);
@@ -62,25 +64,15 @@ function UpdateCancelledAttandance() {
     console.log(errorUpdate);
     try {
       const result = await updateStaff({
-        id: id,
-        data: {
-          staff_email,
-          national_id,
-          first_name,
-          last_name,
-          phone_number,
-          bank_account_number,
-          payroll_category_code,
-          biweekly,
-          monthly,
-        },
+        staff_code: national_id,
+        date: date,
       }).unwrap();
 
       if (result == "failed") {
         toast.error(error.message);
       } else {
         toast.success(result.message);
-        navigate("../allstaff");
+        navigate("../cancelledattendance");
       }
     } catch (error) {
       toast.error(error.message);
@@ -170,13 +162,13 @@ function UpdateCancelledAttandance() {
           <Col></Col>
           <Col>
             <Form.Group className="my-2" controlId="bank_account_number">
-              <Form.Label>Monthly</Form.Label>
+              <Form.Label>Date To Cancel</Form.Label>
               <Form.Control
                 type="date"
                 required
                 placeholder="date"
-                value={monthly}
-                onChange={(e) => set_monthly(e.target.value)}
+                value={date}
+                onChange={(e) => set_date(e.target.value)}
               ></Form.Control>
             </Form.Group>
           </Col>

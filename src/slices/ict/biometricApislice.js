@@ -21,8 +21,28 @@ export const biometricApliSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Biometric"],
     }),
+    allowedAbsence: builder.mutation({
+      query: (data) => ({
+        url: `${STAFF_URL}/allowedabsence`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Biometric"],
+    }),
+    canclledAttandance: builder.mutation({
+      query: (data) => ({
+        url: `${STAFF_URL}/canclledattandance`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Biometric"],
+    }),
   }),
 });
 
-export const { useDailyAttendanceMutation, useAttandanceReportMutation } =
-  biometricApliSlice;
+export const {
+  useDailyAttendanceMutation,
+  useAttandanceReportMutation,
+  useAllowedAbsenceMutation,
+  useCanclledAttandanceMutation,
+} = biometricApliSlice;
