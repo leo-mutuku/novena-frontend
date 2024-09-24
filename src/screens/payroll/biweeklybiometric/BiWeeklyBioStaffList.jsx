@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import Loader from "../../../components/Loader";
 import {
   useGetAllBiweeklyStaffQuery,
-  useValidateStaffBiWeeklyRegisterMutation,
+  useValidateStaffBiWeeklyBiometricMutation,
 } from "../../../slices/administration/staffApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
@@ -37,7 +37,7 @@ const BiWeeklyBioStaffList = () => {
   const { data, isLoading } = useGetAllBiweeklyStaffQuery();
   const [start_date, set_start_date] = useState("");
   const [end_date, set_end_date] = useState("");
-  const [validateSatff] = useValidateStaffBiWeeklyRegisterMutation();
+  const [validateSatff] = useValidateStaffBiWeeklyBiometricMutation();
   useEffect(() => {
     if (data?.data) {
       setTableData(data.data);

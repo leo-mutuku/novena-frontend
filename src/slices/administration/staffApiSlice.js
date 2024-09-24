@@ -44,6 +44,14 @@ export const staffApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Staff"],
     }),
+    validateStaffBiWeeklyBiometric: builder.mutation({
+      query: (data) => ({
+        url: `${STAFF_URL}/validatestaffbiweeklybiometric`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Staff"],
+    }),
     validateBales: builder.mutation({
       query: (data) => ({
         url: `${STAFF_URL}/validatebales`,
@@ -119,6 +127,7 @@ export const staffApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useValidateStaffBiWeeklyBiometricMutation,
   useValidateStaffBiWeeklyRegisterMutation,
   useUpdateSalePeopleSalaryMutation,
   useValidateBalesMutation,
