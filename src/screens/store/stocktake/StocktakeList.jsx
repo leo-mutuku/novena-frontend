@@ -174,7 +174,7 @@ const StocktakeList = () => {
           <>
             {row.original.status !== "Generated" ? (
               <Link
-                to={`/store/stocktake/stocktakelist/${row.original.stock_take_header_id}`}
+                to={`/store/stocktake/stocktakeline/${row.original.stock_take_header_id}`}
               >
                 <Button variant="primary">
                   <IoMdClock />

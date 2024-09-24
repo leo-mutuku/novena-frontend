@@ -399,6 +399,7 @@ import EditBiWeeklyBiometric from "./screens/payroll/biweeklybiometric/EditBiWee
 import { PayVendorScreen } from "./screens/payment/PayVendorScreen.jsx";
 import BankVendors from "./screens/payment/payments/payvendors/BankVendor.jsx";
 import CashVendor from "./screens/payment/payments/payvendors/CashVendors.jsx";
+import StockTakeLines from "./screens/store/stocktake/StockTakeLines.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -799,6 +800,7 @@ const router = createHashRouter(
           <Route path="stocktake" element={<StockTakeScreen />}>
             <Route imdex element={<StocktakeList />} />
             <Route path="allstocktakes" element={<StocktakeList />} />
+            <Route path="stocktakeline/:id" element={<StockTakeLines />} />
             <Route path="createstocktake" element={<CreateStockTake />} />
             <Route
               path="allstocktakeinprogress"

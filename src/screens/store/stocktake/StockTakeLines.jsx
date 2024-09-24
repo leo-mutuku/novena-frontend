@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useGetAutoStockTakeLinesByIdQuery } from "../../../slices/store/storeItemsApiSlice";
+import { useGetStockTakeHeaderByIdQuery } from "../../../slices/store/stockTakeHeadersApiSlice";
 import { useMakePaymentMutation } from "../../../slices/payment/requisitionHeaderApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllCashAccountsQuery } from "../../../slices/finance/cashAccountApiSlice";
@@ -17,7 +17,7 @@ const StockTakeLines = () => {
   const [bank, set_bank] = useState("");
   const [cash, set_cash] = useState("");
 
-  const { data: requisition } = useGetAutoStockTakeLinesByIdQuery(id);
+  const { data: requisition } = useGetStockTakeHeaderByIdQuery(id);
   const [postRequisition] = useMakePaymentMutation();
   const { data: bankAccounts } = useGetAllBankAccountsQuery();
   const { data: cashAccounts } = useGetAllCashAccountsQuery();
@@ -53,7 +53,7 @@ const StockTakeLines = () => {
 
   return (
     <>
-      <span> ** Auto Stock Take Entry Number {id}</span>
+      <span> ** Stock Take Entry Number {id}</span>
       {/* <Row>
         <Col>
           {" "}
@@ -116,20 +116,24 @@ const StockTakeLines = () => {
         <thead>
           <tr>
             <th>#</th>
-            <th> Store</th>
+
             <th>Name</th>
             <th>Code</th>
-            <th>Quantity</th>
+            <th>Physical</th>
+            <th>System</th>
+            <th>Variance</th>
           </tr>
         </thead>
         <tbody>
           {requisition?.data.map((item, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td style={{ fontSize: "11px" }}>{item.store_item_name}</td>
+
               <td>{item.item_name}</td>
               <td>{item.item_code}</td>
-              <td>{item.item_quantity}</td>
+              <td>{item.physical}</td>
+              <td>{item.system}</td>
+              <td>{item.variance}</td>
             </tr>
           ))}
         </tbody>

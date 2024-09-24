@@ -11,6 +11,13 @@ export const stockTakeHeadersApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: "store_items",
     }),
+    getStockTakeHeaderById: builder.query({
+      query: (id) => ({
+        url: `${STOCKTAKEHEADER_URL}/getstocktakeheaderbyid/${id}`,
+        method: "GET",
+      }),
+      providesTags: "store_items",
+    }),
     createStockTakeHeader: builder.mutation({
       query: (data) => ({
         url: `${STOCKTAKEHEADER_URL}/createstocktakeheader`,
@@ -31,6 +38,7 @@ export const stockTakeHeadersApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetStockTakeHeaderByIdQuery,
   useGetallstocktakeheadersQuery,
   useCreateStockTakeHeaderMutation,
   useValidateStoreMutation,
