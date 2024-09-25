@@ -5,11 +5,13 @@ export const sidelinks = [
       { subMenuTitle: "Daily Attendance", to: "dailyattance", role: 9000 },
       { subMenuTitle: "Attendance Report", to: "attendancereport", role: 9000 },
       { subMenuTitle: "Allowed Absence", to: "allowedabsence", role: 9000 },
+
       {
         subMenuTitle: "Cancelled Attendance",
         to: "cancelledattendance",
         role: 9000,
       },
+      { subMenuTitle: "Last In", to: "lastin", role: 9000 },
     ],
   },
 

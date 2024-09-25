@@ -402,6 +402,7 @@ import CashVendor from "./screens/payment/payments/payvendors/CashVendors.jsx";
 import StockTakeLines from "./screens/store/stocktake/StockTakeLines.jsx";
 import AllCashVendorPayments from "./screens/payment/payments/payvendors/AllCashVendorPayments.jsx";
 import AllBankVendorPayments from "./screens/payment/payments/payvendors/AllBankVendorPayments.jsx";
+import LastIn from "./screens/ict/biometric/LastIn.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -1132,6 +1133,7 @@ const router = createHashRouter(
           <Route path="dailyattance" element={<DailyAttendance />}></Route>
           <Route path="attendancereport" element={<AttendanceReport />}></Route>
           <Route path="allowedabsence" element={<AllAllowedAbsence />}></Route>
+          <Route path="lastin" element={<LastIn />}></Route>
           <Route
             path="updateallowedabsence/:id"
             element={<UpdateAllowedAbsence />}
