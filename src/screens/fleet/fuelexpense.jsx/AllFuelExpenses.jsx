@@ -10,10 +10,11 @@ const AllFuelExpenses = () => {
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
+    console.log(vendors); // Check the structure of vendors
     if (Array.isArray(vendors?.data)) {
       setTableData(vendors.data);
     } else {
-      setTableData([]); // Fallback to empty array if not an array
+      setTableData([]);
     }
   }, [vendors]);
 

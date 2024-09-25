@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Loader from "../../../components/Loader";
-import { useGetVendorsQuery } from "../../../slices/fleet/vendorApiSlice";
+import { useGetRepairExpensesQuery } from "../../../slices/fleet/repairExpnesApiSlice";
 import { Link } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
 import DataTable from "../../../components/general/DataTable";
 
 const MaintenanceList = () => {
-  const { data: vendors, isLoading, isError } = useGetVendorsQuery(); // Added isError
+  const { data: vendors, isLoading, isError } = useGetRepairExpensesQuery(); // Added isError
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
@@ -24,38 +24,32 @@ const MaintenanceList = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "Vendor #",
-        accessor: "vendor_number",
+        Header: "Vehicle",
+        accessor: "registration_number",
       },
       {
-        Header: "Vendor Name",
+        Header: "Vendor ",
         accessor: "vendor_name",
       },
       {
-        Header: "Email",
-        accessor: "vendor_email",
+        Header: "Amount",
+        accessor: "credit",
+      },
+      // {
+      //   Header: "Debit",
+      //   accessor: "debit",
+      // },
+      // {
+      //   Header: "Balance",
+      //   accessor: "balance",
+      // },
+      {
+        Header: "Date",
+        accessor: "created_at",
       },
       {
-        Header: "Contact",
-        accessor: "phone_number",
-      },
-      {
-        Header: "Location",
-        accessor: "vendor_location",
-      },
-      {
-        Header: "Balance",
-        accessor: "balance",
-        Cell: ({ row }) => <Link to={"#"}>{row.original.balance}</Link>,
-      },
-      {
-        Header: "Edit",
-        accessor: "edit",
-        Cell: ({ row }) => (
-          <Link to={`/purchase/suppliers/update/${row.original.vendor_id}`}>
-            <CiEdit />
-          </Link>
-        ),
+        Header: "By",
+        accessor: "created_by",
       },
     ],
     []
@@ -72,7 +66,7 @@ const MaintenanceList = () => {
   return (
     <>
       <div>
-        <p>*** All vendors ***</p>
+        <p>*** All Fleet Maintance Expenses ***</p>
         <div style={{ display: "flex", justifyContent: "flex-end" }}></div>
         <DataTable columns={columns} data={tableData} />
       </div>
