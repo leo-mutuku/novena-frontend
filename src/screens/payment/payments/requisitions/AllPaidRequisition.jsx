@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
 import { IoMdEye } from "react-icons/io";
 
-import { MdMonetizationOn } from "react-icons/md";
+import { CiEdit } from "react-icons/ci";
 import PrintA4A5ExcelButton from "../../../../components/PrintA4A5ExcelButton";
 import DataTable from "../../../../components/general/DataTable";
 import moment from "moment";
@@ -16,7 +16,7 @@ import axios from "axios";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
-const AllPaidPV = () => {
+const AllPaidRequisition = () => {
   const [columns_header, set_columns_header] = useState([]);
   const [columns_body, set_columns_body] = useState([]);
   const [footer_header, set_footer_header] = useState([]);
@@ -133,10 +133,10 @@ const AllPaidPV = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "Name",
-        accessor: "name",
+        Header: "Number",
+        accessor: "entry_id",
       },
-
+      { Header: "Name", accessor: "name" },
       {
         Header: "Created At",
         accessor: "created_at",
@@ -146,33 +146,23 @@ const AllPaidPV = () => {
           ).format("HH:mm A")}`}</span>
         ),
       },
+      { Header: "Account", accessor: "account_number" },
+
       {
         Header: "Amount",
         accessor: "amount",
       },
-      {
-        Header: "Account",
-        accessor: "account_number",
-      },
+      { Header: "Satus", accessor: "status" },
 
       {
-        Header: "Status",
-        accessor: "status",
-        // Cell: () => (
-        //   <Link to="#">
-        //     <IoMdEye />
-        //   </Link>
-        // ),
-      },
-      {
-        Header: "Pay",
-        accessor: "Pay",
+        Header: "View",
+        accessor: "view",
         Cell: ({ row }) => (
           <Link
-            to={`/payment/paymentvoucher/makepayment/${row.original.entry_id}`}
+            to={`/payment/requsitions/viewrequisition/${row.original.entry_id}`}
           >
-            <Button variant="outline-success">
-              <MdMonetizationOn />
+            <Button>
+              <IoMdEye style={{ color: "white" }} />
             </Button>
           </Link>
         ),
@@ -183,9 +173,9 @@ const AllPaidPV = () => {
 
   return (
     <>
-      <p>*** All PV ***</p>
+      <p>*** Posted Requisition List ***</p>
       <DataTable columns={columns} data={tableData} />
     </>
   );
 };
-export default AllPaidPV;
+export default AllPaidRequisition;

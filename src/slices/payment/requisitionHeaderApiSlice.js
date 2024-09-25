@@ -29,6 +29,14 @@ export const requisitionHeaderApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["requisitionHeaders", "requisitionLine"],
     }),
+    getAllPaidRequisitionHeaders: builder.query({
+      query: (data) => ({
+        url: `${PAYMENTPURCHASE_URL}/getallpaidrequisitionheaders`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["requisitionHeaders", "requisitionLine"],
+    }),
     getAllRequisitionHeaders: builder.query({
       query: (data) => ({
         url: `${PAYMENTPURCHASE_URL}/getallrequisitionheaders`,
@@ -63,4 +71,5 @@ export const {
   useGetAllRequisitionHeadersQuery,
   useGetAllRequisitionHeadersInProgressQuery,
   useGetAllPostedRequisitionHeadersQuery,
+  useGetAllPaidRequisitionHeadersQuery,
 } = requisitionHeaderApiSlice;
