@@ -138,8 +138,9 @@ const RequisitionList = () => {
         accessor: "entry_id",
       },
 
+      { Header: "Name", accessor: "name" },
       {
-        Header: "Requisition Date",
+        Header: " Date",
         accessor: "requsition_date",
         Cell: ({ value }) => (
           <span>{`${moment(value).format("YYYY-MM-DD")} : ${moment(
