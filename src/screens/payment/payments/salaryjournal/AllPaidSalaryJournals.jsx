@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../../components/Loader";
-import { useGetAllPostedRequisitionHeadersQuery } from "../../../../slices/payment/requisitionHeaderApiSlice";
+import { useGetAllPayRollHeadersQuery } from "../../../../slices/payroll/payrollHeadersApiSlice";
 import { useGetAllBankAccountsQuery } from "../../../../slices/finance/bankAccountsApiSlice";
 import { useGetAllCashAccountsQuery } from "../../../../slices/finance/cashAccountApiSlice";
 import { Table, Button } from "react-bootstrap";
@@ -28,10 +28,13 @@ const AllPaidSalaryJournals = () => {
   const [tableData, setTableData] = useState([]);
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
-  const { data, isLoading } = useGetAllPostedRequisitionHeadersQuery();
+  const { data, isLoading } = useGetAllPayRollHeadersQuery();
+
   useEffect(() => {
     if (data?.data) {
-      setTableData(data.data);
+      // Filter the data to include only rows where the status is 'Paid'
+      const filteredData = data.data.filter((item) => item.status === "Paid");
+      setTableData(filteredData);
     }
   }, [data]);
   const [title, set_title] = useState({
@@ -137,8 +140,8 @@ const AllPaidSalaryJournals = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "Name",
-        accessor: "name",
+        Header: "P No.",
+        accessor: "payroll_header_id",
       },
 
       {
@@ -150,13 +153,18 @@ const AllPaidSalaryJournals = () => {
           ).format("HH:mm A")}`}</span>
         ),
       },
+
       {
-        Header: "Amount",
-        accessor: "amount",
+        Header: "Gross",
+        accessor: "gross_pay",
       },
       {
-        Header: "Account",
-        accessor: "account_number",
+        Header: "Deductions",
+        accessor: "total_deductions",
+      },
+      {
+        Header: "Net",
+        accessor: "net_pay",
       },
 
       {
@@ -173,9 +181,9 @@ const AllPaidSalaryJournals = () => {
         accessor: "Pay",
         Cell: ({ row }) => (
           <>
-            {row.original.status === "Posted" ? (
+            {row.original.status === "Generated" ? (
               <Link
-                to={`/payment/paymentvoucher/makepayment/${row.original.entry_id}`}
+                to={`/payment/salaryjournal/paysalary/${row.original.payroll_header_id}`}
               >
                 <Button variant="outline-success">
                   <MdMonetizationOn />
@@ -193,7 +201,7 @@ const AllPaidSalaryJournals = () => {
 
   return (
     <>
-      <p>*** All PV ***</p>
+      <p>*** Generated Payroll List***</p>
       <DataTable columns={columns} data={tableData} />
     </>
   );

@@ -1,12 +1,16 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Loader from "../../../../components/Loader";
-import { useGetFuelExpensesQuery } from "../../../../slices/fleet/fuelExpenseApiSlice";
+import { useGetAllCashSupplierPaymentsQuery } from "../../../../slices/finance/cashAccountApiSlice";
 import { Link } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
 import DataTable from "../../../../components/general/DataTable";
 
 const AllCashSupplierPayment = () => {
-  const { data: vendors, isLoading, isError } = useGetFuelExpensesQuery(); // Added isError
+  const {
+    data: vendors,
+    isLoading,
+    isError,
+  } = useGetAllCashSupplierPaymentsQuery();
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
@@ -25,28 +29,30 @@ const AllCashSupplierPayment = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "Vehicle",
-        accessor: "registration_number",
+        Header: "Name",
+        accessor: "supplier_name",
       },
       {
-        Header: "Vendor ",
-        accessor: "vendor_name",
-      },
-      {
-        Header: "Amount",
+        Header: "Credit ",
         accessor: "credit",
       },
-      // {
-      //   Header: "Debit",
-      //   accessor: "debit",
-      // },
-      // {
-      //   Header: "Balance",
-      //   accessor: "balance",
-      // },
+      {
+        Header: "Debit",
+        accessor: "debit",
+      },
+      {
+        Header: "Balance",
+        accessor: "balance",
+      },
+      {
+        Header: "Description",
+        accessor: (row) =>
+          row.description?.slice(0, 40) +
+          (row.description?.length > 40 ? "..." : ""),
+      },
       {
         Header: "Date",
-        accessor: "created_at",
+        accessor: "formatted_entry_date",
       },
       {
         Header: "By",

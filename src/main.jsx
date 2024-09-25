@@ -400,6 +400,8 @@ import { PayVendorScreen } from "./screens/payment/PayVendorScreen.jsx";
 import BankVendors from "./screens/payment/payments/payvendors/BankVendor.jsx";
 import CashVendor from "./screens/payment/payments/payvendors/CashVendors.jsx";
 import StockTakeLines from "./screens/store/stocktake/StockTakeLines.jsx";
+import AllCashVendorPayments from "./screens/payment/payments/payvendors/AllCashVendorPayments.jsx";
+import AllBankVendorPayments from "./screens/payment/payments/payvendors/AllBankVendorPayments.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -634,6 +636,14 @@ const router = createHashRouter(
           ></Route>
           <Route path="payvendors" element={<PayVendorScreen />}>
             <Route path="vendorbank" element={<BankVendors />} />
+            <Route
+              path="allcashvendorpayment"
+              element={<AllCashVendorPayments />}
+            />
+            <Route
+              path="allbankvendorpayment"
+              element={<AllBankVendorPayments />}
+            />
             <Route path="vendorcash" element={<CashVendor />} />
           </Route>
           <Route path="salaryjournal" element={<SalaryJournalScreen />}>

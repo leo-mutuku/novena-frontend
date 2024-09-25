@@ -3,8 +3,8 @@ const pagemenus = [
   { pagename: "Bank", to: "vendorbank" },
   { pagename: "Cash", to: "vendorcash" },
 
-  { pagename: "All Bank", to: "allbanksupplierpayment" },
-  { pagename: "All Cash", to: "allcashsupplierpayment" },
+  { pagename: "All Bank", to: "allbankvendorpayment" },
+  { pagename: "All Cash", to: "allcashvendorpayment" },
 ];
 export const PayVendorScreen = () => {
   return (

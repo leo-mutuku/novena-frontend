@@ -13,6 +13,15 @@ export const cashAccountsApiSlice = apiSlice.injectEndpoints({
       providesTags: ["cashaccounts"],
       // refetchOnMountOrArgChange: true,
     }),
+    getAllCashSupplierPayments: builder.query({
+      query: (data) => ({
+        url: `${URL}/getallcashSupplierpayments`,
+        method: "GET",
+        body: data,
+      }),
+      providesTags: ["cashaccounts"],
+      // refetchOnMountOrArgChange: true,
+    }),
     getAllSalesCashRecepts: builder.query({
       query: (data) => ({
         url: `${URL}/getallsalescashrecepts`,
@@ -91,6 +100,7 @@ export const cashAccountsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetAllCashSupplierPaymentsQuery,
   useCreatCashVendorPaymentMutation,
   useReverseCashSalesOrderReceiptMutation,
   useUpdateCashAccountBalanceMutation,

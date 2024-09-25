@@ -15,6 +15,15 @@ export const vehicleApiSlice = apiSlice.injectEndpoints({
       query: (id) => `${VENDORS_URL}/getfuelexpense/${id}`,
       providesTags: ["Vendor"],
     }),
+    getAllCashSupplierPayments: builder.query({
+      query: (data) => ({
+        url: `${VENDORS_URL}/getallcashSupplierpayments`,
+        method: "GET",
+        body: data,
+      }),
+      keepUnusedDataFor: 5,
+      providesTags: ["Vendor"],
+    }),
     getFuelExpenses: builder.query({
       query: (data) => ({
         url: `${VENDORS_URL}/getfuelexpenses`,
@@ -38,6 +47,7 @@ export const vehicleApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetAllCashSupplierPaymentsQuery,
   useCreateFuelExpenseMutation,
   useGetFuelExpenseQuery,
   useUpdateFuelExpenseMutation,
