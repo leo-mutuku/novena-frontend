@@ -235,7 +235,7 @@ const BiWeeklyBioStaffList = () => {
         <Col>
           <Form.Group className="my-2" controlId="account_number">
             <Form.Control
-              type="date"
+              type="datetime-local"
               required
               placeholder="Start"
               value={start_date}
@@ -246,7 +246,7 @@ const BiWeeklyBioStaffList = () => {
         <Col>
           <Form.Group className="my-2" controlId="account_number">
             <Form.Control
-              type="date"
+              type="datetime-local"
               required
               placeholder="End"
               value={end_date}
