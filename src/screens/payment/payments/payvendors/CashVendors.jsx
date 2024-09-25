@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 
 import {
-  useCreateCashSupplierPaymentMutation,
+  useCreatCashVendorPaymentMutation,
   useGetAllCashAccountsQuery,
 } from "../../../../slices/finance/cashAccountApiSlice";
 
@@ -16,13 +16,13 @@ import { useSelector } from "react-redux";
 function CashVendor() {
   const { userInfo } = useSelector((state) => state.auth);
   const [cash_account_id, set_cash_account_id] = useState("");
-  const [supplier_id, set_supplier_id] = useState("");
+  const [vendor_id, set_vendor_id] = useState("");
   const [amount, set_amount] = useState("");
   const [amount_in_words, set_amount_in_words] = useState("");
   const [created_by, set_created_by] = useState("");
 
-  const [createSuplierCashPayment, { isLoading }] =
-    useCreateCashSupplierPaymentMutation();
+  const [createVendorCashPayment, { isLoading }] =
+    useCreatCashVendorPaymentMutation();
   const { data: cashAccount } = useGetAllCashAccountsQuery();
   const { data: suppliers } = useGetVendorsQuery();
 
@@ -36,9 +36,9 @@ function CashVendor() {
     e.preventDefault();
 
     try {
-      const res = await createSuplierCashPayment({
+      const res = await createVendorCashPayment({
         cash_account_id,
-        supplier_id,
+        vendor_id,
         amount_in_words,
         amount,
 
@@ -70,7 +70,7 @@ function CashVendor() {
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="cash_account_id">
-              <Form.Label>Bank Accounts </Form.Label>
+              <Form.Label>cash Accounts </Form.Label>
               <Form.Select
                 type="number"
                 required
@@ -88,14 +88,14 @@ function CashVendor() {
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group className="my-2" controlId="supplier_id">
+            <Form.Group className="my-2" controlId="vendor_id">
               <Form.Label>Vendor</Form.Label>
               <Form.Select
                 type="number"
                 required
-                placeholder="supplier_id"
-                value={supplier_id}
-                onChange={(e) => set_supplier_id(e.target.value)}
+                placeholder="vendor_id"
+                value={vendor_id}
+                onChange={(e) => set_vendor_id(e.target.value)}
               >
                 <option value={""}>Select Vendor</option>
                 {suppliers?.data.map((item, index) => (
