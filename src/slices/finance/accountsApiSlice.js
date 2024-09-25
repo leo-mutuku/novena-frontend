@@ -35,6 +35,14 @@ export const accountsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Account"],
     }),
+    incomeStateemnt: builder.mutation({
+      query: (data) => ({
+        url: `${ACCOUNTS_URL}/incomestateemnt`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Account"],
+    }),
     salesIncome: builder.mutation({
       query: (data) => ({
         url: `${ACCOUNTS_URL}/salesincome`,
@@ -71,6 +79,7 @@ export const accountsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useIncomeStateemntMutation,
   useCostofProductionReportMutation,
   useGetCombinedExpenseAccountsQuery,
   useGetAllAccountsQuery,

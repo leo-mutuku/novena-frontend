@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 //import { useGetTodosQuery } from './apiSlice';
 import Loader from "../../../components/Loader";
 import { useGetAllGLAccountsQuery } from "../../../slices/finance/glApiSlice";
+import { useIncomeStateemntMutation } from "../../../slices/finance/accountsApiSlice";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaPrint } from "react-icons/fa6";
@@ -29,6 +30,8 @@ const IncomeStatementList = () => {
   const [loadingPdf, setLoadingPdf] = useState(false);
   const [loadingExcel, setLoadingExcel] = useState(false);
   const { data, isLoading } = useGetAllGLAccountsQuery();
+  const [gettIncomeStatement, { isLoading: isIncomeStatementLoading }] =
+    useIncomeStateemntMutation();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   useEffect(() => {
@@ -196,7 +199,12 @@ const IncomeStatementList = () => {
     type: `add`,
   });
 
-  const handleLoadBTN = () => {};
+  const handleLoadBTN = async () => {
+    const res = await gettIncomeStatement({
+      start_date: startDate,
+      end_date: endDate,
+    }).unwrap();
+  };
   return (
     <>
       <div>
