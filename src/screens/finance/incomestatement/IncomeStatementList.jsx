@@ -98,102 +98,102 @@ const IncomeStatementList = () => {
     footer: footer,
   };
 
-  const [a, setA] = useState({
+  const [a, seta] = useState({
     name: `Total sales (a)`,
     value: 0,
     type: `add`,
   });
-  const [b, setB] = useState({
+  const [b, setb] = useState({
     name: `Cost of goods return (b)`,
     value: 0,
     type: `less`,
   });
-  const [c, setC] = useState({
+  const [c, setc] = useState({
     name: ` Opening stock of finished goods (c)`,
     value: 0,
     type: `add`,
   });
-  const [d, setD] = useState({
+  const [d, setd] = useState({
     name: `Cost of production (d)`,
     value: 0,
     type: `add`,
   });
-  const [e, setE] = useState({
+  const [e, sete] = useState({
     name: `Closing stock of finished goods (e)`,
     value: 0,
     type: `add`,
   });
-  const [f, setF] = useState({
+  const [f, setf] = useState({
     name: `Gross profit (f)`,
     value: 0,
     type: `add`,
   });
-  const [g, setG] = useState({
+  const [g, setg] = useState({
     name: `Wifi + airtime (g)`,
     value: 0,
     type: `add`,
   });
-  const [h, setH] = useState({
+  const [h, seth] = useState({
     name: `Security services (h)`,
     value: 0,
     type: `add`,
   });
-  const [i, setI] = useState({
+  const [i, seti] = useState({
     name: `Kitchen expenses (i)`,
     value: 0,
     type: `add`,
   });
-  const [j, setJ] = useState({
+  const [j, setj] = useState({
     name: `General salaries (j)`,
     value: 0,
     type: `add`,
   });
-  const [k, setK] = useState({
+  const [k, setk] = useState({
     name: `Other expense (k) `,
     value: 0,
     type: `add`,
   });
-  const [l, setL] = useState({
+  const [l, setl] = useState({
     name: `Misllineous (l)`,
     value: 0,
     type: `add`,
   });
-  const [m, setM] = useState({
+  const [m, setm] = useState({
     name: `Water bill (m)`,
     value: 0,
     type: `add`,
   });
-  const [n, setN] = useState({
+  const [n, setn] = useState({
     name: `Administration expenses`,
     value: 0,
     type: `add`,
   });
-  const [o, setO] = useState({
+  const [o, seto] = useState({
     name: `Fuel `,
     value: 0,
     type: `add`,
   });
-  const [p, setP] = useState({
+  const [p, setp] = useState({
     name: `Services (p)`,
     value: 0,
     type: `add`,
   });
-  const [q, setQ] = useState({
+  const [q, setq] = useState({
     name: ` spares (q)`,
     value: 0,
     type: `add`,
   });
-  const [r, setR] = useState({
+  const [r, setr] = useState({
     name: `Sales and distribution expenses (r)`,
     value: 0,
     type: `add`,
   });
-  const [s, setS] = useState({
+  const [s, sets] = useState({
     name: `Financial charges  (s)`,
     value: 0,
     type: `add`,
   });
-  const [t, setT] = useState({
+  const [t, sett] = useState({
     name: `Net Profit / Loss (t)`,
     value: 0,
     type: `add`,
@@ -204,6 +204,30 @@ const IncomeStatementList = () => {
       start_date: startDate,
       end_date: endDate,
     }).unwrap();
+    if (res.status == "success") {
+      seta({ ...a, value: res.data.a.value });
+      setb({ ...b, value: res.data.b.value });
+      setc({ ...c, value: res.data.c.value });
+      setd({ ...d, value: res.data.d.value });
+      sete({ ...e, value: res.data.e.value });
+      setf({ ...f, value: res.data.f.value });
+      setg({ ...g, value: res.data.g.value });
+      seth({ ...h, value: res.data.h.value });
+      seti({ ...i, value: res.data.i.value });
+      setj({ ...j, value: res.data.j.value });
+      setk({ ...k, value: res.data.k.value });
+      setl({ ...l, value: res.data.l.value });
+      setm({ ...m, value: res.data.m.value });
+      setn({ ...n, value: res.data.n.value });
+      seto({ ...o, value: res.data.o.value });
+      setp({ ...p, value: res.data.p.value });
+      setq({ ...q, value: res.data.q.value });
+      setr({ ...r, value: res.data.r.value });
+      sets({ ...s, value: res.data.s.value });
+      sett({ ...t, value: res.data.t.value });
+    } else {
+      throw new Error(res.message);
+    }
   };
   return (
     <>

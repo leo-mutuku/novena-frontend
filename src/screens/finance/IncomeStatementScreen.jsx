@@ -1,5 +1,5 @@
 import PageActionComponent from "../../components/PageActionComponent";
-const pagemenus = [{ pagename: "In Come Statement", to: "incomestatement" }];
+const pagemenus = [{ pagename: "Income Statement", to: "incomestatement" }];
 
 function IncomeStatementScreen() {
   return (
