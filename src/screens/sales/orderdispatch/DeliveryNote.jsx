@@ -18,7 +18,7 @@ const DeliveryNote = () => {
     description: "Dealers in: All types of cereals, Animal feeds",
     address: "P.O Box 238, Meru, Kenya",
     pin: `P052132641M`,
-    phone: "0720 830 830",
+    phone: "0793306004",
     date: "08/08/2024",
     batch_number: "",
     invoice_number: `${id}1`,
