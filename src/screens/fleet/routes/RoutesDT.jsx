@@ -56,7 +56,7 @@ const RoutesDT = () => {
         Header: "Destination",
         accessor: "end_location",
       },
-      { Header: "Distance (KM)", accessor: "distance_km" },
+      // { Header: "Distance (KM)", accessor: "distance_km" },
       {
         Header: "Edit",
         accessor: "edit",

@@ -10,7 +10,7 @@ function CreateRoutes() {
   const [name, setName] = useState("");
   const [start_location, setStartLocation] = useState("");
   const [end_location, setEndLocation] = useState("");
-  const [distance_km, setDistanceKm] = useState("");
+  // const [distance_km, setDistanceKm] = useState("");
 
   //call route add mutation
   const [addRoute, { isLoading }] = useAddRouteMutation();
@@ -25,7 +25,7 @@ function CreateRoutes() {
         name,
         start_location,
         end_location,
-        distance_km,
+        // distance_km,
       }).unwrap(); //extract the actual payload from the action
       if (res.status === "failed") {
         toast.error(res.message);
@@ -91,16 +91,16 @@ function CreateRoutes() {
           </Col>
           <Col>
             {/* */}
-            <Form.Group className="my-2" controlId="distance_km">
-              <Form.Label>Distance (KM)</Form.Label>
-              <Form.Control
+            {/* <Form.Group className="my-2" controlId="distance_km">
+              <Form.Label>Distance (KM)</Form.Label> */}
+            {/* <Form.Control
                 type="text"
                 required
                 placeholder="Distance in km"
                 value={distance_km}
                 onChange={(e) => setDistanceKm(e.target.value)}
               ></Form.Control>
-            </Form.Group>
+            </Form.Group> */}
           </Col>
         </Row>
 
