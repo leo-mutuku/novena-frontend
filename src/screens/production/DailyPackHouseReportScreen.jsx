@@ -69,13 +69,18 @@ const DailyPackHouseReportScreen = () => {
         accessor: (row, index) => index + 1,
       },
       {
-        Header: "date_of_entry",
-        accessor: "date_of_entry",
+        Header: "Item",
+        accessor: "item_name",
       },
-      { Header: "Name", accessor: "first_name" },
+      { Header: "Pay Per unit", accessor: "pay_per_unit" },
       { Header: "Batch", accessor: "batch_no" },
-      { Header: "Pack type", accessor: "pack_type" },
-      { Header: "Number", accessor: "quantity" },
+      { Header: "Quantity", accessor: "number_packed" },
+      { Header: "Wgt 90kg", accessor: "in_90kg" },
+      { Header: "Cost", accessor: "total_cost" },
+      { Header: "Pack Officer", accessor: "pack_officer" },
+      { Header: "By", accessor: "created_by" },
+      { Header: "Pack Date", accessor: "formatted_pack_date" },
+      { Header: "Capture Date", accessor: "capture_date" },
     ],
     []
   );
