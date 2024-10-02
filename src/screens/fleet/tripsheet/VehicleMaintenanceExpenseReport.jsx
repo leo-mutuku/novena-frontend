@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
 import DataTable from "../../../components/general/DataTable";
 
-const VehicleTripSummarys = () => {
+const VehicleMaintenanceExpenseReport = () => {
   const { data: vendors, isLoading, isError } = useGetFuelExpensesQuery(); // Added isError
   const [tableData, setTableData] = useState([]);
 
@@ -67,7 +67,7 @@ const VehicleTripSummarys = () => {
   return (
     <>
       <div>
-        <p>*** Vehicle Mileage Report ***</p>
+        <p>*** Vehicle Maintenance Report ***</p>
         <div style={{ display: "flex", justifyContent: "flex-end" }}></div>
         <DataTable columns={columns} data={tableData} />
       </div>
@@ -75,4 +75,4 @@ const VehicleTripSummarys = () => {
   );
 };
 
-export default VehicleTripSummarys;
+export default VehicleMaintenanceExpenseReport;

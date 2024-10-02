@@ -403,6 +403,7 @@ import StockTakeLines from "./screens/store/stocktake/StockTakeLines.jsx";
 import AllCashVendorPayments from "./screens/payment/payments/payvendors/AllCashVendorPayments.jsx";
 import AllBankVendorPayments from "./screens/payment/payments/payvendors/AllBankVendorPayments.jsx";
 import LastIn from "./screens/ict/biometric/LastIn.jsx";
+import VehicleMaintenanceExpenseReport from "./screens/fleet/tripsheet/VehicleMaintenanceExpenseReport.jsx";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -1122,6 +1123,10 @@ const router = createHashRouter(
             <Route path="vehicletripsummary" element={<VehicleTripSummary />} />
 
             <Route path="vehicletripdetails" element={<VehicleTripDetails />} />
+            <Route
+              path="vehiclemaintenanceexpensereport"
+              element={<VehicleMaintenanceExpenseReport />}
+            />
           </Route>
           <Route path="vendors" element={<VendorsScreen />}>
             <Route path="allvendors" element={<AllVendors />} />

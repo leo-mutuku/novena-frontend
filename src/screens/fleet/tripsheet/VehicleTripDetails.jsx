@@ -67,7 +67,7 @@ const VehicleTripDetails = () => {
   return (
     <>
       <div>
-        <p>*** All Fleet Fuel Expenses ***</p>
+        <p>*** Vehicle Fuel Report ***</p>
         <div style={{ display: "flex", justifyContent: "flex-end" }}></div>
         <DataTable columns={columns} data={tableData} />
       </div>
