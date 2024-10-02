@@ -195,6 +195,7 @@ function NewMialage() {
             <Form.Group className="my-2" controlId="supplier_location">
               <Form.Label>Distance (Km)</Form.Label>
               <Form.Control
+                disabled
                 required
                 type="number"
                 placeholder="Distance (Km)"
