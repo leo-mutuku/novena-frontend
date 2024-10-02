@@ -36,6 +36,12 @@ function NewMialage() {
     e.preventDefault();
 
     try {
+      if (distance < 0) {
+        toast.error(
+          "Distance cannot be negative, adjust the start and end mileage"
+        );
+        return;
+      }
       const res = await createMialage({
         driver_id,
         vehicle_id,
@@ -57,6 +63,16 @@ function NewMialage() {
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
+  };
+
+  const handleStartMialage = (e) => {
+    set_start_mileage(e.target.value);
+    set_distance((end_mileage - e.target.value) * 1.609344);
+  };
+
+  const handleEndMialage = (e) => {
+    set_end_mileage(e.target.value);
+    set_distance((e.target.value - start_mileage) * 1.609344);
   };
   return (
     <>
@@ -156,7 +172,7 @@ function NewMialage() {
                 type="number"
                 placeholder="Start mialage"
                 value={start_mileage}
-                onChange={(e) => set_start_mileage(e.target.value)}
+                onChange={handleStartMialage}
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -168,7 +184,7 @@ function NewMialage() {
                 type="number"
                 placeholder="End mialage"
                 value={end_mileage}
-                onChange={(e) => set_end_mileage(e.target.value)}
+                onChange={handleEndMialage}
               ></Form.Control>
             </Form.Group>
           </Col>
