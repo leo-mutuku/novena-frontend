@@ -4,14 +4,17 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader";
-import { useGetRouteQuery, useUpdateRouteMutation } from "../../../slices/fleet/routesApiSlice";
+import {
+  useGetRouteQuery,
+  useUpdateRouteMutation,
+} from "../../../slices/fleet/routesApiSlice";
 
 function EditRoute() {
   const [name, setName] = useState("");
   const [start_location, setStartLocation] = useState("");
   const [end_location, setEndLocation] = useState("");
   const [distance_km, setDistanceKm] = useState("");
-  
+
   const [updateRoute, { isError, isSuccess, error: errorUpdate }] =
     useUpdateRouteMutation();
 
@@ -93,7 +96,7 @@ function EditRoute() {
           <Col>
             {/* */}
             <Form.Group className="my-2" controlId="start_location">
-              <Form.Label>Start Location</Form.Label>
+              <Form.Label>Start </Form.Label>
               <Form.Control
                 type="text"
                 required
@@ -107,7 +110,7 @@ function EditRoute() {
         <Row>
           <Col>
             <Form.Group className="my-2" controlId="end_location">
-              <Form.Label>End Location</Form.Label>
+              <Form.Label>End </Form.Label>
               <Form.Control
                 type="text"
                 required
@@ -119,7 +122,7 @@ function EditRoute() {
           </Col>
           <Col>
             {/* */}
-            <Form.Group className="my-2" controlId="distance_km">
+            {/* <Form.Group className="my-2" controlId="distance_km">
               <Form.Label>Distance (KM)</Form.Label>
               <Form.Control
                 type="text"
@@ -128,7 +131,7 @@ function EditRoute() {
                 value={distance_km}
                 onChange={(e) => setDistanceKm(e.target.value)}
               ></Form.Control>
-            </Form.Group>
+            </Form.Group> */}
           </Col>
         </Row>
 

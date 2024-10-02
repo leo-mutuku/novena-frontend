@@ -49,11 +49,11 @@ const RoutesDT = () => {
       { Header: "ID", accessor: "route_id" },
       { Header: "Name", accessor: "name" },
       {
-        Header: "Start Location",
+        Header: "Start",
         accessor: "start_location",
       },
       {
-        Header: "Destination",
+        Header: "End",
         accessor: "end_location",
       },
       // { Header: "Distance (KM)", accessor: "distance_km" },

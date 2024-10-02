@@ -16,11 +16,11 @@ function NewMialage() {
   const { userInfo } = useSelector((state) => state.auth);
   const [driver_id, set_driver_id] = useState("");
   const [vehicle_id, set_vehicle_id] = useState("");
-  const [mialage_date, set_mialage_date] = useState("");
-  const [start_mileage, set_start_mileage] = useState("");
-  const [end_mileage, set_end_mileage] = useState("");
-  const [distance, set_distance] = useState("");
-  const [fuel_lts, set_fuel_lts] = useState("");
+  const [mialage_date, set_mialage_date] = useState(0);
+  const [start_mileage, set_start_mileage] = useState(0);
+  const [end_mileage, set_end_mileage] = useState(0);
+  const [distance, set_distance] = useState(0);
+
   const [route_id, set_route_id] = useState("");
 
   const [createFuelExpense, { isLoading }] = useCreateFuelExpenseMutation();
@@ -42,7 +42,7 @@ function NewMialage() {
         mialage_date,
         start_mileage,
         end_mileage,
-        fuel_lts,
+
         distance,
         created_by: userInfo.first_name,
         route_id,
@@ -183,12 +183,14 @@ function NewMialage() {
                 type="number"
                 placeholder="Distance (Km)"
                 value={distance}
-                onChange={(e) => set_distance(e.target.value)}
+                onChange={(e) => {
+                  (end_mileage - start_mileage) * 1.60934;
+                }}
               ></Form.Control>
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group className="my-2" controlId="supplier_location">
+            {/* <Form.Group className="my-2" controlId="supplier_location">
               <Form.Label>Fuel (Lts)</Form.Label>
               <Form.Control
                 required
@@ -197,7 +199,7 @@ function NewMialage() {
                 value={fuel_lts}
                 onChange={(e) => set_fuel_lts(e.target.value)}
               ></Form.Control>
-            </Form.Group>
+            </Form.Group> */}
           </Col>
         </Row>
 
