@@ -74,7 +74,18 @@ function AddOrderLines({
       toast.error("Item and Store Item code must be the same");
       return;
     }
-    set_sales_list([...sales_list, order_items]);
+    // Check if item with the same item_code already exists in the sales_list
+    const itemExists = sales_list.some(
+      (item) => item.item_code === order_items.item_code
+    );
+
+    if (!itemExists) {
+      // If the item does not exist, add it to the sales_list
+      set_sales_list([...sales_list, order_items]);
+    } else {
+      toast.error("Item already exists in the list");
+      return;
+    }
   };
 
   const handleSave = async () => {
