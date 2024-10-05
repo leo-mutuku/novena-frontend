@@ -49,30 +49,25 @@ const AllPostedOrderHeaders = () => {
         accessor: "sales_order_date",
         Cell: ({ value }) => <span>{moment(value).format("YYYY-MM-DD")}</span>,
       },
+
       {
-        Header: "Sales Type",
-        accessor: "sale_order_type",
-      },
-      {
-        Header: "Order No.",
+        Header: "Order #",
         accessor: "sales_order_number",
       },
       {
         Header: "Total",
         accessor: "total",
       },
+
       {
-        Header: "No. of Items",
-        accessor: "number_of_items",
-      },
-      {
-        Header: "Cust Name",
+        Header: "Customer",
         accessor: "customer_name",
       },
       {
-        Header: "Sales .P",
+        Header: "SP",
         accessor: "first_name",
       },
+      { Header: "By", accessor: "created_by" },
       {
         Header: "Status",
         accessor: "status",

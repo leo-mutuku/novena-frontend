@@ -32,20 +32,24 @@ const MaintenanceList = () => {
         accessor: "vendor_name",
       },
       {
-        Header: "Amount",
+        Header: "Credit",
         accessor: "credit",
       },
-      // {
-      //   Header: "Debit",
-      //   accessor: "debit",
-      // },
+      {
+        Header: "Debit",
+        accessor: "debit",
+      },
       // {
       //   Header: "Balance",
       //   accessor: "balance",
       // },
       {
-        Header: "Date",
-        accessor: "created_at",
+        Header: "Date XP",
+        accessor: "formatted_expense_date",
+      },
+      {
+        Header: "Date Entry",
+        accessor: "formatted_created_at",
       },
       {
         Header: "By",

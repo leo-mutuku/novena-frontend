@@ -93,10 +93,11 @@ const OrderHeaderList = () => {
 
               <th style={{ position: "initial" }}>Order No.</th>
               <th style={{ position: "initial" }}>Total</th>
-              <th style={{ position: "initial" }}>No. of Items</th>
-              <th style={{ position: "initial" }}>Customer</th>
+
               <th style={{ position: "initial" }}>SP</th>
+              <th style={{ position: "initial" }}>By</th>
               <th style={{ position: "initial" }}>Status</th>
+
               <th style={{ position: "initial" }}>Add</th>
               <th style={{ position: "initial" }}>Del</th>
             </tr>
@@ -118,9 +119,9 @@ const OrderHeaderList = () => {
 
                   <td>{item.sales_order_number}</td>
                   <td>{item.total}</td>
-                  <td>{item.number_of_items}</td>
-                  <td>{item.customer_name}</td>
+
                   <td>{item.first_name}</td>
+                  <td>{item.created_by}</td>
                   <td>
                     {item.status === "New" ? (
                       <span style={{ color: "orange" }}>{item.status}</span>
