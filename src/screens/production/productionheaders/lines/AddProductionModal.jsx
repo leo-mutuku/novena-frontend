@@ -72,28 +72,68 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (products.production_buffer == "store") {
+    if (products.production_buffer === "store") {
       if (store.includes(products.product_code)) {
-        set_products({ ...products, created_by: userInfo.first_name });
-        set_production_list([...production_list, products]);
+        // Check if the item_code already exists in the production_list
+        const isDuplicate = production_list.some(
+          (item) => item.product_code == products.product_code
+        );
+
+        if (isDuplicate) {
+          toast.error("This product is already in the production list.");
+          return; // If duplicate, show an error message
+        } else {
+          // If no duplicate, add the product to the production_list
+          set_products({ ...products, created_by: userInfo.first_name });
+
+          // Make sure you're updating the state with the latest production list
+          set_production_list([...production_list, products]);
+        }
       } else {
-        toast.error("Please select the correct destination store ");
+        toast.error("Please select the correct destination store");
+        return;
       }
     }
     if (products.production_buffer == "by_products") {
       if (by_products.includes(products.product_code)) {
-        set_products({ ...products, created_by: userInfo.first_name });
-        set_production_list([...production_list, products]);
+        const isDuplicate = production_list.some(
+          (item) => item.product_code == products.product_code
+        );
+
+        if (isDuplicate) {
+          toast.error("This product is already in the production list.");
+          return; // If duplicate, show an error message
+        } else {
+          // If no duplicate, add the product to the production_list
+          set_products({ ...products, created_by: userInfo.first_name });
+
+          // Make sure you're updating the state with the latest production list
+          set_production_list([...production_list, products]);
+        }
       } else {
         toast.error("Please select the correct destination store");
+        return;
       }
     }
     if (products.production_buffer == "pack_house") {
       if (pack_house.includes(products.product_code)) {
-        set_products({ ...products, created_by: userInfo.first_name });
-        set_production_list([...production_list, products]);
+        const isDuplicate = production_list.some(
+          (item) => item.product_code == products.product_code
+        );
+
+        if (isDuplicate) {
+          toast.error("This product is already in the production list.");
+          return; // If duplicate, show an error message
+        } else {
+          // If no duplicate, add the product to the production_list
+          set_products({ ...products, created_by: userInfo.first_name });
+
+          // Make sure you're updating the state with the latest production list
+          set_production_list([...production_list, products]);
+        }
       } else {
         toast.error("Please select the correct destination store");
+        return;
       }
     }
   };
