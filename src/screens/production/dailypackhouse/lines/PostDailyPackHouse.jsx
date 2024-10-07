@@ -50,14 +50,21 @@ const PostDailyPackHouse = () => {
     }
   };
   const handleAdd = (e) => {
-    if (staff_id && quantity) {
+    // Check if staff_id already exists in the daily_pack_list
+    const staffExists = daily_pack_list.find(
+      (item) => item.staff_id === staff_id
+    );
+
+    if (staffExists) {
+      toast.error("Staff already exists in the list");
+    } else if (staff_id && quantity) {
       set_daily_pack_list([
         ...daily_pack_list,
         { staff_id, quantity, full_name, balance },
       ]);
       set_total(total + parseFloat(quantity));
     } else {
-      alert("Please fill all the fields");
+      toast.error("Please select staff and quantity");
     }
   };
 
