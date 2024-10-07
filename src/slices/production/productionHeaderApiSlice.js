@@ -77,10 +77,19 @@ export const productionHeaderApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["ProductionLines", "productionHeaders"],
     }),
+    reverseProduction: builder.mutation({
+      query: (data) => ({
+        url: `${PRODUCTIONHEADER_URL}/reverseproduction`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["ProductionLines", "productionHeaders"],
+    }),
   }),
 });
 
 export const {
+  useReverseProductionMutation,
   useProductionCertificateQuery,
   useCreateProductionHeaderMutation,
   useCancelProductionHeaderMutation,

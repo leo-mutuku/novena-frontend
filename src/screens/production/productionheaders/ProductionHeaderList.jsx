@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Loader from "../../../components/Loader";
-import { useGetAllProductionHeadersQuery } from "../../../slices/production/productionHeaderApiSlice";
+import {
+  useGetAllProductionHeadersQuery,
+  useReverseProductionMutation,
+} from "../../../slices/production/productionHeaderApiSlice";
 import { useGetAllStaffQuery } from "../../../slices/administration/staffApiSlice";
 
 import { Table, Button } from "react-bootstrap";
@@ -14,8 +17,20 @@ import AddProductionModal from "./lines/AddProductionModal";
 
 import TimeDate from "../../../components/TimeDate";
 import { GiReturnArrow } from "react-icons/gi";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const ProductionHeaderList = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    if (userInfo?.roles.includes(9999)) {
+      setIsAdmin(true);
+    } else {
+      setIsAdmin(false);
+    }
+  }, [userInfo]);
+
   let timeDate = new TimeDate();
   const [mode, set_mode] = useState("none");
   const [mode_delete, set_mode_delete] = useState("none");
@@ -26,11 +41,23 @@ const ProductionHeaderList = () => {
     set_mode(style);
     set_batch_number(batch_number);
   };
-  const handleDelete = (e, id, style) => {
-    set_store_purchase_id(parseInt(id));
-    set_mode_delete(style);
-  };
+
   const { data: production, isLoading } = useGetAllProductionHeadersQuery();
+  const [reverseProduction] = useReverseProductionMutation();
+  const handleReverse = async (id) => {
+    try {
+      const res = await reverseProduction({
+        id: id,
+      }).unwrap();
+      if (res.status == "success") {
+        toast.success("Production reversed successfully");
+      } else {
+        toast.error(res.message);
+      }
+    } catch (error) {
+      toast.error(error.data.message || "Error reversing production");
+    }
+  };
   const navigate = useNavigate();
   useEffect(() => {});
   console.log(production?.data);
@@ -120,7 +147,7 @@ const ProductionHeaderList = () => {
                     <Link
                       to={`/production/productionheaders/productioncertificate/${item.production_batch_no}`}
                     >
-                      <Button className="btn btn-success" size="sm">
+                      <Button variant="success" size="sm">
                         <IoMdEye
                           onClick={(e) =>
                             handleAdd(
@@ -138,14 +165,12 @@ const ProductionHeaderList = () => {
                   )}
                 </td>
                 <td>
-                  {item.status === "Posted" ? (
-                    <Link to={`#`}>
+                  {item.status === "Posted" && isAdmin ? (
+                    <Button variant="danger">
                       <GiReturnArrow
-                        onClick={(e) =>
-                          handleDelete(e, item.store_purchase_number, "block")
-                        }
+                        onClick={() => handleReverse(item.production_header_id)}
                       />
-                    </Link>
+                    </Button>
                   ) : (
                     "--"
                   )}

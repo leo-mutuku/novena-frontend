@@ -123,11 +123,12 @@ function AddProductionModal({ store_purchase_id, batch_number, set_mode }) {
           created_by: products.created_by,
           production_line: production_list,
         }).unwrap();
-        if (res.status == "failed") {
-          toast.error(res.message);
-        } else {
+
+        if (res.status == "success") {
           toast.success("Production lines created successfully");
           navigate("../allpostedtransiactionheaderlist");
+        } else {
+          toast.error(res.message);
         }
       }
     } catch (err) {

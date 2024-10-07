@@ -87,8 +87,11 @@ function CreateDailyPackhouseHeader() {
                 <option>Select Batch no</option>
                 {last_batch_numbers?.data.map((item, index) => (
                   <>
-                    <option key={index} value={item.batch_number}>
-                      {item.batch_number}
+                    <option
+                      key={index}
+                      value={`${item.batch_number}${item.production_header_id}`}
+                    >
+                      {item.batch_number} {item.production_header_id}
                     </option>
                   </>
                 ))}
