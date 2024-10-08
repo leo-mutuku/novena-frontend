@@ -45,7 +45,7 @@ export const handlePrintA4 = (payrollHeader, getlistOfStaffId) => {
   autoTable(doc, { html: "#my-table" });
   doc.setFontSize(10);
 
-  doc.text(85, 43, `KRA PIN P63426847C`);
+  doc.text(85, 43, `KRA PIN P052132641M`);
   doc.text(12, 48, ` Payroll no. - ${payrollHeader.payroll_no}`);
 
   autoTable(doc, {

@@ -29,7 +29,7 @@ export const handlePrintA4 = (e) => {
   autoTable(doc, { html: "#my-table" });
   doc.setFontSize(10);
   doc.text(12, 43, `# ${title.report_title}`);
-  doc.text(80, 43, `KRA PIN P63426847C`);
+  doc.text(80, 43, `KRA PIN P052132641M`);
   doc.text(130, 43, `Generate By: ${title.generated_by}`);
 
   //body
