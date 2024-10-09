@@ -2,7 +2,7 @@ import { apiSlice } from "../apiSlice";
 const DAILYPACJHOUSE_URL = "/api/v1/production/dailypackhouselines";
 
 export const dailyPackhouseLinesApiSlice = apiSlice.injectEndpoints({
-  tagTypes: ["dailypackhouselines", "dailypackhouseheader"],
+  tagTypes: ["dailypackhouselines", "dailypackhouseheader", "Store_items"],
   endpoints: (builder) => ({
     createDailyPackhouseLine: builder.mutation({
       query: (data) => ({
@@ -10,7 +10,11 @@ export const dailyPackhouseLinesApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["dailypackhouselines", "dailypackhouseheader"],
+      invalidatesTags: [
+        "dailypackhouselines",
+        "dailypackhouseheader",
+        "Store_items",
+      ],
     }),
 
     getAllDailyPackhouseLines: builder.query({
@@ -19,7 +23,11 @@ export const dailyPackhouseLinesApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["dailypackhouselines", "dailypackhouseheader"],
+      providesTags: [
+        "dailypackhouselines",
+        "dailypackhouseheader",
+        "Store_items",
+      ],
     }),
     getAllPostedDailyPackhouseLinest: builder.query({
       query: (data) => ({
@@ -27,7 +35,11 @@ export const dailyPackhouseLinesApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["dailypackhouselines", "dailypackhouseheader"],
+      providesTags: [
+        "dailypackhouselines",
+        "dailypackhouseheader",
+        "Store_items",
+      ],
     }),
     getAllDailyPackhouseLinesInTransit: builder.query({
       query: (data) => ({
@@ -35,7 +47,11 @@ export const dailyPackhouseLinesApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["dailypackhouselines", "dailypackhouseheader"],
+      providesTags: [
+        "dailypackhouselines",
+        "dailypackhouseheader",
+        "Store_items",
+      ],
     }),
   }),
 });

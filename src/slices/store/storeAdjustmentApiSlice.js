@@ -2,7 +2,7 @@ import { apiSlice } from "../apiSlice";
 const URL = "/api/v1/store/storetransfer";
 
 export const storeAdjustmentApiSlice = apiSlice.injectEndpoints({
-  tagTypes: ["StoreAdjustments"],
+  tagTypes: ["StoreAdjustments", "Store_items"],
   endpoints: (builder) => ({
     getAllStoreAdjustments: builder.query({
       query: (data) => ({
@@ -10,7 +10,7 @@ export const storeAdjustmentApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["StoreAdjustments"],
+      providesTags: ["StoreAdjustments", "Store_items"],
     }),
     createStoreAdjustment: builder.mutation({
       query: (data) => ({
@@ -18,7 +18,7 @@ export const storeAdjustmentApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["StoreAdjustments"],
+      invalidatesTags: ["StoreAdjustments", "Store_items"],
     }),
   }),
 });

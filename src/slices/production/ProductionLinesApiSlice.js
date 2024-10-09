@@ -3,14 +3,14 @@ const PRODUCTIONLINE_URL = "/api/v1/production/productionlines";
 
 export const ProductionLinesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    tagTypes: ["ProductionLines", "productionHeaders"],
+    tagTypes: ["ProductionLines", "productionHeaders", "Store_items"],
     createProductionLine: builder.mutation({
       query: (data) => ({
         url: `${PRODUCTIONLINE_URL}/createproductionline`,
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["ProductionLines", "productionHeaders"],
+      invalidatesTags: ["ProductionLines", "productionHeaders", "Store_items"],
     }),
 
     getAllProductionHeaders: builder.query({
@@ -19,7 +19,7 @@ export const ProductionLinesApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["ProductionLines", "productionHeaders"],
+      providesTags: ["ProductionLines", "productionHeaders", "Store_items"],
     }),
     getAllProductionHeadersInTransit: builder.query({
       query: (data) => ({
@@ -27,7 +27,7 @@ export const ProductionLinesApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["ProductionLines", "productionHeaders"],
+      providesTags: ["ProductionLines", "productionHeaders", "Store_items"],
     }),
     getAllProductionHeadersInTransit: builder.query({
       query: (data) => ({
@@ -35,7 +35,7 @@ export const ProductionLinesApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["ProductionLines", "productionHeaders"],
+      providesTags: ["ProductionLines", "productionHeaders", "Store_items"],
     }),
     getAllPostedProductionHeaders: builder.query({
       query: (data) => ({
@@ -43,7 +43,7 @@ export const ProductionLinesApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["ProductionLines", "productionHeaders"],
+      providesTags: ["ProductionLines", "productionHeaders", "Store_items"],
     }),
   }),
 });

@@ -2,7 +2,7 @@ import { apiSlice } from "../apiSlice";
 const URL = "/api/v1/store/storetransfer";
 
 export const storeTransferApiSlice = apiSlice.injectEndpoints({
-  tagTypes: ["StoreTransfers"],
+  tagTypes: ["StoreTransfers", "Store_items"],
   endpoints: (builder) => ({
     getAllStoreTransfer: builder.query({
       query: (data) => ({
@@ -10,7 +10,7 @@ export const storeTransferApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["StoreTransfers"],
+      providesTags: ["StoreTransfers", "Store_items"],
     }),
     createStoreTransfer: builder.mutation({
       query: (data) => ({
@@ -18,7 +18,7 @@ export const storeTransferApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["StoreTransfers"],
+      invalidatesTags: ["StoreTransfers", "Store_items"],
     }),
   }),
 });

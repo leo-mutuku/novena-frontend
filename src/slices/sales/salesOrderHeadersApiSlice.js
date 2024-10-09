@@ -3,14 +3,14 @@ const SALESORDERHEADER_URL = "/api/v1/sales/salesorderheaders";
 
 export const orderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    tagTypes: ["Sales_order"],
+    tagTypes: ["Sales_order", "Store_items"],
     getSalesOrderHeaderById: builder.query({
       query: (id) => ({
         url: `${SALESORDERHEADER_URL}/getallsalesorderbyheaderid`,
         method: "GET",
         body: data,
       }),
-      providesTags: ["Sales_order"],
+      providesTags: ["Sales_order", "Store_items"],
     }),
     getAllDispatchedOrders: builder.query({
       query: (data) => ({
@@ -18,7 +18,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["Sales_order"],
+      providesTags: ["Sales_order", "Store_items"],
     }),
     getAllSalesOrderHeaders: builder.query({
       query: (data) => ({
@@ -26,7 +26,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["Sales_order"],
+      providesTags: ["Sales_order", "Store_items"],
     }),
     getAllSalesOrdersInTransit: builder.query({
       query: (data) => ({
@@ -34,7 +34,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["Sales_order"],
+      providesTags: ["Sales_order", "Store_items"],
     }),
     getAllDailySales: builder.query({
       query: (data) => ({
@@ -42,7 +42,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["Sales_order"],
+      providesTags: ["Sales_order", "Store_items"],
     }),
     getAllPostedSalesOrders: builder.query({
       query: (data) => ({
@@ -50,7 +50,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         body: data,
       }),
-      providesTags: ["Sales_order"],
+      providesTags: ["Sales_order", "Store_items"],
     }),
     createSalesOrderHeader: builder.mutation({
       query: (data) => ({
@@ -58,7 +58,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Sales_order"],
+      invalidatesTags: ["Sales_order", "Store_items"],
     }),
     archiveuPostedSalesOrder: builder.mutation({
       query: (data) => ({
@@ -66,7 +66,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Sales_order"],
+      invalidatesTags: ["Sales_order", "Store_items"],
     }),
     postSalesOrder: builder.mutation({
       query: (data) => ({
@@ -74,7 +74,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Sales_order"],
+      invalidatesTags: ["Sales_order", "Store_items"],
     }),
     cancelOrder: builder.mutation({
       query: (data) => ({
@@ -82,7 +82,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Sales_order"],
+      invalidatesTags: ["Sales_order", "Store_items"],
     }),
   }),
 });
