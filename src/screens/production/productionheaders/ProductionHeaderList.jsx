@@ -21,6 +21,12 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 const ProductionHeaderList = () => {
+  const getIsDisabled = (entryDate) => {
+    const entryTime = new Date(entryDate); // Convert the entry_date to a Date object
+    const currentTime = new Date();
+    const timeDiff = Math.abs(currentTime - entryTime) / 36e5; // Time difference in hours
+    return timeDiff > 3; // Return true if more than 3 hours have passed
+  };
   const { userInfo } = useSelector((state) => state.auth);
   const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
@@ -164,9 +170,15 @@ const ProductionHeaderList = () => {
                     "--"
                   )}
                 </td>
-                <td>
+                <td style={{ zIndex: "-1" }}>
                   {item.status === "Posted" && isAdmin ? (
-                    <Button variant="danger">
+                    <Button
+                      variant="danger"
+                      disabled={getIsDisabled(item.entry_date)}
+                      style={{
+                        zIndex: getIsDisabled(item.entry_date) ? "-1" : "auto",
+                      }}
+                    >
                       <GiReturnArrow
                         onClick={() => handleReverse(item.production_header_id)}
                       />
