@@ -14,13 +14,9 @@ const IncomeStatementComp = forwardRef(
       d,
       e,
       f,
-      g,
-      h,
-      i,
-      j,
+     
       k,
-      l,
-      m,
+     
       n,
       o,
       p,
@@ -190,34 +186,12 @@ const IncomeStatementComp = forwardRef(
                     <th>{f?.name}</th>
                     <th>{f?.value}</th>
                   </tr>
-                  <tr>
-                    <th>{g?.name}</th>
-                    <th>{g?.value}</th>
-                  </tr>
-                  <tr>
-                    <th>{h?.name}</th>
-                    <th>{h?.value}</th>
-                  </tr>
-                  <tr>
-                    <th>{i?.name}</th>
-                    <th>{i?.value}</th>
-                  </tr>
-                  <tr>
-                    <th>{j?.name}</th>
-                    <th>{j?.value}</th>
-                  </tr>
+                
                   <tr>
                     <th>{k?.name}</th>
                     <th>{k?.value}</th>
                   </tr>
-                  <tr>
-                    <th>{l?.name}</th>
-                    <th>{l?.value}</th>
-                  </tr>
-                  <tr>
-                    <th>{m?.name}</th>
-                    <th>{m?.value}</th>
-                  </tr>
+                
                   <tr>
                     <th>{n?.name}</th>
                     <th>{n?.value}</th>

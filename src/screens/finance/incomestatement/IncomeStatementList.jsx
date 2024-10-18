@@ -164,22 +164,22 @@ const IncomeStatementList = () => {
     type: `add`,
   });
   const [n, setn] = useState({
-    name: `Administration expenses`,
+    name: `Administration expenses (General Salaries + other XP) `,
     value: 0,
     type: `add`,
   });
   const [o, seto] = useState({
-    name: `Fuel `,
+    name: `Fleet Fuel Expense (o) `,
     value: 0,
     type: `add`,
   });
   const [p, setp] = useState({
-    name: `Services (p)`,
+    name: `Fleet Maintenance expense (p)`,
     value: 0,
     type: `add`,
   });
   const [q, setq] = useState({
-    name: ` spares (q)`,
+    name: `Machinery spares (q)`,
     value: 0,
     type: `add`,
   });

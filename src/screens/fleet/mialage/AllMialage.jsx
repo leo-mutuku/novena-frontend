@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Loader from "../../../components/Loader";
-import { useGetFuelExpensesQuery } from "../../../slices/fleet/fuelExpenseApiSlice";
+import { useGetMileageQuery } from "../../../slices/fleet/mialageApiSlice";
 import { Link } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
 import DataTable from "../../../components/general/DataTable";
 
 const AllMialage = () => {
-  const { data: vendors, isLoading, isError } = useGetFuelExpensesQuery(); // Added isError
+  const { data: vendors, isLoading, isError } = useGetMileageQuery(); // Added isError
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
@@ -29,17 +29,17 @@ const AllMialage = () => {
         accessor: "registration_number",
       },
       {
-        Header: "Vendor ",
-        accessor: "vendor_name",
+        Header: "Driver ",
+        accessor: "full_name",
       },
       {
-        Header: "Amount",
-        accessor: "credit",
+        Header: "Start",
+        accessor: "start_mialage",
       },
-      // {
-      //   Header: "Debit",
-      //   accessor: "debit",
-      // },
+      {
+        Header: "End",
+        accessor: "end_mialage",
+      },
       // {
       //   Header: "Balance",
       //   accessor: "balance",

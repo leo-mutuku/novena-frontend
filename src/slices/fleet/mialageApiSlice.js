@@ -15,13 +15,13 @@ export const mialageApiSlice = apiSlice.injectEndpoints({
       query: (id) => `${VENDORS_URL}/getvendor${id}`,
       providesTags: ["Vendor"],
     }),
-    getVendors: builder.query({
+    getMileage: builder.query({
       query: (data) => ({
-        url: `${VENDORS_URL}/getvendors`,
+        url: `${VENDORS_URL}/getmileage`,
         method: "GET",
         body: data,
       }),
-      keepUnusedDataFor: 5,
+   
       providesTags: ["Vendor"],
     }),
     updatevendor: builder.mutation({
@@ -39,7 +39,7 @@ export const mialageApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useCreateMialageMutation,
-  useGetVendorsQuery,
+  useGetMileageQuery,
   useUpdatevendorMutation,
   useGetVendorQuery,
 } = mialageApiSlice;
