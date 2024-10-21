@@ -10,7 +10,7 @@ const AllCashVendorPayments = () => {
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
-    console.log(vendors); // Check the structure of vendors
+
     if (Array.isArray(vendors?.data)) {
       setTableData(vendors.data);
     } else {
@@ -67,7 +67,7 @@ const AllCashVendorPayments = () => {
   return (
     <>
       <div>
-        <p>*** All Supplier payment entries ***</p>
+        <p>*** All Vendor Payment Entries ***</p>
         <div style={{ display: "flex", justifyContent: "flex-end" }}></div>
         <DataTable columns={columns} data={tableData} />
       </div>

@@ -10,6 +10,8 @@ function ModulePageComponent({ sidelinks, page_title }) {
     return null;
   }
 
+  console.log(userInfo)
+
   return (
     <Container>
       <Row>
