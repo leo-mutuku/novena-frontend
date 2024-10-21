@@ -24,6 +24,15 @@ export const vehicleApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
       providesTags: ["Vendor"],
     }),
+    getVendorsEntries: builder.query({
+      query: (data) => ({
+        url: `${VENDORS_URL}/getvendorsentries`,
+        method: "GET",
+        body: data,
+      }),
+      keepUnusedDataFor: 5,
+      providesTags: ["Vendor"],
+    }),
     updatevendor: builder.mutation({
       query: (data) => {
         return {
@@ -42,4 +51,5 @@ export const {
   useGetVendorsQuery,
   useUpdatevendorMutation,
   useGetVendorQuery,
+  useGetVendorsEntriesQuery,
 } = vehicleApiSlice;
