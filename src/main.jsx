@@ -404,7 +404,8 @@ import AllCashVendorPayments from "./screens/payment/payments/payvendors/AllCash
 import AllBankVendorPayments from "./screens/payment/payments/payvendors/AllBankVendorPayments.jsx";
 import LastIn from "./screens/ict/biometric/LastIn.jsx";
 import VehicleMaintenanceExpenseReport from "./screens/fleet/tripsheet/VehicleMaintenanceExpenseReport.jsx";
-
+import paymentReportsVendors from "./screens/payment/paymentReportsVendors.jsx"
+import { VendorReportScreen } from "./screens/payment/VendorReportScreen.jsx";
 const router = createHashRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -636,6 +637,7 @@ const router = createHashRouter(
             path="paymentreports"
             element={<PaymentReportScreen />}
           ></Route>
+         
           <Route path="payvendors" element={<PayVendorScreen />}>
             <Route path="vendorbank" element={<BankVendors />} />
             <Route
@@ -660,6 +662,7 @@ const router = createHashRouter(
             path="suppliersreport"
             element={<SupplierPaymentReportScreen />}
           ></Route>
+         
 
           <Route path="paymentvoucher" element={<PaymentVoucherScreen />}>
             <Route path="bankpv" element={<BankPv />} />
@@ -668,6 +671,16 @@ const router = createHashRouter(
             <Route path="allpaidpv" element={<AllPaidPV />} />
             <Route path="makepayment/:id" element={<MakePayment />} />
           </Route>
+          <Route path='vendorreports' element={<VendorReportScreen />}>
+
+</Route>
+
+          <Route 
+          path="paymentreportsvendors"
+          element={<paymentReportsVendors/>}>
+            
+          </Route>
+         
         </Route>
 
         {/* production routes */}

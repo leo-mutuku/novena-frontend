@@ -9,7 +9,16 @@ export const vehicleApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      providesTags: ["Vendor"],
+      invalidatesTags: ["Vendor"],
+    }),
+    getVendorBalance: builder.mutation({
+      query: (data) => ({
+        url: `${VENDORS_URL}/getvendorbalance`,
+        method: "POST",
+        body: data,
+      }),
+      keepUnusedDataFor: 5,
+      invalidatesTags: ["Vendor"],
     }),
     getVendor: builder.query({
       query: (id) => `${VENDORS_URL}/getvendor${id}`,
@@ -52,4 +61,5 @@ export const {
   useUpdatevendorMutation,
   useGetVendorQuery,
   useGetVendorsEntriesQuery,
+  useGetVendorBalanceMutation,
 } = vehicleApiSlice;
