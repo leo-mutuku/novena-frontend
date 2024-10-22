@@ -23,8 +23,6 @@ const VehicleMaintenanceExpenseReport = () => {
   useRepairBalanceReportMutation();
   const { data: suppliers } = useGetAllVehiclesQuery();
 
-  
-
   const loaddata = async () => {
     if (!supplier_number || !start_date || !end_date) {
       toast.error("Please select report name, start and end date");
@@ -105,11 +103,11 @@ const VehicleMaintenanceExpenseReport = () => {
       },
       {
         Header: "Date",
-        accessor: "created_at",
+        accessor: "expense_date",
         
       },
 
-      { Header: "Desc", accessor: "description" },
+      { Header: "Desc", accessor: (row)=> 'Fuel Expense' },
       { Header: "Credit", accessor: "credit" },
       { Header: "Debit", accessor: "debit" },
       { Header: "Balance ", accessor: "balance" },
@@ -151,9 +149,9 @@ const VehicleMaintenanceExpenseReport = () => {
       title:"VENDOR"
     };
 
-    navigate(`../purchases/statement/${supplier_number}`, {
+    navigate(`#`, {
       state: { statementData },
-    });
+    }); // ../purchases/statement/${supplier_number}
   };
 
   const handleSupplier = (e) => {

@@ -9,7 +9,7 @@ export const vehicleApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      providesTags: ["Vendor"],
+      invalidatesTags: ["Vendor"],
     }),
     repairBalanceReport: builder.mutation({
       query: (data) => ({
@@ -17,7 +17,7 @@ export const vehicleApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      providesTags: ["Vendor"],
+      invalidatesTags: ["Vendor"],
     }),
     getRepairExpense: builder.query({
       query: (id) => `${VENDORS_URL}/getrepairexpense/${id}`,
