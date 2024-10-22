@@ -21,9 +21,9 @@ const SupplierStatement = () => {
 
   const componentRef = React.useRef();
   const [headers1, setHeaders1] = useState({
-    title: "SUPPLIER STATEMENT",
+    title: `${statementData.title} STATEMENT`,
     period: `FROM ${statementData?.period}`,
-    type: "Supplier",
+    type: statementData.type,
     name: statementData.customer,
   });
   const [headers2, setHeaders2] = useState({

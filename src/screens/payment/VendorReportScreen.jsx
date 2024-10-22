@@ -105,8 +105,8 @@ export const VendorReportScreen = () => {
       },
       {
         Header: "Date",
-        accessor: "entry_date",
-        Cell: ({ value }) => moment(value).format("DD-MM-YYYY"),
+        accessor: "created_at",
+        
       },
 
       { Header: "Desc", accessor: "description" },
@@ -120,7 +120,7 @@ export const VendorReportScreen = () => {
   const rows = [];
   getData?.map((row) => {
     rows.push([
-      row.entry_date,
+      row.created_at,
       row.description,
       row.credit,
       row.debit,
@@ -147,7 +147,8 @@ export const VendorReportScreen = () => {
       // Add other relevant data here
 
       date: formattedDateTime,
-      type: "Supplier",
+      type: "VENDOR",
+      title:"VENDOR"
     };
 
     navigate(`../purchases/statement/${supplier_number}`, {

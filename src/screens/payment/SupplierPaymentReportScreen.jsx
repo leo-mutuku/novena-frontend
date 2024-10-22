@@ -146,7 +146,8 @@ const SupplierPaymentReportScreen = () => {
       // Add other relevant data here
 
       date: formattedDateTime,
-      type: "Supplier",
+       type: "SUPPLIER",
+      title:"SUPPLIER"
     };
 
     navigate(`../purchases/statement/${supplier_number}`, {
