@@ -11,6 +11,14 @@ export const vehicleApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Vendor"],
     }),
+    repairBalanceReport: builder.mutation({
+      query: (data) => ({
+        url: `${VENDORS_URL}/repairbalancereport`,
+        method: "POST",
+        body: data,
+      }),
+      providesTags: ["Vendor"],
+    }),
     getRepairExpense: builder.query({
       query: (id) => `${VENDORS_URL}/getrepairexpense/${id}`,
       providesTags: ["Vendor"],
@@ -42,4 +50,5 @@ export const {
   useGetRepairExpenseQuery,
   useGetRepairExpensesQuery,
   useUpdateRepairExpenseMutation,
+  useRepairBalanceReportMutation,
 } = vehicleApiSlice;

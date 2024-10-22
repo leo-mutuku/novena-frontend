@@ -11,6 +11,14 @@ export const vehicleApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Vendor"],
     }),
+    fuelBalanceReport: builder.mutation({
+      query: (data) => ({
+        url: `${VENDORS_URL}/fuelbalancereport`,
+        method: "POST",
+        body: data,
+      }),
+      providesTags: ["Vendor"],
+    }),
     getFuelExpense: builder.query({
       query: (id) => `${VENDORS_URL}/getfuelexpense/${id}`,
       providesTags: ["Vendor"],
@@ -52,4 +60,5 @@ export const {
   useGetFuelExpenseQuery,
   useUpdateFuelExpenseMutation,
   useGetFuelExpensesQuery,
+  useFuelBalanceReportMutation,
 } = vehicleApiSlice;

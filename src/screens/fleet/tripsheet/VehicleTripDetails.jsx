@@ -1,7 +1,7 @@
 
 import React, { useEffect, useMemo } from "react";
-import { useGetSupplierBalanceMutation } from "../../../slices/administration/suppliersApiSlice";
-import { useGetVendorsQuery, useGetVendorBalanceMutation } from "../../../slices/fleet/vendorApiSlice";
+import { useFuelBalanceReportMutation } from "../../../slices/fleet/fuelExpenseApiSlice";
+import { useGetAllVehiclesQuery } from "../../../slices/fleet/vehicleApiSlice";
 import DataTable from "../../../components/general/DataTable";
 import moment from "moment";
 import { Button, Form, Row, Col } from "react-bootstrap";
@@ -20,8 +20,8 @@ const VehicleTripDetails = () => {
   const [supplier_filter, set_supplier_filter] = React.useState("");
   const [product_filter, set_product_filter] = React.useState("");
   const [setData, { isLoading, isSuccess, isError }] =
-  useGetVendorBalanceMutation();
-  const { data: suppliers } = useGetVendorsQuery();
+  useFuelBalanceReportMutation();
+  const { data: suppliers } = useGetAllVehiclesQuery();
 
   
 
@@ -105,11 +105,11 @@ const VehicleTripDetails = () => {
       },
       {
         Header: "Date",
-        accessor: "created_at",
+        accessor: "expense_date",
         
       },
 
-      { Header: "Desc", accessor: "description" },
+      { Header: "Desc", accessor:  (row)=>'Maintenance', },
       { Header: "Credit", accessor: "credit" },
       { Header: "Debit", accessor: "debit" },
       { Header: "Balance ", accessor: "balance" },
@@ -151,21 +151,21 @@ const VehicleTripDetails = () => {
       title:"VENDOR"
     };
 
-    navigate(`../purchases/statement/${supplier_number}`, {
+    navigate(`# }`, {
       state: { statementData },
-    });
+    }); // ../purchases/statement/${supplier_number
   };
 
   const handleSupplier = (e) => {
     let x = suppliers?.data?.filter((a) => {
-      if (a.vendor_number == parseInt(e.target.value)) {
-        return a.vendor_number;
+      if (a.vehicle_id == parseInt(e.target.value)) {
+        return a.vehicle_id;
       }
     });
 
-    set_supplier_number(x[0].vendor_number);
+  set_supplier_number(x[0].vehicle_id);
 
-    set_supplier_name(x[0].vendor_name);
+    set_supplier_name(x[0].registration_number);
   };
 
   return (
@@ -183,8 +183,8 @@ const VehicleTripDetails = () => {
               >
                 <option value="">Select Vehicle</option>
                 {suppliers?.data.map((item, key) => (
-                  <option value={item.vendor_} key={key}>
-                    {item.vendor_}
+                  <option value={item.vehicle_id} key={key}>
+                    {item.registration_number}
                   </option>
                 ))}
               </Form.Select>
